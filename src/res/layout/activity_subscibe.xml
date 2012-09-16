@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/white">
+    
+    <include 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_title2"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:background="@color/sub_left_bg"
+            android:paddingTop="20dip"          
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/lv_sub_left"
+                android:layout_width="match_parent"
+                android:dividerHeight="0dip"
+                android:divider="@color/sub_left_bg"
+                android:layout_height="wrap_content" >
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"
+            android:background="@color/sub_right_bg"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dip" 
+                android:paddingTop="10dip"
+                android:paddingRight="2dip">
+
+                <EditText
+                    android:id="@+id/edtx_sub_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip" 
+                    android:layout_toLeftOf="@+id/btn_sub_search"    
+                    android:layout_centerVertical="true"      
+                    android:ems="10"
+                    android:hint="输入关键字搜索" >
+                    <requestFocus />
+                </EditText>
+
+                <Button
+                    android:id="@+id/btn_sub_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" 
+                    android:layout_centerVertical="true"                    
+                    android:background="@drawable/sub_search"
+                    android:text="" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"                
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/txt_sub_totol"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="全部" />
+
+                <TextView
+                    android:id="@+id/txt_sub_total_num"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="2dip"
+                    android:paddingBottom="2dip"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:layout_width="wrap_content"
+                    android:layout_alignTop="@+id/txt_sub_totol"
+                    android:layout_alignBottom="@+id/txt_sub_totol"
+                    android:layout_height="wrap_content"
+                    android:background="#474747"
+                    android:text="396" />
+
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/lv_sub_right"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

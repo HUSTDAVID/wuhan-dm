@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="40dip"
+    android:background="@drawable/topbar_red_bg"
+    android:orientation="vertical"
+    android:id="@+id/rel_header3">
+
+        <ImageButton
+            android:id="@+id/img_header3_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true" 
+            android:background="@drawable/topbar_retreat"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/img_header3_back"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/txt_header3_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="19sp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"                       
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="@string/news" />
+
+
+        <TextView
+            android:id="@+id/txt_total_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:textSize="13sp"
+            android:clickable="true"
+            android:background="@drawable/btn_topbar_red"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="169跟帖" />
+        
+    </RelativeLayout>

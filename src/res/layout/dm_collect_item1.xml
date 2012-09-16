@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="54dip"
+    android:paddingLeft="10dip"
+    android:paddingTop="2dip"
+    android:paddingBottom="2dip"
+    android:background="@color/bg_normal" >
+    
+    <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_toLeftOf="@+id/cb_collect"
+         android:orientation="vertical" >
+        
+
+	    <TextView
+	        android:id="@+id/txt_collect_title1"
+	        style="@style/collect_title"
+	        android:layout_width="wrap_content"
+	        android:singleLine="true"
+	        android:text="@string/title01" />
+
+        <TextView
+            android:id="@+id/txt_collect_body1"
+            style="@style/collect_body"
+            android:text="@string/body01" />
+            
+       </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cb_collect"
+        android:layout_alignParentRight="true"
+        android:button="@drawable/check_box"
+        android:gravity="center_vertical|right"
+        style="@style/CheckBox"/>
+        
+</RelativeLayout>

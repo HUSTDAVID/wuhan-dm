@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_headline_slide"
+    android:layout_width="fill_parent"
+    android:layout_height="130dip" >
+        
+        <com.wh.dm.widget.HorizontalPager
+                    android:id="@+id/horizontal_pager"
+                    android:layout_width="fill_parent"
+                    android:layout_height="130dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true" >
+
+                    <ImageView
+                        android:id="@+id/pic0"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/image01" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/pic1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/image02" >
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/pic2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/image03" >
+                    </ImageView>
+
+                     <ImageView
+                        android:id="@+id/pic3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/image04" >
+                    </ImageView>
+                </com.wh.dm.widget.HorizontalPager>
+        
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="30dip"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="#e0616161"
+            android:focusable="true"
+            android:orientation="horizontal" >
+<TextView
+            android:id="@+id/txt_headline_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textColor="#ffffff" />
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dip"
+                android:layout_marginTop="10dip"
+                android:focusable="true"
+                android:gravity="center" >
+                
+                <View 
+                    android:id="@+id/view_news_dot0"
+                    style="@style/dot_style"
+                    android:background="@drawable/dot_focused"/>
+                
+                <View 
+                    android:id="@+id/view_news_dot1"
+                    style="@style/dot_style"/>
+                
+                <View 
+                    android:id="@+id/view_news_dot2"
+                    style="@style/dot_style"/>
+                
+                <View 
+                    android:id="@+id/view_news_dot3"
+                    style="@style/dot_style"/>
+                
+                
+            </LinearLayout>
+            
+        </RelativeLayout>
+        
+    </RelativeLayout>

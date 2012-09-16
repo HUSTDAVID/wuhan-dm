@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#1e90ff</color>
+    <color name="yellow">#aac41c</color>
+    <color name="green">#60a47f</color>
+    <color name="pink">#e12ea0</color>
+    <color name="red">#e6571d</color>
+    <color name="black">#000000</color>
+    <color name="divider">#cdcdcd</color>
+    <color name="translucence_black">#70000000</color>
+    
+    <color name="sub_left_bg">#474747</color>
+    <color name="sub_right_bg">#141414</color>
+    
+    <color name="txt_gray">#858585</color>
+    
+    <color name="bg_clicked">#e7e7e7</color>
+    <color name="bg_normal">#efefef</color>
+    
+    <color name="btn_normal">#e4e4e4</color>
+    <color name="btn_onclicked">#c8c8c8</color>
+    
+    <color name="collecte_divider">#eeeeee</color>
+    
+    <!-- magazine -->
+    <color name="mzine_txt_normal">#353535</color>
+    <color name="mzine_txt_onclick">#000000</color>
+    <color name="mzine_txt_clicked">#858585</color>
+    
+    
+    <color name="tab_txt_normal_color">#919297</color>
+
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/headline_item_bg"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingBottom="8dip"
+    android:id="@+id/layout_headline_item">
+
+    
+    <ImageView
+        android:id="@+id/img_headline_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dip"
+        android:contentDescription="@string/news_image"
+        android:layout_marginTop="8dip"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/news_img_background"
+        android:src="@drawable/temp_news_img" />
+
+    <RelativeLayout
+        android:id="@+id/layout_headline_item_right"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"  
+        android:layout_toRightOf="@+id/img_headline_item"
+        android:layout_alignBottom="@+id/img_headline_item"  
+        android:layout_alignTop="@+id/img_headline_item"   
+        android:orientation="vertical" >
+        
+         <TextView
+            android:id="@+id/txt_headline_item_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/headline_title"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/txt_headline_item_body"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/txt_headline_item_title"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_gray"
+            android:layout_alignParentBottom="true"
+            android:text="@string/headline_body"
+            android:textSize="11sp" />
+
+       
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

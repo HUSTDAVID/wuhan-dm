@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WH_DM</string>
+    <string name="collections">我的收藏</string>
+    <string name="favorites">猜你喜欢</string>
+    <string name="temp1">柏氏专卖</string>
+    <string name="temp2">Dior迪奥特价</string>
+    <string name="temp3">东风标致4S店</string>
+    <string name="temp4">BMW专营店</string>
+    <string name="interaction">互动</string>
+    <string name="headline">头条</string>
+    <string name="news">新闻</string>
+    <string name="photo">组图</string>
+    <string name="subscribe">订阅</string>
+    <string name="store">收藏</string>
+    <string name="vote">投票</string>
+    <string name="comment">抽奖</string>
+    <string name="surver">有奖调查</string>
+    <string name="topic">话题</string>
+    <string name="house">房产</string>
+    <string name="car">汽车</string>
+    <string name="fashion">时尚</string>
+    <string name="lift">生活</string>
+    <string name="traval">旅游</string>
+    <string name="magazine">杂志</string>
+    <string name="news_image">新闻附图</string>
+    <string name="sub_have">已订阅</string>
+    <string name="sub_no">我要订阅</string>
+    <string name="sub_manager">订阅管理</string>
+    
+    <!-- 组图 -->
+    <string name="all">全部</string>
+    <string name="hot">热点</string>
+    <string name="girl">美女</string>
+    <string name="photograph">摄影</string>
+    <string name="fun">奇趣</string>
+    
+
+    <!-- 新闻详情 -->
+    <string name="news_title">日媒称日本11日派官员赴华 欲讨论钓鱼岛问题</string>
+    <string name="news_time">2010-12-30</string>
+    <string name="news_source">来源：荆楚网</string>
+    <string name="news_user">手机版网友</string>
+    <string name="news_reply_time">13小时前</string>
+    <string name="news_reply_body">没什么谈的，人不敬我，我何必敬人。</string>
+    <string name="news_reply_top">顶1152</string>
+    <string name="news_reply">回复</string>
+
+    <!-- test data -->
+    <string name="title01">为何美国人拿的奥运奖牌比我们多很多呢啊啊啊</string>
+    <string name="body01">收藏时间：2012-12-30  16:12</string>
+    <string name="mag_title1">五楼品牌服装升级</string>
+    <string name="mag_body1">形象全面升级，隆重开幕，快来体验吧。（哥伦比亚，新亚当，NIKE,LIVIS诺诗蓝，狼爪）</string>
+    <string name="mag_title2">清凉夏，群光2楼升级待卖</string>
+    <string name="mag_body2">匡威，大嘴猴，i‘m david。熊猫人形象全面升级，隆重开幕，快来体验吧!</string>
+    <string name="mag_title3">森田面膜买一送一</string>
+    <string name="mag_body3">BIF缤纷夏日，森田有礼！药妆玻尿酸面膜买一送一现价59元</string>
+    <string name="mag_title4">JACK JONES特卖</string>
+    <string name="mag_body4">活动时间 ：08.02-08.15</string>
+    <string name="mag_title5">ADIDAS等专柜全新形象登场</string>
+    <string name="mag_body5">5f运动休闲馆ADIDAS,NIKE,360，LE COQ SPORTIF ,AIDDAS生活全新形象闪亮开幕，赶快来体验不一样的感觉吧!</string>
+    <string name="headline_title">销品茂停车场两天四案</string>
+    <string name="headline_body">7月8日下午6点，武汉一高校员工张先生开着一辆奥迪A4车来到销品茂。</string>
+    <string name="news_body">　中新网9月11日电 据日本共同社报道，据日本政府相关人士透露，外务省11日派遣亚洲大洋洲局长杉山晋辅前往北京，就日本政府所谓钓鱼岛“国有化”方针同中国政府交换意见。
+　　据悉，日本政府11日上午召开内阁会议，决定从2012年度预算的预备费中拨出20.5亿日元(约合人民币1.66亿元)“购买”钓鱼岛的3个岛屿。日本政府考虑最早于11日同“土地权所有者”签订合同。
+　　针对日本所谓“购岛”行径，中国政府9月10日严正声明，日本政府的所谓“购岛”完全是非法的、无效的，丝毫改变不了日本侵占中国领土的历史事实，丝毫改变不了中国对钓鱼岛及其附属岛屿的领土主权。</string>
+
+    <string name="photos_title">两女子接吻引围观</string>
+</resources>

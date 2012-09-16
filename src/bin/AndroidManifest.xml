@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wh.dm"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".activity.DM_ImgActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.DM_SubActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.DM_MZine1Activity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_InteractionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_NewsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_NewsDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.DM_Tab_1Activity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_Tab_2Activity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_PhotosActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_HeadLineActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_CollectActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name=".activity.DM_Photos_AllActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_PhotosDetailsAcitivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_SubscribeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_Sub_HotActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+    </application>
+
+</manifest>

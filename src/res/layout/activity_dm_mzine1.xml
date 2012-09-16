@@ -1,0 +1,177 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:orientation="vertical">
+	<include
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    layout="@layout/dm_mzine_header" 
+	    android:layout_weight="0.3">
+	</include>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.8dip"
+        android:background="@drawable/double_line_hor"
+         android:layout_marginLeft="10dip" 
+         android:layout_marginRight="10dip"/>
+
+    <TableRow
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_weight="1.2">
+
+        <LinearLayout
+            android:id="@+id/layout1_magazine_1"
+            style="@style/magazine_news_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_magazine_1_title1"
+                style="@style/magazine_title"
+                android:singleLine="true"
+                android:text="@string/mag_title1" />
+
+            <TextView
+                android:id="@+id/txt_magazine_1_body1"
+                style="@style/magazine_body"
+                android:layout_height="match_parent"
+                android:text="@string/mag_body1" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.8dip"
+            android:layout_height="fill_parent"
+            android:background="@drawable/double_line_ver" >
+        </View>
+
+        <LinearLayout
+            android:id="@+id/layout2_magazine_1"
+            style="@style/magazine_news_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/txt_magazine_1_title2"
+                style="@style/magazine_title"
+                android:singleLine="true"
+                android:text="@string/mag_title2" />
+
+            <TextView
+                android:id="@+id/txt_magazine_1_body2"
+                style="@style/magazine_body"
+                android:text="@string/mag_body2" />
+        </LinearLayout>
+    </TableRow>
+
+    <ImageView
+        android:id="@+id/img_magazine_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/temp_magazine_img" />
+
+    <TableRow
+        android:id="@+id/medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_weight="0.8">
+
+        <LinearLayout
+            android:id="@+id/layout3_magazine_1"
+            style="@style/magazine_news_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_magazine_1_title3"
+                style="@style/magazine_title"
+                android:singleLine="true"
+                android:text="@string/mag_title3" />
+
+            <TextView
+                android:id="@+id/txt_magazine_1_body3"
+                style="@style/magazine_body"
+                android:text="@string/mag_body3" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.8dip"
+            android:layout_height="fill_parent"
+            android:background="@drawable/double_line_ver" />
+
+        <LinearLayout
+            android:id="@+id/layout4_magazine_1"
+            style="@style/magazine_news_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_magazine_1_title4"
+                style="@style/magazine_title"
+                android:singleLine="true"
+                android:text="@string/mag_title4" />
+
+            <TextView
+                android:id="@+id/txt_magazine_1_body4"
+                style="@style/magazine_body"
+                android:text="@string/mag_body4" />
+        </LinearLayout>
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.8dip"
+        android:background="@drawable/double_line_hor" 
+        android:layout_marginLeft="10dip" 
+        android:layout_marginRight="10dip"/>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/layout5_magazine_1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_magazine_1_title5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/mag_title5"
+                android:textColor="@color/mzine_txt_normal"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txt_magazine_1_body5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/mag_body5"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </TableRow>
+
+</LinearLayout>

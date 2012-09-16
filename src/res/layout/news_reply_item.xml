@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingTop="5dip"
+    android:paddingBottom="5dip"
+    android:orientation="vertical" 
+    android:background="@color/bg_normal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:paddingBottom="8dip">
+
+        <TextView
+            android:id="@+id/txt_reply_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#da3635"
+            android:layout_alignParentLeft="true"
+            android:text="@string/news_user" />
+
+        <TextView
+            android:id="@+id/txt_reply_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#b1b1b1"
+            android:text="@string/news_reply_time" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:paddingBottom="8dip">
+
+        <TextView
+            android:id="@+id/txt_replay_body"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/news_normal"
+            android:layout_height="wrap_content"
+            android:textColor="#404040"
+            android:text="@string/news_reply_body" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="8dip" >
+
+
+
+        <Button
+            android:id="@+id/btn_reply"
+            android:layout_width="80dip"
+            android:layout_height="30dip"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_news_reply"
+            android:text="@string/news_reply" />
+
+        <Button
+            android:id="@+id/btn_reply_top"
+            android:layout_width="80dip"
+            android:layout_height="30dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@+id/btn_reply"
+            android:background="@drawable/btn_news_reply"
+            android:text="@string/news_reply_top" />
+
+    </RelativeLayout>
+
+</LinearLayout>
