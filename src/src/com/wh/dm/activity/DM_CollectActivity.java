@@ -18,6 +18,7 @@ public class DM_CollectActivity extends Activity {
 
     private ListView collect_list;
     List<Map<String, Object>> list;
+ 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
