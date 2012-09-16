@@ -32,4 +32,6 @@
     
     <color name="tab_txt_normal_color">#919297</color>
 
+    <color name="vote_background">#777777</color>
+    <color name="vote_text1">#868686</color>
 </resources>

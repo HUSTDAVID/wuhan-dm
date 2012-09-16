@@ -67,4 +67,12 @@
 　　针对日本所谓“购岛”行径，中国政府9月10日严正声明，日本政府的所谓“购岛”完全是非法的、无效的，丝毫改变不了日本侵占中国领土的历史事实，丝毫改变不了中国对钓鱼岛及其附属岛屿的领土主权。</string>
 
     <string name="photos_title">两女子接吻引围观</string>
+    
+    <string name="vote_question">农民工进城打工，温饱问题尚未能解决，你怎么看待这个问题？</string>
+    <string name="vote_number">2879</string>
+    <string name="vote_title1">1.需要加强扶持</string>
+    <string name="vote_title2">2.已经足够，无需调整</string>
+    <string name="vote_title3">3.恐怕很难改变</string>
+    
+    
 </resources>
