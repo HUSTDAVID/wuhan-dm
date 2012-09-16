@@ -3,7 +3,9 @@
     package="com.wh.dm"
     android:versionCode="1"
     android:versionName="1.0" >
+
     <uses-sdk android:minSdkVersion="8" />
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
@@ -17,7 +19,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.DM_SubActivity"
@@ -81,17 +87,14 @@
             android:name=".activity.DM_VoteActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true" >
     </supports-screens>
+
 </manifest>
