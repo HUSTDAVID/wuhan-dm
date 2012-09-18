@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/btn_normal" >
+    android:background="@drawable/sub_search_box_bg" >
 
 
     <ImageView
@@ -33,8 +33,7 @@
         android:id="@+id/img_sub_search_right"
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_height="wrap_content"
-       
+        android:layout_height="wrap_content"       
         android:layout_marginRight="10dip"
         android:layout_toLeftOf="@+id/btn_sub_csearch"
         android:src="@drawable/subscription_review_right" />
