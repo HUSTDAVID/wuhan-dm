@@ -85,15 +85,18 @@
         </activity>
         <activity
             android:name=".activity.DM_SubManagerActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity
             android:name=".activity.DM_VoteResultActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity
             android:name=".activity.DM_Vote1Activity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity
             android:name=".activity.DM_NewsMoreReplyActivity"
