@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="67dip"
+    android:paddingTop="8dip"
+    android:paddingBottom="8dip"
     android:background="@color/bg_normal"
     android:orientation="horizontal" >
 
@@ -12,7 +14,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/subscription_manage_background" />
 
     <TextView

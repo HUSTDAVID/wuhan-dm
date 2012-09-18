@@ -13,5 +13,7 @@ public class DM_Vote2Activity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote2);
+
     }
+
 }

@@ -31,7 +31,7 @@
             android:textColor="@color/white"
             android:layout_centerVertical="true"                       
             android:layout_toRightOf="@+id/imageView2"
-            android:text="@string/news" />
+            android:text="@string/vote" />
 
         
     </RelativeLayout>

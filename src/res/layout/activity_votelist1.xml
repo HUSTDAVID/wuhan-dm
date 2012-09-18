@@ -10,7 +10,7 @@
         android:id="@+id/vote_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        layout="@layout/dm_vote_header"/>
+        layout="@layout/dm_vote_header1"/>
 
     <RelativeLayout
          android:id="@+id/rel_vote_img"

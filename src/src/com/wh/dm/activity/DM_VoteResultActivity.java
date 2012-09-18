@@ -6,6 +6,7 @@ import com.wh.dm.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -36,6 +37,10 @@ public class DM_VoteResultActivity extends Activity {
         progressBar1 = (ProgressBar) findViewById(R.id.pro_vote_result1);
         progressBar2 = (ProgressBar) findViewById(R.id.pro_vote_result2);
         progressBar3 = (ProgressBar) findViewById(R.id.pro_vote_result3);
+
+        progressBar1.setLayoutParams(new LayoutParams(43 * 2, 34));
+        progressBar2.setLayoutParams(new LayoutParams(15 * 2, 34));
+        progressBar2.setLayoutParams(new LayoutParams(42 * 2, 34));
 
     }
 
