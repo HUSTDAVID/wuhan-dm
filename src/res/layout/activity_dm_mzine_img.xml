@@ -1,115 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_normal" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <include
         android:id="@+id/include1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
         layout="@layout/dm_mzine_header" >
     </include>
 
-    <View
-        android:id="@+id/mzine_img_line6"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:background="@drawable/double_line_hor"
-        android:layout_below="@id/include1"/>
-
-    <ImageView
-        android:id="@+id/mzine_img_imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/mzine_img_line6"
-        android:src="@drawable/temp_dm_4x_1" />
-    <View
+       <View
         android:id="@+id/mzine_img_line1"
         android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:background="@drawable/double_line_hor"
-        android:layout_below="@id/mzine_img_imageView1"/>
-
-    <View
-            android:id="@+id/mzine_img_line2"
-            android:layout_width="2dip"
-            android:layout_height="402.67dip"
-            android:layout_below="@id/include1"
-            android:layout_toRightOf="@id/mzine_img_imageView1"
-            android:background="@drawable/double_line_ver" />
-    <ImageView
-        android:id="@+id/mzine_img_imageView2"
-        android:layout_width="wrap_content"
+        android:layout_height="1dip"
+        android:layout_weight="1.5"
+        android:background="@color/mzine_img"/>
+     
+    <ListView
+        android:id="@+id/lv_img2"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/mzine_img_line6"
-        android:layout_alignTop="@id/mzine_img_imageView1"
-        android:src="@drawable/temp_dm_1x_1" />
+        android:layout_weight="302" 
+        android:divider="@color/white">
 
-    <View
-        android:id="@+id/mzine_img_line3"
-        android:layout_width="110dip"
-        android:layout_height="0.67dip"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/double_line_hor"
-        android:layout_below="@id/mzine_img_imageView2"/>
-    <ImageView
-        android:id="@+id/mzine_img_imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/mzine_img_imageView1"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/temp_dm_1x_2" />
+    </ListView>
 
-    <ImageView
-        android:id="@+id/mzine_img_imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/mzine_img_line1"
-        android:src="@drawable/temp_dm_2x_1" />
-
-    <View
-        android:id="@+id/mzine_img_line4"
-        android:layout_width="210dip"
-        android:layout_height="0.67dip"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/double_line_hor"
-        android:layout_below="@id/mzine_img_imageView4"/>
-
-    <ImageView
-        android:id="@+id/mzine_img_imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/mzine_img_line1"
-        android:src="@drawable/temp_dm_2x_2" />
-
-    <ImageView
-        android:id="@+id/mzine_img_imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/mzine_img_line4"
-        android:src="@drawable/temp_dm_1x_3" />
-
-    <View
-            android:id="@+id/mzine_img_line5"
-            android:layout_width="1.33dip"
-            android:layout_height="100dip"
-            android:layout_below="@id/mzine_img_line4"
-            android:layout_toRightOf="@id/mzine_img_imageView6"
-            android:background="@drawable/double_line_ver" />
-
-    <ImageView
-        android:id="@+id/mzine_img_imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mzine_img_line4"
-        android:layout_toRightOf ="@id/mzine_img_line5"
-        android:src="@drawable/temp_dm_1x_4" />
-
-</RelativeLayout>
+</LinearLayout>

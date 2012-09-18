@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -76,6 +77,7 @@ public class CollectAdapter extends BaseAdapter {
         public TextView txt_collect_title;
         public TextView txt_collect_body;
         public CheckBox check;
+        public ImageView img1;
     }
 
     public void addItemType(String string) {

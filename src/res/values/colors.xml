@@ -34,4 +34,7 @@
 
     <color name="vote_background">#777777</color>
     <color name="vote_text1">#868686</color>
+    
+    <color name="mzine_img">#d9d9d9</color>
+    <color name="mzine_fullacreen">#e7e7e7</color>
 </resources>
