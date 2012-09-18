@@ -59,11 +59,59 @@ public class DM_HeadLineActivity extends Activity {
         // headerView.findViewById(R.id.txt_headline_title);
         listView = (ListView) findViewById(R.id.lv_headline);
 
+<<<<<<< .mine
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
         mPager.setOnScreenSwitchListener(onScreenSwitchListener);
-        mPager.setCurrentScreen(0, true);
+
+
+
+
+
+
+=======
+        // image title
+        titles = new String[4];
+        titles[0] = "请带我一起，将须臾活成不朽";
+        titles[1] = "请带我一起，将须臾活成不朽2";
+        titles[2] = "请带我一起，将须臾活成不朽3";
+        titles[3] = "请带我一起，将须臾活成不朽4";
+        //
+        // mPager = (HorizontalPager)
+        // headerView.findViewById(R.id.horizontal_pager);
+        // mPager.setOnScreenSwitchListener(onScreenSwitchListener);
+>>>>>>> .theirs
+        // mPager.setCurrentScreen(0, true);
+<<<<<<< .mine
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+
+        // the four dot
+        dots = new ArrayList<View>();
+        dots.add(headerView.findViewById(R.id.view_news_dot0));
+        dots.add(headerView.findViewById(R.id.view_news_dot1));
+        dots.add(headerView.findViewById(R.id.view_news_dot2));
+        dots.add(headerView.findViewById(R.id.view_news_dot3));
+
+        // the first title
+        txt_title.setText(titles[0]);
+
+        listView.addHeaderView(headerView);
+
+>>>>>>> .theirs
         HeadlineAdapter adapter = new HeadlineAdapter(this);
         // add data
         String title = getResources().getString(R.string.headline_title);
@@ -73,6 +121,11 @@ public class DM_HeadLineActivity extends Activity {
             adapter.addItem(title, body, bmp);
         }
         listView.setAdapter(adapter);
+<<<<<<< .mine
+
+=======
+
+>>>>>>> .theirs
         listView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
