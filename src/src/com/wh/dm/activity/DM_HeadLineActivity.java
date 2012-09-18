@@ -62,14 +62,15 @@ public class DM_HeadLineActivity extends Activity {
 
         // image title
         titles = new String[4];
-        titles[0] = "这里是标题一呀一呀有木有";
-        titles[1] = "这里是标题二呀二呀有木有";
-        titles[2] = "这里是标题三呀三呀有木有";
-        titles[3] = "这里是标题四呀四呀有木有";
+        titles[0] = "请带我一起，将须臾活成不朽";
+        titles[1] = "请带我一起，将须臾活成不朽2";
+        titles[2] = "请带我一起，将须臾活成不朽3";
+        titles[3] = "请带我一起，将须臾活成不朽4";
         //
-        mPager = (HorizontalPager) headerView.findViewById(R.id.horizontal_pager);
+        // mPager = (HorizontalPager)
+        // headerView.findViewById(R.id.horizontal_pager);
         // mPager.setOnScreenSwitchListener(onScreenSwitchListener);
-        mPager.setCurrentScreen(0, true);
+        // mPager.setCurrentScreen(0, true);
 
         // the four dot
         dots = new ArrayList<View>();
@@ -81,7 +82,7 @@ public class DM_HeadLineActivity extends Activity {
         // the first title
         txt_title.setText(titles[0]);
 
-        // listView.addHeaderView(headerView);
+        listView.addHeaderView(headerView);
 
         HeadlineAdapter adapter = new HeadlineAdapter(this);
         // add data
@@ -93,11 +94,6 @@ public class DM_HeadLineActivity extends Activity {
         }
         listView.setAdapter(adapter);
 
-        /*
-         * ArrayList<View> views = new ArrayList<View>(); for (int i = 0; i <
-         * 100; i++) { TextView tv = new TextView(this); tv.setText(i + "ddd");
-         * views.add(tv); } listView.setAdapter(new SackOfViewsAdapter(views));
-         */
         listView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
+      
     <ListView
         android:id="@+id/lv_headline"
         android:layout_width="fill_parent"
