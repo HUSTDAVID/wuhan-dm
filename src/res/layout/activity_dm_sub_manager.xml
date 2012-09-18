@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/bg_normal">
+    
+    <include 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_title3"/>
+    
+    <ListView 
+        android:id="@+id/lv_sub_manager"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/double_line_hor"
+        android:dividerHeight="1.5dip">
+        
+        
+    </ListView>
+
+</LinearLayout>

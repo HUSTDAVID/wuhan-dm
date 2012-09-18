@@ -84,7 +84,43 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_VoteActivity"
+            android:name=".activity.DM_SubManagerActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_VoteResultActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_Vote1Activity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_NewsMoreReplyActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.DM_Vote2Activity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".activity.DM_VotedListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".activity.DM_MzineFullActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+		 <activity
+            android:name=".activity.DM_MzineImgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+         <activity
+            android:name=".activity.DM_MzineLongActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>

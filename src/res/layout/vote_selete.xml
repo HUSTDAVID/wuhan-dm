@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/btn_normal">
+    
+    <RelativeLayout
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:paddingBottom="20dip"
+           android:orientation="vertical" >
+
+           <Button
+               android:id="@+id/vote_button1"
+               style="@style/vote_btn"
+               android:layout_marginTop="30dp"
+               android:text="@string/vote_title1"/>
+           
+
+
+           <Button
+               android:id="@+id/vote_button2"
+               style="@style/vote_btn"
+               android:layout_below="@id/vote_button1"
+               android:layout_marginTop="6.67dp"
+               android:text="@string/vote_title2" />
+
+
+           <Button
+               android:id="@+id/vote_button3"
+               style="@style/vote_btn"
+               android:layout_below="@id/vote_button2"
+               android:layout_marginTop="6.67dip"
+               android:text="@string/vote_title3" />
+
+
+         
+
+       </RelativeLayout>
+
+</LinearLayout>

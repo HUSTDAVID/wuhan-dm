@@ -44,7 +44,7 @@
             android:textSize="@dimen/news_normal"
             android:layout_height="wrap_content"
             android:textColor="#404040"
-            android:text="@string/news_reply_body" />
+            android:text="真搞笑，银行给多了就要要回，少给了离柜不负责" />
 
     </LinearLayout>
 

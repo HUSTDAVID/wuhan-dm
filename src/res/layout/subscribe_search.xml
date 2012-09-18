@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/btn_normal" >
+
+    <ImageView
+        android:id="@+id/img_sub_search_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="11dip"
+        android:layout_centerVertical="true"
+        android:src="@drawable/subscription_review_left" />
+
+    <EditText
+        android:id="@+id/edt_sub_search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:hint="请输入关键字"       
+        android:background="@drawable/input_sub_search"
+        android:layout_toRightOf="@+id/img_sub_search_left"
+        android:layout_toLeftOf="@+id/img_sub_search_right"
+        android:ems="10" />
+
+    <ImageView
+        android:id="@+id/img_sub_search_right"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+       
+        android:layout_marginRight="10dip"
+        android:layout_toLeftOf="@+id/btn_sub_csearch"
+        android:src="@drawable/subscription_review_right" />
+
+    <Button
+        android:id="@+id/btn_sub_csearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"          
+        android:layout_marginRight="11dip"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/sub_search"
+        android:text="" />
+    
+    </RelativeLayout>

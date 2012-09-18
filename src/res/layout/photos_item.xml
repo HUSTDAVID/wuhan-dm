@@ -15,12 +15,12 @@
             android:layout_width="fill_parent"
             android:text="@string/photos_title"
             android:textSize="12sp"/>
-            
+            
 	    <ImageView
 	        android:id="@+id/img_potos_item"
-	        android:layout_below="@+id/txt_photos_title"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/txt_photos_title"
 	        android:scaleType="fitXY"
 	        android:src="@drawable/temp_photos_img" />
 	    

@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.wh.dm.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DM_InteractionActivity extends Activity implements OnClickListener {
 
@@ -81,26 +81,22 @@ public class DM_InteractionActivity extends Activity implements OnClickListener 
         switch (v.getId()) {
             case R.id.rel_interaction_vote:
             case R.id.btn_interaction_vote:
-                Toast.makeText(DM_InteractionActivity.this, "vote test", Toast.LENGTH_SHORT).show();
+                Intent intent_vote1 = new Intent(DM_InteractionActivity.this,
+                        DM_Vote1Activity.class);
+                startActivity(intent_vote1);
                 break;
             case R.id.rel_interaction_critic:
             case R.id.btn_interaction_critic:
-                Toast.makeText(DM_InteractionActivity.this, "comment test", Toast.LENGTH_SHORT)
-                        .show();
+                Intent intent_vote2 = new Intent(DM_InteractionActivity.this,
+                        DM_Vote2Activity.class);
+                startActivity(intent_vote2);
                 break;
             case R.id.rel_interaction_award:
             case R.id.btn_interaction_award:
-                Toast.makeText(DM_InteractionActivity.this, "survey test", Toast.LENGTH_SHORT)
-                        .show();
+                Intent intent_list = new Intent(DM_InteractionActivity.this,
+                        DM_VotedListActivity.class);
+                startActivity(intent_list);
                 break;
-        /*
-         * case R.id.rel_interaction_essence: case R.id.btn_interaction_essence:
-         * Toast.makeText(DM_InteractionActivity.this, "essence test",
-         * Toast.LENGTH_SHORT) .show(); break; case R.id.rel_interaction_depth:
-         * case R.id.btn_interaction_depth:
-         * Toast.makeText(DM_InteractionActivity.this, "depth test",
-         * Toast.LENGTH_SHORT) .show(); break;
-         */
         }
 
     }

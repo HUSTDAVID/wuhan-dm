@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sub_left">18sp</dimen>
+    <dimen name="sub_right">14sp</dimen>
+    <dimen name="list_item_height">25dip</dimen>
+    <dimen name="news_normal">14sp</dimen>
+    <dimen name="grid_outer_width">130dip</dimen>
+    <dimen name="grid_outer_height">130dip</dimen>
+    <dimen name="grid_item_width">130dip</dimen>
+    <dimen name="grid_item_height">99dip</dimen>
+	<dimen name="toolbar_margin">10dip</dimen>
+</resources>

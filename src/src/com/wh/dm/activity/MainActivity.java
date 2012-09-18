@@ -134,11 +134,17 @@ public class MainActivity extends Activity {
         com.wh.dm.widget.Configure.init(MainActivity.this);
         param = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
                 android.view.ViewGroup.LayoutParams.FILL_PARENT);
-        param.rightMargin = 85;
+        param.rightMargin = dip2px(55);
         param.leftMargin = 20;
         if (gridView != null) {
             scrollLayout.removeAllViews();
         }
+    }
+
+    public int dip2px(float dpValue) {
+
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
     public void initData() {
@@ -205,12 +211,29 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 
-                if (pos == 0) {
-                    Intent it = new Intent(MainActivity.this, DM_Tab_1Activity.class);
-                    startActivity(it);
-                } else {
-                    Intent it = new Intent(MainActivity.this, DM_Tab_2Activity.class);
-                    startActivity(it);
+                switch (pos) {
+                    case 0:
+                        Intent it0 = new Intent(MainActivity.this, DM_Tab_1Activity.class);
+                        startActivity(it0);
+                        break;
+                    case 1:
+                        Intent it1 = new Intent(MainActivity.this, DM_Tab_2Activity.class);
+                        startActivity(it1);
+                        break;
+
+                    case 2:
+                        Intent it2 = new Intent(MainActivity.this, DM_MzineFullActivity.class);
+                        startActivity(it2);
+                        break;
+                    case 3:
+                        Intent it3 = new Intent(MainActivity.this, DM_MzineLongActivity.class);
+                        startActivity(it3);
+                        break;
+                    case 4:
+                        Intent it4 = new Intent(MainActivity.this, DM_MzineImgActivity.class);
+                        startActivity(it4);
+                        break;
+
                 }
             }
         });

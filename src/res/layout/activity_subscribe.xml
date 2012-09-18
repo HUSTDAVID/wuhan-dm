@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -9,17 +11,43 @@
         android:layout_height="40dip"
         android:layout_alignParentTop="true"
         layout="@layout/header_title3"/>
-     
-    <include 
-        android:id="@+id/sub_list_top"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/subscribe_top"
-        layout="@layout/list_top"/>
+  
+     <RelativeLayout
+         android:id="@+id/rel_sub_list" 
+         android:layout_below="@+id/subscribe_top"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content">
+         
+         <LinearLayout 
+             android:id="@+id/linear_sub_list_top"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"             
+             android:visibility="visible">
+		    <include 
+		        android:id="@+id/sub_list_top"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        layout="@layout/sub_list_top"/>
+		    </LinearLayout>
+		    
+         <LinearLayout 
+             android:id="@+id/linear_sub_search"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:visibility="gone">
+		    
+		    <include 		        
+		        android:id="@+id/sub_search"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"		        
+		        layout="@layout/subscribe_search"/>
+		    </LinearLayout>
+		   
+    </RelativeLayout>
     
     <RelativeLayout 
         android:id="@+id/rel_sub_main"
-        android:layout_below="@+id/sub_list_top"
+        android:layout_below="@+id/rel_sub_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>         
          

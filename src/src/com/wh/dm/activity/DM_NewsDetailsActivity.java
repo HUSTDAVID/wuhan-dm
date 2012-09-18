@@ -5,6 +5,7 @@ import com.wh.dm.R;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class DM_NewsDetailsActivity extends Activity {
     private EditText edtxMyReply;
     private Button btnMyShare;
     private Button btnMyFavorite;
+    private Button btnMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,19 @@ public class DM_NewsDetailsActivity extends Activity {
 
                 String str = edtxMyReply.getText().toString();
                 Toast.makeText(DM_NewsDetailsActivity.this, str, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnMore = (Button) findViewById(R.id.btn_news_more);
+        btnMore.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DM_NewsDetailsActivity.this,
+                        DM_NewsMoreReplyActivity.class);
+                startActivity(intent);
+
             }
         });
     }

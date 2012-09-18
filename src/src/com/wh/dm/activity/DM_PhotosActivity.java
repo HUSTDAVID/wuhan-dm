@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,7 +23,6 @@ import android.widget.Toast;
 
 public class DM_PhotosActivity extends ActivityGroup {
 
-    private TextView txtTitle;
     private TextView txtSelectedItem;
 
     private RelativeLayout layoutListTop;
@@ -55,9 +55,17 @@ public class DM_PhotosActivity extends ActivityGroup {
 
     private void initViews() {
 
-        layoutListTop = (RelativeLayout) findViewById(R.id.layout_list_top);
-        txtTitle = (TextView) findViewById(R.id.txt_title);
+        // init header
+        View header = LayoutInflater.from(this).inflate(R.layout.header_title3, null);
+        header.setBackgroundResource(R.drawable.topbar_black_bg);
+        RelativeLayout rel = (RelativeLayout) header.findViewById(R.id.rel_header3);
+        rel.setBackgroundResource(R.drawable.topbar_black_bg);
+
+        TextView txtTitle = (TextView) findViewById(R.id.txt_title);
         txtTitle.setText(getResources().getString(R.string.photo));
+
+        // list top
+        layoutListTop = (RelativeLayout) findViewById(R.id.layout_list_top);
 
         txtAll = (TextView) findViewById(R.id.txt_listtop_1);
         txtAll.setText(getResources().getString(R.string.all));

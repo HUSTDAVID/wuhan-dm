@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="67dip"
+    android:background="@color/bg_normal"
     android:orientation="horizontal" >
 
     <ImageView
@@ -12,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/subscription_manage_background" />
+        android:background="@drawable/subscription_manage_background" />
 
     <TextView
         android:id="@+id/txt_sub_manage_title"
@@ -23,6 +24,7 @@
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/img_sub_manage"
         android:text="中百仓库"
+        android:textColor="@color/black"
         android:textSize="15sp" />
 
     <TextView
@@ -34,16 +36,18 @@
         android:layout_marginLeft="10dip"
         android:layout_toRightOf="@+id/txt_sub_manage_title"
         android:text="22496人订阅"
+        android:textColor="#a4a4a4"
         android:textSize="12sp" />
-
+
     <TextView
         android:id="@+id/txt_sub_manage_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txt_sub_manage_title"
         android:layout_below="@+id/txt_sub_manage_title"
-        android:layout_marginTop="12dip"
+        android:layout_marginTop="8dip"
         android:text="新菜天天送，瓶装可乐1元/瓶"
+        android:textColor="#747474"
         android:textSize="12sp" />
 
     <Button
@@ -52,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:textColor="#5b5b5b"
         android:layout_marginRight="11dip"
         android:background="@drawable/btn_subscription"
         android:text="取消订阅" />

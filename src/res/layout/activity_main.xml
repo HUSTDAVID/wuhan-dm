@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relate"
+<RelativeLayout android:id="@+id/relate"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/index_bg" >
-
+    android:background="@drawable/index_bg" xmlns:android="http://schemas.android.com/apk/res/android">
+
     <com.wh.dm.widget.ScrollLayout
         android:id="@+id/views"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="25dip"
+        android:layout_marginTop="20dip"
         android:background="@drawable/index_bg" />
 
     <RelativeLayout
@@ -50,13 +49,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dip"
                 android:background="@drawable/add" />
-
+
             <ImageButton
                 android:id="@+id/btn_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="18dip"
+                android:layout_marginBottom="@dimen/toolbar_margin"
                 android:background="@drawable/set" />
+
         </LinearLayout>
     </RelativeLayout><ImageView
         android:id="@+id/dels"

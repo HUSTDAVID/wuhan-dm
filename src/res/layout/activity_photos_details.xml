@@ -9,7 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="40dip"
         android:layout_alignParentTop="true"
-        layout="@layout/header_title3"/>
+        
+        layout="@layout/header_title3_black"/>
     
     <!-- 中间部分内容没有写 -->
    

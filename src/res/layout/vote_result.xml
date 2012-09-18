@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dip"
+    android:paddingLeft="15dip"
+    android:paddingTop="10dip" >
+
+    <TextView
+        android:id="@+id/txt_vote_result1"
+        style="@style/vote_result_txt"
+        android:text="@string/vote_title1" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ProgressBar
+            android:id="@+id/pro_vote_result1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dip"
+            android:layout_height="23dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dip"
+            android:layout_marginRight="10dip"
+            
+            android:progressDrawable="@drawable/vote_pro_blue" />
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/vote_result_percent"
+            android:layout_alignBaseline="@+id/pro_vote_result1"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/pro_vote_result1"
+            android:text="43%" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_vote_result2"
+        style="@style/vote_result_txt"
+        android:text="@string/vote_title2" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ProgressBar
+            android:id="@+id/pro_vote_result2"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dip"
+            android:layout_height="23dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dip"
+            android:layout_marginRight="10dip"
+            android:max="100"
+            android:progressDrawable="@drawable/vote_pro_green" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/vote_result_percent"
+            android:layout_alignBaseline="@+id/pro_vote_result2"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/pro_vote_result2"
+            android:text="15%" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_vote_result3"
+        style="@style/vote_result_txt"
+        android:text="@string/vote_title3" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ProgressBar
+            android:id="@+id/pro_vote_result3"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200dip"
+            android:layout_height="23dip"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dip"
+            android:max="100"
+            android:progressDrawable="@drawable/vote_pro_red" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/vote_result_percent"
+            android:layout_alignBaseline="@+id/pro_vote_result3"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/pro_vote_result3"
+            android:text="42%" />
+    </RelativeLayout>
+
+</LinearLayout>
