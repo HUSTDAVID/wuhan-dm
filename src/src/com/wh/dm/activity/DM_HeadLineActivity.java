@@ -17,16 +17,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DM_HeadLineActivity extends Activity {
 
-    private List<ImageView> imageViews;
     private String[] titles;
     private List<View> dots;
     private TextView txt_title;
@@ -36,9 +34,10 @@ public class DM_HeadLineActivity extends Activity {
     private ListView listView;
 
     private final int SHOW_NEXT = 0011;
-    private boolean isRun = true;
+    private final boolean isRun = true;
 
     private HorizontalPager mPager;
+    private RadioGroup mRadioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,43 +45,25 @@ public class DM_HeadLineActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_headline);
-
         init();
-        // thread.start();
+        thread.start();
     }
 
     private void init() {
 
-        mInfalater = getLayoutInflater();
-        headerView = (View) mInfalater.inflate(R.layout.header_headline, null);
-
-        txt_title = (TextView) headerView.findViewById(R.id.txt_headline_title);
-
+        /*
+         * mInfalater = getLayoutInflater(); headerView =
+         * mInfalater.inflate(R.layout.header_headline, null);
+         */
+        // txt_title = (TextView)
+        // headerView.findViewById(R.id.txt_headline_title);
         listView = (ListView) findViewById(R.id.lv_headline);
 
-        // image title
-        titles = new String[4];
-        titles[0] = "这里是标题一呀一呀有木有";
-        titles[1] = "这里是标题二呀二呀有木有";
-        titles[2] = "这里是标题三呀三呀有木有";
-        titles[3] = "这里是标题四呀四呀有木有";
-        //
-        mPager = (HorizontalPager) headerView.findViewById(R.id.horizontal_pager);
-        // mPager.setOnScreenSwitchListener(onScreenSwitchListener);
+        mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
+        mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
+        mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
+        mPager.setOnScreenSwitchListener(onScreenSwitchListener);
         mPager.setCurrentScreen(0, true);
-
-        // the four dot
-        dots = new ArrayList<View>();
-        dots.add(headerView.findViewById(R.id.view_news_dot0));
-        dots.add(headerView.findViewById(R.id.view_news_dot1));
-        dots.add(headerView.findViewById(R.id.view_news_dot2));
-        dots.add(headerView.findViewById(R.id.view_news_dot3));
-
-        // the first title
-        txt_title.setText(titles[0]);
-
-        // listView.addHeaderView(headerView);
-
         HeadlineAdapter adapter = new HeadlineAdapter(this);
         // add data
         String title = getResources().getString(R.string.headline_title);
@@ -92,12 +73,6 @@ public class DM_HeadLineActivity extends Activity {
             adapter.addItem(title, body, bmp);
         }
         listView.setAdapter(adapter);
-
-        /*
-         * ArrayList<View> views = new ArrayList<View>(); for (int i = 0; i <
-         * 100; i++) { TextView tv = new TextView(this); tv.setText(i + "ddd");
-         * views.add(tv); } listView.setAdapter(new SackOfViewsAdapter(views));
-         */
         listView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -110,7 +85,55 @@ public class DM_HeadLineActivity extends Activity {
 
     }
 
-    private Handler mflipperHandler = new Handler() {
+    private final RadioGroup.OnCheckedChangeListener onCheckedChangedListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(final RadioGroup group, final int checkedId) {
+
+            // Slide to the appropriate screen when the user checks a button.
+            switch (checkedId) {
+                case R.id.radio_btn_0:
+                    mPager.setCurrentScreen(0, true);
+                    break;
+                case R.id.radio_btn_1:
+                    mPager.setCurrentScreen(1, true);
+                    break;
+                case R.id.radio_btn_2:
+                    mPager.setCurrentScreen(2, true);
+                    break;
+                case R.id.radio_btn_3:
+                    mPager.setCurrentScreen(3, true);
+                default:
+                    break;
+            }
+        }
+    };
+
+    private final HorizontalPager.OnScreenSwitchListener onScreenSwitchListener = new HorizontalPager.OnScreenSwitchListener() {
+        @Override
+        public void onScreenSwitched(final int screen) {
+
+            // Check the appropriate button when the user swipes screens.
+            switch (screen) {
+                case 0:
+                    mRadioGroup.check(R.id.radio_btn_0);
+                    break;
+                case 1:
+                    mRadioGroup.check(R.id.radio_btn_1);
+                    break;
+                case 2:
+                    mRadioGroup.check(R.id.radio_btn_2);
+                    break;
+                case 3:
+                    mRadioGroup.check(R.id.radio_btn_3);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
+
+    private final Handler mflipperHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -128,7 +151,7 @@ public class DM_HeadLineActivity extends Activity {
 
     };
 
-    private Thread thread = new Thread() {
+    private final Thread thread = new Thread() {
         @Override
         public void run() {
 

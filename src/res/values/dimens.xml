@@ -10,5 +10,6 @@
     <dimen name="grid_item_width">150dip</dimen>
     <dimen name="grid_item_height">100dip</dimen>
     <dimen name="toolbar_margin">3dip</dimen>
+    <dimen name="rbtn_width">10dip</dimen>
 
 </resources>
