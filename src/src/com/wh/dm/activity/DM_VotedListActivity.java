@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,19 +25,12 @@ import java.util.ArrayList;
 public class DM_VotedListActivity extends Activity {
     private ViewPager viewPager;
     private ArrayList<View> pageViews;
-    private ImageView imageView;
-    private ImageView[] imageViews;
+    private View dot;
+    private View[] dots;
 
     private ViewGroup main;
 
     private ViewGroup group;
-    private TextView tv1;
-    private TextView tv2;
-    private TextView tv3;
-    private TextView tv4;
-    private TextView tv5;
-    private TextView tv6;
-    private TextView tv7;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,12 +41,12 @@ public class DM_VotedListActivity extends Activity {
 
         LayoutInflater inflater = getLayoutInflater();
         View v1 = inflater.inflate(R.layout.dm_voteitem1, null);
-        View v2 = inflater.inflate(R.layout.dm_voteitem2, null);
-        View v3 = inflater.inflate(R.layout.dm_voteitem3, null);
-        View v4 = inflater.inflate(R.layout.dm_voteitem4, null);
-        View v5 = inflater.inflate(R.layout.dm_voteitem5, null);
-        View v6 = inflater.inflate(R.layout.dm_voteitem6, null);
-        View v7 = inflater.inflate(R.layout.dm_voteitem7, null);
+        View v2 = inflater.inflate(R.layout.dm_voteitem1, null);
+        View v3 = inflater.inflate(R.layout.dm_voteitem1, null);
+        View v4 = inflater.inflate(R.layout.dm_voteitem1, null);
+        View v5 = inflater.inflate(R.layout.dm_voteitem1, null);
+        View v6 = inflater.inflate(R.layout.dm_voteitem1, null);
+        View v7 = inflater.inflate(R.layout.dm_voteitem1, null);
 
         pageViews = new ArrayList<View>();
         pageViews.add(v1);
@@ -63,44 +57,31 @@ public class DM_VotedListActivity extends Activity {
         pageViews.add(v6);
         pageViews.add(v7);
 
-        imageViews = new ImageView[pageViews.size()];
+        dots = new View[pageViews.size()];
         main = (ViewGroup) inflater.inflate(R.layout.activity_votemain, null);
 
         group = (ViewGroup) main.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) main.findViewById(R.id.guidePages);
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(12, 12);
+        params.setMargins(0, 0, 20, 10);
         for (int i = 0; i < pageViews.size(); i++) {
-            imageView = new ImageView(DM_VotedListActivity.this);
-            imageView.setLayoutParams(new LayoutParams(20, 20));
-            imageView.setPadding(20, 0, 20, 0);
-            imageViews[i] = imageView;
+            dot = new ImageView(DM_VotedListActivity.this);
+            dot.setLayoutParams(new LayoutParams(12, 12));
+            dot.setLayoutParams(params);
+            dots[i] = dot;
 
             if (i == 0) {
 
-                imageViews[i].setBackgroundResource(R.drawable.page_indicator_focused);
+                dots[i].setBackgroundResource(R.drawable.dot_in_vote_focused);
             } else {
-                imageViews[i].setBackgroundResource(R.drawable.page_indicator);
+                dots[i].setBackgroundResource(R.drawable.dot_in_vote_normal);
             }
 
-            group.addView(imageViews[i]);
+            group.addView(dots[i]);
         }
 
         setContentView(main);
-
-        tv1 = (TextView) v1.findViewById(R.id.vote_list_1);
-        tv1.setOnClickListener(new TextViewOnClickListener());
-        tv2 = (TextView) v2.findViewById(R.id.textView2);
-        tv2.setOnClickListener(new TextViewOnClickListener());
-        tv3 = (TextView) v3.findViewById(R.id.textView3);
-        tv3.setOnClickListener(new TextViewOnClickListener());
-        tv4 = (TextView) v4.findViewById(R.id.textView4);
-        tv4.setOnClickListener(new TextViewOnClickListener());
-        tv5 = (TextView) v5.findViewById(R.id.textView5);
-        tv5.setOnClickListener(new TextViewOnClickListener());
-        tv6 = (TextView) v6.findViewById(R.id.textView6);
-        tv6.setOnClickListener(new TextViewOnClickListener());
-        tv7 = (TextView) v7.findViewById(R.id.textView1);
-        tv7.setOnClickListener(new TextViewOnClickListener());
 
         viewPager.setAdapter(new GuidePageAdapter());
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
@@ -200,11 +181,11 @@ public class DM_VotedListActivity extends Activity {
         @Override
         public void onPageSelected(int arg0) {
 
-            for (int i = 0; i < imageViews.length; i++) {
-                imageViews[arg0].setBackgroundResource(R.drawable.page_indicator_focused);
+            for (int i = 0; i < dots.length; i++) {
+                dots[arg0].setBackgroundResource(R.drawable.dot_in_vote_focused);
 
                 if (arg0 != i) {
-                    imageViews[i].setBackgroundResource(R.drawable.page_indicator);
+                    dots[i].setBackgroundResource(R.drawable.dot_in_vote_normal);
                 }
             }
         }
