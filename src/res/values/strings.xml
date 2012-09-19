@@ -37,6 +37,11 @@
     <string name="girl">美女</string>
     <string name="photograph">摄影</string>
     <string name="fun">奇趣</string>
+    <string name="txt_opder2">● 营业时间；11:00-21:00</string> 
+    <string name="txt_opder3">● 用餐需提前1天预约，如遇等位，请耐心等候</string> 
+    <string name="txt_opder4">● 仅限大厅使用，不可预订包房</string> 
+    <string name="txt_opder5">● 预约电话：027-85892777</string> 
+    <string name="txt_opder6">● 商家地址：武汉市解放大道武汉国际广场B座9层</string>
     
 
     <!-- 新闻详情 -->
@@ -61,7 +66,7 @@
     <string name="mag_title4">JACK JONES特卖</string>
     <string name="mag_body4">活动时间 ：08.02-08.15</string>
     <string name="mag_title5">ADIDAS等专柜全新形象登场</string>
-    <string name="mag_body5">5f运动休闲馆ADIDAS,NIKE,360，LE COQ SPORTIF ,AIDDAS生活全新形象闪亮开幕，赶快来体验不一样的感觉吧!</string>
+    <string name="mag_body5">5f运动休闲馆ADIDAS,NIKE360，Le COQ SPORTIF ,AIDDAS生活全新形象闪亮开幕，赶快来体验不一样的感觉吧!</string>
     <string name="headline_title">销品茂停车场两天四案</string>
     <string name="headline_body">7月8日下午6点，武汉一高校员工张先生开着一辆奥迪A4车来到销品茂。</string>
     <string name="news_body">　中新网9月11日电 据日本共同社报道，据日本政府相关人士透露，外务省11日派遣亚洲大洋洲局长杉山晋辅前往北京，就日本政府所谓钓鱼岛“国有化”方针同中国政府交换意见。

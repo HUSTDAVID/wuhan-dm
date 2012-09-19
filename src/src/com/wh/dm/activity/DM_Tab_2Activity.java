@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -22,6 +23,7 @@ public class DM_Tab_2Activity extends TabActivity implements OnTabChangeListener
     private static final int STORE = 3;
 
     TabHost tabHost;
+    private Button btn_close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
