@@ -132,19 +132,6 @@
                layout="@layout/vote_result" />
 
        </LinearLayout>
-       
-       
-        <Button
-               android:id="@+id/vote_button_close"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"               
-               android:layout_marginBottom="10dp"
-               android:background="@drawable/btn_vote_close"
-               android:text="关闭"
-               android:layout_alignParentBottom="true"
-               android:layout_centerHorizontal="true"
-               android:textColor="@color/white"
-               android:textSize="20sp" />
         </RelativeLayout>
    </LinearLayout>
 

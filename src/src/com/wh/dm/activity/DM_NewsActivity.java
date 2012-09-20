@@ -18,7 +18,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DM_NewsActivity extends ActivityGroup {
 
@@ -93,6 +92,7 @@ public class DM_NewsActivity extends ActivityGroup {
         vMain = getLocalActivityManager().startActivity("Headline", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         relMain.addView(vMain, params);
+
     }
 
     private class NewsItemOnClickListener implements OnClickListener {
@@ -109,47 +109,46 @@ public class DM_NewsActivity extends ActivityGroup {
                     intent.setClass(DM_NewsActivity.this, DM_HeadLineActivity.class);
                     vMain = getLocalActivityManager().startActivity("Headline", intent)
                             .getDecorView();
-                    Toast.makeText(DM_NewsActivity.this, "头条", Toast.LENGTH_SHORT).show();
+
                     break;
 
                 case R.id.txt_listtop_2:
                     SetImageSlide(txtSelectedItem, startX, itemWidth, 0, 0);
                     startX = itemWidth;
                     txtSelectedItem.setText(R.string.house);
+                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
+                    vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
 
-                    Toast.makeText(DM_NewsActivity.this, "房产", Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.txt_listtop_3:
                     SetImageSlide(txtSelectedItem, startX, itemWidth * 2, 0, 0);
                     startX = itemWidth * 2;
                     txtSelectedItem.setText(R.string.car);
-
-                    Toast.makeText(DM_NewsActivity.this, "汽车", Toast.LENGTH_SHORT).show();
+                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
+                    vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_4:
                     SetImageSlide(txtSelectedItem, startX, itemWidth * 3, 0, 0);
                     startX = itemWidth * 3;
                     txtSelectedItem.setText(R.string.fashion);
-
-                    Toast.makeText(DM_NewsActivity.this, "时尚", Toast.LENGTH_SHORT).show();
+                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
+                    vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_5:
                     SetImageSlide(txtSelectedItem, startX, itemWidth * 4, 0, 0);
                     startX = itemWidth * 4;
                     txtSelectedItem.setText(R.string.lift);
-
-                    Toast.makeText(DM_NewsActivity.this, "生活", Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.txt_listtop_6:
                     SetImageSlide(txtSelectedItem, startX, itemWidth * 5, 0, 0);
                     startX = itemWidth * 5;
                     txtSelectedItem.setText(R.string.traval);
-
-                    Toast.makeText(DM_NewsActivity.this, "旅游", Toast.LENGTH_SHORT).show();
+                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
+                    vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
             }
 

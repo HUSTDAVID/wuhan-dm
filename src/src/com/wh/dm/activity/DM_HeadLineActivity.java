@@ -46,13 +46,11 @@ public class DM_HeadLineActivity extends Activity {
 
     private void init() {
 
-        listView = (ListView) findViewById(R.id.lv_headline);
-
+        listView = (ListView) findViewById(R.id.list);
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
         mPager.setOnScreenSwitchListener(onScreenSwitchListener);
-
         mPager.setCurrentScreen(0, true);
 
         HeadlineAdapter adapter = new HeadlineAdapter(this);
@@ -63,6 +61,7 @@ public class DM_HeadLineActivity extends Activity {
         for (int i = 0; i < 10; i++) {
             adapter.addItem(title, body, bmp);
         }
+
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -73,7 +72,6 @@ public class DM_HeadLineActivity extends Activity {
                 startActivity(intent);
             }
         });
-
     }
 
     private final RadioGroup.OnCheckedChangeListener onCheckedChangedListener = new RadioGroup.OnCheckedChangeListener() {

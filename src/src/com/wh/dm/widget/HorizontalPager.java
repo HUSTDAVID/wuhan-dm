@@ -1,3 +1,4 @@
+
 package com.wh.dm.widget;
 
 import android.content.Context;
@@ -13,42 +14,46 @@ import android.view.WindowManager;
 import android.widget.Scroller;
 
 /**
- * A view group that allows users to switch between multiple screens (layouts) in the same way as
- * the Android home screen (Launcher application).
+ * A view group that allows users to switch between multiple screens (layouts)
+ * in the same way as the Android home screen (Launcher application).
  * <p>
- * You can add and remove views using the normal methods {@link ViewGroup#addView(View)},
- * {@link ViewGroup#removeView(View)} etc. You may want to listen for updates by calling
- * {@link HorizontalPager#setOnScreenSwitchListener(OnScreenSwitchListener)} in order to perform
- * operations once a new screen has been selected.
- *
- * Modifications from original version (ysamlan): Animate argument in setCurrentScreen and duration
- * in snapToScreen; onInterceptTouchEvent handling to support nesting a vertical Scrollview inside
- * the RealViewSwitcher; allowing snapping to a view even during an ongoing scroll; snap to
- * next/prev view on 25% scroll change; density-independent swipe sensitivity; width-independent
- * pager animation durations on scrolling to properly handle large screens without excessively
- * long animations.
- *
- * Other modifications:
- * (aveyD) Handle orientation changes properly and fully snap to the right position.
- *
- * @author Marc Reichelt, <a href="http://www.marcreichelt.de/">http://www.marcreichelt.de/</a>
+ * You can add and remove views using the normal methods
+ * {@link ViewGroup#addView(View)}, {@link ViewGroup#removeView(View)} etc. You
+ * may want to listen for updates by calling
+ * {@link HorizontalPager#setOnScreenSwitchListener(OnScreenSwitchListener)} in
+ * order to perform operations once a new screen has been selected.
+ * Modifications from original version (ysamlan): Animate argument in
+ * setCurrentScreen and duration in snapToScreen; onInterceptTouchEvent handling
+ * to support nesting a vertical Scrollview inside the RealViewSwitcher;
+ * allowing snapping to a view even during an ongoing scroll; snap to next/prev
+ * view on 25% scroll change; density-independent swipe sensitivity;
+ * width-independent pager animation durations on scrolling to properly handle
+ * large screens without excessively long animations. Other modifications:
+ * (aveyD) Handle orientation changes properly and fully snap to the right
+ * position.
+ * 
+ * @author Marc Reichelt, <a
+ *         href="http://www.marcreichelt.de/">http://www.marcreichelt.de/</a>
  * @version 0.1.0
  */
 public final class HorizontalPager extends ViewGroup {
     /*
-     * How long to animate between screens when programmatically setting with setCurrentScreen using
-     * the animate parameter
+     * How long to animate between screens when programmatically setting with
+     * setCurrentScreen using the animate parameter
      */
     private static final int ANIMATION_SCREEN_SET_DURATION_MILLIS = 500;
-    // What fraction (1/x) of the screen the user must swipe to indicate a page change
+    // What fraction (1/x) of the screen the user must swipe to indicate a page
+    // change
     private static final int FRACTION_OF_SCREEN_WIDTH_FOR_SWIPE = 4;
     private static final int INVALID_SCREEN = -1;
     /*
-     * Velocity of a swipe (in density-independent pixels per second) to force a swipe to the
-     * next/previous screen. Adjusted into mDensityAdjustedSnapVelocity on init.
+     * Velocity of a swipe (in density-independent pixels per second) to force a
+     * swipe to the next/previous screen. Adjusted into
+     * mDensityAdjustedSnapVelocity on init.
      */
     private static final int SNAP_VELOCITY_DIP_PER_SECOND = 600;
-    // Argument to getVelocity for units to give pixels per second (1 = pixels per millisecond).
+    // Argument to getVelocity for units to give pixels per second (1 = pixels
+    // per millisecond).
     private static final int VELOCITY_UNIT_PIXELS_PER_SECOND = 1000;
 
     private static final int TOUCH_STATE_REST = 0;
@@ -70,11 +75,12 @@ public final class HorizontalPager extends ViewGroup {
 
     /**
      * Simple constructor to use when creating a view from code.
-     *
+     * 
      * @param context The Context the view is running in, through which it can
-     *        access the current theme, resources, etc.
+     *            access the current theme, resources, etc.
      */
     public HorizontalPager(final Context context) {
+
         super(context);
         init();
     }
@@ -85,33 +91,34 @@ public final class HorizontalPager extends ViewGroup {
      * that were specified in the XML file. This version uses a default style of
      * 0, so the only attribute values applied are those in the Context's Theme
      * and the given AttributeSet.
-     *
      * <p>
      * The method onFinishInflate() will be called after all children have been
      * added.
-     *
+     * 
      * @param context The Context the view is running in, through which it can
-     *        access the current theme, resources, etc.
+     *            access the current theme, resources, etc.
      * @param attrs The attributes of the XML tag that is inflating the view.
      * @see #View(Context, AttributeSet, int)
      */
     public HorizontalPager(final Context context, final AttributeSet attrs) {
+
         super(context, attrs);
         init();
     }
 
     /**
-     * Sets up the scroller and touch/fling sensitivity parameters for the pager.
+     * Sets up the scroller and touch/fling sensitivity parameters for the
+     * pager.
      */
     private void init() {
+
         mScroller = new Scroller(getContext());
 
         // Calculate the density-dependent snap velocity in pixels
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
                 .getMetrics(displayMetrics);
-        mDensityAdjustedSnapVelocity =
-                (int) (displayMetrics.density * SNAP_VELOCITY_DIP_PER_SECOND);
+        mDensityAdjustedSnapVelocity = (int) (displayMetrics.density * SNAP_VELOCITY_DIP_PER_SECOND);
 
         final ViewConfiguration configuration = ViewConfiguration.get(getContext());
         mTouchSlop = configuration.getScaledTouchSlop();
@@ -120,17 +127,22 @@ public final class HorizontalPager extends ViewGroup {
 
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         final int width = MeasureSpec.getSize(widthMeasureSpec);
-        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         if (widthMode != MeasureSpec.EXACTLY) {
-            throw new IllegalStateException("ViewSwitcher can only be used in EXACTLY mode.");
+            // throw new
+            // IllegalStateException("ViewSwitcher can only be used in EXACTLY mode.");
+            widthMode = MeasureSpec.EXACTLY;
         }
 
-        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         if (heightMode != MeasureSpec.EXACTLY) {
-            throw new IllegalStateException("ViewSwitcher can only be used in EXACTLY mode.");
+            // throw new
+            // IllegalStateException("ViewSwitcher can only be used in EXACTLY mode.");
+            heightMode = MeasureSpec.EXACTLY;
         }
 
         // The children are given the same width and height as the workspace
@@ -146,13 +158,13 @@ public final class HorizontalPager extends ViewGroup {
 
         else if (width != mLastSeenLayoutWidth) { // Width has changed
             /*
-             * Recalculate the width and scroll to the right position to be sure we're in the right
-             * place in the event that we had a rotation that didn't result in an activity restart
-             * (code by aveyD). Without this you can end up between two pages after a rotation.
+             * Recalculate the width and scroll to the right position to be sure
+             * we're in the right place in the event that we had a rotation that
+             * didn't result in an activity restart (code by aveyD). Without
+             * this you can end up between two pages after a rotation.
              */
-            Display display =
-                    ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE))
-                            .getDefaultDisplay();
+            Display display = ((WindowManager) getContext()
+                    .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
             int displayWidth = display.getWidth();
 
             mNextScreen = Math.max(0, Math.min(getCurrentScreen(), getChildCount() - 1));
@@ -162,12 +174,13 @@ public final class HorizontalPager extends ViewGroup {
             mScroller.startScroll(getScrollX(), 0, delta, 0, 0);
         }
 
-        mLastSeenLayoutWidth   = width;
+        mLastSeenLayoutWidth = width;
     }
 
     @Override
     protected void onLayout(final boolean changed, final int l, final int t, final int r,
             final int b) {
+
         int childLeft = 0;
         final int count = getChildCount();
 
@@ -183,12 +196,14 @@ public final class HorizontalPager extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(final MotionEvent ev) {
+
         /*
-         * By Yoni Samlan: Modified onInterceptTouchEvent based on standard ScrollView's
-         * onIntercept. The logic is designed to support a nested vertically scrolling view inside
-         * this one; once a scroll registers for X-wise scrolling, handle it in this view and don't
-         * let the children, but once a scroll registers for y-wise scrolling, let the children
-         * handle it exclusively.
+         * By Yoni Samlan: Modified onInterceptTouchEvent based on standard
+         * ScrollView's onIntercept. The logic is designed to support a nested
+         * vertically scrolling view inside this one; once a scroll registers
+         * for X-wise scrolling, handle it in this view and don't let the
+         * children, but once a scroll registers for y-wise scrolling, let the
+         * children handle it exclusively.
          */
         final int action = ev.getAction();
         boolean intercept = false;
@@ -196,26 +211,31 @@ public final class HorizontalPager extends ViewGroup {
         switch (action) {
             case MotionEvent.ACTION_MOVE:
                 /*
-                 * If we're in a horizontal scroll event, take it (intercept further events). But if
-                 * we're mid-vertical-scroll, don't even try; let the children deal with it. If we
-                 * haven't found a scroll event yet, check for one.
+                 * If we're in a horizontal scroll event, take it (intercept
+                 * further events). But if we're mid-vertical-scroll, don't even
+                 * try; let the children deal with it. If we haven't found a
+                 * scroll event yet, check for one.
                  */
                 if (mTouchState == TOUCH_STATE_HORIZONTAL_SCROLLING) {
                     /*
-                     * We've already started a horizontal scroll; set intercept to true so we can
-                     * take the remainder of all touch events in onTouchEvent.
+                     * We've already started a horizontal scroll; set intercept
+                     * to true so we can take the remainder of all touch events
+                     * in onTouchEvent.
                      */
                     intercept = true;
                 } else if (mTouchState == TOUCH_STATE_VERTICAL_SCROLLING) {
-                    // Let children handle the events for the duration of the scroll event.
+                    // Let children handle the events for the duration of the
+                    // scroll event.
                     intercept = false;
-                } else { // We haven't picked up a scroll event yet; check for one.
+                } else { // We haven't picked up a scroll event yet; check for
+                         // one.
 
                     /*
-                     * If we detected a horizontal scroll event, start stealing touch events (mark
-                     * as scrolling). Otherwise, see if we had a vertical scroll event -- if so, let
-                     * the children handle it and don't look to intercept again until the motion is
-                     * done.
+                     * If we detected a horizontal scroll event, start stealing
+                     * touch events (mark as scrolling). Otherwise, see if we
+                     * had a vertical scroll event -- if so, let the children
+                     * handle it and don't look to intercept again until the
+                     * motion is done.
                      */
 
                     final float x = ev.getX();
@@ -245,15 +265,15 @@ public final class HorizontalPager extends ViewGroup {
                 break;
             case MotionEvent.ACTION_DOWN:
                 /*
-                 * No motion yet, but register the coordinates so we can check for intercept at the
-                 * next MOVE event.
+                 * No motion yet, but register the coordinates so we can check
+                 * for intercept at the next MOVE event.
                  */
                 mLastMotionY = ev.getY();
                 mLastMotionX = ev.getX();
                 break;
             default:
                 break;
-            }
+        }
 
         return intercept;
     }
@@ -272,8 +292,8 @@ public final class HorizontalPager extends ViewGroup {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 /*
-                 * If being flinged and user touches, stop the fling. isFinished will be false if
-                 * being flinged.
+                 * If being flinged and user touches, stop the fling. isFinished
+                 * will be false if being flinged.
                  */
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
@@ -309,8 +329,8 @@ public final class HorizontalPager extends ViewGroup {
                             scrollBy(Math.max(-scrollX, deltaX), 0);
                         }
                     } else if (deltaX > 0) {
-                        final int availableToScroll =
-                                getChildAt(getChildCount() - 1).getRight() - scrollX - getWidth();
+                        final int availableToScroll = getChildAt(getChildCount() - 1).getRight()
+                                - scrollX - getWidth();
 
                         if (availableToScroll > 0) {
                             scrollBy(Math.min(availableToScroll, deltaX), 0);
@@ -359,6 +379,7 @@ public final class HorizontalPager extends ViewGroup {
 
     @Override
     public void computeScroll() {
+
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
             postInvalidate();
@@ -376,20 +397,23 @@ public final class HorizontalPager extends ViewGroup {
 
     /**
      * Returns the index of the currently displayed screen.
-     *
+     * 
      * @return The index of the currently displayed screen.
      */
     public int getCurrentScreen() {
+
         return mCurrentScreen;
     }
 
     /**
      * Sets the current screen.
-     *
+     * 
      * @param currentScreen The new screen.
-     * @param animate True to smoothly scroll to the screen, false to snap instantly
+     * @param animate True to smoothly scroll to the screen, false to snap
+     *            instantly
      */
     public void setCurrentScreen(final int currentScreen, final boolean animate) {
+
         mCurrentScreen = Math.max(0, Math.min(currentScreen, getChildCount() - 1));
         if (animate) {
             snapToScreen(currentScreen, ANIMATION_SCREEN_SET_DURATION_MILLIS);
@@ -401,18 +425,20 @@ public final class HorizontalPager extends ViewGroup {
 
     /**
      * Sets the {@link OnScreenSwitchListener}.
-     *
+     * 
      * @param onScreenSwitchListener The listener for switch events.
      */
     public void setOnScreenSwitchListener(final OnScreenSwitchListener onScreenSwitchListener) {
+
         mOnScreenSwitchListener = onScreenSwitchListener;
     }
 
     /**
-     * Snaps to the screen we think the user wants (the current screen for very small movements; the
-     * next/prev screen for bigger movements).
+     * Snaps to the screen we think the user wants (the current screen for very
+     * small movements; the next/prev screen for bigger movements).
      */
     private void snapToDestination() {
+
         final int screenWidth = getWidth();
         int scrollX = getScrollX();
         int whichScreen = mCurrentScreen;
@@ -432,35 +458,40 @@ public final class HorizontalPager extends ViewGroup {
     }
 
     /**
-     * Snap to a specific screen, animating automatically for a duration proportional to the
-     * distance left to scroll.
-     *
+     * Snap to a specific screen, animating automatically for a duration
+     * proportional to the distance left to scroll.
+     * 
      * @param whichScreen Screen to snap to
      */
     private void snapToScreen(final int whichScreen) {
+
         snapToScreen(whichScreen, -1);
     }
 
     /**
-     * Snaps to a specific screen, animating for a specific amount of time to get there.
-     *
+     * Snaps to a specific screen, animating for a specific amount of time to
+     * get there.
+     * 
      * @param whichScreen Screen to snap to
-     * @param duration -1 to automatically time it based on scroll distance; a positive number to
-     *            make the scroll take an exact duration.
+     * @param duration -1 to automatically time it based on scroll distance; a
+     *            positive number to make the scroll take an exact duration.
      */
     private void snapToScreen(final int whichScreen, final int duration) {
+
         /*
-         * Modified by Yoni Samlan: Allow new snapping even during an ongoing scroll animation. This
-         * is intended to make HorizontalPager work as expected when used in conjunction with a
-         * RadioGroup used as "tabbed" controls. Also, make the animation take a percentage of our
-         * normal animation time, depending how far they've already scrolled.
+         * Modified by Yoni Samlan: Allow new snapping even during an ongoing
+         * scroll animation. This is intended to make HorizontalPager work as
+         * expected when used in conjunction with a RadioGroup used as "tabbed"
+         * controls. Also, make the animation take a percentage of our normal
+         * animation time, depending how far they've already scrolled.
          */
         mNextScreen = Math.max(0, Math.min(whichScreen, getChildCount() - 1));
         final int newX = mNextScreen * getWidth();
         final int delta = newX - getScrollX();
 
         if (duration < 0) {
-             // E.g. if they've scrolled 80% of the way, only animation for 20% of the duration
+            // E.g. if they've scrolled 80% of the way, only animation for 20%
+            // of the duration
             mScroller.startScroll(getScrollX(), 0, delta, 0, (int) (Math.abs(delta)
                     / (float) getWidth() * ANIMATION_SCREEN_SET_DURATION_MILLIS));
         } else {
@@ -475,8 +506,9 @@ public final class HorizontalPager extends ViewGroup {
      */
     public static interface OnScreenSwitchListener {
         /**
-         * Notifies listeners about the new screen. Runs after the animation completed.
-         *
+         * Notifies listeners about the new screen. Runs after the animation
+         * completed.
+         * 
          * @param screen The new screen index.
          */
         void onScreenSwitched(int screen);

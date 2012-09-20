@@ -5,15 +5,11 @@ import com.wh.dm.R;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.ProgressBar;
 
 public class DM_Vote1Activity extends Activity {
     /** Called when the activity is first created. */
-    private Button btn_close;
 
     ProgressBar progressBar1;
     ProgressBar progressBar2;
@@ -37,20 +33,11 @@ public class DM_Vote1Activity extends Activity {
         setProgress(progressBar2, 15);
         setProgress(progressBar3, 42);
 
-        btn_close = (Button) findViewById(R.id.vote_button_close);
-        btn_close.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                finish();
-            }
-        });
-
     }
 
     private void setProgress(ProgressBar progress, int percent) {
 
-        LayoutParams params = (LayoutParams) progress.getLayoutParams();
+        LayoutParams params = progress.getLayoutParams();
         params.width = (int) (percent * 3.5);
         progress.setLayoutParams(params);
     }
