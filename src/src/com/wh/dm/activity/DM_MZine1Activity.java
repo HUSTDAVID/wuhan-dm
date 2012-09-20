@@ -56,6 +56,11 @@ public class DM_MZine1Activity extends Activity implements OnClickListener {
         txtTile4 = (TextView) findViewById(R.id.txt_magazine_1_title4);
         txtTile5 = (TextView) findViewById(R.id.txt_magazine_1_title5);
 
+<<<<<<< HEAD
+=======
+        txtBody5 = (TextView) findViewById(R.id.txt_magazine_1_body5);
+
+>>>>>>> 119239f3edf183f519ad2dfd848f6f8ddb31ebc3
         linearLayouItem1.setOnClickListener(this);
         linearLayouItem2.setOnClickListener(this);
         linearLayouItem3.setOnClickListener(this);
