@@ -56,12 +56,6 @@ public class DM_MZine1Activity extends Activity implements OnClickListener {
         txtTile4 = (TextView) findViewById(R.id.txt_magazine_1_title4);
         txtTile5 = (TextView) findViewById(R.id.txt_magazine_1_title5);
 
-        txtBody1 = (TextView) findViewById(R.id.txt_magazine_1_body1);
-        txtBody2 = (TextView) findViewById(R.id.txt_magazine_1_body2);
-        txtBody3 = (TextView) findViewById(R.id.txt_magazine_1_body3);
-        txtBody4 = (TextView) findViewById(R.id.txt_magazine_1_body4);
-        txtBody5 = (TextView) findViewById(R.id.txt_magazine_1_body5);
-
         linearLayouItem1.setOnClickListener(this);
         linearLayouItem2.setOnClickListener(this);
         linearLayouItem3.setOnClickListener(this);

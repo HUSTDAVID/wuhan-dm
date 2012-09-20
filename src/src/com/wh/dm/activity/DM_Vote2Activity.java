@@ -16,7 +16,6 @@ public class DM_Vote2Activity extends Activity {
     private Button votebutton2;
     private Button votebutton3;
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 

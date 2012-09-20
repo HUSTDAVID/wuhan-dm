@@ -37,4 +37,6 @@
     
     <color name="mzine_img">#d9d9d9</color>
     <color name="mzine_fullacreen">#e7e7e7</color>
+    
+    <color name="mzine_long">#eeeeee</color>
 </resources>
