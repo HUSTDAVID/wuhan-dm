@@ -39,8 +39,9 @@
     <CheckBox
         android:id="@+id/cb_collect"
         android:layout_alignParentRight="true"
-        android:button="@drawable/check_box"
+        android:button="@drawable/check_box"        
         android:gravity="center_vertical|right"
+        android:layout_centerVertical="true"
         style="@style/CheckBox"/>
      </RelativeLayout>
         
