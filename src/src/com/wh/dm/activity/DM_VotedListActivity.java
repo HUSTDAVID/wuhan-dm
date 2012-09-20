@@ -57,7 +57,7 @@ public class DM_VotedListActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(DM_VotedListActivity.this, DM_VoteWatchResult.class);
+                Intent intent = new Intent(DM_VotedListActivity.this, DM_Vote2Activity.class);
                 startActivity(intent);
             }
         });
