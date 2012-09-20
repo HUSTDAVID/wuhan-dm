@@ -132,6 +132,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
+         <activity
+            android:name=".activity.DM_VoteWatchResult"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
     </application>
 
     <supports-screens
