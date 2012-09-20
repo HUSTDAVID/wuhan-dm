@@ -65,9 +65,12 @@
         <RadioGroup
             android:id="@+id/tabs"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_height="30dip"
+            android:layout_alignBottom="@+id/horizontal_pager"
+            android:layout_alignParentTop="@+id/txt_horizontal_title"
+            android:gravity="center_vertical"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip"
             android:orientation="horizontal" >
 
             <RadioButton

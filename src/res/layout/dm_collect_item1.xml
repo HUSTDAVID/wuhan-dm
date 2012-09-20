@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
+<LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="54dip"
-    android:paddingLeft="10dip"
-    android:paddingTop="2dip"
-    android:paddingBottom="2dip"
+    android:layout_gravity="center_vertical"
     android:background="@color/bg_normal" >
-    
+  
+    <RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="54dip"
+    android:paddingLeft="10dip"
+    android:background="@color/bg_normal">
+        
+   
     <LinearLayout
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -36,5 +41,6 @@
         android:button="@drawable/check_box"
         android:gravity="center_vertical|right"
         style="@style/CheckBox"/>
+     </RelativeLayout>
         
-</RelativeLayout>
+</LinearLayout>
