@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 public class DM_HeadLineActivity extends Activity {
 
@@ -33,6 +34,7 @@ public class DM_HeadLineActivity extends Activity {
 
     private HorizontalPager mPager;
     private RadioGroup mRadioGroup;
+    private TextView txtHorizontalTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class DM_HeadLineActivity extends Activity {
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
         mPager.setOnScreenSwitchListener(onScreenSwitchListener);
+        txtHorizontalTitle = (TextView) findViewById(R.id.txt_horizontal_title);
 
         mPager.setCurrentScreen(0, true);
 
@@ -84,15 +87,19 @@ public class DM_HeadLineActivity extends Activity {
             switch (checkedId) {
                 case R.id.radio_btn_0:
                     mPager.setCurrentScreen(0, true);
+                    txtHorizontalTitle.setText("湖北省第四届飞Young杯");
                     break;
                 case R.id.radio_btn_1:
                     mPager.setCurrentScreen(1, true);
+                    txtHorizontalTitle.setText("再见 那些年 毕业季");
                     break;
                 case R.id.radio_btn_2:
                     mPager.setCurrentScreen(2, true);
+                    txtHorizontalTitle.setText("飞Young杯 网络歌手大赛");
                     break;
                 case R.id.radio_btn_3:
                     mPager.setCurrentScreen(3, true);
+                    txtHorizontalTitle.setText("记忆中的橡皮擦");
                 default:
                     break;
             }
