@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.wh.dm.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +34,8 @@ public class DM_VotedListActivity extends Activity {
 
     private ViewGroup group;
 
+    Button btnVote;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -47,6 +51,16 @@ public class DM_VotedListActivity extends Activity {
         View v5 = inflater.inflate(R.layout.dm_voteitem1, null);
         View v6 = inflater.inflate(R.layout.dm_voteitem1, null);
         View v7 = inflater.inflate(R.layout.dm_voteitem1, null);
+
+        btnVote = (Button) v1.findViewById(R.id.btn_vote);
+        btnVote.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DM_VotedListActivity.this, DM_VoteWatchResult.class);
+                startActivity(intent);
+            }
+        });
 
         pageViews = new ArrayList<View>();
         pageViews.add(v1);
