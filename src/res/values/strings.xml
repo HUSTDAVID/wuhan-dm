@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">WH_DM</string>
     <string name="collections">我的收藏</string>
     <string name="favorites">猜你喜欢</string>
-    <string name="temp1">柏氏专卖</string>
-    <string name="temp2">Dior迪奥特价</string>
-    <string name="temp3">东风标致4S店</string>
-    <string name="temp4">BMW专营店</string>
     <string name="interaction">互动</string>
     <string name="headline">头条</string>
     <string name="news">新闻</string>
@@ -30,19 +25,33 @@
     <string name="sub_manager">订阅管理</string>
     <string name="reply">跟帖</string>
     <string name="context">原文</string>
-    
+    <string name="temp1">本地新闻</string>
+    <string name="temp2">我的收藏</string>
+    <string name="temp3">今日光谷</string>
+    <string name="temp4">光博览</string>
+    <string name="temp5">群光广场</string>
+    <string name="temp6">柏氏专卖</string>
+    <string name="temp7">volvo沃尔沃</string>
+    <string name="temp8">Benz奔驰</string>
+    <string name="temp9">Dior迪奥</string>
+    <string name="temp10">沃尔玛</string>
+    <string name="temp11">家乐福</string>
+    <string name="temp12">摩托罗拉</string>
+    <string name="temp13">苏宁电器</string>
+    <string name="temp14">国美电器</string>
+    <string name="temp15">格力电器</string>
+    <string name="temp16">西门子</string>
     <!-- 组图 -->
     <string name="all">全部</string>
     <string name="hot">热点</string>
     <string name="girl">美女</string>
     <string name="photograph">摄影</string>
     <string name="fun">奇趣</string>
-    <string name="txt_opder2">● 营业时间；11:00-21:00</string> 
-    <string name="txt_opder3">● 用餐需提前1天预约，如遇等位，请耐心等候</string> 
-    <string name="txt_opder4">● 仅限大厅使用，不可预订包房</string> 
-    <string name="txt_opder5">● 预约电话：027-85892777</string> 
+    <string name="txt_opder2">● 营业时间；11:00-21:00</string>
+    <string name="txt_opder3">● 用餐需提前1天预约，如遇等位，请耐心等候</string>
+    <string name="txt_opder4">● 仅限大厅使用，不可预订包房</string>
+    <string name="txt_opder5">● 预约电话：027-85892777</string>
     <string name="txt_opder6">● 商家地址：武汉市解放大道武汉国际广场B座9层</string>
-    
 
     <!-- 新闻详情 -->
     <string name="news_title">日媒称日本11日派官员赴华 欲讨论钓鱼岛问题</string>
@@ -72,15 +81,11 @@
     <string name="news_body">　中新网9月11日电 据日本共同社报道，据日本政府相关人士透露，外务省11日派遣亚洲大洋洲局长杉山晋辅前往北京，就日本政府所谓钓鱼岛“国有化”方针同中国政府交换意见。
 　　据悉，日本政府11日上午召开内阁会议，决定从2012年度预算的预备费中拨出20.5亿日元(约合人民币1.66亿元)“购买”钓鱼岛的3个岛屿。日本政府考虑最早于11日同“土地权所有者”签订合同。
 　　针对日本所谓“购岛”行径，中国政府9月10日严正声明，日本政府的所谓“购岛”完全是非法的、无效的，丝毫改变不了日本侵占中国领土的历史事实，丝毫改变不了中国对钓鱼岛及其附属岛屿的领土主权。</string>
-
     <string name="photos_title">两女子接吻引围观</string>
-    
     <string name="vote_question">农民工进城打工，温饱问题尚未能解决，你怎么看待这个问题？</string>
     <string name="vote_number">2879</string>
     <string name="vote_title1">1.需要加强扶持</string>
     <string name="vote_title2">2.已经足够，无需调整</string>
     <string name="vote_title3">3.恐怕很难改变</string>
-    
-    
-       
+
 </resources>

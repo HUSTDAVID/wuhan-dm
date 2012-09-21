@@ -2,7 +2,7 @@
 package com.wh.dm.activity;
 
 import com.wh.dm.R;
-import com.wh.dm.type.DM;
+import com.wh.dm.type.Cover;
 import com.wh.dm.widget.Configure;
 import com.wh.dm.widget.DragGrid;
 import com.wh.dm.widget.DragGridAdapter;
@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,9 +30,8 @@ public class MainActivity extends Activity {
     /** GridView. */
     private LinearLayout linear;
     private DragGrid gridView;
+    private TextView txt_page;
     private ScrollLayout scrollLayout;
-
-    TextView txt_page;
     private ImageView delImage;
     LinearLayout.LayoutParams param;
     Animation up, down;
@@ -44,9 +44,14 @@ public class MainActivity extends Activity {
     public static final int DEL_DOWN = 4;
     public static final int DEL_GRID = 5;
 
+    // DM VERSION
+    public static final int DM_FULL = 0;
+    public static final int DM_PICS = 1;
+    public static final int DM_PICS_TXT = 2;
+
     ArrayList<DragGrid> gridviews = new ArrayList<DragGrid>();
-    ArrayList<ArrayList<DM>> lists = new ArrayList<ArrayList<DM>>();
-    ArrayList<DM> data = new ArrayList<DM>();
+    ArrayList<ArrayList<Cover>> lists = new ArrayList<ArrayList<Cover>>();
+    ArrayList<Cover> data = new ArrayList<Cover>();
 
     boolean isClean = false;
     Vibrator vibrator;
@@ -81,6 +86,7 @@ public class MainActivity extends Activity {
 
                     delImage.startAnimation(down);
                     lists.get(Configure.curentPage).remove(Configure.removeItem);
+                    data.remove(Configure.removeItem);
                     cleanItems();
                     ((DragGridAdapter) ((gridviews.get(Configure.curentPage)).getAdapter()))
                             .notifyDataSetChanged();
@@ -99,15 +105,9 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        for (int i = 0; i < 22; i++) {
-            DM dm = new DM();
-            dm.setDM("" + i);
-            data.add(dm);
-        }
-
         init();
+        menu_init();
         initData();
-        init_default();
         for (int i = 0; i < Configure.countPages; i++) {
             scrollLayout.addView(addGridView(i));
         }
@@ -124,6 +124,122 @@ public class MainActivity extends Activity {
 
     }
 
+    public void menu_init() {
+
+        Cover cover1 = new Cover();
+        String name1 = getResources().getString(R.string.temp1);
+        cover1.setName(name1);
+        cover1.setDrawableId(R.drawable.t1);
+        cover1.setId(0);
+
+        Cover cover2 = new Cover();
+        String name2 = getResources().getString(R.string.temp2);
+        cover2.setName(name2);
+        cover2.setDrawableId(R.drawable.t2);
+        cover2.setId(1);
+
+        Cover cover3 = new Cover();
+        String name3 = getResources().getString(R.string.temp3);
+        cover3.setName(name3);
+        cover3.setDrawableId(R.drawable.t3);
+        cover3.setId(2);
+
+        Cover cover4 = new Cover();
+        String name4 = getResources().getString(R.string.temp4);
+        cover4.setName(name4);
+        cover4.setDrawableId(R.drawable.t4);
+        cover4.setId(3);
+
+        Cover cover5 = new Cover();
+        String name5 = getResources().getString(R.string.temp5);
+        cover5.setName(name5);
+        cover5.setDrawableId(R.drawable.t5);
+        cover5.setId(4);
+
+        Cover cover6 = new Cover();
+        String name6 = getResources().getString(R.string.temp6);
+        cover6.setName(name6);
+        cover6.setDrawableId(R.drawable.t6);
+        cover6.setId(5);
+
+        Cover cover7 = new Cover();
+        String name7 = getResources().getString(R.string.temp7);
+        cover7.setName(name7);
+        cover7.setDrawableId(R.drawable.t7);
+        cover7.setId(6);
+
+        Cover cover8 = new Cover();
+        String name8 = getResources().getString(R.string.temp8);
+        cover8.setName(name8);
+        cover8.setDrawableId(R.drawable.t8);
+        cover8.setId(7);
+
+        Cover cover9 = new Cover();
+        String name9 = getResources().getString(R.string.temp9);
+        cover9.setName(name9);
+        cover9.setDrawableId(R.drawable.t9);
+        cover9.setId(8);
+
+        Cover cover10 = new Cover();
+        String name10 = getResources().getString(R.string.temp10);
+        cover10.setName(name10);
+        cover10.setDrawableId(R.drawable.t10);
+        cover10.setId(9);
+
+        Cover cover11 = new Cover();
+        String name11 = getResources().getString(R.string.temp11);
+        cover11.setName(name11);
+        cover11.setDrawableId(R.drawable.t11);
+        cover11.setId(10);
+
+        Cover cover12 = new Cover();
+        String name12 = getResources().getString(R.string.temp12);
+        cover12.setName(name12);
+        cover12.setDrawableId(R.drawable.t12);
+        cover12.setId(11);
+
+        Cover cover13 = new Cover();
+        String name13 = getResources().getString(R.string.temp13);
+        cover13.setName(name13);
+        cover13.setDrawableId(R.drawable.t13);
+        cover13.setId(12);
+
+        Cover cover14 = new Cover();
+        String name14 = getResources().getString(R.string.temp14);
+        cover14.setName(name14);
+        cover14.setDrawableId(R.drawable.t14);
+        cover14.setId(13);
+
+        Cover cover15 = new Cover();
+        String name15 = getResources().getString(R.string.temp15);
+        cover15.setName(name15);
+        cover15.setDrawableId(R.drawable.t15);
+        cover15.setId(15);
+
+        Cover cover16 = new Cover();
+        String name16 = getResources().getString(R.string.temp16);
+        cover16.setName(name16);
+        cover16.setDrawableId(R.drawable.t16);
+        cover16.setId(16);
+
+        data.add(cover1);
+        data.add(cover2);
+        data.add(cover3);
+        data.add(cover4);
+        data.add(cover5);
+        data.add(cover6);
+        data.add(cover7);
+        data.add(cover8);
+        data.add(cover9);
+        data.add(cover10);
+        data.add(cover11);
+        data.add(cover12);
+        data.add(cover13);
+        data.add(cover14);
+        data.add(cover15);
+        data.add(cover16);
+    }
+
     public void init() {
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -134,6 +250,7 @@ public class MainActivity extends Activity {
         com.wh.dm.widget.Configure.init(MainActivity.this);
         param = new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,
                 android.view.ViewGroup.LayoutParams.FILL_PARENT);
+
         param.rightMargin = dip2px(55);
         param.leftMargin = 20;
         if (gridView != null) {
@@ -141,18 +258,18 @@ public class MainActivity extends Activity {
         }
     }
 
-    public int dip2px(float dpValue) {
+    public int dip2px(int dip) {
 
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+        final float scale = Configure.screenDensity;
+        return (int) (dip * scale + 0.5f);
     }
 
     public void initData() {
 
         Configure.countPages = (int) Math.ceil(data.size() / (float) PAGE_SIZE);
-        lists = new ArrayList<ArrayList<DM>>();
+        lists = new ArrayList<ArrayList<Cover>>();
         for (int i = 0; i < Configure.countPages; i++) {
-            lists.add(new ArrayList<DM>());
+            lists.add(new ArrayList<Cover>());
             for (int j = PAGE_SIZE * i; j < (PAGE_SIZE * (i + 1) > data.size() ? data.size()
                     : PAGE_SIZE * (i + 1)); j++)
                 lists.get(i).add(data.get(j));
@@ -160,29 +277,10 @@ public class MainActivity extends Activity {
 
     }
 
-    public void init_default() {
-
-        lists.get(0).get(0).setDM(getString(R.string.favorites));
-        lists.get(0).get(0).setId(R.drawable.love);
-        lists.get(0).get(0).setRed(true);
-        lists.get(0).get(1).setDM(getString(R.string.collections));
-        lists.get(0).get(1).setId(R.drawable.collect);
-        lists.get(0).get(1).setRed(true);
-
-        lists.get(0).get(2).setDM(getString(R.string.temp1));
-        lists.get(0).get(2).setId(R.drawable.temp1);
-        lists.get(0).get(3).setDM(getString(R.string.temp2));
-        lists.get(0).get(3).setId(R.drawable.temp2);
-        lists.get(0).get(4).setDM(getString(R.string.temp3));
-        lists.get(0).get(4).setId(R.drawable.temp3);
-        lists.get(0).get(5).setDM(getString(R.string.temp4));
-        lists.get(0).get(5).setId(R.drawable.temp4);
-    }
-
     public void cleanItems() {
 
         scrollLayout.removeAllViews();
-        data = new ArrayList<DM>();
+        data = new ArrayList<Cover>();
         for (int i = 0; i < lists.size(); i++) {
             for (int j = 0; j < lists.get(i).size(); j++) {
                 if (lists.get(i).get(j) != null) {
@@ -198,7 +296,7 @@ public class MainActivity extends Activity {
         isClean = false;
     }
 
-    public LinearLayout addGridView(int i) {
+    public LinearLayout addGridView(final int i) {
 
         linear = new LinearLayout(MainActivity.this);
         gridView = new DragGrid(MainActivity.this);
@@ -211,29 +309,44 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 
-                switch (pos) {
+                Bundle bundle = new Bundle();
+                switch (lists.get(i).get(pos).getId()) {
                     case 0:
-                        Intent it0 = new Intent(MainActivity.this, DM_Tab_1Activity.class);
-                        startActivity(it0);
+                        Intent intent_tab1 = new Intent(MainActivity.this, DM_Tab_1Activity.class);
+                        startActivity(intent_tab1);
                         break;
                     case 1:
-                        Intent it1 = new Intent(MainActivity.this, DM_Tab_2Activity.class);
-                        startActivity(it1);
+                        Intent intent_collect = new Intent(MainActivity.this,
+                                DM_CollectActivity.class);
+                        startActivity(intent_collect);
                         break;
-
                     case 2:
-                        Intent it2 = new Intent(MainActivity.this, DM_MzineFullActivity.class);
-                        startActivity(it2);
+                        Intent intent_pic_txt = new Intent(MainActivity.this,
+                                DM_Tab_2Activity.class);
+                        bundle.putInt("dm", DM_PICS_TXT);
+                        intent_pic_txt.putExtras(bundle);
+                        startActivity(intent_pic_txt);
                         break;
                     case 3:
-                        Intent it3 = new Intent(MainActivity.this, DM_MzineLongActivity.class);
-                        startActivity(it3);
+                        Intent intent_tab_full = new Intent(MainActivity.this,
+                                DM_Tab_2Activity.class);
+                        bundle.putInt("dm", DM_FULL);
+                        intent_tab_full.putExtras(bundle);
+                        startActivity(intent_tab_full);
                         break;
                     case 4:
-                        Intent it4 = new Intent(MainActivity.this, DM_MzineImgActivity.class);
-                        startActivity(it4);
                         break;
+                    case 5:
 
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+
+                        break;
+                    default:
+                        break;
                 }
             }
         });
@@ -276,7 +389,7 @@ public class MainActivity extends Activity {
             @Override
             public void change(int from, int to, int count) {
 
-                DM toString = lists.get(Configure.curentPage - count).get(from);
+                Cover toString = lists.get(Configure.curentPage - count).get(from);
 
                 lists.get(Configure.curentPage - count).add(from,
                         lists.get(Configure.curentPage).get(to));
@@ -296,7 +409,7 @@ public class MainActivity extends Activity {
                 android.view.ViewGroup.LayoutParams.FILL_PARENT);
         par.width = Configure.screenWidth / 2 - 10;
         par.height = Configure.screenHeight / 4 - 10;
-
+        gridView.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         gridView.setLayoutParams(par);
 
         linear.addView(gridviews.get(i), param);
@@ -345,11 +458,11 @@ public class MainActivity extends Activity {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                // TODO Auto-generated method stub
                 txt_page.setText((page + 1) + "");
                 txt_page.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,
                         R.anim.scale_out));
             }
+
         });
         txt_page.startAnimation(a);
 

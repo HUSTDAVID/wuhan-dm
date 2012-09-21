@@ -81,21 +81,15 @@ public class DM_InteractionActivity extends Activity implements OnClickListener 
         switch (v.getId()) {
             case R.id.rel_interaction_vote:
             case R.id.btn_interaction_vote:
-                Intent intent_vote1 = new Intent(DM_InteractionActivity.this,
-                        DM_Vote1Activity.class);
-                startActivity(intent_vote1);
-                break;
-            case R.id.rel_interaction_critic:
-            case R.id.btn_interaction_critic:
-                Intent intent_vote2 = new Intent(DM_InteractionActivity.this,
-                        DM_Vote2Activity.class);
-                startActivity(intent_vote2);
-                break;
-            case R.id.rel_interaction_award:
-            case R.id.btn_interaction_award:
                 Intent intent_list = new Intent(DM_InteractionActivity.this,
                         DM_VotedListActivity.class);
                 startActivity(intent_list);
+                break;
+            case R.id.rel_interaction_critic:
+            case R.id.btn_interaction_critic:
+                break;
+            case R.id.rel_interaction_award:
+            case R.id.btn_interaction_award:
                 break;
         }
 

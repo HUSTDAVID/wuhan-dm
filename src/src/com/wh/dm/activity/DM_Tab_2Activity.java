@@ -38,15 +38,25 @@ public class DM_Tab_2Activity extends TabActivity implements OnTabChangeListener
     private void initTabs() {
 
         tabHost = getTabHost();
+        Intent intent = getIntent();
+        Bundle flag = intent.getExtras();
+        if (flag.getInt("dm") == MainActivity.DM_FULL) {
+            tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
+                    .setContent(new Intent(this, DM_MzineFullActivity.class)));
 
-        tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
-                .setContent(new Intent(this, DM_MZine3Activity.class)));
+        } else if (flag.getInt("dm") == MainActivity.DM_PICS_TXT) {
+            tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
+                    .setContent(new Intent(this, DM_MZine1Activity.class)));
+        } else {
+            tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
+                    .setContent(new Intent(this, DM_MZine1Activity.class)));
+        }
 
         tabHost.addTab(tabHost.newTabSpec("interaction").setIndicator(createTabView(INTERACTION))
                 .setContent(new Intent(this, DM_InteractionActivity.class)));
 
         tabHost.addTab(tabHost.newTabSpec("subscribe").setIndicator(createTabView(SUBSCRIBE))
-                .setContent(new Intent(this, DM_MZine1Activity.class)));
+                .setContent(new Intent(this, DM_SubscribeActivity.class)));
 
         tabHost.addTab(tabHost.newTabSpec("store").setIndicator(createTabView(STORE))
                 .setContent(new Intent(this, DM_CollectActivity.class)));

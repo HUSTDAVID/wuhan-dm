@@ -30,15 +30,18 @@ public class DM_Sub_HotActivity extends Activity {
         gvSub = (GridView) findViewById(R.id.gv_subscribe);
 
         SubscribeAdapter adapter = new SubscribeAdapter(this);
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),
-                R.drawable.temp_subscription_bigimg);
-        for (int i = 0; i < 10; i++) {
-            if (i % 2 == 0)
-                adapter.addItem(bmp, "时尚", false);
-            else
-                adapter.addItem(bmp, "时尚", true);
-        }
-
+        Bitmap bmp1 = BitmapFactory.decodeResource(getResources(), R.drawable.man);
+        Bitmap bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.ruili);
+        Bitmap bmp3 = BitmapFactory.decodeResource(getResources(), R.drawable.business);
+        Bitmap bmp4 = BitmapFactory.decodeResource(getResources(), R.drawable.fashion1);
+        Bitmap bmp5 = BitmapFactory.decodeResource(getResources(), R.drawable.fashion2);
+        Bitmap bmp6 = BitmapFactory.decodeResource(getResources(), R.drawable.fashion_travel);
+        adapter.addItem(bmp1, "男人装", false);
+        adapter.addItem(bmp2, "瑞丽", true);
+        adapter.addItem(bmp3, "商界BUSINESS", false);
+        adapter.addItem(bmp4, "时尚1", false);
+        adapter.addItem(bmp5, "时尚2", false);
+        adapter.addItem(bmp6, "时尚旅游", true);
         gvSub.setAdapter(adapter);
     }
 }

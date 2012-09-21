@@ -37,7 +37,6 @@ public class DM_MZine1Activity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_dm_mzine1);
-
         initViews();
     }
 

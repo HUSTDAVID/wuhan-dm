@@ -19,7 +19,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DM_PhotosActivity extends ActivityGroup {
 
@@ -123,7 +122,6 @@ public class DM_PhotosActivity extends ActivityGroup {
 
                     intent.setClass(DM_PhotosActivity.this, DM_Photos_AllActivity.class);
                     vMain = getLocalActivityManager().startActivity("all", intent).getDecorView();
-                    Toast.makeText(DM_PhotosActivity.this, "全部", Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.txt_listtop_2:
@@ -131,7 +129,6 @@ public class DM_PhotosActivity extends ActivityGroup {
                     startX = itemWidth;
                     txtSelectedItem.setText(R.string.hot);
 
-                    Toast.makeText(DM_PhotosActivity.this, "热点", Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.txt_listtop_3:
@@ -139,7 +136,6 @@ public class DM_PhotosActivity extends ActivityGroup {
                     startX = itemWidth * 2;
                     txtSelectedItem.setText(R.string.car);
 
-                    Toast.makeText(DM_PhotosActivity.this, "汽车", Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.txt_listtop_4:
@@ -147,7 +143,6 @@ public class DM_PhotosActivity extends ActivityGroup {
                     startX = itemWidth * 3;
                     txtSelectedItem.setText(R.string.girl);
 
-                    Toast.makeText(DM_PhotosActivity.this, "美女", Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.txt_listtop_5:
@@ -155,7 +150,6 @@ public class DM_PhotosActivity extends ActivityGroup {
                     startX = itemWidth * 4;
                     txtSelectedItem.setText(R.string.photograph);
 
-                    Toast.makeText(DM_PhotosActivity.this, "摄影", Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.txt_listtop_6:
@@ -163,7 +157,6 @@ public class DM_PhotosActivity extends ActivityGroup {
                     startX = itemWidth * 5;
                     txtSelectedItem.setText(R.string.fun);
 
-                    Toast.makeText(DM_PhotosActivity.this, "奇趣", Toast.LENGTH_SHORT).show();
                     break;
             }
 

@@ -2,7 +2,7 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
-import com.wh.dm.type.DM;
+import com.wh.dm.type.Cover;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 public class DragGridAdapter extends BaseAdapter {
 
     private final Context context;
-    private final ArrayList<DM> list;
+    private final ArrayList<Cover> list;
     private RelativeLayout relate_dm;
-    private TextView txt_dm;
-    private ImageView img_dm;
+    private TextView txt_String;
+    private ImageView img_String;
 
-    public DragGridAdapter(Context mContext, ArrayList<DM> list) {
+    public DragGridAdapter(Context mContext, ArrayList<Cover> list) {
 
         this.context = mContext;
         this.list = list;
@@ -51,9 +51,9 @@ public class DragGridAdapter extends BaseAdapter {
 
         Object endObject = getItem(endPosition);
         Object startObject = getItem(startPosition);
-        list.add(startPosition, (DM) endObject);
+        list.add(startPosition, (Cover) endObject);
         list.remove(startPosition + 1);
-        list.add(endPosition, (DM) startObject);
+        list.add(endPosition, (Cover) startObject);
         list.remove(endPosition + 1);
     }
 
@@ -61,16 +61,17 @@ public class DragGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, null);
-        txt_dm = (TextView) convertView.findViewById(R.id.item_text);
-        img_dm = (ImageView) convertView.findViewById(R.id.item_img);
+        TextView txt = (TextView) convertView.findViewById(R.id.item_text);
+        ImageView img = (ImageView) convertView.findViewById(R.id.item_img);
         relate_dm = (RelativeLayout) convertView.findViewById(R.id.item_relate);
-        txt_dm.setText(list.get(position).getDM());
-        if (list.get(position).getId() != 0) {
-            img_dm.setImageResource(list.get(position).getId());
-        }
-        if (list.get(position).getRed()) {
+        txt.setText(list.get(position).getName());
+        img.setImageResource(list.get(position).getDrawableId());
+        if (list.get(position).getId() == 0) {
+            relate_dm.setBackgroundResource(R.drawable.red);
+        } else if (list.get(position).getId() == 1) {
             relate_dm.setBackgroundResource(R.drawable.red);
         }
+
         return convertView;
     }
 
