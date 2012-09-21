@@ -11,8 +11,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class DM_MZine1Activity extends Activity implements OnClickListener {
-
+public class DM_MZine3Activity extends Activity implements OnClickListener {
     LinearLayout linearLayouItem1;
     LinearLayout linearLayouItem2;
     LinearLayout linearLayouItem3;
@@ -36,24 +35,24 @@ public class DM_MZine1Activity extends Activity implements OnClickListener {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_dm_mzine1);
+        setContentView(R.layout.activity_dm_mzine3);
 
         initViews();
     }
 
     private void initViews() {
 
-        linearLayouItem1 = (LinearLayout) findViewById(R.id.layout1_magazine_1);
-        linearLayouItem2 = (LinearLayout) findViewById(R.id.layout2_magazine_1);
-        linearLayouItem3 = (LinearLayout) findViewById(R.id.layout3_magazine_1);
-        linearLayouItem4 = (LinearLayout) findViewById(R.id.layout4_magazine_1);
-        linearLayouItem5 = (LinearLayout) findViewById(R.id.layout5_magazine_1);
+        linearLayouItem1 = (LinearLayout) findViewById(R.id.layout1_magazine_3);
+        linearLayouItem2 = (LinearLayout) findViewById(R.id.layout2_magazine_3);
+        linearLayouItem3 = (LinearLayout) findViewById(R.id.layout3_magazine_3);
+        linearLayouItem4 = (LinearLayout) findViewById(R.id.layout4_magazine_3);
+        linearLayouItem5 = (LinearLayout) findViewById(R.id.layout5_magazine_3);
 
-        txtTile1 = (TextView) findViewById(R.id.txt_magazine_1_title1);
-        txtTile2 = (TextView) findViewById(R.id.txt_magazine_1_title2);
-        txtTile3 = (TextView) findViewById(R.id.txt_magazine_1_title3);
-        txtTile4 = (TextView) findViewById(R.id.txt_magazine_1_title4);
-        txtTile5 = (TextView) findViewById(R.id.txt_magazine_1_title5);
+        txtTile1 = (TextView) findViewById(R.id.txt_magazine_3_title1);
+        txtTile2 = (TextView) findViewById(R.id.txt_magazine_3_title2);
+        txtTile3 = (TextView) findViewById(R.id.txt_magazine_3_title3);
+        txtTile4 = (TextView) findViewById(R.id.txt_magazine_3_title4);
+        txtTile5 = (TextView) findViewById(R.id.txt_magazine_3_title5);
 
         linearLayouItem1.setOnClickListener(this);
         linearLayouItem2.setOnClickListener(this);
@@ -69,38 +68,32 @@ public class DM_MZine1Activity extends Activity implements OnClickListener {
         int backColor = getResources().getColor(R.color.bg_clicked);
 
         switch (v.getId()) {
-            case R.id.layout1_magazine_1:
+            case R.id.layout1_magazine_3:
                 linearLayouItem1.setBackgroundColor(backColor);
                 txtTile1.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                // Toast.makeText(DM_MZine1Activity.this, "test 1",
-                // Toast.LENGTH_SHORT).show();
+
                 break;
-            case R.id.layout2_magazine_1:
+            case R.id.layout2_magazine_3:
                 linearLayouItem2.setBackgroundColor(backColor);
                 txtTile2.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                // Toast.makeText(DM_MZine1Activity.this, "test 2",
-                // Toast.LENGTH_SHORT).show();
+
                 break;
-            case R.id.layout3_magazine_1:
+            case R.id.layout3_magazine_3:
                 linearLayouItem3.setBackgroundColor(backColor);
                 txtTile3.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                // Toast.makeText(DM_MZine1Activity.this, "test 3",
-                // Toast.LENGTH_SHORT).show();
+
                 break;
-            case R.id.layout4_magazine_1:
+            case R.id.layout4_magazine_3:
                 linearLayouItem4.setBackgroundColor(backColor);
                 txtTile4.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                // Toast.makeText(DM_MZine1Activity.this, "test 4",
-                // Toast.LENGTH_SHORT).show();
+
                 break;
-            case R.id.layout5_magazine_1:
+            case R.id.layout5_magazine_3:
                 linearLayouItem5.setBackgroundColor(backColor);
                 txtTile5.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                // Toast.makeText(DM_MZine1Activity.this, "test 5",
-                // Toast.LENGTH_SHORT).show();
+
                 break;
         }
 
     }
-
 }

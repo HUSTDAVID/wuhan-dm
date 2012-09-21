@@ -40,7 +40,7 @@ public class DM_Tab_2Activity extends TabActivity implements OnTabChangeListener
         tabHost = getTabHost();
 
         tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
-                .setContent(new Intent(this, DM_MZine1Activity.class)));
+                .setContent(new Intent(this, DM_MZine3Activity.class)));
 
         tabHost.addTab(tabHost.newTabSpec("interaction").setIndicator(createTabView(INTERACTION))
                 .setContent(new Intent(this, DM_InteractionActivity.class)));

@@ -12,7 +12,76 @@
         
         layout="@layout/header_title3_black"/>
     
-    <!-- 中间部分内容没有写 -->
+    <RelativeLayout 
+        android:id="@+id/rel_photos_detail_center"
+        android:layout_below="@+id/photos_top"
+        android:layout_above="@+id/layout_photos_detail_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        
+        <android.support.v4.view.ViewPager
+      		  android:id="@+id/viewpager_photos_details"
+       	 	  android:layout_width="fill_parent"
+       	 	  android:layout_centerInParent="true"
+       		  android:layout_height="wrap_content"/>
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+             android:paddingLeft="15dip"
+                android:paddingRight="15dip"
+            android:background="@color/translucence_black"
+            android:layout_alignParentBottom="true">
+            
+            <RelativeLayout 
+                android:background="@color/translucence_black"
+                android:layout_width="fill_parent"               
+                android:layout_height="40dip">
+                
+                <TextView
+                    android:id="@+id/txt_photos_details_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="趴着上课的女孩"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/img_photos_details_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/txt_photos_details_title"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/photos_arrow_down" />
+
+                <TextView
+                    android:id="@+id/txt_photos_details_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/txt_photos_details_title"
+                    android:layout_toLeftOf="@+id/img_photos_details_arrow"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="2/9" />
+                
+            </RelativeLayout>
+            
+            <TextView 
+                android:id="@+id/txt_photos_details_body"
+                android:layout_width="fill_parent"
+                android:background="@color/black"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:layout_height="wrap_content"
+                android:visibility="gone" 
+                android:paddingBottom="10dip"               
+                />
+            
+        </LinearLayout>
+        
+    </RelativeLayout>
    
     
     

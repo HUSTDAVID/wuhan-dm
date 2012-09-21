@@ -5,7 +5,6 @@ import com.wh.dm.R;
 import com.wh.dm.widget.PhotoAdapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DM_Photos_AllActivity extends Activity {
 
@@ -57,12 +55,6 @@ public class DM_Photos_AllActivity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(DM_Photos_AllActivity.this, "position is " + position,
-                        Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(DM_Photos_AllActivity.this,
-                        DM_PhotosDetailsAcitivity.class);
-                startActivity(intent);
 
             }
         });
