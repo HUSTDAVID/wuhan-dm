@@ -16,7 +16,8 @@
         android:id="@+id/lv_mzine_long1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:divider="@color/mzine_img">
+        android:divider="@color/mzine_img"
+        android:background="@color/mzine_long">
 
     </ListView>
 
