@@ -2,11 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-<<<<<<< HEAD
-    android:background="#eeeeee"
-=======
     android:background="@color/mzine_long"
->>>>>>> 7068ab859bc8ef450f33bf5f46bd6fed80ad9b5c
     android:orientation="vertical" >
     
     <View
