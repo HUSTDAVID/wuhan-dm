@@ -2,10 +2,12 @@
 package com.wh.dm.activity;
 
 import com.wh.dm.R;
-import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.HorizontalPager;
+import com.wh.dm.widget.MzineLongAdapter;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +47,19 @@ public class DM_MzineLongActivity extends Activity {
 
         listView.addHeaderView(headerView);
 
-        HeadlineAdapter adapter = new HeadlineAdapter(this);
+        MzineLongAdapter adapter = new MzineLongAdapter(this);
+        // add data
+        Bitmap bmp1_bottom1 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_2x_1);
+        Bitmap bmp2_bottom1 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_1x_3);
+        Bitmap bmp3_bottom1 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_1x_4);
+        Bitmap bmp4_bottom1 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_2x_2);
+
+        Bitmap bmp1_bottom2 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_1x_5);
+        Bitmap bmp2_bottom2 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_1x_6);
+        Bitmap bmp3_bottom2 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_1x_7);
+
+        adapter.addItemType1(bmp1_bottom1, bmp2_bottom1, bmp3_bottom1, bmp4_bottom1);
+        adapter.addItemType2(bmp1_bottom2, bmp2_bottom2, bmp3_bottom2);
 
         listView.setAdapter(adapter);
 
