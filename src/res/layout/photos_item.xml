@@ -4,7 +4,6 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_weight="1"
-	    android:paddingLeft="7dip"
 	    android:background="@drawable/photos_img_background"
 	    android:orientation="vertical" >
         <TextView 
@@ -12,7 +11,7 @@
             android:textColor="@color/black"
             android:layout_height="17dip"
             android:layout_alignLeft="@+id/img_potos_item"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:text="@string/photos_title"
             android:textSize="12sp"/>
             
@@ -21,6 +20,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/txt_photos_title"
+	        android:layout_centerHorizontal="true"
 	        android:scaleType="fitXY"
 	        android:src="@drawable/temp_photos_img" />
 	    
