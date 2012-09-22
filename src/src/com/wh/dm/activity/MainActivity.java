@@ -48,6 +48,8 @@ public class MainActivity extends Activity {
     public static final int DM_FULL = 0;
     public static final int DM_PICS = 1;
     public static final int DM_PICS_TXT = 2;
+    public static final int DM_PICS_TXT2 = 3;
+    public static final int DM_PICS_TXT3 = 4;
 
     ArrayList<DragGrid> gridviews = new ArrayList<DragGrid>();
     ArrayList<ArrayList<Cover>> lists = new ArrayList<ArrayList<Cover>>();
@@ -334,11 +336,17 @@ public class MainActivity extends Activity {
                         intent_tab_full.putExtras(bundle);
                         startActivity(intent_tab_full);
                         break;
-                    case 4:
-                        break;
-                    case 5:
-
-                        break;
+                    /*
+                     * case 4: Intent intent_pic_txt2 = new
+                     * Intent(MainActivity.this, DM_Tab_2Activity.class);
+                     * bundle.putInt("dm", DM_PICS_TXT2);
+                     * intent_pic_txt2.putExtras(bundle);
+                     * startActivity(intent_pic_txt2); break; case 5: Intent
+                     * intent_pic_txt3 = new Intent(MainActivity.this,
+                     * DM_Tab_2Activity.class); bundle.putInt("dm",
+                     * DM_PICS_TXT3); intent_pic_txt3.putExtras(bundle);
+                     * startActivity(intent_pic_txt3); break;
+                     */
                     case 6:
 
                         break;

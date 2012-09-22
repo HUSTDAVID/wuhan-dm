@@ -47,9 +47,12 @@ public class DM_Tab_2Activity extends TabActivity implements OnTabChangeListener
         } else if (flag.getInt("dm") == MainActivity.DM_PICS_TXT) {
             tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
                     .setContent(new Intent(this, DM_MZine1Activity.class)));
-        } else {
+        } else if (flag.getInt("dm") == MainActivity.DM_PICS_TXT2) {
             tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
-                    .setContent(new Intent(this, DM_MZine1Activity.class)));
+                    .setContent(new Intent(this, DM_MZine3Activity.class)));
+        } else if (flag.getInt("dm") == MainActivity.DM_PICS_TXT3) {
+            tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))
+                    .setContent(new Intent(this, DM_MZine2Activity.class)));
         }
 
         tabHost.addTab(tabHost.newTabSpec("interaction").setIndicator(createTabView(INTERACTION))
