@@ -73,7 +73,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_PhotosDetailsAcitivity"
+            android:name=".activity.DM_PhotosDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
