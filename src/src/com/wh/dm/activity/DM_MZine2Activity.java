@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DM_MZine2Activity extends Activity implements OnClickListener {
 
@@ -73,27 +72,22 @@ public class DM_MZine2Activity extends Activity implements OnClickListener {
             case R.id.layout1_magazine_2:
                 linearLayouItem1.setBackgroundColor(backColor);
                 txtTile1.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                Toast.makeText(DM_MZine2Activity.this, "test 1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout2_magazine_2:
                 linearLayouItem2.setBackgroundColor(backColor);
                 txtTile2.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                Toast.makeText(DM_MZine2Activity.this, "test 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout3_magazine_2:
                 linearLayouItem3.setBackgroundColor(backColor);
                 txtTile3.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                Toast.makeText(DM_MZine2Activity.this, "test 3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout4_magazine_2:
                 linearLayouItem4.setBackgroundColor(backColor);
                 txtTile4.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                Toast.makeText(DM_MZine2Activity.this, "test 4", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout5_magazine_2:
                 linearLayouItem5.setBackgroundColor(backColor);
                 txtTile5.setTextColor(getResources().getColor(R.color.mzine_txt_clicked));
-                Toast.makeText(DM_MZine2Activity.this, "test 5", Toast.LENGTH_SHORT).show();
                 break;
         }
 
