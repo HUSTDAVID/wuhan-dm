@@ -73,7 +73,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_PhotosDetailsAcitivity"
+            android:name=".activity.DM_PhotosDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -150,6 +150,11 @@
         </activity>
 		 <activity
             android:name=".activity.DM_TempActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.DM_MZineLongActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>

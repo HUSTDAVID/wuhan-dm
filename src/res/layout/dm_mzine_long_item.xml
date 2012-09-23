@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/mzine_long"
+    android:orientation="vertical" >
+    
+    <View
+        android:id="@+id/mzine_long_bottom1_line1"
+        android:layout_width="320dip"
+        android:layout_height="1dip"
+        android:background="@color/mzine_img"/>
+    
+	 <LinearLayout
+	     android:layout_width="match_parent"
+	     android:layout_height="wrap_content"
+	     android:orientation="horizontal" >
+	     
+	     
+	     
+	     <LinearLayout
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_weight="314"
+	     android:orientation="vertical" >
+	     
+
+	         <ImageView
+	             android:id="@+id/img_mzine_long_1"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_weight="149"
+	             android:src="@drawable/temp_dm_2x_1" />
+	         
+	         <View
+	        android:id="@+id/mzine_long_bottom1_line4"
+	        android:layout_width="209.33dip"
+	        android:layout_height="0.67dip"
+	        android:layout_weight="1"
+	        android:background="@color/mzine_img"/>
+	         
+	     <LinearLayout
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_weight="149"
+	     android:orientation="horizontal" >
+	
+
+	         <ImageView
+	             android:id="@+id/img_mzine_long_3"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:src="@drawable/temp_dm_1x_3" />
+	         
+	         <View
+	            android:id="@+id/mzine_long_bottom1_line5"
+	            android:layout_width="1.33dip"
+	            android:layout_height="99.33dip"
+	            android:background="@color/mzine_img" />
+	
+
+	         <ImageView
+	             android:id="@+id/img_mzine_long_4"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:src="@drawable/temp_dm_1x_4" />
+	     
+	</LinearLayout>
+     
+	</LinearLayout>
+	
+	     <View
+	            android:id="@+id/mzine_long_bottom1_line2"
+	            android:layout_width="2dip"
+	            android:layout_height="199.33dip"
+	            android:layout_weight="3"
+	            android:background="@color/mzine_img" />
+
+	      <ImageView
+	          android:id="@+id/img_mzine_long_2"
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:layout_weight="163"
+	          android:src="@drawable/temp_dm_2x_2" />
+
+	</LinearLayout>
+	
+	 <LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/mzine_long"
+	    android:orientation="vertical">
+	      
+	      <View
+        android:id="@+id/mzine_long_bottom2_line1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/mzine_img"/>
+     
+     <LinearLayout 
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+
+
+         <ImageView
+             android:id="@+id/img_mzine_long_5"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="157"
+             android:src="@drawable/temp_dm_1x_5" />
+         
+         <View
+            android:id="@+id/mzine_long_bottom2_line2"
+            android:layout_width="1dip"
+            android:layout_height="99.33dip"
+            android:layout_weight="1.5"
+            android:background="@color/mzine_img" />
+
+
+
+         <ImageView
+             android:id="@+id/img_mzine_long_6"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="156"
+             android:src="@drawable/temp_dm_1x_6" />
+         
+         <View
+            android:id="@+id/mzine_long_bottom2_line2"
+            android:layout_width="1dip"
+            android:layout_height="99.33dip"
+            android:layout_weight="1.5"
+            android:background="@color/mzine_img" />
+         
+
+
+
+         <ImageView
+             android:id="@+id/img_mzine_long_7"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="164"
+             android:src="@drawable/temp_dm_1x_7" />
+         
+     </LinearLayout>
+	     
+	 </LinearLayout>
+</LinearLayout>
