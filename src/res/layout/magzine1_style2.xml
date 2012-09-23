@@ -1,0 +1,254 @@
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#efefef"
+    android:orientation="vertical"
+    android:weightSum="4" >
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        layout="@layout/dm_mzine_header" >
+    </include>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+
+        <ImageView
+            android:id="@+id/img_magazine_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/mzine2_02" />
+
+    </RelativeLayout>
+
+
+    <TableRow
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/layout1_magazine_2"
+            style="@style/magazine_news_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_magazine_2_title1"
+                style="@style/magazine_title"
+                android:layout_height="wrap_content"
+                android:text="贺福初调研光谷生物城" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_source1"
+                    style="@style/magazine_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dip"
+                    android:text="湖北大楚网" />
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_time1"
+                    style="@style/magazine_body"
+                    android:layout_height="match_parent"
+                    android:text="1小时前" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1.5dip"
+            android:layout_height="fill_parent"
+            android:background="@drawable/double_line_ver" >
+        </View>
+
+        <LinearLayout
+            android:id="@+id/layout2_magazine_2"
+            style="@style/magazine_news_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_magazine_2_title2"
+                style="@style/magazine_title"
+                android:layout_height="wrap_content"
+                android:text="国家中心城市的光谷元素" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_source2"
+                    style="@style/magazine_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dip"
+                    android:text="湖北大楚网" />
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_time2"
+                    style="@style/magazine_body"
+                    android:layout_height="match_parent"
+                    android:text="3小时前" />
+            </LinearLayout>
+        </LinearLayout>
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/double_line_hor" />
+
+    <TableRow
+        android:id="@+id/medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/layout3_magazine_2"
+            style="@style/magazine_news_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_magazine_2_title3"
+                style="@style/magazine_title"
+                android:layout_height="wrap_content"
+                android:text="依光而兴 一条街一座城" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_source3"
+                    style="@style/magazine_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dip"
+                    android:text="湖北大楚网" />
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_time3"
+                    style="@style/magazine_body"
+                    android:layout_height="fill_parent"
+                    android:text="1小时前" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1.5dip"
+            android:layout_height="fill_parent"
+            android:background="@drawable/double_line_ver" />
+
+        <LinearLayout
+            android:id="@+id/layout4_magazine_2"
+            style="@style/magazine_news_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txt_magazine_2_title4"
+                style="@style/magazine_title"
+                android:layout_height="wrap_content"
+                android:text="长飞光纤获国际质量管理金奖" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_source4"
+                    style="@style/magazine_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dip"
+                    android:text="湖北大楚网" />
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_time4"
+                    style="@style/magazine_body"
+                    android:layout_height="match_parent"
+                    android:text="3小时前" />
+            </LinearLayout>
+        </LinearLayout>
+    </TableRow>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1.5dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/double_line_hor" />
+
+    <TableRow
+        android:id="@+id/bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/layout5_magazine_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dip"
+            android:paddingRight="15dip" >
+
+            <TextView
+                android:id="@+id/txt_magazine_2_title5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="市政府与中国医药集团签订合作协议"
+                android:textColor="@color/mzine_txt_normal"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_source5"
+                    style="@style/magazine_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dip"
+                    android:text="湖北大楚网" />
+
+                <TextView
+                    android:id="@+id/txt_magazine_2_time5"
+                    style="@style/magazine_body"
+                    android:layout_height="match_parent"
+                    android:text="1小时前" />
+            </LinearLayout>
+        </LinearLayout>
+    </TableRow>
+
+</LinearLayout>
