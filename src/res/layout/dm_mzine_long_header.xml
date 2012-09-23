@@ -17,7 +17,7 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/mzine_img_header_imageView1"
+            android:id="@+id/mzine_long_img_header_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="314"
@@ -37,7 +37,7 @@
         android:orientation="vertical">
         
         <ImageView
-        android:id="@+id/mzine_img_header_imageView3"
+        android:id="@+id/mzine_long_img_header_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="149"
@@ -51,7 +51,7 @@
         android:background="@color/mzine_img"/>
         
     <ImageView
-        android:id="@+id/mzine_img_header_imageView2"
+        android:id="@+id/mzine_long_img_header_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="149"
