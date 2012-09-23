@@ -52,13 +52,13 @@ public class DM_PhotosDetailsActivity extends Activity {
 
         LayoutInflater inflater = getLayoutInflater();
         View v1 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v2 = inflater.inflate(R.layout.activity_photos_details, null);
+        View v2 = inflater.inflate(R.layout.activity_photos_details1, null);
         View v3 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v4 = inflater.inflate(R.layout.activity_photos_details, null);
+        View v4 = inflater.inflate(R.layout.activity_photos_details1, null);
         View v5 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v6 = inflater.inflate(R.layout.activity_photos_details, null);
+        View v6 = inflater.inflate(R.layout.activity_photos_details1, null);
         View v7 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v8 = inflater.inflate(R.layout.activity_photos_details, null);
+        View v8 = inflater.inflate(R.layout.activity_photos_details1, null);
         View v9 = inflater.inflate(R.layout.activity_photos_details, null);
 
         totalPhotos = 9;

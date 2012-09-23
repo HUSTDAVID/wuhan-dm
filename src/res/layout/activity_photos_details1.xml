@@ -5,7 +5,8 @@
     android:background="@color/black">
     
     
-    
+    
+
     <RelativeLayout
         android:id="@+id/rel_photos_detail_center"
         android:layout_width="fill_parent"
@@ -18,15 +19,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
-
+
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="75dp"
-            android:src="@drawable/photos_test2" />
+            android:layout_marginTop="85dp"
+            android:src="@drawable/photos_test" />
         
     </RelativeLayout>
 
