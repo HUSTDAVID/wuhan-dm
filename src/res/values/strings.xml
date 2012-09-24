@@ -74,6 +74,12 @@
     <string name="contact">联系方式：</string>
     <string name="emial_or_phone">Email或手机号</string>
     <string name="feedback_text">反馈内容：</string>
+    
+    <!-- 注册 -->
+    <string name="register">注册</string>
+    <string name="email">电子邮箱</string>
+    <string name="password">密码</string>
+    <string name="show_passwd">显示密码</string>
 
     <!-- test data -->
     <string name="title01">为何美国人拿的奥运奖牌比我们多很多呢啊啊啊</string>
