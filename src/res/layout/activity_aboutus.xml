@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/bg_normal">
+        <include android:id="@+id/aboutus_header"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        layout="@layout/header_title2"/>
+
+    <TextView
+        android:id="@+id/aboutus_text1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:text="        AIMAO(艾猫)，最受欢迎的生活服务类软件。目前支持iPhone、iPad、Android Phone、Android Pad平台"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/aboutus_text2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:text="        AIMAO聚合资讯。打折、微博、博客、报纸、杂志、图片、RSS、Google Reader等众多内容，您可以根据自己的喜好添加定制化内容"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/aboutus_text3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:text="        AIMAO还具有强大的社区交互分享功能，您可以通过绑定微博将喜欢的内容分享给好友"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/aboutus_text4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:text="@string/aboutus_text4"
+        android:textColor="@color/black"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/aboutus_text5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:text="@string/aboutus_text5"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <TextView 
+        android:id="@+id/aboutus_text6"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/aboutus_text6"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+    <TextView 
+        android:id="@+id/aboutus_text7"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/aboutus_text7"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+    <TextView 
+        android:id="@+id/aboutus_text8"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/aboutus_text8"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+    <TextView 
+        android:id="@+id/aboutus_text9"
+        android:layout_width="fill_parent"
+        android:text="@string/aboutus_text9"
+        android:layout_height="wrap_content"
+        android:paddingLeft="14.67dip"
+        android:paddingRight="14.67dip"
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+    
+    <RelativeLayout
+        android:id="@+id/aboutus_relative1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp" >
+         
+        <Button
+            android:id="@+id/aboutus_btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14.67dp"
+            android:background="@drawable/site_btn_1"
+            android:text="提提建议"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+        
+        <Button
+            android:id="@+id/aboutus_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.67dp"
+            android:layout_toRightOf="@id/aboutus_btn1"
+            android:background="@drawable/site_btn_1"
+            android:text="免责声明"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+         
+    </RelativeLayout>
+
+    
+
+</LinearLayout>
