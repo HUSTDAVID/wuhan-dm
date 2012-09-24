@@ -154,6 +154,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
+<<<<<<< HEAD
         <activity
             android:name=".activity.DM_ToWeiboActivity"
             android:label="@string/app_name"
@@ -168,6 +169,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+=======
+         <activity
+            android:name=".activity.DM_ForgetPasswdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.DM_FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+         <activity
+            android:name=".activity.DM_RegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+>>>>>>> 76408f5e0c8bcc265b9ffaabc4f6deca0f475150
         </activity>
     </application>
     
