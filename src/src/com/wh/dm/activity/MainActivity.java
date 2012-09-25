@@ -347,7 +347,7 @@ public class MainActivity extends Activity {
                     case 5:
 
                         Intent intent_pic_txt3 = new Intent(MainActivity.this,
-                                DM_RegisterActivity.class);
+                                DM_LoginActivity.class);
                         bundle.putInt("dm", DM_PICS_TXT3);
                         intent_pic_txt3.putExtras(bundle);
                         startActivity(intent_pic_txt3);
