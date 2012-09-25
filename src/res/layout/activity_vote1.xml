@@ -73,7 +73,7 @@
            android:layout_marginLeft="13.33dp"
            android:layout_marginTop="5dp"
            android:text="您的看法:"
-           android:textSize="17sp"
+           android:textSize="15sp"
            android:textColor="@color/vote_text1" />
 
        <RelativeLayout
@@ -89,7 +89,7 @@
                android:layout_toLeftOf="@+id/vote_ing_5"
                android:text="已有投票："
                android:textColor="@color/red"
-               android:textSize="17sp" />
+               android:textSize="15sp" />
 
            <TextView
                android:id="@+id/vote_ing_5"
@@ -99,7 +99,7 @@
                android:layout_marginRight="13.33dp"
                android:text="@string/vote_number"
                android:textColor="@color/red"
-               android:textSize="17sp" />
+               android:textSize="15sp" />
        </RelativeLayout>
        
        <RelativeLayout 
@@ -124,15 +124,39 @@
            android:layout_marginLeft="10dip"
            android:layout_marginRight="10dip"
            android:layout_height="wrap_content">
-
+
            <include
-               android:layout_width="fill_parent"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginBottom="10dip"
+               android:layout_marginBottom="15dp"
+               android:layout_marginTop="10dp"
                layout="@layout/vote_result" />
 
        </LinearLayout>
         </RelativeLayout>
-   </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/voti1_relative1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+       <Button
+           android:id="@+id/vote_button_close"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:layout_centerHorizontal="true"
+           android:layout_marginBottom="10dp"
+           android:background="@drawable/btn_vote_close"
+           android:text="关闭"
+           android:textColor="@color/white"
+           android:textSize="20sp" />
+       
+        </RelativeLayout>
+     
 
+   </LinearLayout>
+    
+    
+    
+   
 </LinearLayout>
