@@ -13,9 +13,10 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DM_NewsDetailsActivity extends Activity {
 
@@ -24,10 +25,15 @@ public class DM_NewsDetailsActivity extends Activity {
     LayoutInflater mInflater;
     private ListView lvNews;
     private View newsMessage;
-    private EditText edtxMyReply;
+    private EditText edtxMyReplyforBtn;
+    private EditText edtReply;
+    private Button btnReply;
     private Button btnMyShare;
     private Button btnMyFavorite;
     private Button btnMore;
+
+    LinearLayout bottomLayout1;
+    RelativeLayout bottomLayout2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +48,6 @@ public class DM_NewsDetailsActivity extends Activity {
     private void initViews() {
 
         mInflater = getLayoutInflater();
-        // set the header background and title there
-        /*
-         * headerView = mInflater.inflate(R.layout.header_title3, null);
-         * RelativeLayout relNewsHeader = (RelativeLayout)
-         * headerView.findViewById(R.id.rel_header3); TextView txtNewsHeader =
-         * (TextView) headerView.findViewById(R.id.txt_header3_title);
-         * relNewsHeader.setBackgroundResource(R.drawable.topbar_red_bg);
-         * txtNewsHeader.setText(getResources().getString(R.string.photo));
-         */
 
         lvNews = (ListView) findViewById(R.id.lv_news_details);
         // news body message
@@ -65,7 +62,7 @@ public class DM_NewsDetailsActivity extends Activity {
         newsSource.setText(getResources().getString(R.string.news_source));
         newsBody.setText(getResources().getString(R.string.news_body));
 
-        edtxMyReply = (EditText) findViewById(R.id.edtx_news_my_reply);
+        edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
         btnMyFavorite = (Button) findViewById(R.id.btn_news_my_favorite);
 
@@ -81,8 +78,6 @@ public class DM_NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                String str = edtxMyReply.getText().toString();
-                Toast.makeText(DM_NewsDetailsActivity.this, str, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -98,5 +93,34 @@ public class DM_NewsDetailsActivity extends Activity {
 
             }
         });
+
+        // inti reply views
+        bottomLayout1 = (LinearLayout) findViewById(R.id.linear1_news_details_bottom);
+        bottomLayout2 = (RelativeLayout) findViewById(R.id.linear2_news_details_bottom);
+
+        edtxMyReplyforBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                bottomLayout1.setVisibility(View.GONE);
+                bottomLayout2.setVisibility(View.VISIBLE);
+            }
+        });
+
+        edtReply = (EditText) findViewById(R.id.edt_news_details_input);
+        btnReply = (Button) findViewById(R.id.btn_news_details_reply);
+
+        btnReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                bottomLayout1.setVisibility(View.VISIBLE);
+                bottomLayout2.setVisibility(View.GONE);
+
+            }
+        });
+
     }
 }
