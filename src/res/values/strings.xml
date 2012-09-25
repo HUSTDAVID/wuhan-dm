@@ -109,4 +109,14 @@
     <string name="vote_title3">3.恐怕很难改变</string>
 
     <string name="photo1_body">陈苗苗6岁那年，一次患病后腰部以下失去知觉，再也无力站立起来了。从小学一年级到六年级，母亲一路推着坐在轮椅上的苗苗上学和放学。由于无法忍受久坐的疼痛和身体的不便，苗苗上课的时候只能以趴着的方式进行。S-Design/JBR</string>
+    <string name="toweibo">社区账号管理</string>
+    
+    
+    <string name="aboutus_text4">联系我们</string>
+    <string name="aboutus_text5">官方网站：http：//www.aimao.com/</string>
+    <string name="aboutus_text6">新浪微博：@AIMAO</string>
+    <string name="aboutus_text7">电子邮箱：support@aimao.com</string>
+    <string name="aboutus_text8">联系电话：027-87888888/027-87778888</string>
+    <string name="aboutus_text9">欢迎内容接入合作</string>
+    <string name="aboutus">关于我们</string>
 </resources>
