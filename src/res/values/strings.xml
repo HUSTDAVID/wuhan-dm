@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WH_DM</string>
+    <string name="app_name">艾猫</string>
     <string name="collections">我的收藏</string>
     <string name="favorites">猜你喜欢</string>
     <string name="interaction">互动</string>
@@ -87,6 +87,22 @@
     <string name="vote_title1">1.需要加强扶持</string>
     <string name="vote_title2">2.已经足够，无需调整</string>
     <string name="vote_title3">3.恐怕很难改变</string>
-
+	<!-- Preference -->
     <string name="photo1_body">陈苗苗6岁那年，一次患病后腰部以下失去知觉，再也无力站立起来了。从小学一年级到六年级，母亲一路推着坐在轮椅上的苗苗上学和放学。由于无法忍受久坐的疼痛和身体的不便，苗苗上课的时候只能以趴着的方式进行。S-Design/JBR</string>
+    <string name="account">帐号</string>
+    <string name="setting">设置</string>
+    <string name="others">其他</string>
+    <string name="login">登录AIMAO</string>
+    <string name="login_summary">登录后可同步收藏和订阅DM</string>
+    <string name="account_manager">社交帐号管理</string>
+	<string name="account_summary">绑定和管理新浪微博等社交帐号</string>
+	<string name="settings">设置</string>
+	<string name="flow">流量控制</string>
+	<string name="cache">清楚缓存</string>
+	<string name="more">更多</string>
+	<string name="more_summary">更多个性化设置</string>
+	<string name="feedback">用户反馈</string>
+	<string name="feedback_summary">欢迎给我们提出宝贵意见</string>
+	<string name="about_us">关于我们</string>
+	<string name="about_us_summary">当前版本wei</string>
 </resources>

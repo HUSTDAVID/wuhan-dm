@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/account" >
+        <Preference
+            android:key="login"
+            android:summary="@string/login_summary"
+            android:title="@string/login" android:layout="@layout/set_pref">
+        </Preference>
+        <Preference
+            android:key="account"
+            android:summary="@string/account_summary"
+            android:title="@string/account_manager" android:layout="@layout/set_pref" >
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings" >
+        <ListPreference
+            android:key="flow"
+            android:title="@string/flow" />
+
+        <Preference
+            android:key="cache"
+            android:summary="当前共有缓存42.85MB"
+            android:title="@string/cache"
+            android:layout="@layout/set_pref">
+        </Preference>
+
+        <Preference
+            android:key="more"
+            android:summary="@string/more_summary"
+            android:title="@string/more"
+            android:layout="@layout/set_pref" >
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory>
+        <Preference
+            android:key="feedback"
+            android:summary="@string/feedback_summary"
+            android:title="@string/feedback"
+            android:layout="@layout/set_pref">
+        </Preference>
+        <Preference
+            android:key="aboutus"
+            android:summary="@string/about_us_summary"
+            android:title="@string/about_us"
+            android:layout="@layout/set_pref">
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

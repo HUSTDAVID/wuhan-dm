@@ -15,10 +15,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +37,10 @@ public class MainActivity extends Activity {
     private ImageView delImage;
     LinearLayout.LayoutParams param;
     Animation up, down;
+
+    private ImageButton btn_download;
+    private ImageButton btn_add;
+    private ImageButton btn_set;
 
     public static final int PAGE_SIZE = 8;
     public static final int SLIDE_GRID = 0;
@@ -258,6 +264,20 @@ public class MainActivity extends Activity {
         if (gridView != null) {
             scrollLayout.removeAllViews();
         }
+        btn_download = (ImageButton) findViewById(R.id.btn_download);
+        btn_add = (ImageButton) findViewById(R.id.btn_add);
+        btn_set = (ImageButton) findViewById(R.id.btn_set);
+        btn_set.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
+
+            }
+
+        });
     }
 
     public int dip2px(int dip) {
@@ -346,12 +366,13 @@ public class MainActivity extends Activity {
                         break;
                     case 5:
 
-                        Intent intent_pic_txt3 = new Intent(MainActivity.this,
-                                DM_MZineLongActivity.class);
-                        bundle.putInt("dm", DM_PICS_TXT3);
-                        intent_pic_txt3.putExtras(bundle);
-                        startActivity(intent_pic_txt3);
-
+                        /*
+                         * Intent intent_pic_txt3 = new
+                         * Intent(MainActivity.this,
+                         * DM_MZineLongActivity.class); bundle.putInt("dm",
+                         * DM_PICS_TXT3); intent_pic_txt3.putExtras(bundle);
+                         * startActivity(intent_pic_txt3);
+                         */
                         break;
 
                     case 6:

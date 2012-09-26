@@ -17,13 +17,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" >
-
+
         <ImageView
             android:id="@+id/img_magazine_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/mzine2_02" />
+            android:src="@drawable/mzine3" />
 
     </RelativeLayout>
 
