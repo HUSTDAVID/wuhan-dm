@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_normal"
+    android:orientation="vertical" >
+    
+    <include 
+        layout="@layout/header_title2"/>
+   
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dip"
+        android:orientation="vertical"
+        android:paddingRight="20dip">
+        
+        <EditText
+            android:id="@+id/edt_register_emial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:background="@drawable/site_btn_2_9patch"
+            android:ems="10"
+            android:hint="@string/email"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip"
+            android:textColor="#a7a7a7"
+            android:textSize="18dip" />
+
+    <EditText
+        android:id="@+id/edt_register_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dip"
+        android:background="@drawable/site_btn_2_9patch"
+        android:ems="10"
+        android:hint="@string/password"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:textColor="#a7a7a7"
+        android:textSize="18dip" />
+    
+     <TableRow
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="15dip" >
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="36dip"
+    android:layout_marginRight="15dip"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:background="@drawable/site_btn_2" >
+
+    <CheckBox
+        android:id="@+id/cb_show_passwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/checkbox_show_passwd"
+        android:text="@string/show_passwd"
+        android:textColor="#a7a7a7" />
+
+       </LinearLayout>
+
+       <Button
+           android:id="@+id/btn_register_send"
+           android:layout_width="wrap_content"
+           android:layout_height="36dip"
+           android:layout_weight="1"
+           android:background="@drawable/site_btn_3"
+           android:text="@string/register"
+           android:textColor="@color/white"
+           android:textSize="18sp" />
+       
+   </TableRow>
+    
+    
+    
+    </LinearLayout>
+
+</LinearLayout>

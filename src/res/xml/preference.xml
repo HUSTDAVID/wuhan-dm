@@ -5,7 +5,7 @@
         <Preference
             android:key="login"
             android:summary="@string/login_summary"
-            android:title="@string/login" android:layout="@layout/set_pref">
+            android:title="@string/set_login" android:layout="@layout/set_pref">
         </Preference>
         <Preference
             android:key="account"
@@ -36,7 +36,7 @@
         <Preference
             android:key="feedback"
             android:summary="@string/feedback_summary"
-            android:title="@string/feedback"
+            android:title="@string/set_feedback"
             android:layout="@layout/set_pref">
         </Preference>
         <Preference

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_normal"
+    android:orientation="vertical" >
+    
+    <include 
+        layout="@layout/header_title3"/>
+   
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dip"
+        android:orientation="vertical"
+        android:paddingRight="20dip">
+        
+
+        <EditText
+            android:id="@+id/edt_login_emial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:background="@drawable/site_btn_2_9patch"
+            android:ems="10"
+            android:hint="@string/email"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip"
+            android:textColor="#a7a7a7"
+            android:textSize="18dip" />
+
+
+    <EditText
+        android:id="@+id/edt_login_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dip"
+        android:background="@drawable/site_btn_2_9patch"
+        android:ems="10"
+        android:hint="@string/password"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:textColor="#a7a7a7"
+        android:textSize="18dip" />
+    
+
+
+     <TableRow
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="15dip" >
+
+  <Button
+      android:id="@+id/btn_login_forget_pw"
+      android:layout_width="wrap_content"
+      android:layout_height="36dip"
+      android:layout_marginRight="10dip"
+      android:layout_weight="1"
+      android:background="@drawable/site_btn_2"
+      android:text="@string/goto_forget_passwd"
+      android:textColor="#a7a7a7"
+      android:textSize="18sp" />
+       
+       <Button
+           android:id="@+id/btn_login"
+           android:layout_width="wrap_content"
+           android:layout_height="36dip"
+           android:layout_marginLeft="10dip"
+           android:layout_weight="1"
+           android:background="@drawable/site_btn_3"
+           android:text="@string/login"
+           android:textColor="@color/white"
+           android:textSize="18sp" />
+       
+   </TableRow>
+    
+    
+    
+    </LinearLayout>
+
+</LinearLayout>

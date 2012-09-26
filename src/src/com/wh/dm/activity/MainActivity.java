@@ -366,13 +366,12 @@ public class MainActivity extends Activity {
                         break;
                     case 5:
 
-                        /*
-                         * Intent intent_pic_txt3 = new
-                         * Intent(MainActivity.this,
-                         * DM_MZineLongActivity.class); bundle.putInt("dm",
-                         * DM_PICS_TXT3); intent_pic_txt3.putExtras(bundle);
-                         * startActivity(intent_pic_txt3);
-                         */
+                        Intent intent_pic_txt3 = new Intent(MainActivity.this,
+                                DM_LoginActivity.class);
+                        bundle.putInt("dm", DM_PICS_TXT3);
+                        intent_pic_txt3.putExtras(bundle);
+                        startActivity(intent_pic_txt3);
+
                         break;
 
                     case 6:

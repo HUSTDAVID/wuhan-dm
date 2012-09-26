@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_normal"
+    android:orientation="vertical" >
+    
+    <include 
+        layout="@layout/header_title2"/>
+   
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dip"
+        android:orientation="vertical"
+        android:paddingRight="20dip">
+        
+        
+    <TextView 
+        android:text="@string/contact"
+        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="15dip"
+        android:layout_marginBottom="15dip"    
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/edt_feedback_contack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/site_btn_2_9patch"
+        android:ems="10"
+        android:hint="@string/emial_or_phone"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:textColor="#a7a7a7"
+        android:textSize="18dip" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="15dip"
+        android:layout_marginBottom="15dip"    
+        android:layout_height="wrap_content"
+        android:text="@string/feedback_text" />
+
+    <EditText
+        android:id="@+id/edt_feedback_text"
+        android:gravity="top|left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dip"
+        android:background="@drawable/site_btn_2_9patch"
+        android:ems="10"
+        android:minHeight="200dip"
+        android:textColor="#a7a7a7"
+        android:textSize="18dip" />
+    
+     <RelativeLayout 
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content">
+       
+       <Button
+           android:id="@+id/btn_feedback_send"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+           android:background="@drawable/site_btn_3"
+           android:text="@string/send"
+           android:textColor="@color/white"
+           android:textSize="18sp" />
+       
+   </RelativeLayout>
+    
+    
+    
+    </LinearLayout>
+
+</LinearLayout>

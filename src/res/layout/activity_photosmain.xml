@@ -60,7 +60,7 @@
 
             <EditText
                 android:id="@+id/edtx_photos_my_reply"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/btn_photos_det_btm_left"
                 android:background="@drawable/input_black_bg"
