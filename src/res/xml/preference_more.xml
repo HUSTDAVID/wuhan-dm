@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:layout="@layout/set_pref_list"
+        android:summary="@string/text_summary"
+        android:title="@string/text_size" />
+
+    <CheckBoxPreference
+        android:layout="@layout/set_pref_check"
+        android:summaryOff="开启推送功能后，我们会第一时间推送要闻给你"
+        android:summaryOn="消息推送关闭"
+        android:title="@string/push" android:widgetLayout="@layout/set_checkbox"/>
+    <CheckBoxPreference
+        android:layout="@layout/set_pref_check"
+        android:summaryOff="保持屏幕正常亮度"
+        android:summaryOn="屏幕亮度调节关闭"
+        android:title="@string/screen" android:widgetLayout="@layout/set_checkbox"/>
+
+</PreferenceScreen>

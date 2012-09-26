@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="52dip"
+    android:layout_height="55dip"
     android:background="@drawable/set_list_bg"
     android:orientation="vertical" >
 
@@ -15,16 +16,27 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/pref_txt_color"
         android:textSize="19sp" />
-
+
     <TextView
         android:id="@+android:id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+android:id/title"
         android:paddingBottom="6dip"
         android:paddingLeft="12dip"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/pref_txt_color"
         android:textSize="11sp" />
+
+    <LinearLayout
+        android:id="@+android:id/widget_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="false"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="14.7dip" />
 
-</LinearLayout>
+</RelativeLayout>

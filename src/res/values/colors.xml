@@ -42,4 +42,5 @@
     <!-- preference -->
     <color name="pref_txt_color">#343434</color>
     <color name="pref_category_bg">#7B7B7B</color>
+    <color name="pref_selected">#7B7B7B</color>
 </resources>

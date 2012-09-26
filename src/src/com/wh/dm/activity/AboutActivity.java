@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.TextView;
 
-public class DM_AboutUsActivity extends Activity {
+public class AboutActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class DM_FeedbackActivity extends Activity {
+public class FeedbackActivity extends Activity {
 
     EditText edtContack;
     EditText edtFeedbackText;

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DM_CollectActivity extends Activity {
+public class CollectActivity extends Activity {
 
     private ListView collect_list;
     List<Map<String, Object>> list;
