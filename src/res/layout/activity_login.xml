@@ -27,6 +27,7 @@
             android:hint="@string/email"
             android:paddingBottom="5dip"
             android:paddingTop="5dip"
+            android:textColorHint="#a7a7a7"
             android:textColor="#a7a7a7"
             android:textSize="18dip" />
 
@@ -41,6 +42,7 @@
         android:hint="@string/password"
         android:paddingBottom="5dip"
         android:paddingTop="5dip"
+        android:textColorHint="#a7a7a7"
         android:textColor="#a7a7a7"
         android:textSize="18dip" />
     
@@ -59,7 +61,7 @@
       android:layout_weight="1"
       android:background="@drawable/site_btn_2"
       android:text="@string/goto_forget_passwd"
-      android:textColor="#a7a7a7"
+      android:textColor="#7b7b7b"
       android:textSize="18sp" />
        
        <Button
