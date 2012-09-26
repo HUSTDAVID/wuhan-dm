@@ -121,15 +121,17 @@
            android:id="@+id/linear_vote_resul"
            android:layout_width="fill_parent"
            android:visibility="visible"
-           android:layout_marginLeft="10dip"
-           android:layout_marginRight="10dip"
+           android:layout_marginTop="10dp"
+            android:layout_marginLeft="13.33dip"
+           android:layout_marginRight="13.33dip"
            android:layout_height="wrap_content">
-
+
            <include
-               android:layout_width="match_parent"
+               android:layout_width="293.33dip"
                android:layout_height="wrap_content"
-               android:layout_marginBottom="15dp"
-               android:layout_marginTop="10dp"
+               android:layout_gravity="center_horizontal"
+               android:layout_marginBottom="8dp"
+               android:layout_marginTop="5dp"
                layout="@layout/vote_result" />
 
        </LinearLayout>
@@ -138,7 +140,7 @@
         android:id="@+id/voti1_relative1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-
+
        <Button
            android:id="@+id/vote_button_close"
            android:layout_width="wrap_content"
