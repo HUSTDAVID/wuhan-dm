@@ -12,11 +12,7 @@
         layout="@layout/dm_mzine_header" >
     </include>
     
-    <include 
-        android:id="@+id/mzine_long_imgtop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/dm_mzine_long_header"/>
+   
     
      <ListView
         android:id="@+id/lv_mzine_long1"

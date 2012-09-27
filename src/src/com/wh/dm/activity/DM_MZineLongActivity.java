@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,10 +34,12 @@ public class DM_MZineLongActivity extends Activity {
         ImageView header = (ImageView) findViewById(R.id.img_header);
         header.setImageResource(R.drawable.temp_magazine_title);
 
-        // init image header
-        ImageView img1Header = (ImageView) findViewById(R.id.mzine_long_img_header_1);
-        ImageView img2Header = (ImageView) findViewById(R.id.mzine_long_img_header_2);
-        ImageView img3Header = (ImageView) findViewById(R.id.mzine_long_img_header_3);
+        // add header for list view
+        LayoutInflater mInflater = getLayoutInflater();
+        View lvHeader = mInflater.inflate(R.layout.dm_mzine_long_header, null);
+        ImageView img1Header = (ImageView) lvHeader.findViewById(R.id.mzine_long_img_header_1);
+        ImageView img2Header = (ImageView) lvHeader.findViewById(R.id.mzine_long_img_header_2);
+        ImageView img3Header = (ImageView) lvHeader.findViewById(R.id.mzine_long_img_header_3);
 
         Bitmap bmp1Header = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_4x_1);
         Bitmap bmp2Header = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_1x_2);
@@ -47,6 +51,8 @@ public class DM_MZineLongActivity extends Activity {
 
         // init list view
         listview = (ListView) findViewById(R.id.lv_mzine_long1);
+
+        listview.addHeaderView(lvHeader);
         MzineLongAdapter adapter = new MzineLongAdapter(this);
 
         Bitmap bmp1 = BitmapFactory.decodeResource(getResources(), R.drawable.temp_dm_2x_1);

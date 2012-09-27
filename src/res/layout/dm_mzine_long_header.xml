@@ -62,5 +62,10 @@
     
 
 </LinearLayout>
+ <View
+        android:id="@+id/mzine_img_header_line1"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="@drawable/double_line_hor"/>
 
 </LinearLayout>
