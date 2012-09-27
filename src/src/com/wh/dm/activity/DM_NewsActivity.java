@@ -7,14 +7,11 @@ import android.app.ActivityGroup;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -24,7 +21,6 @@ public class DM_NewsActivity extends ActivityGroup {
     private TextView txtTitle;
     private TextView txtSelectedItem;
 
-    private RelativeLayout layoutListTop;
     private RelativeLayout relMain;
     private LayoutParams params = null;
 
@@ -36,10 +32,7 @@ public class DM_NewsActivity extends ActivityGroup {
     private TextView txtTravel;
 
     private View vMain;
-
-    private int startX = 0;
     private int itemWidth = 0;
-
     Intent intent = null;
 
     @Override
@@ -54,7 +47,6 @@ public class DM_NewsActivity extends ActivityGroup {
 
     private void initViews() {
 
-        layoutListTop = (RelativeLayout) findViewById(R.id.layout_list_top);
         txtTitle = (TextView) findViewById(R.id.txt_title);
         txtTitle.setText(getResources().getString(R.string.news));
 
@@ -74,17 +66,9 @@ public class DM_NewsActivity extends ActivityGroup {
         txtLift.setOnClickListener(new NewsItemOnClickListener());
         txtTravel.setOnClickListener(new NewsItemOnClickListener());
 
-        txtSelectedItem = new TextView(this);
-        txtSelectedItem.setText(R.string.headline);
-        txtSelectedItem.setTextColor(Color.WHITE);
-        txtSelectedItem.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-        txtSelectedItem.setGravity(Gravity.CENTER);
-        txtSelectedItem.setWidth(getScreenWidth() / 6);
-        txtSelectedItem.setBackgroundResource(R.drawable.list_topbar_hover);
         RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(itemWidth,
                 LayoutParams.WRAP_CONTENT);
         param.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        layoutListTop.addView(txtSelectedItem);
 
         // set the activity of headline
         intent = new Intent(DM_NewsActivity.this, DM_HeadLineActivity.class);
@@ -92,7 +76,7 @@ public class DM_NewsActivity extends ActivityGroup {
         vMain = getLocalActivityManager().startActivity("Headline", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         relMain.addView(vMain, params);
-
+        setCurTxt(1);
     }
 
     private class NewsItemOnClickListener implements OnClickListener {
@@ -102,10 +86,7 @@ public class DM_NewsActivity extends ActivityGroup {
 
             switch (v.getId()) {
                 case R.id.txt_listtop_1:
-                    SetImageSlide(txtSelectedItem, startX, 0, 0, 0);
-                    startX = 0;
-                    txtSelectedItem.setText(R.string.headline);
-
+                    setCurTxt(1);
                     intent.setClass(DM_NewsActivity.this, DM_HeadLineActivity.class);
                     vMain = getLocalActivityManager().startActivity("Headline", intent)
                             .getDecorView();
@@ -113,40 +94,29 @@ public class DM_NewsActivity extends ActivityGroup {
                     break;
 
                 case R.id.txt_listtop_2:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth, 0, 0);
-                    startX = itemWidth;
-                    txtSelectedItem.setText(R.string.house);
+                    setCurTxt(2);
                     intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
-
                     break;
 
                 case R.id.txt_listtop_3:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 2, 0, 0);
-                    startX = itemWidth * 2;
-                    txtSelectedItem.setText(R.string.car);
+                    setCurTxt(3);
                     intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_4:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 3, 0, 0);
-                    startX = itemWidth * 3;
-                    txtSelectedItem.setText(R.string.fashion);
+                    setCurTxt(4);
                     intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_5:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 4, 0, 0);
-                    startX = itemWidth * 4;
-                    txtSelectedItem.setText(R.string.lift);
+                    setCurTxt(5);
                     break;
 
                 case R.id.txt_listtop_6:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 5, 0, 0);
-                    startX = itemWidth * 5;
-                    txtSelectedItem.setText(R.string.traval);
+                    setCurTxt(6);
                     intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
@@ -167,11 +137,95 @@ public class DM_NewsActivity extends ActivityGroup {
         return screenWidth;
     }
 
-    public static void SetImageSlide(View v, int startX, int toX, int startY, int toY) {
+    private void setCurTxt(int i) {
 
-        TranslateAnimation anim = new TranslateAnimation(startX, toX, startY, toY);
-        anim.setDuration(100);
-        anim.setFillAfter(true);
-        v.startAnimation(anim);
+        switch (i) {
+            case 1:
+                txtHeadline.setSelected(true);
+                txtHeadline.setTextColor(Color.WHITE);
+                txtHouse.setSelected(false);
+                txtHouse.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtFashion.setSelected(false);
+                txtFashion.setTextColor(Color.BLACK);
+                txtLift.setSelected(false);
+                txtLift.setTextColor(Color.BLACK);
+                txtTravel.setSelected(false);
+                txtTravel.setTextColor(Color.BLACK);
+                break;
+            case 2:
+                txtHeadline.setSelected(false);
+                txtHeadline.setTextColor(Color.BLACK);
+                txtHouse.setSelected(true);
+                txtHouse.setTextColor(Color.WHITE);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtFashion.setSelected(false);
+                txtFashion.setTextColor(Color.BLACK);
+                txtLift.setSelected(false);
+                txtLift.setTextColor(Color.BLACK);
+                txtTravel.setSelected(false);
+                txtTravel.setTextColor(Color.BLACK);
+                break;
+            case 3:
+                txtHeadline.setSelected(false);
+                txtHeadline.setTextColor(Color.BLACK);
+                txtHouse.setSelected(false);
+                txtHouse.setTextColor(Color.BLACK);
+                txtCar.setSelected(true);
+                txtCar.setTextColor(Color.WHITE);
+                txtFashion.setSelected(false);
+                txtFashion.setTextColor(Color.BLACK);
+                txtLift.setSelected(false);
+                txtLift.setTextColor(Color.BLACK);
+                txtTravel.setSelected(false);
+                txtTravel.setTextColor(Color.BLACK);
+                break;
+            case 4:
+                txtHeadline.setSelected(false);
+                txtHeadline.setTextColor(Color.BLACK);
+                txtHouse.setSelected(false);
+                txtHouse.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtFashion.setSelected(true);
+                txtFashion.setTextColor(Color.WHITE);
+                txtLift.setSelected(false);
+                txtLift.setTextColor(Color.BLACK);
+                txtTravel.setSelected(false);
+                txtTravel.setTextColor(Color.BLACK);
+                break;
+            case 5:
+                txtHeadline.setSelected(false);
+                txtHeadline.setTextColor(Color.BLACK);
+                txtHouse.setSelected(false);
+                txtHouse.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtFashion.setSelected(false);
+                txtFashion.setTextColor(Color.BLACK);
+                txtLift.setSelected(true);
+                txtLift.setTextColor(Color.WHITE);
+                txtTravel.setSelected(false);
+                txtTravel.setTextColor(Color.BLACK);
+                break;
+            case 6:
+                txtHeadline.setSelected(false);
+                txtHeadline.setTextColor(Color.BLACK);
+                txtHouse.setSelected(false);
+                txtHouse.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtFashion.setSelected(false);
+                txtFashion.setTextColor(Color.BLACK);
+                txtLift.setSelected(false);
+                txtLift.setTextColor(Color.BLACK);
+                txtTravel.setSelected(true);
+                txtTravel.setTextColor(Color.WHITE);
+                break;
+        }
+
     }
+
 }

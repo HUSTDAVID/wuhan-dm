@@ -7,24 +7,18 @@ import android.app.ActivityGroup;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 public class DM_PhotosActivity extends ActivityGroup {
 
-    private TextView txtSelectedItem;
-
-    private RelativeLayout layoutListTop;
     private RelativeLayout relMain;
     private LayoutParams params = null;
 
@@ -36,8 +30,6 @@ public class DM_PhotosActivity extends ActivityGroup {
     private TextView txtFun;
 
     private View vMain;
-
-    private int startX = 0;
     private int itemWidth = 0;
 
     Intent intent = null;
@@ -63,9 +55,6 @@ public class DM_PhotosActivity extends ActivityGroup {
         TextView txtTitle = (TextView) findViewById(R.id.txt_title);
         txtTitle.setText(getResources().getString(R.string.photo));
 
-        // list top
-        layoutListTop = (RelativeLayout) findViewById(R.id.layout_list_top);
-
         txtAll = (TextView) findViewById(R.id.txt_listtop_1);
         txtAll.setText(getResources().getString(R.string.all));
         txtHot = (TextView) findViewById(R.id.txt_listtop_2);
@@ -88,17 +77,9 @@ public class DM_PhotosActivity extends ActivityGroup {
         txtPhotograph.setOnClickListener(new PhotosItemOnClickListener());
         txtFun.setOnClickListener(new PhotosItemOnClickListener());
 
-        txtSelectedItem = new TextView(this);
-        txtSelectedItem.setText(R.string.all);
-        txtSelectedItem.setTextColor(Color.WHITE);
-        txtSelectedItem.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-        txtSelectedItem.setGravity(Gravity.CENTER);
-        txtSelectedItem.setWidth(getScreenWidth() / 6);
-        txtSelectedItem.setBackgroundResource(R.drawable.list_topbar_hover);
         RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(itemWidth,
                 LayoutParams.WRAP_CONTENT);
         param.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        layoutListTop.addView(txtSelectedItem);
 
         // set the activity of photos all
         intent = new Intent(DM_PhotosActivity.this, DM_Photos_AllActivity.class);
@@ -106,7 +87,7 @@ public class DM_PhotosActivity extends ActivityGroup {
         vMain = getLocalActivityManager().startActivity("all", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         relMain.addView(vMain, params);
-
+        setCurTxt(1);
     }
 
     private class PhotosItemOnClickListener implements OnClickListener {
@@ -116,47 +97,29 @@ public class DM_PhotosActivity extends ActivityGroup {
 
             switch (v.getId()) {
                 case R.id.txt_listtop_1:
-                    SetImageSlide(txtSelectedItem, startX, 0, 0, 0);
-                    startX = 0;
-                    txtSelectedItem.setText(R.string.all);
-
+                    setCurTxt(1);
                     intent.setClass(DM_PhotosActivity.this, DM_Photos_AllActivity.class);
                     vMain = getLocalActivityManager().startActivity("all", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_2:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth, 0, 0);
-                    startX = itemWidth;
-                    txtSelectedItem.setText(R.string.hot);
-
+                    setCurTxt(2);
                     break;
 
                 case R.id.txt_listtop_3:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 2, 0, 0);
-                    startX = itemWidth * 2;
-                    txtSelectedItem.setText(R.string.car);
-
+                    setCurTxt(3);
                     break;
 
                 case R.id.txt_listtop_4:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 3, 0, 0);
-                    startX = itemWidth * 3;
-                    txtSelectedItem.setText(R.string.girl);
-
+                    setCurTxt(4);
                     break;
 
                 case R.id.txt_listtop_5:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 4, 0, 0);
-                    startX = itemWidth * 4;
-                    txtSelectedItem.setText(R.string.photograph);
-
+                    setCurTxt(5);
                     break;
 
                 case R.id.txt_listtop_6:
-                    SetImageSlide(txtSelectedItem, startX, itemWidth * 5, 0, 0);
-                    startX = itemWidth * 5;
-                    txtSelectedItem.setText(R.string.fun);
-
+                    setCurTxt(6);
                     break;
             }
 
@@ -175,11 +138,95 @@ public class DM_PhotosActivity extends ActivityGroup {
         return screenWidth;
     }
 
-    public static void SetImageSlide(View v, int startX, int toX, int startY, int toY) {
+    private void setCurTxt(int i) {
 
-        TranslateAnimation anim = new TranslateAnimation(startX, toX, startY, toY);
-        anim.setDuration(100);
-        anim.setFillAfter(true);
-        v.startAnimation(anim);
+        switch (i) {
+            case 1:
+                txtAll.setSelected(true);
+                txtAll.setTextColor(Color.WHITE);
+                txtHot.setSelected(false);
+                txtHot.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtGirl.setSelected(false);
+                txtGirl.setTextColor(Color.BLACK);
+                txtPhotograph.setSelected(false);
+                txtPhotograph.setTextColor(Color.BLACK);
+                txtFun.setSelected(false);
+                txtFun.setTextColor(Color.BLACK);
+                break;
+            case 2:
+                txtAll.setSelected(false);
+                txtAll.setTextColor(Color.BLACK);
+                txtHot.setSelected(true);
+                txtHot.setTextColor(Color.WHITE);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtGirl.setSelected(false);
+                txtGirl.setTextColor(Color.BLACK);
+                txtPhotograph.setSelected(false);
+                txtPhotograph.setTextColor(Color.BLACK);
+                txtFun.setSelected(false);
+                txtFun.setTextColor(Color.BLACK);
+                break;
+            case 3:
+                txtAll.setSelected(false);
+                txtAll.setTextColor(Color.BLACK);
+                txtHot.setSelected(false);
+                txtHot.setTextColor(Color.BLACK);
+                txtCar.setSelected(true);
+                txtCar.setTextColor(Color.WHITE);
+                txtGirl.setSelected(false);
+                txtGirl.setTextColor(Color.BLACK);
+                txtPhotograph.setSelected(false);
+                txtPhotograph.setTextColor(Color.BLACK);
+                txtFun.setSelected(false);
+                txtFun.setTextColor(Color.BLACK);
+                break;
+            case 4:
+                txtAll.setSelected(false);
+                txtAll.setTextColor(Color.BLACK);
+                txtHot.setSelected(false);
+                txtHot.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtGirl.setSelected(true);
+                txtGirl.setTextColor(Color.WHITE);
+                txtPhotograph.setSelected(false);
+                txtPhotograph.setTextColor(Color.BLACK);
+                txtFun.setSelected(false);
+                txtFun.setTextColor(Color.BLACK);
+                break;
+            case 5:
+                txtAll.setSelected(false);
+                txtAll.setTextColor(Color.BLACK);
+                txtHot.setSelected(false);
+                txtHot.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtGirl.setSelected(false);
+                txtGirl.setTextColor(Color.BLACK);
+                txtPhotograph.setSelected(true);
+                txtPhotograph.setTextColor(Color.WHITE);
+                txtFun.setSelected(false);
+                txtFun.setTextColor(Color.BLACK);
+                break;
+            case 6:
+                txtAll.setSelected(false);
+                txtAll.setTextColor(Color.BLACK);
+                txtHot.setSelected(false);
+                txtHot.setTextColor(Color.BLACK);
+                txtCar.setSelected(false);
+                txtCar.setTextColor(Color.BLACK);
+                txtGirl.setSelected(false);
+                txtGirl.setTextColor(Color.BLACK);
+                txtPhotograph.setSelected(false);
+                txtPhotograph.setTextColor(Color.BLACK);
+                txtFun.setSelected(true);
+                txtFun.setTextColor(Color.WHITE);
+                break;
+        }
+
     }
+
 }
