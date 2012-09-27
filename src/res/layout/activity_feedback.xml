@@ -35,6 +35,7 @@
         android:hint="@string/emial_or_phone"
         android:paddingBottom="5dip"
         android:paddingTop="5dip"
+        android:textColorHint="#a7a7a7"
         android:textColor="#a7a7a7"
         android:textSize="18dip" />
 

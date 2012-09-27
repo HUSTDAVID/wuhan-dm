@@ -64,9 +64,9 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_CollectActivity"
+            android:name=".activity.CollectActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name=".activity.DM_Photos_AllActivity"
@@ -128,17 +128,17 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-         <activity
+        <activity
             android:name=".activity.DM_News_HouseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-         <activity
+        <activity
             android:name=".activity.DM_VoteWatchResult"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-         <activity
+        <activity
             android:name=".activity.DM_MZine2Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
@@ -148,7 +148,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-		 <activity
+        <activity
             android:name=".activity.DM_TempActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
@@ -158,42 +158,59 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-
         <activity
-            android:name=".activity.DM_ToWeiboActivity"
+            android:name=".activity.WeiboActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_AboutUsActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            
-            </activity>
-
-         <activity
-            android:name=".activity.DM_ForgetPasswdActivity"
+            android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
-        <activity
-            android:name=".activity.DM_FeedbackActivity"
-            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
          <activity
-            android:name=".activity.DM_RegisterActivity"
+            android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-
         </activity>
-        <activity
-            android:name=".activity.DM_LoginActivity"
+          <activity
+            android:name=".activity.ForgetPasswdActivity"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+         <activity
+            android:name=".activity.AccountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+         <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+         <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+         <activity
+            android:name=".activity.MoreActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
     </application>
-    
 
     <supports-screens
         android:anyDensity="true"

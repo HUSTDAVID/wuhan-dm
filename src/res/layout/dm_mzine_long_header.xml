@@ -8,7 +8,7 @@
     <View
         android:id="@+id/mzine_img_header_line1"
         android:layout_width="fill_parent"
-        android:layout_height="2dip"
+        android:layout_height="1.5dip"
         android:background="@drawable/double_line_hor"/>
 
     <LinearLayout 
@@ -25,7 +25,7 @@
     
     <View
             android:id="@+id/mzine_img_header_line2"
-            android:layout_width="2dip"
+            android:layout_width="1.5dip"
             android:layout_height="199.33dip"
             android:layout_weight="3"
             android:background="@color/mzine_img" />
@@ -65,7 +65,7 @@
  <View
         android:id="@+id/mzine_img_header_line1"
         android:layout_width="fill_parent"
-        android:layout_height="2dip"
+        android:layout_height="1.5dip"
         android:background="@drawable/double_line_hor"/>
 
 </LinearLayout>

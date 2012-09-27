@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class DM_RegisterActivity extends Activity {
+public class RegisterActivity extends Activity {
 
     EditText edtEmail;
     EditText edtPasswd;

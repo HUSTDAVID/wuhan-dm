@@ -7,11 +7,11 @@
 	<include
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    layout="@layout/dm_mzine_header" 
+	    layout="@layout/dm_mzine_header"
 	    android:layout_weight="0.3">
 	</include>
-	
-	<RelativeLayout 
+
+	<RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@drawable/mzine3" />
-    
-    <TextView 
+
+    <TextView
         android:id="@+id/txt_mzine3_photos_title"
         android:layout_width="wrap_content"
         android:layout_height="30dip"
@@ -41,7 +41,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
         android:background="@drawable/double_line_hor"
-        android:layout_marginLeft="10dip" 
+        android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"/>
 
 
@@ -51,17 +51,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-
-
+
         <LinearLayout
             android:id="@+id/layout1_magazine_3"
             style="@style/magazine_news_layout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
-
+            android:orientation="vertical"
+            android:paddingTop="15dip" >
 
             <TextView
                 android:id="@+id/txt_magazine_3_title1"
@@ -100,16 +98,15 @@
             android:layout_height="fill_parent"
             android:background="@drawable/double_line_ver" >
         </View>
-
-
+
         <LinearLayout
             android:id="@+id/layout2_magazine_3"
             style="@style/magazine_news_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical" >
-
+            android:orientation="vertical"
+            android:paddingTop="15dip" >
 
             <TextView
                 android:id="@+id/txt_magazine_3_title2"
@@ -126,7 +123,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dip"
                     android:text="湖北荆楚网" />
-                
+
                  <TextView
                     android:id="@+id/txt_magazine_3_time2"
                     style="@style/magazine_body"
@@ -140,13 +137,13 @@
 
 
 
-    
+
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
-        android:background="@drawable/double_line_hor" 
-        android:layout_marginLeft="10dip" 
+        android:background="@drawable/double_line_hor"
+        android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"/>
 
 
@@ -164,13 +161,12 @@
             android:paddingLeft="15dip"
             android:paddingRight="15dip"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/txt_magazine_3_title5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"               
-                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="市政府与中国医药集团签订合作协议"
                 android:textColor="@color/mzine_txt_normal"
                 android:textSize="17sp" />
@@ -198,37 +194,34 @@
                     android:text="1个小时前" />
 
             </LinearLayout>
-            
-             
+
+
         </LinearLayout>
-        
-        
-        
+
+
+
     </TableRow>
-    
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
-        android:background="@drawable/double_line_hor" 
-        android:layout_marginLeft="10dip" 
+        android:background="@drawable/double_line_hor"
+        android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"/>
-    
+
     <LinearLayout
         android:id="@+id/medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-
-
-
+
         <LinearLayout
             android:id="@+id/layout3_magazine_3"
             style="@style/magazine_news_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical" >
-
+            android:orientation="vertical"
+            android:paddingTop="15dip" >
 
             <TextView
                 android:id="@+id/txt_magazine_3_title3"
@@ -245,7 +238,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dip"
                     android:text="湖北荆楚网" />
-                
+
                  <TextView
                     android:id="@+id/txt_magazine_3_time3"
                     style="@style/magazine_body"
@@ -259,15 +252,15 @@
             android:layout_width="1.5dip"
             android:layout_height="fill_parent"
             android:background="@drawable/double_line_ver" />
-
-
+
         <LinearLayout
             android:id="@+id/layout4_magazine_3"
             style="@style/magazine_news_layout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingTop="15dip" >
 
             <TextView
                 android:id="@+id/txt_magazine_3_title4"
@@ -284,7 +277,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dip"
                     android:text="湖北荆楚网" />
-                
+
                  <TextView
                     android:id="@+id/txt_magazine_3_time4"
                     style="@style/magazine_body"

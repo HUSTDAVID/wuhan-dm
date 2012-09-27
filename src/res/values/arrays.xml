@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <string-array name="flow_control">
+        <item>仅在WiFi下加载图片</item>
+        <item>总是加载图片</item>
+        <item>仅加载文本</item>
+    </string-array>
+    <string-array name="flow_control_key">
+        <item>key0</item>
+        <item>key1</item>
+        <item>key2</item>
+        <item>key3</item>
+    </string-array>
 </resources>

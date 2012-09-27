@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:layout="@layout/set_pref_category"
+        android:title="@string/account" >
+        <PreferenceScreen
+            android:key="login"
+            android:layout="@layout/set_pref"
+            android:summary="@string/login_summary"
+            android:title="@string/set_login" >
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="account"
+            android:layout="@layout/set_pref"
+            android:summary="@string/account_summary"
+            android:title="@string/account_manager" >
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/set_pref_category"
+        android:title="@string/settings" >
+        <ListPreference
+            android:entries="@array/flow_control"
+            android:entryValues="@array/flow_control_key"
+            android:key="flow"
+            android:layout="@layout/set_pref_list"
+            android:summary="任何网络情况下均加载照片"
+            android:title="@string/flow" />
+
+        <PreferenceScreen
+            android:key="cache"
+            android:layout="@layout/set_pref"
+            android:summary="当前共有缓存42.85MB"
+            android:title="@string/cache" >
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="more"
+            android:layout="@layout/set_pref"
+            android:summary="@string/more_summary"
+            android:title="@string/more" >
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/set_pref_category"
+        android:title="@string/others" >
+        <PreferenceScreen
+            android:key="feedback"
+            android:layout="@layout/set_pref"
+            android:summary="@string/feedback_summary"
+            android:title="@string/set_feedback" >
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="about"
+            android:layout="@layout/set_pref"
+            android:summary="@string/about_us_summary"
+            android:title="@string/about_us" >
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,6 +37,13 @@ public class DM_PhotosDetailsActivity extends Activity {
     int currentPhoto = 1;
 
     Button btnVote;
+
+    // bottom
+    RelativeLayout RelBottom1;
+    RelativeLayout RelBottom2;
+    EditText edtChangeToReply;
+    EditText edtReply;
+    Button btnReply;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +116,33 @@ public class DM_PhotosDetailsActivity extends Activity {
                     imgArrow.setImageResource(R.drawable.photos_arrow_down);
                 }
 
+            }
+        });
+
+        // bottom
+        RelBottom1 = (RelativeLayout) main.findViewById(R.id.layout_photos_detail_bottom1);
+        RelBottom2 = (RelativeLayout) main.findViewById(R.id.layout_photos_detail_bottom2);
+        edtChangeToReply = (EditText) main.findViewById(R.id.edtx_photos_my_reply);
+        edtReply = (EditText) main.findViewById(R.id.edt_photos_details_input);
+        btnReply = (Button) main.findViewById(R.id.btn_photos_details_reply);
+
+        edtChangeToReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                RelBottom1.setVisibility(View.GONE);
+                RelBottom2.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                RelBottom2.setVisibility(View.GONE);
+                RelBottom1.setVisibility(View.VISIBLE);
             }
         });
     }

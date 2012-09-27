@@ -10,33 +10,37 @@
     <color name="black">#000000</color>
     <color name="divider">#cdcdcd</color>
     <color name="translucence_black">#70000000</color>
-    
+
     <color name="sub_left_bg">#474747</color>
     <color name="sub_right_bg">#141414</color>
-    
+
     <color name="txt_gray">#858585</color>
-    
+
     <color name="bg_clicked">#e7e7e7</color>
     <color name="bg_normal">#efefef</color>
-    
+
     <color name="btn_normal">#e4e4e4</color>
     <color name="btn_onclicked">#c8c8c8</color>
-    
+
     <color name="collecte_divider">#eeeeee</color>
-    
+
     <!-- magazine -->
     <color name="mzine_txt_normal">#353535</color>
     <color name="mzine_txt_onclick">#000000</color>
     <color name="mzine_txt_clicked">#858585</color>
-    
-    
+
+
     <color name="tab_txt_normal_color">#919297</color>
 
     <color name="vote_background">#777777</color>
     <color name="vote_text1">#868686</color>
-    
+
     <color name="mzine_img">#d9d9d9</color>
     <color name="mzine_fullacreen">#e7e7e7</color>
-    
+
     <color name="mzine_long">#eeeeee</color>
+    <!-- preference -->
+    <color name="pref_txt_color">#343434</color>
+    <color name="pref_category_bg">#7B7B7B</color>
+    <color name="pref_selected">#7B7B7B</color>
 </resources>
