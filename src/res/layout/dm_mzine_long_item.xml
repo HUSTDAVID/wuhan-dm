@@ -20,7 +20,8 @@
 	             android:src="@drawable/temp_dm_2x_1" />
 	         
 	       
-	      <View 
+	      <View
+	          android:id="@+id/mzine_line1" 
 	          android:layout_width="wrap_content"
 	          android:layout_height="1.5dip"
 	          android:layout_below="@+id/img_mzine_long_1"
@@ -28,7 +29,8 @@
 	          android:layout_alignRight="@+id/img_mzine_long_1"
 	          android:background="@color/mzine_img"/>  
 	          
-	      <View 
+	      <View
+	          android:id="@+id/mzine_line2"  
 	          android:layout_width="1.5dip"
 	          android:layout_height="wrap_content"
 	          android:layout_toRightOf="@+id/img_mzine_long_1"
@@ -48,6 +50,7 @@
 	         
 	         
 	          <View 
+	          android:id="@+id/mzine_line3" 
 	          android:layout_width="1.5dip"
 	          android:layout_height="wrap_content"
 	          android:layout_toRightOf="@+id/img_mzine_long_3"
@@ -68,14 +71,15 @@
 	             android:layout_toRightOf="@+id/img_mzine_long_3"
 	             android:src="@drawable/temp_dm_1x_4" />
 	         
-	         <View 
+	         <View
+	          android:id="@+id/mzine_line4"  
 	          android:layout_width="wrap_content"
 	          android:layout_height="1.5dip"
 	          android:layout_below="@+id/img_mzine_long_3"
 	          android:layout_alignLeft="@+id/img_mzine_long_3"
 	          android:layout_alignRight="@+id/img_mzine_long_2"
 	          android:background="@color/mzine_img"/>
-
+
 	      <ImageView
 	          android:id="@+id/img_mzine_long_2"
 	          android:layout_width="wrap_content"
@@ -94,7 +98,7 @@
              android:layout_below="@+id/img_mzine_long_3"
              android:layout_marginTop="1.5dp"
              android:src="@drawable/temp_dm_1x_5" />
-
+
          <ImageView
              android:id="@+id/img_mzine_long_6"
              android:layout_width="wrap_content"
@@ -104,7 +108,6 @@
              android:layout_alignRight="@+id/img_mzine_long_4"
              android:layout_alignTop="@+id/img_mzine_long_5"
              android:layout_below="@+id/img_mzine_long_4"
-             android:layout_marginLeft="1.5dip"
              android:layout_toRightOf="@+id/img_mzine_long_5"
              android:src="@drawable/temp_dm_1x_6" />
          

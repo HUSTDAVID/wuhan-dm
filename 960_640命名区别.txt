@@ -1,0 +1,81 @@
+命名区别记录：
+
+960 x 640文件名                     当前文件名
+
+news:
+
+temp_news_banner                     banner02
+bottom_review_background            不变
+bottom_review_favorite              不变
+bottom_review_favorite_on           不变
+bottom_review_left                  不变
+bottom_review_right                 不变
+bottom_review_share                 不变
+bottom_review_share_on              不变
+btn_review_more                     不变
+btn_review_more_on                  不变
+btn_review_list_on                  原来使用取色
+btn_review_list                     原来使用取色
+news_img_background                 不变
+temp_news_img                       新闻图片，以后数据填充
+
+photos:
+bottom_review_black_background       不变
+bottom_review_black_down             不变 
+bottom_review_black_down_on          不变 
+bottom_review_black_favorite         不变
+bottom_review_black_favorite_on      不变
+bottom_review_black_left             不变
+bottom_review_black_right            不变
+bottom_review_black_share            不变
+bottom_review_black_share_on         不变
+btn_topbar_black_normal              不变
+btn_topbar_black_normal_on            不变
+icon_photos_num                       不变    
+icon_photos_review                    不变 
+photos_arrow_down                    不变 
+photos_arrow_up                      不变 
+photos_img_background               不变 
+photos_img_background_nr           未使用
+temp_photos_img                     不变
+temp_photos_img_gd                  没有见过此图，用在和上面的temp_photos_img一样
+temp_photos_img_nr                  photos_test和photos_test2测试图
+topbar_black_background             不变
+
+
+site:
+
+site_background                     不变
+site_btn_1                          不变
+site_btn_2                   不变，其中还某些地方把它做成九宫图，命名site_btn_2_9patch
+site_btn_3
+site_ipt_checked_1                  不变
+site_ipt_checked_1_onv              不变
+site_ipt_checked_2_on               不变
+site_ipt_checked_2_on               不变
+site_list_background_on             不变
+site_slt                            不变
+site_t_add                          不变
+site_t_sina                         不变
+site_t_tencent                      不变
+
+
+subscription:(后面不写就是名字不变)
+
+btn_subscription_csearch
+btn_subscription_csearch_on
+btn_subscription_have
+btn_subscription_have_on
+btn_subscription_manage
+btn_subscription_manage_on
+btn_subscription_no
+btn_subscription_no_on
+btn_subscription_search
+temp_subscription_bigimg             fashion2
+subscription_manage_background
+subscription_review_background
+subscription_review_box_background
+subscription_review_left
+subscription_review_right
+temp_subscription_manage_logo         subscription_manage_logo
+
