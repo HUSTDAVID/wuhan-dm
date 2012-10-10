@@ -11,7 +11,7 @@
         android:layout_marginLeft="3dip"
         android:layout_marginRight="3dip"
         android:layout_marginTop="6dip"
-        android:background="@drawable/blue" >
+         >
 
         <ImageView
             android:id="@+id/item_img"

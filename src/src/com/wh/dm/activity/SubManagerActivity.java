@@ -8,14 +8,17 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DM_SubManagerActivity extends Activity {
+public class SubManagerActivity extends Activity {
 
     private ListView lvSubManager;
-
+    private ImageButton btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,6 +34,16 @@ public class DM_SubManagerActivity extends Activity {
         // init header
         TextView txtTitle = (TextView) findViewById(R.id.txt_header3_title);
         TextView txtQRCode = (TextView) findViewById(R.id.txt_total_reply);
+        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				finish();
+
+			}
+
+        });
         txtTitle.setText(getResources().getString(R.string.subscribe));
         txtQRCode.setText("");
         txtQRCode.setBackgroundResource(R.drawable.temp_2d);

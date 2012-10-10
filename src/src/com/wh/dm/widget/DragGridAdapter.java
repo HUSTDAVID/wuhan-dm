@@ -1,4 +1,3 @@
-
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
@@ -17,62 +16,62 @@ import java.util.ArrayList;
 
 public class DragGridAdapter extends BaseAdapter {
 
-    private final Context context;
-    private final ArrayList<Cover> list;
-    private RelativeLayout relate_dm;
-    private TextView txt_String;
-    private ImageView img_String;
+	private final Context context;
+	private final ArrayList<Cover> list;
+	private RelativeLayout relate_dm;
+	private TextView txt_String;
+	private ImageView img_String;
 
-    public DragGridAdapter(Context mContext, ArrayList<Cover> list) {
+	public DragGridAdapter(Context mContext, ArrayList<Cover> list) {
 
-        this.context = mContext;
-        this.list = list;
-    }
+		this.context = mContext;
+		this.list = list;
 
-    @Override
-    public int getCount() {
+	}
 
-        return list.size();
-    }
+	@Override
+	public int getCount() {
 
-    @Override
-    public Object getItem(int position) {
+		return list.size();
+	}
 
-        return list.get(position);
-    }
+	@Override
+	public Object getItem(int position) {
 
-    @Override
-    public long getItemId(int position) {
+		return list.get(position);
+	}
 
-        return position;
-    }
+	@Override
+	public long getItemId(int position) {
 
-    public void exchange(int startPosition, int endPosition) {
+		return position;
+	}
 
-        Object endObject = getItem(endPosition);
-        Object startObject = getItem(startPosition);
-        list.add(startPosition, (Cover) endObject);
-        list.remove(startPosition + 1);
-        list.add(endPosition, (Cover) startObject);
-        list.remove(endPosition + 1);
-    }
+	public void exchange(int startPosition, int endPosition) {
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+		Object endObject = getItem(endPosition);
+		Object startObject = getItem(startPosition);
+		list.add(startPosition, (Cover) endObject);
+		list.remove(startPosition + 1);
+		list.add(endPosition, (Cover) startObject);
+		list.remove(endPosition + 1);
+	}
 
-        convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, null);
-        TextView txt = (TextView) convertView.findViewById(R.id.item_text);
-        ImageView img = (ImageView) convertView.findViewById(R.id.item_img);
-        relate_dm = (RelativeLayout) convertView.findViewById(R.id.item_relate);
-        txt.setText(list.get(position).getName());
-        img.setImageResource(list.get(position).getDrawableId());
-        if (list.get(position).getId() == 0) {
-            relate_dm.setBackgroundResource(R.drawable.red);
-        } else if (list.get(position).getId() == 1) {
-            relate_dm.setBackgroundResource(R.drawable.red);
-        }
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
 
-        return convertView;
-    }
-
+		convertView = LayoutInflater.from(context).inflate(R.layout.grid_item,
+				null);
+		TextView txt = (TextView) convertView.findViewById(R.id.item_text);
+		ImageView img = (ImageView) convertView.findViewById(R.id.item_img);
+		relate_dm = (RelativeLayout) convertView.findViewById(R.id.item_relate);
+		txt.setText(list.get(position).getName());
+		img.setImageResource(list.get(position).getDrawableId());
+		if (list.get(position).getId() == 0||list.get(position).getId()==1) {
+			relate_dm.setBackgroundResource(R.drawable.index_bg_orange);
+		} else {
+			relate_dm.setBackgroundResource(R.drawable.index_bg_blue);
+		}
+		return convertView;
+	}
 }

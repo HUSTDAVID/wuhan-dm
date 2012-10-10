@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="index_blue1">#1e90ff</color>
+    <color name="index_blue2">#0082fe</color>
+    <color name="index_orange1">#e6571d</color>
+    <color name="index_orange2">#e05119</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#1e90ff</color>
     <color name="yellow">#aac41c</color>

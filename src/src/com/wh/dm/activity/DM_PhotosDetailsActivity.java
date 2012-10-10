@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +30,7 @@ public class DM_PhotosDetailsActivity extends Activity {
 
     private ViewGroup main;
     private ViewGroup group;
+    private ImageButton btnBack;
 
     TextView txtBody;
     TextView txtPage;
@@ -144,6 +146,16 @@ public class DM_PhotosDetailsActivity extends Activity {
                 RelBottom2.setVisibility(View.GONE);
                 RelBottom1.setVisibility(View.VISIBLE);
             }
+        });
+        btnBack =(ImageButton)findViewById(R.id.img_header3_black_back);
+        btnBack.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				finish();
+
+			}
+
         });
     }
 
