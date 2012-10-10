@@ -11,6 +11,7 @@
         android:numColumns="2"
         android:horizontalSpacing="13dip"
         android:verticalSpacing="8dip"
+        android:scrollbars="none"
         android:dividerHeight="0dip"
         android:paddingTop="8dip"
         android:background="@drawable/photos_bg">
