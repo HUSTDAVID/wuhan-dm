@@ -14,7 +14,7 @@
      android:layout_width="fill_parent"
      android:layout_height="match_parent"
      android:divider="@drawable/double_line_hor" >
-"
 
- </ListView>"
+
+ </ListView>
 </LinearLayout>

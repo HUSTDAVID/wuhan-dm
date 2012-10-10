@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -31,6 +32,7 @@ public class DM_NewsDetailsActivity extends Activity {
     private Button btnMyShare;
     private Button btnMyFavorite;
     private Button btnMore;
+    private ImageButton btnBack;
 
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
@@ -120,6 +122,16 @@ public class DM_NewsDetailsActivity extends Activity {
                 bottomLayout2.setVisibility(View.GONE);
 
             }
+        });
+        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				finish();
+
+			}
+
         });
 
     }

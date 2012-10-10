@@ -10,13 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-public class DM_SubscribeActivity extends ActivityGroup {
+public class SubscribeActivity extends ActivityGroup {
 
     LinearLayout linearListTop;
     LinearLayout linearSubSearch;
@@ -33,7 +34,7 @@ public class DM_SubscribeActivity extends ActivityGroup {
     private TextView txtPhotograph;
     private TextView txtFun;
     private ImageView imgSearch;
-
+    private ImageButton btnBack;
     private View vMain;
 
     private final int startX = 0;
@@ -68,7 +69,7 @@ public class DM_SubscribeActivity extends ActivityGroup {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(DM_SubscribeActivity.this, DM_SubManagerActivity.class);
+                Intent intent = new Intent(SubscribeActivity.this, SubManagerActivity.class);
                 startActivity(intent);
 
             }
@@ -85,6 +86,16 @@ public class DM_SubscribeActivity extends ActivityGroup {
         txtPhotograph = (TextView) findViewById(R.id.txt_sub_photograph);
         txtFun = (TextView) findViewById(R.id.txt_sub_fun);
         imgSearch = (ImageView) findViewById(R.id.img_sub_search);
+        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				finish();
+
+			}
+
+		});
 
         itemWidth = txtHot.getWidth();
 
@@ -101,7 +112,7 @@ public class DM_SubscribeActivity extends ActivityGroup {
         param.leftMargin = startX;
 
         // set the activity of hot
-        intent = new Intent(DM_SubscribeActivity.this, DM_Sub_HotActivity.class);
+        intent = new Intent(SubscribeActivity.this, DM_Sub_HotActivity.class);
         relMain = (RelativeLayout) findViewById(R.id.rel_sub_main);
         vMain = getLocalActivityManager().startActivity("Hot", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
@@ -118,7 +129,7 @@ public class DM_SubscribeActivity extends ActivityGroup {
             switch (v.getId()) {
                 case R.id.txt_sub_hot:
                     setCurTxt(1);
-                    intent.setClass(DM_SubscribeActivity.this, DM_Sub_HotActivity.class);
+                    intent.setClass(SubscribeActivity.this, DM_Sub_HotActivity.class);
                     vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
                     break;
 

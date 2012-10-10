@@ -266,6 +266,16 @@ public class MainActivity extends Activity {
         }
         btn_download = (ImageButton) findViewById(R.id.btn_download);
         btn_add = (ImageButton) findViewById(R.id.btn_add);
+        btn_add.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this,SubscribeActivity.class);
+				startActivity(intent);
+
+			}
+
+        });
         btn_set = (ImageButton) findViewById(R.id.btn_set);
         btn_set.setOnClickListener(new OnClickListener() {
 

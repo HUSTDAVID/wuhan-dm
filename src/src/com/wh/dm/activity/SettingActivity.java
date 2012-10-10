@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class SettingActivity extends PreferenceActivity implements OnPreferenceClickListener {
@@ -20,6 +23,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     Preference pref_feedback;
     Preference pref_about;
 
+    private ImageButton btnBack;
     @Override
     public void onCreate(Bundle bundle) {
 
@@ -33,6 +37,16 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 
         txt_title = (TextView) findViewById(R.id.txt_header_title2);
         txt_title.setText(getResources().getString(R.string.setting));
+        btnBack =(ImageButton)findViewById(R.id.Btn_back_header2);
+        btnBack.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				finish();
+
+			}
+
+        });
         getListView().setDivider(getResources().getDrawable(R.drawable.divider_horizontal_line));
         pref_login = findPreference("login");
         pref_account = findPreference("account");
