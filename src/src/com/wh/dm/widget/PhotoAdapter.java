@@ -27,13 +27,20 @@ public class PhotoAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
     }
 
-    public void addItem(Bitmap bmp, String title, int review, int num) {
+    public void addItem(Bitmap leftBmp, String leftRitle, int leftReview, int leftNum,
+            Bitmap rightBmp, String rightRitle, int rightReview, int rightNum) {
 
         HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("image", bmp);
-        map.put("title", title);
-        map.put("review", review);
-        map.put("num", num);
+        // add left data
+        map.put("leftImage", leftBmp);
+        map.put("leftTitle", leftRitle);
+        map.put("leftReview", leftReview);
+        map.put("leftNum", leftNum);
+        // add rigth data
+        map.put("rightImage", rightBmp);
+        map.put("rightRitle", rightRitle);
+        map.put("rightReview", rightReview);
+        map.put("rightNum", rightNum);
         mData.add(map);
         notifyDataSetChanged();
     }
@@ -64,29 +71,45 @@ public class PhotoAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.photos_item, null);
 
-            holder.img = (ImageView) convertView.findViewById(R.id.img_potos_item);
-            holder.txtTitle = (TextView) convertView.findViewById(R.id.txt_photos_title);
-            holder.txtReview = (TextView) convertView.findViewById(R.id.txt_review_total);
-            holder.txtNum = (TextView) convertView.findViewById(R.id.txt_num_total);
+            holder.imgLeft = (ImageView) convertView.findViewById(R.id.img_left_potos_item);
+            holder.txtLeftTitle = (TextView) convertView.findViewById(R.id.txt_left_photos_title);
+            holder.txtLeftReview = (TextView) convertView.findViewById(R.id.txt_left_review_total);
+            holder.txtLeftNum = (TextView) convertView.findViewById(R.id.txt_left_num_total);
+
+            holder.imgRight = (ImageView) convertView.findViewById(R.id.img_right_potos_item);
+            holder.txtRightTitle = (TextView) convertView.findViewById(R.id.txt_right_photos_title);
+            holder.txtRightReview = (TextView) convertView
+                    .findViewById(R.id.txt_right_review_total);
+            holder.txtRightNum = (TextView) convertView.findViewById(R.id.txt_right_num_total);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
-        holder.txtTitle.setText(mData.get(position).get("title").toString());
-        holder.txtReview.setText(mData.get(position).get("review").toString());
-        holder.txtNum.setText(mData.get(position).get("num").toString());
+        holder.imgLeft.setImageBitmap((Bitmap) mData.get(position).get("leftImage"));
+        holder.txtLeftTitle.setText(mData.get(position).get("leftTitle").toString());
+        holder.txtLeftReview.setText(mData.get(position).get("leftReview").toString());
+        holder.txtLeftNum.setText(mData.get(position).get("leftNum").toString());
+
+        holder.imgRight.setImageBitmap((Bitmap) mData.get(position).get("rightImage"));
+        holder.txtRightTitle.setText(mData.get(position).get("rightTitle").toString());
+        holder.txtRightReview.setText(mData.get(position).get("rightReview").toString());
+        holder.txtRightNum.setText(mData.get(position).get("rightNum").toString());
 
         return convertView;
     }
 
     static class ViewHolder {
-        ImageView img;
-        TextView txtTitle;
-        TextView txtReview;
-        TextView txtNum;
+        ImageView imgLeft;
+        TextView txtLeftTitle;
+        TextView txtLeftReview;
+        TextView txtLeftNum;
+
+        ImageView imgRight;
+        TextView txtRightTitle;
+        TextView txtRightReview;
+        TextView txtRightNum;
 
     }
 

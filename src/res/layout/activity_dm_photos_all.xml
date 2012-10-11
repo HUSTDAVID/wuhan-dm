@@ -4,18 +4,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/photos_bg" >
 
-    <GridView
-        android:id="@+id/gv_photos_all"
+    <ListView
+        android:id="@+id/lv_photos_all"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:numColumns="2"
-        android:horizontalSpacing="13dip"
-        android:verticalSpacing="8dip"
+        android:layout_height="fill_parent"      
         android:scrollbars="none"
         android:dividerHeight="0dip"
         android:paddingTop="8dip"
         android:background="@drawable/photos_bg">
                 
-    </GridView>
+    </ListView>
 
 </RelativeLayout>
