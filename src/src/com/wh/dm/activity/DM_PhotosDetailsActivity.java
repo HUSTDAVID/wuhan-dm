@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -135,6 +136,10 @@ public class DM_PhotosDetailsActivity extends Activity {
 
                 RelBottom1.setVisibility(View.GONE);
                 RelBottom2.setVisibility(View.VISIBLE);
+
+                edtReply.requestFocus();
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(
+                        edtReply, 0);
             }
         });
 
@@ -145,16 +150,19 @@ public class DM_PhotosDetailsActivity extends Activity {
 
                 RelBottom2.setVisibility(View.GONE);
                 RelBottom1.setVisibility(View.VISIBLE);
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
             }
         });
-        btnBack =(ImageButton)findViewById(R.id.img_header3_black_back);
-        btnBack.setOnClickListener(new OnClickListener(){
+        btnBack = (ImageButton) findViewById(R.id.img_header3_black_back);
+        btnBack.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				finish();
+            @Override
+            public void onClick(View v) {
 
-			}
+                finish();
+
+            }
 
         });
     }

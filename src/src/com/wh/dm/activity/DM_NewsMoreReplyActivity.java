@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -56,6 +57,10 @@ public class DM_NewsMoreReplyActivity extends Activity {
 
                 bottomLayout1.setVisibility(View.GONE);
                 bottomLayout2.setVisibility(View.VISIBLE);
+
+                edtReply.requestFocus();
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(
+                        edtReply, 0);
             }
         });
 

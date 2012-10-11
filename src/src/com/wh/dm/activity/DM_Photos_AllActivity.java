@@ -50,6 +50,12 @@ public class DM_Photos_AllActivity extends Activity {
         for (int i = 0; i < 10; i++) {
             adapter.addItem(bmp, title, 6, 6);
         }
+        // temp check
+        // Bitmap bmpsrc = BitmapFactory.decodeResource(getResources(),
+        // R.drawable.photos_img_background_nr);
+        // adapter.addItem(bmpsrc, title, 6, 6);
+        // adapter.addItem(bmpsrc, title, 6, 6);
+
         gvPhotos.setAdapter(adapter);
 
         gvPhotos.setOnItemClickListener(new OnItemClickListener() {

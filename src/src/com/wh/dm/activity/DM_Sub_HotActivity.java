@@ -37,12 +37,13 @@ public class DM_Sub_HotActivity extends Activity {
         Bitmap bmp4 = BitmapFactory.decodeResource(getResources(), R.drawable.dm_temp2);
         Bitmap bmp5 = BitmapFactory.decodeResource(getResources(), R.drawable.dm_temp3);
         Bitmap bmp6 = BitmapFactory.decodeResource(getResources(), R.drawable.fashion_travel);
-        adapter.addItem(bmp1, "光博会", true);
-        adapter.addItem(bmp2, "今日光谷", true);
         adapter.addItem(bmp3, "爱帝", false);
         adapter.addItem(bmp4, "君顶会", false);
         adapter.addItem(bmp5, "中国石油石化", false);
         adapter.addItem(bmp6, "时尚旅游", false);
+        adapter.addItem(bmp1, "光博会", true);
+        adapter.addItem(bmp2, "今日光谷", true);
+
         gvSub.setAdapter(adapter);
     }
 }

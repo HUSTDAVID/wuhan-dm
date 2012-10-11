@@ -30,6 +30,7 @@ public class DM_NewsDetailsActivity extends Activity {
     private View footer;
     private EditText edtxMyReplyforBtn;
     private EditText edtReply;
+    private TextView edtMoreReply;
     private Button btnReply;
     private Button btnMyShare;
     private Button btnMyFavorite;
@@ -130,6 +131,8 @@ public class DM_NewsDetailsActivity extends Activity {
 
                 bottomLayout1.setVisibility(View.VISIBLE);
                 bottomLayout2.setVisibility(View.GONE);
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
 
             }
         });
@@ -143,6 +146,17 @@ public class DM_NewsDetailsActivity extends Activity {
 
             }
 
+        });
+        edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
+        edtMoreReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DM_NewsDetailsActivity.this,
+                        DM_NewsMoreReplyActivity.class);
+                startActivity(intent);
+            }
         });
 
     }

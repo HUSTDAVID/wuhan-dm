@@ -48,7 +48,7 @@
 	                 android:layout_width="wrap_content"
 	                 android:layout_alignTop="@+id/img_photos_review"
 	                 android:textSize="10sp"
-	                 android:text="6"/>	                      
+	                 android:text="0"/>	                      
 	        
 	             
 	             <ImageView 
@@ -67,7 +67,7 @@
 	                 android:layout_width="wrap_content"
 	                 android:layout_alignParentRight="true"
 	                 android:textSize="10sp"
-	                 android:text="6"/>
+	                 android:text="0"/>
 	             
 
 	         

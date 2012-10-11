@@ -11,6 +11,8 @@
          android:paddingTop="10dip"
          android:paddingLeft="10dip"
          android:paddingRight="10dip"
+         android:scrollbars="none"
+         android:layout_gravity="center_horizontal"
          android:background="@color/bg_normal"
          android:horizontalSpacing="10dip"
          android:verticalSpacing="9dip"
