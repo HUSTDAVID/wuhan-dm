@@ -81,7 +81,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_Sub_HotActivity"
+            android:name=".activity.Sub_HotActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity

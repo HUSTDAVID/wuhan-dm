@@ -3,6 +3,8 @@ package com.wh.dm.activity;
 
 import com.wh.dm.R;
 import com.wh.dm.widget.PhotoAdapter;
+import com.wh.dm.widget.PullToRefreshListView;
+import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,7 +25,7 @@ public class DM_Photos_AllActivity extends Activity {
     RelativeLayout relPhotosHeader;
     TextView txtPhotosHeader;
 
-    ListView lvPhotos;
+    PullToRefreshListView lvPhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class DM_Photos_AllActivity extends Activity {
         // relPhotosHeader.setBackgroundResource(R.drawable.topbar_black_bg);
         // txtPhotosHeader.setText(getResources().getString(R.string.photo));
 
-        lvPhotos = (ListView) findViewById(R.id.lv_photos_all);
+        lvPhotos = (PullToRefreshListView) findViewById(R.id.lv_photos_all);
         lvPhotos.setDivider(null);
 
         PhotoAdapter adapter = new PhotoAdapter(this);
@@ -51,6 +54,29 @@ public class DM_Photos_AllActivity extends Activity {
         for (int i = 0; i < 5; i++) {
             adapter.addItem(bmp, title, 6, 6, bmp, title, 6, 6);
         }
+
+        lvPhotos.setOnRefreshListener(new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				// Your code to refresh the list contents goes here
+
+				// Make sure you call listView.onRefreshComplete()
+				// when the loading is done. This can be done from here or any
+				// other place, like on a broadcast receive from your loading
+				// service or the onPostExecute of your AsyncTask.
+
+				// For the sake of this sample, the code will pause here to
+				// force a delay when invoking the refresh
+				lvPhotos.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						lvPhotos.onRefreshComplete();
+					}
+				}, 2000);
+			}
+		});
 
         lvPhotos.setAdapter(adapter);
 

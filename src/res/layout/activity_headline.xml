@@ -110,6 +110,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scrollbars="none"
+        android:cacheColorHint="#00000000"
+        android:fadingEdge="none"
         android:layout_below="@id/news_flipper"
         android:divider="@drawable/doubleline"
         android:dividerHeight="1.5dip" >

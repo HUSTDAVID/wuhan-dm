@@ -10,10 +10,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.ListView;
+import com.wh.dm.widget.PullToRefreshListView;
+import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
-public class DM_Sub_HotActivity extends Activity {
+public class Sub_HotActivity extends Activity {
 
-    ListView lvSub;
+    PullToRefreshListView lvSub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class DM_Sub_HotActivity extends Activity {
 
     private void initViews() {
 
-        lvSub = (ListView) findViewById(R.id.lv_subscribe);
+        lvSub = (PullToRefreshListView) findViewById(R.id.lv_subscribe);
         lvSub.setDivider(null);
 
         SubscribeAdapter adapter = new SubscribeAdapter(this);
@@ -42,6 +44,28 @@ public class DM_Sub_HotActivity extends Activity {
         adapter.addItem(bmp5, "中国石油石化", false, bmp6, "时尚旅游", false);
         adapter.addItem(bmp1, "光博会", true, bmp2, "今日光谷", true);
 
+        lvSub.setOnRefreshListener(new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				// Your code to refresh the list contents goes here
+
+				// Make sure you call listView.onRefreshComplete()
+				// when the loading is done. This can be done from here or any
+				// other place, like on a broadcast receive from your loading
+				// service or the onPostExecute of your AsyncTask.
+
+				// For the sake of this sample, the code will pause here to
+				// force a delay when invoking the refresh
+				lvSub.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						lvSub.onRefreshComplete();
+					}
+				}, 2000);
+			}
+		});
         lvSub.setAdapter(adapter);
     }
 }

@@ -112,7 +112,7 @@ public class SubscribeActivity extends ActivityGroup {
         param.leftMargin = startX;
 
         // set the activity of hot
-        intent = new Intent(SubscribeActivity.this, DM_Sub_HotActivity.class);
+        intent = new Intent(SubscribeActivity.this, Sub_HotActivity.class);
         relMain = (RelativeLayout) findViewById(R.id.rel_sub_main);
         vMain = getLocalActivityManager().startActivity("Hot", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
@@ -129,7 +129,7 @@ public class SubscribeActivity extends ActivityGroup {
             switch (v.getId()) {
                 case R.id.txt_sub_hot:
                     setCurTxt(1);
-                    intent.setClass(SubscribeActivity.this, DM_Sub_HotActivity.class);
+                    intent.setClass(SubscribeActivity.this, Sub_HotActivity.class);
                     vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
                     break;
 
