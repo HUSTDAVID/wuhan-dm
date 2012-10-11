@@ -14,9 +14,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -51,6 +53,8 @@ public class DM_HeadLineActivity extends Activity {
     private View headerView;
     private LayoutInflater mInfalater;
     private ListView listView;
+    private View footer;
+    private Button btnFoolter;
 
     private final int SHOW_NEXT = 0011;
     private final boolean isRun = true;
@@ -70,6 +74,7 @@ public class DM_HeadLineActivity extends Activity {
 
     private void init() {
 
+        mInfalater = getLayoutInflater();
         listView = (ListView) findViewById(R.id.list);
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
@@ -92,6 +97,11 @@ public class DM_HeadLineActivity extends Activity {
             adapter.addItem(title, body, bmp);
         }
 
+        // add footer for listview
+        footer = mInfalater.inflate(R.layout.news_list_footer, null);
+        btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+        listView.addFooterView(footer);
+
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -100,6 +110,14 @@ public class DM_HeadLineActivity extends Activity {
 
                 Intent intent = new Intent(DM_HeadLineActivity.this, DM_NewsDetailsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnFoolter.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

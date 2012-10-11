@@ -30,11 +30,13 @@ public class DM_NewsDetailsActivity extends Activity {
     private View footer;
     private EditText edtxMyReplyforBtn;
     private EditText edtReply;
+    private TextView edtMoreReply;
     private Button btnReply;
     private Button btnMyShare;
     private Button btnMyFavorite;
     private Button btnMore;
     private ImageButton btnBack;
+    private NewsReplyAdapter adapter;
 
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
@@ -76,9 +78,10 @@ public class DM_NewsDetailsActivity extends Activity {
         footer = (View) mInflater.inflate(R.layout.news_more_comment, null);
         lvNews.addFooterView(footer, null, false);
 
-        NewsReplyAdapter adapter = new NewsReplyAdapter(this);
-        // for (int i = 0; i < 10; i++) {
+        adapter = new NewsReplyAdapter(this);
+        // for (int i = 0; i < 3; i++) {
         adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212");
+        adapter.addItem("抗日者", "12小时前", "抗日抗日抗日抗日抗日抗日抗日抗日", "顶1212");
         // }
         lvNews.setAdapter(adapter);
 
@@ -96,9 +99,11 @@ public class DM_NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(DM_NewsDetailsActivity.this,
-                        DM_NewsMoreReplyActivity.class);
-                startActivity(intent);
+                int current = adapter.getCount() - 1;
+                for (int i = 0; i < 3; i++) {
+                    adapter.addItem("手机版网友", "11小时前", "反抗呀，核潜艇出击……", "顶4008");
+                }
+                lvNews.setSelection(current);
 
             }
         });
@@ -130,6 +135,8 @@ public class DM_NewsDetailsActivity extends Activity {
 
                 bottomLayout1.setVisibility(View.VISIBLE);
                 bottomLayout2.setVisibility(View.GONE);
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
 
             }
         });
@@ -143,6 +150,17 @@ public class DM_NewsDetailsActivity extends Activity {
 
             }
 
+        });
+        edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
+        edtMoreReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DM_NewsDetailsActivity.this,
+                        DM_NewsMoreReplyActivity.class);
+                startActivity(intent);
+            }
         });
 
     }

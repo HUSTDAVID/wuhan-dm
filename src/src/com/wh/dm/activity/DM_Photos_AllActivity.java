@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,7 +22,7 @@ public class DM_Photos_AllActivity extends Activity {
     RelativeLayout relPhotosHeader;
     TextView txtPhotosHeader;
 
-    GridView gvPhotos;
+    ListView lvPhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +42,19 @@ public class DM_Photos_AllActivity extends Activity {
         // relPhotosHeader.setBackgroundResource(R.drawable.topbar_black_bg);
         // txtPhotosHeader.setText(getResources().getString(R.string.photo));
 
-        gvPhotos = (GridView) findViewById(R.id.gv_photos_all);
+        lvPhotos = (ListView) findViewById(R.id.lv_photos_all);
+        lvPhotos.setDivider(null);
 
         PhotoAdapter adapter = new PhotoAdapter(this);
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.temp_photos_img);
         String title = getResources().getString(R.string.photos_title);
-        for (int i = 0; i < 10; i++) {
-            adapter.addItem(bmp, title, 6, 6);
+        for (int i = 0; i < 5; i++) {
+            adapter.addItem(bmp, title, 6, 6, bmp, title, 6, 6);
         }
-        gvPhotos.setAdapter(adapter);
 
-        gvPhotos.setOnItemClickListener(new OnItemClickListener() {
+        lvPhotos.setAdapter(adapter);
+
+        lvPhotos.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
