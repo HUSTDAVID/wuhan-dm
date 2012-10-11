@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_news_more"
+        android:layout_width="fill_parent"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:background="@color/bg_normal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+ 
+          
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1.5dip"
+            android:layout_marginBottom="5dip"
+            android:background="@drawable/doubleline"/>
+            
+                      
+        <Button 
+            android:id="@+id/btn_news_more"
+            android:layout_width="wrap_content"           
+            android:hint="查看更多评论"
+            android:background="@drawable/news_more"
+            android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
+

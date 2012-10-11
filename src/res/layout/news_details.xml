@@ -12,17 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:text="@string/news_title" />
-    
-   
-
+    
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="10dip"
-        android:gravity="center">
+        android:paddingBottom="10dip" >
 
         <TextView
             android:id="@+id/txt_news_time"
@@ -49,7 +48,8 @@
         android:layout_width="fill_parent"
         android:padding="10dip"
         android:textColor="#404040"
-        android:textSize="@dimen/news_normal"
+        android:textSize="15sp"
+        android:lineSpacingExtra="5dip"
         android:layout_height="wrap_content"
         android:text="" />
     
