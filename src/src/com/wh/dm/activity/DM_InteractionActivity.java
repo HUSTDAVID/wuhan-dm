@@ -82,7 +82,7 @@ public class DM_InteractionActivity extends Activity implements OnClickListener 
             case R.id.rel_interaction_vote:
             case R.id.btn_interaction_vote:
                 Intent intent_list = new Intent(DM_InteractionActivity.this,
-                        DM_VotedListActivity.class);
+                        VotedListActivity.class);
                 startActivity(intent_list);
                 break;
             case R.id.rel_interaction_critic:
