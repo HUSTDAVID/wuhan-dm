@@ -21,8 +21,10 @@
                       
         <Button 
             android:id="@+id/btn_news_more"
-            android:layout_width="wrap_content"           
+            android:layout_width="180dip"           
             android:hint="查看更多评论"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             android:background="@drawable/news_more"
             android:layout_height="wrap_content"/>
         
