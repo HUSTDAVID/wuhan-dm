@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,6 +27,7 @@ public class DM_NewsDetailsActivity extends Activity {
     LayoutInflater mInflater;
     private ListView lvNews;
     private View newsMessage;
+    private View footer;
     private EditText edtxMyReplyforBtn;
     private EditText edtReply;
     private Button btnReply;
@@ -69,6 +71,11 @@ public class DM_NewsDetailsActivity extends Activity {
         btnMyFavorite = (Button) findViewById(R.id.btn_news_my_favorite);
 
         lvNews.addHeaderView(newsMessage, null, false);
+
+        // watch more comments
+        footer = (View) mInflater.inflate(R.layout.news_more_comment, null);
+        lvNews.addFooterView(footer, null, false);
+
         NewsReplyAdapter adapter = new NewsReplyAdapter(this);
         // for (int i = 0; i < 10; i++) {
         adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212");
@@ -107,6 +114,9 @@ public class DM_NewsDetailsActivity extends Activity {
 
                 bottomLayout1.setVisibility(View.GONE);
                 bottomLayout2.setVisibility(View.VISIBLE);
+                edtReply.requestFocus();
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(
+                        edtReply, 0);
             }
         });
 
@@ -123,14 +133,15 @@ public class DM_NewsDetailsActivity extends Activity {
 
             }
         });
-        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener(){
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				finish();
+            @Override
+            public void onClick(View v) {
 
-			}
+                finish();
+
+            }
 
         });
 

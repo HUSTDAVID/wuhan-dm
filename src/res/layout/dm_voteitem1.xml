@@ -2,98 +2,95 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@color/bg_normal">
-    
+    android:background="@color/bg_normal"
+    android:orientation="vertical" >
 
-    <include 
+    <include
         android:id="@+id/vote_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        layout="@layout/dm_vote_header"/>
+        layout="@layout/dm_vote_header" />
 
-    <RelativeLayout 
-         android:id="@+id/rel_vote_img"
-         android:layout_width="match_parent"
-         android:layout_height="192dip"
-         >
-    <ImageView
-        android:id="@+id/vote_imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/temp_vote_banner" />
-    
-     <Button
-	        android:id="@+id/btn_votelist"
-	        android:layout_width="fill_parent"
-	        android:layout_height="54dip"
-	        android:layout_alignParentBottom="true"
-	        android:layout_alignLeft="@+id/vote_imageView1"
-	        android:layout_alignRight="@+id/vote_imageView1"
-	        android:background="@color/translucence_black"
-	        android:textColor="@color/white"
-	        android:textSize="15sp"
-	        android:paddingLeft="13.33dip"
-	        android:paddingRight="13.33dip"
-	        android:gravity="center_vertical"
-	        android:text="镜头中的火车车窗，映着车窗内外的两重人影，被车厢分割开来的一家人..." />
-   </RelativeLayout>
-   
     <RelativeLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="13dp"
-           android:orientation="horizontal" >
+        android:id="@+id/rel_vote_img"
+        android:layout_width="match_parent"
+        android:layout_height="192dip" >
 
-           <ImageView
-               android:id="@+id/imageView1"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_centerVertical="true"
-               android:layout_marginLeft="13.33dp"
-               android:src="@drawable/icon_vote_title" />
+        <ImageView
+            android:id="@+id/vote_imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/temp_vote_banner" />
 
-           <TextView
-               android:id="@+id/vote_list_title1"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignBaseline="@+id/imageView1"
-               android:layout_centerVertical="true"
-               android:layout_marginLeft="10dp"
-               android:layout_toRightOf="@+id/imageView1"
-               android:text="投票问题"
-               android:textColor="@color/black"
-               android:textSize="15sp" />
-       </RelativeLayout>
-       
-     <TextView
-           android:id="@+id/vote_list_1"
-           android:layout_width="280dp"
-           android:layout_height="wrap_content"
-           android:layout_marginLeft="13.33dp"
-           android:layout_marginTop="5dp"
-           android:text="@string/vote_question"
-           android:textColor="@color/black"
-           android:textSize="18sp" />
+        <Button
+            android:id="@+id/btn_votelist"
+            android:layout_width="fill_parent"
+            android:layout_height="54dip"
+            android:layout_alignLeft="@+id/vote_imageView1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/vote_imageView1"
+            android:background="@color/translucence_black"
+            android:gravity="center_vertical"
+            android:paddingLeft="13.33dip"
+            android:paddingRight="13.33dip"
+            android:text="镜头中的火车车窗，映着车窗内外的两重人影，被车厢分割开来的一家人..."
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
-     <RelativeLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="13dp"
-           android:orientation="horizontal" >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal" >
 
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13.33dp"
+            android:src="@drawable/icon_vote_title" />
 
-       <TextView
-           android:id="@+id/vote_ing_3"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentLeft="true"
-           android:layout_marginLeft="13.33dp"
-           android:layout_marginTop="5dp"
-           android:text="投票进行中..."
-           android:textColor="@color/vote_text1"
-           android:textSize="15sp" />
+        <TextView
+            android:id="@+id/vote_list_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/imageView1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:text="投票问题"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
+    <TextView
+        android:id="@+id/vote_list_1"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13.33dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/vote_question"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/vote_ing_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="13.33dp"
+            android:layout_marginTop="5dp"
+            android:text="投票进行中..."
+            android:textColor="@color/vote_text1"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/vote_ing_4"
@@ -105,19 +102,18 @@
             android:text="2012-12-12"
             android:textColor="@color/vote_text1"
             android:textSize="15sp" />
+    </RelativeLayout>
 
-      </RelativeLayout>
-
-     <Button
-         android:id="@+id/btn_vote"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_gravity="center_horizontal"
-         android:layout_marginTop="25dp"
-         android:paddingBottom="3dip"
-         android:background="@drawable/btn_vote"
-         android:text="投票"
-         android:textColor="@color/black"
-         android:textSize="20sp" />
+    <Button
+        android:id="@+id/btn_vote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_vote"
+        android:paddingBottom="3dip"
+        android:text="投票"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
 </LinearLayout>

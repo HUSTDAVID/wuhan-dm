@@ -65,4 +65,5 @@ public class CollectActivity extends Activity {
         collect_list.setAdapter(adapter);
 
     }
+
 }

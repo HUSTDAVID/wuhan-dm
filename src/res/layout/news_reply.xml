@@ -29,8 +29,8 @@
             android:background="@drawable/input_bg"
             android:layout_height="fill_parent"
             android:ems="10" >
-
             <requestFocus />
+            
         </EditText>
         
          <ImageView
@@ -70,7 +70,9 @@
             android:layout_width="fill_parent"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/btn_news_details_reply"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            </EditText>
         
         <Button 
             android:id="@+id/btn_news_details_reply"
