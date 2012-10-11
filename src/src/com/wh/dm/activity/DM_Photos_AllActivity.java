@@ -43,6 +43,7 @@ public class DM_Photos_AllActivity extends Activity {
         // txtPhotosHeader.setText(getResources().getString(R.string.photo));
 
         lvPhotos = (ListView) findViewById(R.id.lv_photos_all);
+        lvPhotos.setDivider(null);
 
         PhotoAdapter adapter = new PhotoAdapter(this);
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.temp_photos_img);

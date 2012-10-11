@@ -3,13 +3,15 @@
    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"	   
 	    android:layout_height="wrap_content"
+	    android:paddingTop="10dip"
+	    android:paddingBottom="1dip"
 	    android:background="@drawable/photos_bg" >
-
+
        <RelativeLayout
            android:layout_width="140dip"
            android:layout_height="wrap_content"
            android:layout_alignParentLeft="true"
-           android:layout_marginLeft="5dip"
+           android:layout_marginLeft="11dip"
            android:layout_weight="1"
            android:background="@drawable/photos_img_background"
            android:orientation="vertical" >
@@ -81,12 +83,12 @@
 	         
 	     </RelativeLayout>
         </RelativeLayout>
-        
+        
         <RelativeLayout
             android:layout_width="140dip"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="11dip"
             android:layout_weight="1"
             android:background="@drawable/photos_img_background"
             android:orientation="vertical" >

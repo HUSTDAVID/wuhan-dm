@@ -27,18 +27,18 @@ public class PhotoAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
     }
 
-    public void addItem(Bitmap leftBmp, String leftRitle, int leftReview, int leftNum,
-            Bitmap rightBmp, String rightRitle, int rightReview, int rightNum) {
+    public void addItem(Bitmap leftBmp, String leftTitle, int leftReview, int leftNum,
+            Bitmap rightBmp, String rightTitle, int rightReview, int rightNum) {
 
         HashMap<String, Object> map = new HashMap<String, Object>();
         // add left data
         map.put("leftImage", leftBmp);
-        map.put("leftTitle", leftRitle);
+        map.put("leftTitle", leftTitle);
         map.put("leftReview", leftReview);
         map.put("leftNum", leftNum);
         // add rigth data
         map.put("rightImage", rightBmp);
-        map.put("rightRitle", rightRitle);
+        map.put("rightTitle", rightTitle);
         map.put("rightReview", rightReview);
         map.put("rightNum", rightNum);
         mData.add(map);
