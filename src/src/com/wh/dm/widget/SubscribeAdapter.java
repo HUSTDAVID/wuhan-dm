@@ -30,12 +30,17 @@ public class SubscribeAdapter extends BaseAdapter {
         mData = new ArrayList<Map<String, Object>>();
     }
 
-    public void addItem(Bitmap bmp, String title, boolean isSub) {
+    public void addItem(Bitmap leftBmp, String leftTitle, boolean leftIsSub, Bitmap rightBmp,
+            String rightTitle, boolean rightIsSub) {
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("image", bmp);
-        map.put("title", title);
-        map.put("isSub", isSub);
+        map.put("leftImage", leftBmp);
+        map.put("leftTitle", leftTitle);
+        map.put("leftIsSub", leftIsSub);
+
+        map.put("rightImage", rightBmp);
+        map.put("rightTitle", rightTitle);
+        map.put("rightIsSub", rightIsSub);
         mData.add(map);
         notifyDataSetChanged();
     }
@@ -65,25 +70,44 @@ public class SubscribeAdapter extends BaseAdapter {
         if (conterView == null) {
             conterView = mInflater.inflate(R.layout.sub_item, null);
             holder = new ViewHolder();
-            holder.img = (ImageView) conterView.findViewById(R.id.img_sub);
-            holder.txt = (TextView) conterView.findViewById(R.id.txt_sub_title);
-            holder.btn = (Button) conterView.findViewById(R.id.btn_sub);
+            holder.leftImg = (ImageView) conterView.findViewById(R.id.img_left_sub);
+            holder.leftTxt = (TextView) conterView.findViewById(R.id.txt_left_sub_title);
+            holder.leftBtn = (Button) conterView.findViewById(R.id.btn_left_sub);
+
+            holder.rightImg = (ImageView) conterView.findViewById(R.id.img_right_sub);
+            holder.rightTxt = (TextView) conterView.findViewById(R.id.txt_right_sub_title);
+            holder.rightBtn = (Button) conterView.findViewById(R.id.btn_right_sub);
             conterView.setTag(holder);
         } else {
             holder = (ViewHolder) conterView.getTag();
         }
 
-        holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
-        holder.txt.setText(mData.get(position).get("title").toString());
-        boolean isSub = (Boolean) mData.get(position).get("isSub");
-        if (isSub) {
-            holder.btn.setBackgroundResource(R.drawable.btn_sub_have);
-            holder.btn.setText(context.getResources().getString(R.string.sub_have));
-            holder.btn.setTextColor(context.getResources().getColor(R.color.black));
+        // add left data
+        holder.leftImg.setImageBitmap((Bitmap) mData.get(position).get("leftImage"));
+        holder.leftTxt.setText(mData.get(position).get("leftTitle").toString());
+        boolean leftIsSub = (Boolean) mData.get(position).get("leftIsSub");
+        if (leftIsSub) {
+            holder.leftBtn.setBackgroundResource(R.drawable.btn_sub_have);
+            holder.leftBtn.setText(context.getResources().getString(R.string.sub_have));
+            holder.leftBtn.setTextColor(context.getResources().getColor(R.color.black));
         } else {
-            holder.btn.setBackgroundResource(R.drawable.btn_sub_no);
-            holder.btn.setText(context.getResources().getString(R.string.sub_no));
-            holder.btn.setTextColor(context.getResources().getColor(R.color.white));
+            holder.leftBtn.setBackgroundResource(R.drawable.btn_sub_no);
+            holder.leftBtn.setText(context.getResources().getString(R.string.sub_no));
+            holder.leftBtn.setTextColor(context.getResources().getColor(R.color.white));
+        }
+
+        // add right data
+        holder.rightImg.setImageBitmap((Bitmap) mData.get(position).get("rightImage"));
+        holder.rightTxt.setText(mData.get(position).get("rightTitle").toString());
+        boolean rightIsSub = (Boolean) mData.get(position).get("rightIsSub");
+        if (rightIsSub) {
+            holder.rightBtn.setBackgroundResource(R.drawable.btn_sub_have);
+            holder.rightBtn.setText(context.getResources().getString(R.string.sub_have));
+            holder.rightBtn.setTextColor(context.getResources().getColor(R.color.black));
+        } else {
+            holder.rightBtn.setBackgroundResource(R.drawable.btn_sub_no);
+            holder.rightBtn.setText(context.getResources().getString(R.string.sub_no));
+            holder.rightBtn.setTextColor(context.getResources().getColor(R.color.white));
         }
 
         return conterView;
@@ -91,9 +115,13 @@ public class SubscribeAdapter extends BaseAdapter {
 
     static class ViewHolder {
 
-        ImageView img;
-        TextView txt;
-        Button btn;
+        ImageView leftImg;
+        TextView leftTxt;
+        Button leftBtn;
+
+        ImageView rightImg;
+        TextView rightTxt;
+        Button rightBtn;
     }
 
 }
