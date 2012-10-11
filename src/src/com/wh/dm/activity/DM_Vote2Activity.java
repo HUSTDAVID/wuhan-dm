@@ -9,13 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class DM_Vote2Activity extends Activity {
     private Button btn_close;
     private Button votebutton1;
     private Button votebutton2;
     private Button votebutton3;
-
+    private ImageButton btnBack;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -53,6 +54,12 @@ public class DM_Vote2Activity extends Activity {
                 startActivity(intent);
 
             }
+        });
+        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		finish();
+        	}
         });
     }
 

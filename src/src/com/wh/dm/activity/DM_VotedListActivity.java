@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,7 +35,8 @@ public class DM_VotedListActivity extends Activity {
 
     private ViewGroup group;
 
-    Button btnVote;
+    private Button btnVote;
+    private ImageButton btnBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,12 @@ public class DM_VotedListActivity extends Activity {
                 Intent intent = new Intent(DM_VotedListActivity.this, DM_Vote2Activity.class);
                 startActivity(intent);
             }
+        });
+        btnBack = (ImageButton)v1.findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener(){
+        	public void onClick(View view){
+        		finish();
+        	}
         });
 
         pageViews = new ArrayList<View>();
@@ -99,6 +107,7 @@ public class DM_VotedListActivity extends Activity {
 
         viewPager.setAdapter(new GuidePageAdapter());
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
+
     }
 
     private class TextViewOnClickListener implements OnClickListener {
