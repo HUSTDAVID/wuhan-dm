@@ -1,6 +1,8 @@
 
 package com.wh.dm.activity;
 
+import java.util.zip.Inflater;
+
 import com.wh.dm.R;
 import com.wh.dm.widget.PhotoAdapter;
 import com.wh.dm.widget.PullToRefreshListView;
@@ -11,11 +13,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,14 +30,16 @@ public class DM_Photos_AllActivity extends Activity {
     TextView txtPhotosHeader;
 
     PullToRefreshListView lvPhotos;
-
+    View footer;
+    Button btnFooter;
+    LayoutInflater mInflater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_dm_photos_all);
-
+        mInflater = getLayoutInflater();
         initViews();
     }
 
@@ -90,6 +96,11 @@ public class DM_Photos_AllActivity extends Activity {
                 startActivity(intent_list);
             }
         });
+
+        footer = mInflater.inflate(R.layout.news_list_footer, null);
+        footer.setBackgroundResource(R.drawable.photos_bg);
+        btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
+        lvPhotos.addFooterView(footer);
     }
 
 }

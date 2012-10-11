@@ -8,7 +8,10 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ListView;
 import com.wh.dm.widget.PullToRefreshListView;
 import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
@@ -16,14 +19,16 @@ import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 public class Sub_HotActivity extends Activity {
 
     PullToRefreshListView lvSub;
-
+    View footer;
+    Button btnFooter;
+    LayoutInflater mInflater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_sub_item);
-
+        mInflater = getLayoutInflater();
         initViews();
     }
 
@@ -67,5 +72,9 @@ public class Sub_HotActivity extends Activity {
 			}
 		});
         lvSub.setAdapter(adapter);
+        footer = mInflater.inflate(R.layout.news_list_footer, null);
+        footer.setBackgroundColor(getResources().getColor(R.color.bg_normal));
+        btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
+        lvSub.addFooterView(footer);
     }
 }
