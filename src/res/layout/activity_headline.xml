@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/news_flipper"
         android:layout_width="fill_parent"
-        android:layout_height="121.4dip"
+        android:layout_height="150dip"
         android:gravity="bottom"
         android:orientation="vertical" >
 
