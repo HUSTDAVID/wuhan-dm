@@ -62,10 +62,8 @@ public class CollectActivity extends Activity {
 		CollectAdapter adapter = new CollectAdapter(this, list);
 		collect_list.setAdapter(adapter);
 
-<<<<<<< HEAD
-    }
-=======
+
 	}
 
->>>>>>> 5d5667fbf515f33126f6eb698e8da3871654c282
+
 }
