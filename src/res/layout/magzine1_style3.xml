@@ -138,7 +138,7 @@
             android:layout_marginTop="20dip"
             android:text="市政府与中国医药集团签订合作协议"
             android:textColor="@color/mzine_txt_normal"
-            android:textSize="17sp" />
+            android:textSize="22sp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
