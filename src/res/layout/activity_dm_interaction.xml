@@ -100,7 +100,7 @@
 		            android:layout_alignLeft="@+id/img_3_interaction"
 		            android:layout_alignRight="@+id/img_3_interaction"
 		            android:layout_alignParentBottom="true"
-		            android:text="@string/surver" />
+		            android:text="@string/survey" />
                 
             </RelativeLayout>
             

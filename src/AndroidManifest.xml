@@ -211,6 +211,18 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
+        <activity
+            android:name=".activity.SurveyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+         <activity
+            android:name=".activity.SurveyFinishActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
     </application>
 
     <supports-screens
