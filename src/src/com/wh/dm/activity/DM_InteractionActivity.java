@@ -90,6 +90,8 @@ public class DM_InteractionActivity extends Activity implements OnClickListener 
                 break;
             case R.id.rel_interaction_award:
             case R.id.btn_interaction_award:
+                Intent intentSurvey = new Intent(DM_InteractionActivity.this, SurveyActivity.class);
+                startActivity(intentSurvey);
                 break;
         }
 

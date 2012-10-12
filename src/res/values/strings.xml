@@ -12,7 +12,7 @@
     <string name="store">收藏</string>
     <string name="vote">投票</string>
     <string name="comment">抽奖</string>
-    <string name="surver">有奖调查</string>
+    <string name="survey">有奖调查</string>
     <string name="topic">话题</string>
     <string name="house">房产</string>
     <string name="car">汽车</string>
@@ -42,6 +42,11 @@
     <string name="temp14">国美电器</string>
     <string name="temp15">格力电器</string>
     <string name="temp16">西门子</string>
+    <string name="next">下一题</string>
+    <string name="commit">提交</string>
+    <string name="survey_thanks">感谢您的参与！</string>
+    <string name="survey_notice">中奖结果及更多内容请关照官方公告</string>
+    <string name="finish">完成</string>
     <!-- 组图 -->
     <string name="all">全部</string>
     <string name="hot">热点</string>

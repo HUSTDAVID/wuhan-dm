@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:name=".activity.DM_InteractionActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.DM_NewsActivity"
@@ -53,7 +53,8 @@
         </activity>
         <activity
             android:name=".activity.DM_Tab_2Activity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+           >
         </activity>
         <activity
             android:name=".activity.PhotosActivity"
@@ -211,8 +212,20 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-         <activity
+        <activity
             android:name=".activity.DownloadActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.SurveyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.SurveyFinishActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
