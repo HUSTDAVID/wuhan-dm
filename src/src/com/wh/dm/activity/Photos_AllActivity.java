@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class DM_Photos_AllActivity extends Activity {
+public class Photos_AllActivity extends Activity {
 
     RelativeLayout relPhotosHeader;
     TextView txtPhotosHeader;
@@ -91,8 +91,8 @@ public class DM_Photos_AllActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent_list = new Intent(DM_Photos_AllActivity.this,
-                        DM_PhotosDetailsActivity.class);
+                Intent intent_list = new Intent(Photos_AllActivity.this,
+                        PhotosDetailsActivity.class);
                 startActivity(intent_list);
             }
         });

@@ -30,7 +30,7 @@ public class Vote2Activity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Vote2Activity.this, VoteWatchResult.class);
+                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
                 startActivity(intent);
 
             }
@@ -40,7 +40,7 @@ public class Vote2Activity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Vote2Activity.this, VoteWatchResult.class);
+                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
                 startActivity(intent);
 
             }
@@ -50,7 +50,7 @@ public class Vote2Activity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Vote2Activity.this, VoteWatchResult.class);
+                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
                 startActivity(intent);
 
             }

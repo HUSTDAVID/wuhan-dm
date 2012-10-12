@@ -41,7 +41,7 @@ public class DM_Tab_1Activity extends TabActivity implements OnTabChangeListener
                 .setContent(new Intent(this, DM_NewsActivity.class)));
 
         tabHost.addTab(tabHost.newTabSpec("photos").setIndicator(createTabView(PHOTOS))
-                .setContent(new Intent(this, DM_PhotosActivity.class)));
+                .setContent(new Intent(this, PhotosActivity.class)));
 
         tabHost.addTab(tabHost.newTabSpec("subscribe").setIndicator(createTabView(SUBSCRIBE))
                 .setContent(new Intent(this, SubscribeActivity.class)));

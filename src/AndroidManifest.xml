@@ -56,7 +56,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_PhotosActivity"
+            android:name=".activity.PhotosActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -69,11 +69,11 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name=".activity.DM_Photos_AllActivity"
+            android:name=".activity.Photos_AllActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_PhotosDetailsActivity"
+            android:name=".activity.PhotosDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -134,7 +134,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
         <activity
-            android:name=".activity.VoteWatchResult"
+            android:name=".activity.VoteWatchResultActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
@@ -207,6 +207,12 @@
         </activity>
         <activity
             android:name=".activity.MoreActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+        </activity>
+         <activity
+            android:name=".activity.DownloadActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >

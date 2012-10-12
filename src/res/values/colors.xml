@@ -46,4 +46,7 @@
     <color name="pref_txt_color">#343434</color>
     <color name="pref_category_bg">#7B7B7B</color>
     <color name="pref_selected">#7B7B7B</color>
+    <color name="download_selected">#e7e7e7</color>
+    <color name="download_normal">#efefef</color>
+    <color name="progressbar">#d9d9d9</color>
 </resources>

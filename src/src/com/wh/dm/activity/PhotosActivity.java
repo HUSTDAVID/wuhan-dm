@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-public class DM_PhotosActivity extends ActivityGroup {
+public class PhotosActivity extends ActivityGroup {
 
     private RelativeLayout relMain;
     private LayoutParams params = null;
@@ -82,7 +82,7 @@ public class DM_PhotosActivity extends ActivityGroup {
         param.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
 
         // set the activity of photos all
-        intent = new Intent(DM_PhotosActivity.this, DM_Photos_AllActivity.class);
+        intent = new Intent(PhotosActivity.this, Photos_AllActivity.class);
         relMain = (RelativeLayout) findViewById(R.id.rel_photos_main);
         vMain = getLocalActivityManager().startActivity("all", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
@@ -98,7 +98,7 @@ public class DM_PhotosActivity extends ActivityGroup {
             switch (v.getId()) {
                 case R.id.txt_listtop_1:
                     setCurTxt(1);
-                    intent.setClass(DM_PhotosActivity.this, DM_Photos_AllActivity.class);
+                    intent.setClass(PhotosActivity.this, Photos_AllActivity.class);
                     vMain = getLocalActivityManager().startActivity("all", intent).getDecorView();
                     break;
 

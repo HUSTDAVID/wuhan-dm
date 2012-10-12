@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class VoteWatchResult extends Activity {
+public class VoteWatchResultActivity extends Activity {
 	private ImageButton btnBack;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,14 +35,17 @@ public class VoteWatchResult extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(VoteWatchResult.this, Vote1Activity.class);
+                Intent intent = new Intent(VoteWatchResultActivity.this, Vote1Activity.class);
                 startActivity(intent);
             }
         });
         btnBack =(ImageButton)findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new OnClickListener(){
         	public void onClick(View view){
-        		finish();
+        		Intent intent = new Intent(VoteWatchResultActivity.this,VotedListActivity.class);
+        		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        		startActivity(intent);
         	}
         });
     }

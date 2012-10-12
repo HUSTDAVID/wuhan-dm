@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class DM_PhotosDetailsActivity extends Activity {
+public class PhotosDetailsActivity extends Activity {
     private ViewPager viewPager;
     private ArrayList<View> pageViews;
 

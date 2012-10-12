@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="67dip"
+    android:background="@drawable/download_bg"
+    android:orientation="horizontal"
+    android:paddingBottom="8dip"
+    android:paddingTop="8dip" >
+
+    <ImageView
+        android:id="@+id/img_sub_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/subscription_manage_background"
+        android:src="@drawable/subscription_manage_logo" />
+
+    <TextView
+        android:id="@+id/txt_sub_manage_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/img_sub_manage"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/img_sub_manage"
+        android:text="中百仓库"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/txt_download_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txt_sub_manage_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/txt_sub_manage_title"
+        android:text="22496人订阅"
+        android:textColor="#a4a4a4"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/txt_download_ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_sub_manage_title"
+        android:layout_below="@+id/txt_sub_manage_title"
+        android:layout_marginTop="8dip"
+        android:text="下载已完成"
+        android:textColor="#747474"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btn_download_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="11dip"
+        android:background="@drawable/btn_subscription"
+        android:focusable="false"
+        android:text="查看DM"
+        android:textColor="#5b5b5b" />
+
+    <ProgressBar
+        android:id="@+id/pbar_download"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_download_ad"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="15dip"
+        android:layout_toLeftOf="@+id/btn_download_status"
+        android:background="@color/progressbar"
+        android:visibility="gone" />
+
+</RelativeLayout>
