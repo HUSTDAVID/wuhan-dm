@@ -204,18 +204,18 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:orientation="vertical" >
-
+
             <TextView
                 android:id="@+id/txt_magazine_1_title5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:text="@string/mag_title5"
                 android:textColor="@color/mzine_txt_normal"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/txt_magazine_1_body5"
@@ -225,7 +225,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="@string/mag_body5"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
         </LinearLayout>
     </TableRow>
 
