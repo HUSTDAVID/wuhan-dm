@@ -48,8 +48,16 @@
             android:layout_alignParentBottom="true"
             android:text="@string/headline_body"
             android:textSize="11sp" />
-
-       
+
+        <TextView
+            android:id="@+id/txt_headline_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="213跟帖"
+            android:textColor="@color/txt_gray"
+            android:textSize="11sp" />
 
     </RelativeLayout>
 
