@@ -26,7 +26,6 @@
         <item name="android:layout_height">25dip</item>
         <item name="android:lines">2</item>
         <item name="android:textSize">19sp</item>
-        <item name="android:lines">2</item>
         <item name="android:textColor">@color/mzine_txt_normal</item>
     </style>
 
