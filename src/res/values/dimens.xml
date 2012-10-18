@@ -11,5 +11,7 @@
     <dimen name="grid_item_height">100dip</dimen>
     <dimen name="toolbar_margin">3dip</dimen>
     <dimen name="rbtn_width">10dip</dimen>
+    
+    <dimen name="mzine_title">21sp</dimen>
 
 </resources>
