@@ -74,6 +74,8 @@ public class DM_NewsMoreReplyActivity extends Activity {
 
                 bottomLayout1.setVisibility(View.VISIBLE);
                 bottomLayout2.setVisibility(View.GONE);
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
 
             }
         });

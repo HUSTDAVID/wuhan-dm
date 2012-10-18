@@ -29,12 +29,13 @@ public class HeadlineAdapter extends BaseAdapter {
 
     }
 
-    public void addItem(String title, String body, Bitmap bmp) {
+    public void addItem(String title, String body, String reply, Bitmap bmp) {
 
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("title", title);
         map.put("image", bmp);
         map.put("body", body);
+        map.put("reply", reply);
         mData.add(map);
         notifyDataSetChanged();
     }
@@ -62,7 +63,9 @@ public class HeadlineAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.headline_item, null);
             holder.txt_title = (TextView) view.findViewById(R.id.txt_headline_item_title);
             holder.txt_body = (TextView) view.findViewById(R.id.txt_headline_item_body);
+            holder.txt_reply = (TextView) view.findViewById(R.id.txt_headline_reply);
             holder.img = (ImageView) view.findViewById(R.id.img_headline_item);
+
             view.setTag(holder);
         } else
 
@@ -72,6 +75,7 @@ public class HeadlineAdapter extends BaseAdapter {
 
         holder.txt_title.setText(mData.get(position).get("title").toString());
         holder.txt_body.setText(mData.get(position).get("body").toString());
+        holder.txt_reply.setText(mData.get(position).get("reply").toString());
         holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
 
         return view;
@@ -79,7 +83,7 @@ public class HeadlineAdapter extends BaseAdapter {
 
     static class ViewHolder {
         public TextView txt_title;
-
+        public TextView txt_reply;
         public TextView txt_body;
         public ImageView img;
     }

@@ -58,7 +58,7 @@ public class DM_News_HouseActivity extends Activity {
             title = dataTitle[i];
             body = dataBody[i];
             bmp = BitmapFactory.decodeResource(getResources(), imgId[i]);
-            adapter.addItem(title, body, bmp);
+            adapter.addItem(title, body, "213¸úÌû", bmp);
         }
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new OnItemClickListener() {

@@ -94,7 +94,7 @@ public class DM_HeadLineActivity extends Activity {
             title = dataTitle[i];
             body = dataBody[i];
             bmp = BitmapFactory.decodeResource(getResources(), imgId[i]);
-            adapter.addItem(title, body, bmp);
+            adapter.addItem(title, body, "213¸úÌû", bmp);
         }
 
         // add footer for listview
