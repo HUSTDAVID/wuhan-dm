@@ -72,6 +72,8 @@ public class DM_NewsDetailsActivity extends Activity {
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
         btnMyFavorite = (Button) findViewById(R.id.btn_news_my_favorite);
 
+        edtxMyReplyforBtn.setFocusable(false);
+
         lvNews.addHeaderView(newsMessage, null, false);
 
         // watch more comments
@@ -81,7 +83,6 @@ public class DM_NewsDetailsActivity extends Activity {
         adapter = new NewsReplyAdapter(this);
         // for (int i = 0; i < 3; i++) {
         adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212");
-        adapter.addItem("抗日者", "12小时前", "抗日抗日抗日抗日抗日抗日抗日抗日", "顶1212");
         // }
         lvNews.setAdapter(adapter);
 
@@ -99,11 +100,9 @@ public class DM_NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                int current = adapter.getCount() - 1;
-                for (int i = 0; i < 3; i++) {
-                    adapter.addItem("手机版网友", "11小时前", "反抗呀，核潜艇出击……", "顶4008");
-                }
-                lvNews.setSelection(current);
+                Intent intent = new Intent(DM_NewsDetailsActivity.this,
+                        DM_NewsMoreReplyActivity.class);
+                startActivity(intent);
 
             }
         });

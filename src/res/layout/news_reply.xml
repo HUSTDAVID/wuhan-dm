@@ -28,7 +28,6 @@
             android:editable="false"
             android:ems="10"
             android:hint="我来说两句" >
-
             <requestFocus />
             
         </EditText>
