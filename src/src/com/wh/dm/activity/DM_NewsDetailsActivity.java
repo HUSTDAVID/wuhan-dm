@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -61,12 +62,12 @@ public class DM_NewsDetailsActivity extends Activity {
         TextView newsTitle = (TextView) newsMessage.findViewById(R.id.txt_news_title);
         TextView newsTime = (TextView) newsMessage.findViewById(R.id.txt_news_time);
         TextView newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
-        TextView newsBody = (TextView) newsMessage.findViewById(R.id.txt_news_body);
+        WebView webViewNewsBody = (WebView) findViewById(R.id.webview_news_body);
+
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
         newsTime.setText(getResources().getString(R.string.news_time));
         newsSource.setText(getResources().getString(R.string.news_source));
-        newsBody.setText(getResources().getString(R.string.news_body));
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
