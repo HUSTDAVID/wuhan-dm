@@ -63,7 +63,7 @@ public class DM_NewsDetailsActivity extends Activity {
         TextView newsTime = (TextView) newsMessage.findViewById(R.id.txt_news_time);
         TextView newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
         WebView webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
-        webViewNewsBody.loadUrl("http://news.qq.com/a/20121019/001249.htm");
+        webViewNewsBody.loadUrl("file:///android_asset/news.html");
 
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
