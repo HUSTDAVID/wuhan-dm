@@ -2,6 +2,8 @@
 package com.wh.dm.activity;
 
 import com.wh.dm.R;
+import com.wh.dm.widget.NewsReplyFloorAdapter;
+import com.wh.dm.widget.NewsReplyMoreAdapter;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +30,8 @@ public class DM_NewsMoreReplyActivity extends Activity {
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
 
+    ListView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,6 +43,17 @@ public class DM_NewsMoreReplyActivity extends Activity {
     }
 
     private void initViews() {
+
+        // add data for listview
+        lv = (ListView) findViewById(R.id.lv_news_reply);
+        NewsReplyMoreAdapter adapter = new NewsReplyMoreAdapter(this);
+        NewsReplyFloorAdapter floorAdapter = new NewsReplyFloorAdapter(this);
+        floorAdapter.addItem("手机版网友", "谈判，谈什么？狗日的屡屡不改，何必谈", 1);
+        floorAdapter.addItem("手机版网友", "就是，我们也出动我们的潜艇", 2);
+        for (int i = 0; i < 5; i++) {
+            adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212", floorAdapter);
+        }
+        lv.setAdapter(adapter);
 
         // init header
         TextView txtTitle = (TextView) findViewById(R.id.txt_header3_title);

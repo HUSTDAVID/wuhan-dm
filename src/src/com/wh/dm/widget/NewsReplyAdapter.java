@@ -19,13 +19,13 @@ import java.util.Map;
 public class NewsReplyAdapter extends BaseAdapter {
 
     List<Map<String, Object>> mData;
-    LayoutInflater mInfalater;
+    LayoutInflater mInflater;
     Context context;
 
     public NewsReplyAdapter(Context context) {
 
         this.context = context;
-        mInfalater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(context);
         mData = new ArrayList<Map<String, Object>>();
     }
 
@@ -64,7 +64,7 @@ public class NewsReplyAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInfalater.inflate(R.layout.news_reply_item, null);
+            convertView = mInflater.inflate(R.layout.news_reply_item, null);
             holder.txtBody = (TextView) convertView.findViewById(R.id.txt_replay_body);
             holder.txtTime = (TextView) convertView.findViewById(R.id.txt_reply_time);
             holder.txtName = (TextView) convertView.findViewById(R.id.txt_reply_name);

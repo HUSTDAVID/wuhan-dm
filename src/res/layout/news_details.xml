@@ -49,7 +49,7 @@
         android:padding="10dip"
         android:textColor="#404040"
         android:textSize="15sp"
-        android:lineSpacingExtra="5dip"
+        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
         android:text="" />
     

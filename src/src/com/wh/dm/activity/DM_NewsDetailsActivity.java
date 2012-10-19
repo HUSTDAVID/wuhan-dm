@@ -62,7 +62,8 @@ public class DM_NewsDetailsActivity extends Activity {
         TextView newsTitle = (TextView) newsMessage.findViewById(R.id.txt_news_title);
         TextView newsTime = (TextView) newsMessage.findViewById(R.id.txt_news_time);
         TextView newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
-        WebView webViewNewsBody = (WebView) findViewById(R.id.webview_news_body);
+        WebView webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
+        webViewNewsBody.loadUrl("http://news.qq.com/a/20121019/001249.htm");
 
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
@@ -164,4 +165,5 @@ public class DM_NewsDetailsActivity extends Activity {
         });
 
     }
+
 }

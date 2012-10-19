@@ -231,5 +231,7 @@
         android:normalScreens="true"
         android:smallScreens="true" >
     </supports-screens>
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

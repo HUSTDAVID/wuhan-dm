@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="10dip"
     android:paddingRight="10dip"
     android:paddingTop="5dip"
     android:paddingBottom="5dip"
     android:orientation="vertical" 
     android:background="@color/bg_normal">
-
+    
+    <ListView 
+        android:id="@+id/lv_news_floor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:divider="@drawable/double_line_hor"
+        android:dividerHeight="1.5dip"
+        android:visibility="gone">
+        
+    </ListView>
+      
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:paddingBottom="8dip">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:paddingBottom="8dip" >
 
         <TextView
             android:id="@+id/txt_reply_name"
