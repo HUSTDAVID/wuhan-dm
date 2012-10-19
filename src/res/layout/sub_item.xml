@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/VI"
         android:layout_marginLeft="10dip"
         android:layout_marginTop="15dip"
         android:background="@null" >
@@ -54,11 +54,24 @@
 	        android:text="我要订阅" />
 	    
 	    </RelativeLayout>
+	    
+    
+     <View
+            android:id="@+id/VI"
+            android:layout_width="1.5dip"
+            android:layout_height="10dip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/double_line_ver"
+            android:visibility="invisible" >
+
+        </View>
 	    
      <RelativeLayout
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_alignParentRight="true"
+         android:layout_toRightOf="@+id/VI"
          android:layout_marginRight="10dip"
          android:layout_marginTop="15dip"
          android:background="@null" >
