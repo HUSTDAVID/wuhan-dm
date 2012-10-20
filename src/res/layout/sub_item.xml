@@ -21,8 +21,8 @@
 	    
 	    <ImageView
 	        android:id="@+id/img_left_sub"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="134dip"
+	        android:layout_height="152.7dip"
 	        android:layout_centerInParent="true"
 	        android:src="@drawable/temp_subscription_bigimg" />
 	    
@@ -85,8 +85,8 @@
 	    
 	    <ImageView
 	        android:id="@+id/img_right_sub"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="134dip"
+	        android:layout_height="152.7dip"
 	        android:layout_centerInParent="true"
 	        android:src="@drawable/temp_subscription_bigimg" />
 	    

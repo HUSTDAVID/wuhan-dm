@@ -113,8 +113,8 @@
 
         <ImageView
             android:id="@+id/img_magazine_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="138dip"
             android:scaleType="fitXY"
             android:src="@drawable/mzine1_11" />
 

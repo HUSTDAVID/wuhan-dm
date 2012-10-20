@@ -32,8 +32,8 @@
             
 	    <ImageView
 	        android:id="@+id/img_left_potos_item"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="126dip"
+	        android:layout_height="86dip"
 	        android:layout_below="@+id/txt_left_photos_title"
 	        android:layout_centerHorizontal="true"
 	        android:paddingLeft="1dip"
@@ -127,8 +127,8 @@
             
 	    <ImageView
 	        android:id="@+id/img_right_potos_item"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="126dip"
+	        android:layout_height="86dip"
 	        android:layout_below="@+id/txt_right_photos_title"
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginLeft="1dip"
