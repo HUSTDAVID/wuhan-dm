@@ -2,6 +2,9 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,39 +22,34 @@ import java.util.Map;
 
 public class HeadlineAdapter extends BaseAdapter {
 
+
     private LayoutInflater mInflater;
-    private List<Map<String, Object>> mData;
+    private ArrayList<PicWithTxtNews> headNews =null;
 
-    public HeadlineAdapter(Context context) {
-
-        mData = new ArrayList<Map<String, Object>>();
+    public HeadlineAdapter(Context context,ArrayList<PicWithTxtNews> _headNews) {
+    	headNews = _headNews;
         mInflater = LayoutInflater.from(context);
 
     }
 
-    public void addItem(String title, String body, Bitmap bmp) {
-
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("title", title);
-        map.put("image", bmp);
-        map.put("body", body);
-        mData.add(map);
-        notifyDataSetChanged();
-    }
-
     public int getCount() {
 
-        return mData.size();
+        return headNews.size();
     }
 
     public Object getItem(int position) {
 
-        return mData.get(position);
+        return headNews.get(position);
     }
 
     public long getItemId(int position) {
 
         return position;
+    }
+
+    public void setList(ArrayList<PicWithTxtNews> _headNews){
+    	headNews = _headNews;
+    	notifyDataSetChanged();
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -70,10 +68,10 @@ public class HeadlineAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        holder.txt_title.setText(mData.get(position).get("title").toString());
-        holder.txt_body.setText(mData.get(position).get("body").toString());
-        holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
+        holder.txt_title.setText(headNews.get(position).getTitle());
+        holder.txt_body.setText(headNews.get(position).getDescription());
 
+        UrlImageViewHelper.setUrlDrawable(holder.img, WH_DMHttpApiV1.URL_DOMAIN+headNews.get(position).getLitpic());
         return view;
     }
 

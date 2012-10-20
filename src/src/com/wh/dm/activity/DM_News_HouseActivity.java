@@ -48,7 +48,7 @@ public class DM_News_HouseActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_house);
-        lv = (ListView) findViewById(R.id.news_list_house);
+      /*  lv = (ListView) findViewById(R.id.news_list_house);
         HeadlineAdapter adapter = new HeadlineAdapter(this);
         // add data
         String title = getResources().getString(R.string.headline_title);
@@ -69,6 +69,6 @@ public class DM_News_HouseActivity extends Activity {
                 Intent intent = new Intent(DM_News_HouseActivity.this, DM_NewsDetailsActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 }
