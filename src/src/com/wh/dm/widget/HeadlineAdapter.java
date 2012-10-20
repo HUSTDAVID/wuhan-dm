@@ -71,7 +71,8 @@ public class HeadlineAdapter extends BaseAdapter {
         holder.txt_title.setText(headNews.get(position).getTitle());
         holder.txt_body.setText(headNews.get(position).getDescription());
 
-        UrlImageViewHelper.setUrlDrawable(holder.img, WH_DMHttpApiV1.URL_DOMAIN+headNews.get(position).getLitpic());
+        //UrlImageViewHelper.setUrlDrawable(holder.img, WH_DMHttpApiV1.URL_DOMAIN+headNews.get(position).getLitpic());
+        UrlImageViewHelper.setUrlDrawable(holder.img, WH_DMHttpApiV1.URL_DOMAIN+headNews.get(position).getLitpic(),R.drawable.test1_1,null);
         return view;
     }
 

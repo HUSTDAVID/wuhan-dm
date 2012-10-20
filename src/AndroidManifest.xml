@@ -40,11 +40,31 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.DM_NewsActivity"
+            android:name=".activity.LocalNewsActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.DM_NewsDetailsActivity"
+            android:name=".activity.HeadNewsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.CarNewsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.FashionNewsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.LifeNewsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.TravelNewsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.NewsDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
@@ -59,10 +79,6 @@
         </activity>
         <activity
             android:name=".activity.PhotosActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.DM_HeadLineActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -131,7 +147,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
         <activity
-            android:name=".activity.DM_News_HouseActivity"
+            android:name=".activity.HouseNewsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
@@ -239,5 +255,7 @@
         android:normalScreens="true"
         android:smallScreens="true" >
     </supports-screens>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

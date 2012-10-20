@@ -18,7 +18,7 @@
              android:layout_width="wrap_content"
              android:layout_height="fill_parent"
              android:background="@drawable/bottom_review_left" />
-
+
         <EditText
             android:id="@+id/edtx_news_my_reply"
             android:layout_width="wrap_content"
@@ -28,7 +28,6 @@
             android:editable="false"
             android:ems="10"
             android:hint="我来说两句" >
-
             <requestFocus />
             
         </EditText>

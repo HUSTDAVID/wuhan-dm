@@ -1,18 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
- 
+<?xml version="1.0" encoding="utf-8"?> 
    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="fill_parent"	   
 	    android:layout_height="wrap_content"
 	    android:paddingTop="10dip"
 	    android:paddingBottom="1dip"
 	    android:background="@drawable/photos_bg" >
-
+
+   <RelativeLayout
+       android:id="@+id/RE1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_toLeftOf="@+id/VI"
+       android:layout_weight="1" >       
+       
        <RelativeLayout
            android:layout_width="141dip"
            android:layout_height="wrap_content"
-           android:layout_alignParentLeft="true"
-           android:layout_marginLeft="11dip"
-           android:layout_weight="1"
+           android:layout_centerHorizontal="true"
            android:background="@drawable/photos_img_background"
            android:orientation="vertical" >
            
@@ -87,13 +91,28 @@
 	         
 	     </RelativeLayout>
         </RelativeLayout>
-        
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/VI"
+            android:layout_width="1.5dip"
+            android:layout_height="10dip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/double_line_ver"
+            android:visibility="invisible" >
+
+        </View>      <RelativeLayout
+       android:id="@+id/RE2"
+       android:layout_toRightOf="@id/VI"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_weight="1" > 
         <RelativeLayout
             android:layout_width="141dip"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="11dip"
-            android:layout_weight="1"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/photos_img_background"
             android:orientation="vertical" >
       
@@ -165,6 +184,7 @@
 
 	         
 	     </RelativeLayout>
+        </RelativeLayout>
         </RelativeLayout>
 	  
 	</RelativeLayout>

@@ -43,13 +43,13 @@
         android:layout_height="1.5dip"
         android:background="@drawable/doubleline"/>
 
-    <TextView
-        android:id="@+id/txt_news_body"
+    <WebView
+        android:id="@+id/webview_news_body"
         android:layout_width="fill_parent"
         android:padding="10dip"
         android:textColor="#404040"
         android:textSize="15sp"
-        android:lineSpacingExtra="5dip"
+        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
         android:text="" />
     

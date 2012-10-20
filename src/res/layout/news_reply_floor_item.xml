@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"    
+    android:background="@color/white"
+    android:orientation="vertical" >
+    
+    <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+    
+       
+        
+        <View 
+            android:id="@+id/line_left"
+            android:layout_width="0.8dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/RelativeLayout1"
+            android:background="@color/floor_line"
+            android:layout_alignParentLeft="true"/>
+        
+        <View 
+            android:id="@+id/line_right"
+            android:layout_width="0.8dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/RelativeLayout1"
+            android:background="@color/floor_line"
+            android:layout_alignParentRight="true"/>
+        
+         <RelativeLayout 
+		    android:id="@+id/RelativeLayout1"
+		    android:paddingTop="10dip"
+    		android:paddingBottom="10dip"
+		    android:layout_toRightOf="@+id/line_left"
+		    android:layout_toLeftOf="@+id/line_right"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:background="@color/white">
+		
+		    <TextView
+			        android:id="@+id/txt_floor_name"			        
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentLeft="true"
+			        android:layout_alignParentTop="true"
+			        android:layout_marginLeft="10dip"
+			        android:clickable="false"
+			        android:text="手机版网友"
+			        android:textColor="@color/red" />
+						
+			    <TextView
+			        android:id="@+id/txt_floor"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="#404040"
+			        android:textSize="@dimen/news_normal"
+			        android:layout_alignBottom="@+id/txt_floor_name"
+			        android:layout_alignParentRight="true"
+			        android:layout_marginRight="10dp"
+			        android:clickable="false"
+			        android:text="1" />
+						
+			    <TextView
+			        android:id="@+id/txt_floor_text"
+			        android:textColor="#404040"
+			        android:textSize="@dimen/news_normal"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignLeft="@+id/txt_floor_name"
+			        android:layout_alignRight="@+id/txt_floor"
+			        android:layout_below="@+id/txt_floor_name"
+			        android:layout_marginTop="20dp"
+			        android:clickable="false"
+			        android:text="那如果少数了呢？银行会怎么办？不是说离开柜台前请当面点清，离柜概不负责。那就是说，你少数了客户自认倒霉吗？" />
+		    
+    </RelativeLayout>
+    
+    </RelativeLayout>
+
+</LinearLayout>

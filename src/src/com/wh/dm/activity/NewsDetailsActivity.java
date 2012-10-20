@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,7 +21,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class DM_NewsDetailsActivity extends Activity {
+public class NewsDetailsActivity extends Activity {
 
     View headerView;
 
@@ -61,16 +62,19 @@ public class DM_NewsDetailsActivity extends Activity {
         TextView newsTitle = (TextView) newsMessage.findViewById(R.id.txt_news_title);
         TextView newsTime = (TextView) newsMessage.findViewById(R.id.txt_news_time);
         TextView newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
-        TextView newsBody = (TextView) newsMessage.findViewById(R.id.txt_news_body);
+        WebView webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
+        webViewNewsBody.loadUrl("file:///android_asset/news.html");
+
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
         newsTime.setText(getResources().getString(R.string.news_time));
         newsSource.setText(getResources().getString(R.string.news_source));
-        newsBody.setText(getResources().getString(R.string.news_body));
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
         btnMyFavorite = (Button) findViewById(R.id.btn_news_my_favorite);
+
+        edtxMyReplyforBtn.setFocusable(false);
 
         lvNews.addHeaderView(newsMessage, null, false);
 
@@ -81,7 +85,6 @@ public class DM_NewsDetailsActivity extends Activity {
         adapter = new NewsReplyAdapter(this);
         // for (int i = 0; i < 3; i++) {
         adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212");
-        adapter.addItem("抗日者", "12小时前", "抗日抗日抗日抗日抗日抗日抗日抗日", "顶1212");
         // }
         lvNews.setAdapter(adapter);
 
@@ -99,11 +102,9 @@ public class DM_NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                int current = adapter.getCount() - 1;
-                for (int i = 0; i < 3; i++) {
-                    adapter.addItem("手机版网友", "11小时前", "反抗呀，核潜艇出击……", "顶4008");
-                }
-                lvNews.setSelection(current);
+                Intent intent = new Intent(NewsDetailsActivity.this,
+                        DM_NewsMoreReplyActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -157,11 +158,12 @@ public class DM_NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(DM_NewsDetailsActivity.this,
+                Intent intent = new Intent(NewsDetailsActivity.this,
                         DM_NewsMoreReplyActivity.class);
                 startActivity(intent);
             }
         });
 
     }
+
 }

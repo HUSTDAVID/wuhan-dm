@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-public class DM_NewsActivity extends ActivityGroup {
+public class LocalNewsActivity extends ActivityGroup {
 
     private TextView txtTitle;
     private TextView txtSelectedItem;
@@ -71,7 +71,7 @@ public class DM_NewsActivity extends ActivityGroup {
         param.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
 
         // set the activity of headline
-        intent = new Intent(DM_NewsActivity.this, DM_HeadLineActivity.class);
+        intent = new Intent(LocalNewsActivity.this, HeadNewsActivity.class);
         relMain = (RelativeLayout) findViewById(R.id.rel_news_main);
         vMain = getLocalActivityManager().startActivity("Headline", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
@@ -87,7 +87,7 @@ public class DM_NewsActivity extends ActivityGroup {
             switch (v.getId()) {
                 case R.id.txt_listtop_1:
                     setCurTxt(1);
-                    intent.setClass(DM_NewsActivity.this, DM_HeadLineActivity.class);
+                    intent.setClass(LocalNewsActivity.this, HeadNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("Headline", intent)
                             .getDecorView();
 
@@ -95,30 +95,32 @@ public class DM_NewsActivity extends ActivityGroup {
 
                 case R.id.txt_listtop_2:
                     setCurTxt(2);
-                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
+                    intent.setClass(LocalNewsActivity.this, HouseNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_3:
                     setCurTxt(3);
-                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
-                    vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
+                    intent.setClass(LocalNewsActivity.this, CarNewsActivity.class);
+                    vMain = getLocalActivityManager().startActivity("Car", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_4:
                     setCurTxt(4);
-                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
-                    vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
+                    intent.setClass(LocalNewsActivity.this, FashionNewsActivity.class);
+                    vMain = getLocalActivityManager().startActivity("Fashion", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_5:
                     setCurTxt(5);
+                    intent.setClass(LocalNewsActivity.this, LifeNewsActivity.class);
+                    vMain = getLocalActivityManager().startActivity("Life", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_6:
                     setCurTxt(6);
-                    intent.setClass(DM_NewsActivity.this, DM_News_HouseActivity.class);
-                    vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
+                    intent.setClass(LocalNewsActivity.this, TravelNewsActivity.class);
+                    vMain = getLocalActivityManager().startActivity("Travel", intent).getDecorView();
                     break;
             }
 

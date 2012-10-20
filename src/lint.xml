@@ -3,4 +3,5 @@
     <issue id="NewApi" severity="ignore" />
     <issue id="ParserError" severity="ignore" />
     <issue id="ResourceAsColor" severity="ignore" />
+    <issue id="ShowToast" severity="ignore" />
 </lint>

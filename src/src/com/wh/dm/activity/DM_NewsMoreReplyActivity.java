@@ -2,6 +2,8 @@
 package com.wh.dm.activity;
 
 import com.wh.dm.R;
+import com.wh.dm.widget.NewsReplyFloorAdapter;
+import com.wh.dm.widget.NewsReplyMoreAdapter;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,8 +27,12 @@ public class DM_NewsMoreReplyActivity extends Activity {
     private Button btnReply;
     private EditText edtReply;
 
+    private Button btnNews;
+
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
+
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +46,33 @@ public class DM_NewsMoreReplyActivity extends Activity {
 
     private void initViews() {
 
+        // add data for listview
+        lv = (ListView) findViewById(R.id.lv_news_reply);
+        NewsReplyMoreAdapter adapter = new NewsReplyMoreAdapter(this);
+        NewsReplyFloorAdapter floorAdapter = new NewsReplyFloorAdapter(this);
+        floorAdapter.addItem("手机版网友", "谈判，谈什么？狗日的屡屡不改，何必谈", 1);
+        floorAdapter.addItem("手机版网友", "就是，我们也出动我们的潜艇", 2);
+        for (int i = 0; i < 5; i++) {
+            if (i % 2 == 0)
+                adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212", floorAdapter);
+            else
+                adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212", null);
+        }
+        lv.setAdapter(adapter);
+
         // init header
         TextView txtTitle = (TextView) findViewById(R.id.txt_header3_title);
         txtTitle.setText(getResources().getString(R.string.reply));
         TextView txtReply = (TextView) findViewById(R.id.txt_total_reply);
         txtReply.setText(getResources().getString(R.string.context));
+        txtReply.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DM_NewsMoreReplyActivity.this.finish();
+
+            }
+        });
 
         // inti reply views
         bottomLayout1 = (LinearLayout) findViewById(R.id.linear1_news_details_bottom);
@@ -74,6 +103,8 @@ public class DM_NewsMoreReplyActivity extends Activity {
 
                 bottomLayout1.setVisibility(View.VISIBLE);
                 bottomLayout2.setVisibility(View.GONE);
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
 
             }
         });

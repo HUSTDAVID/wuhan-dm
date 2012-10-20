@@ -62,5 +62,64 @@ public class WH_DMHttpApiV1 {
 		Type type = new TypeToken<ArrayList<PicWithTxtNews>>(){}.getType();
 		return gson.fromJson(content, type);
 	}
+	public ArrayList<PicWithTxtNews> getHouseNews() throws WH_DMException, UnKnownException, IOException{
+		HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN,new BasicNameValuePair("act","listp"),
+				new BasicNameValuePair("cid","211"));
+		String content = mHttpApi.doHttpRequest(httpGet);
+		if(DEBUG){
+			Log.d("getHouseNews","getHouseNews");
+			Log.d("gson",content);
 
+		}
+		Type type = new TypeToken<ArrayList<PicWithTxtNews>>(){}.getType();
+		return gson.fromJson(content,type);
+	}
+	public ArrayList<PicWithTxtNews> getCarNews() throws WH_DMException, UnKnownException, IOException{
+		HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN,new BasicNameValuePair("act","listp"),
+				new BasicNameValuePair("cid","212"));
+		String content = mHttpApi.doHttpRequest(httpGet);
+		if(DEBUG){
+			Log.d("getCarNews","getCarNews");
+			Log.d("gson",content);
+
+		}
+		Type type = new TypeToken<ArrayList<PicWithTxtNews>>(){}.getType();
+		return gson.fromJson(content,type);
+	}
+	public ArrayList<PicWithTxtNews> getFashionNews() throws WH_DMException, UnKnownException, IOException{
+		HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN,new BasicNameValuePair("act","listp"),
+				new BasicNameValuePair("cid","213"));
+		String content = mHttpApi.doHttpRequest(httpGet);
+		if(DEBUG){
+			Log.d("getFashionNews","getFashionNews");
+			Log.d("gson",content);
+
+		}
+		Type type = new TypeToken<ArrayList<PicWithTxtNews>>(){}.getType();
+		return gson.fromJson(content,type);
+	}
+	public ArrayList<PicWithTxtNews> getLifeNews() throws WH_DMException, UnKnownException, IOException{
+		HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN,new BasicNameValuePair("act","listp"),
+				new BasicNameValuePair("cid","214"));
+		String content = mHttpApi.doHttpRequest(httpGet);
+		if(DEBUG){
+			Log.d("getLifeNews","getLifeNews");
+			Log.d("gson",content);
+
+		}
+		Type type = new TypeToken<ArrayList<PicWithTxtNews>>(){}.getType();
+		return gson.fromJson(content,type);
+	}
+	public ArrayList<PicWithTxtNews> getTravelNews() throws WH_DMException, UnKnownException, IOException{
+		HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN,new BasicNameValuePair("act","listp"),
+				new BasicNameValuePair("cid","215"));
+		String content = mHttpApi.doHttpRequest(httpGet);
+		if(DEBUG){
+			Log.d("getTravelNews","getTravelNews");
+			Log.d("gson",content);
+
+		}
+		Type type = new TypeToken<ArrayList<PicWithTxtNews>>(){}.getType();
+		return gson.fromJson(content,type);
+	}
 }

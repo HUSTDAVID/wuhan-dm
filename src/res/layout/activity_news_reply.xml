@@ -18,51 +18,17 @@
         android:layout_above="@+id/news_peply_bottom"
         android:layout_below="@+id/news_reply_top"
         android:orientation="vertical" >
-
-        <LinearLayout
+        
+        <ListView 
+            android:id="@+id/lv_news_reply"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:divider="@drawable/double_line_hor"
+        	android:dividerHeight="1.5dip">
+            
+        </ListView>
 
-            <include
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/news_reply_item" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.5dip"
-            android:background="@drawable/double_line_hor" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
-
-            <include
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/news_reply_item3" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.5dip"
-            android:background="@drawable/double_line_hor" />
-
-         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
-
-            <include
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/news_reply_item2" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1.5dip"
-            android:background="@drawable/double_line_hor" />
+     
     </LinearLayout>
 
     <RelativeLayout

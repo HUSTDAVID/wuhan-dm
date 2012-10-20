@@ -9,9 +9,10 @@ import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 
 public class WH_DM {
+
 	public static final boolean DEBUG = true;
 	private WH_DMHttpApiV1 mWH_DMHttpApiV1 ;
-	
+
 	public WH_DM(WH_DMHttpApiV1 httpApi){
 		mWH_DMHttpApiV1 = httpApi;
 	}
@@ -25,5 +26,19 @@ public class WH_DM {
 	public ArrayList<PicWithTxtNews> getHeadNews() throws WH_DMException, UnKnownException, IOException{
 		return mWH_DMHttpApiV1.getHeadNews();
 	}
-
+	public ArrayList<PicWithTxtNews> getHouseNews() throws WH_DMException, UnKnownException, IOException{
+		return mWH_DMHttpApiV1.getHouseNews();
+	}
+	public ArrayList<PicWithTxtNews> getCarNews() throws WH_DMException, UnKnownException, IOException{
+		return mWH_DMHttpApiV1.getCarNews();
+	}
+	public ArrayList<PicWithTxtNews> getFashionNews() throws WH_DMException, UnKnownException, IOException{
+		return mWH_DMHttpApiV1.getFashionNews();
+	}
+	public ArrayList<PicWithTxtNews> getLifeNews() throws WH_DMException, UnKnownException, IOException{
+		return mWH_DMHttpApiV1.getLifeNews();
+	}
+	public ArrayList<PicWithTxtNews> getTravelNews() throws WH_DMException, UnKnownException, IOException{
+		return mWH_DMHttpApiV1.getTravelNews();
+	}
 }

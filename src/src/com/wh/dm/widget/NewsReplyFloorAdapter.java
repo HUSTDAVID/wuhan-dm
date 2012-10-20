@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,28 +15,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewsReplyAdapter extends BaseAdapter {
+public class NewsReplyFloorAdapter extends BaseAdapter {
 
     List<Map<String, Object>> mData;
-    LayoutInflater mInflater;
+    LayoutInflater mInfalater;
     Context context;
 
-    public NewsReplyAdapter(Context context) {
+    public NewsReplyFloorAdapter(Context context) {
 
         this.context = context;
-        mInflater = LayoutInflater.from(context);
+        mInfalater = LayoutInflater.from(context);
         mData = new ArrayList<Map<String, Object>>();
     }
 
-    public void addItem(String name, String time, String body, String top) {
+    public void addItem(String name, String text, int floor) {
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("name", name);
-        map.put("time", time);
-        map.put("body", body);
-        map.put("top", top);
+        map.put("text", text);
+        map.put("floor", floor);
+
         mData.add(map);
-        notifyDataSetInvalidated();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -64,32 +63,27 @@ public class NewsReplyAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.news_reply_item, null);
-            holder.txtBody = (TextView) convertView.findViewById(R.id.txt_replay_body);
-            holder.txtTime = (TextView) convertView.findViewById(R.id.txt_reply_time);
-            holder.txtName = (TextView) convertView.findViewById(R.id.txt_reply_name);
-            holder.btnReply = (Button) convertView.findViewById(R.id.btn_reply);
-            holder.btnTop = (Button) convertView.findViewById(R.id.btn_reply_top);
+            convertView = mInfalater.inflate(R.layout.news_reply_floor_item, null);
+            holder.txtFloor = (TextView) convertView.findViewById(R.id.txt_floor);
+            holder.txtName = (TextView) convertView.findViewById(R.id.txt_floor_name);
+            holder.txtText = (TextView) convertView.findViewById(R.id.txt_floor_text);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.txtBody.setText(mData.get(position).get("body").toString());
+        holder.txtFloor.setText(mData.get(position).get("floor").toString());
         holder.txtName.setText(mData.get(position).get("name").toString());
-        holder.txtTime.setText(mData.get(position).get("time").toString());
-        holder.btnTop.setText(mData.get(position).get("top").toString());
+        holder.txtText.setText(mData.get(position).get("text").toString());
 
         return convertView;
     }
 
     static class ViewHolder {
         TextView txtName;
-        TextView txtTime;
-        TextView txtBody;
-        Button btnTop;
-        Button btnReply;
+        TextView txtText;
+        TextView txtFloor;
     }
 
 }

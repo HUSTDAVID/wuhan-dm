@@ -12,8 +12,11 @@ import com.wh.dm.type.PicsNews;
 import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.HorizontalPager;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,8 +35,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class DM_HeadLineActivity extends Activity {
+public class HeadNewsActivity extends Activity {
 
 	private String URL_DOMAIN = "http://test1.jbr.net.cn:809";
 	private String[] titles;
@@ -53,8 +57,9 @@ public class DM_HeadLineActivity extends Activity {
 	private ImageView pic1;
 	private ImageView pic2;
 	private ImageView pic3;
-	private TextView txtNews;
 
+	private TextView txtNews;
+	private ProgressDialog progressDialog;
 	private static final int MSG_GET_PICSNEWS = 0;
 	private static final int MSG_GET_HEADNEWS = 1;
 	private GetPicsNewsTask getPicsNewsTask = null;
@@ -75,7 +80,7 @@ public class DM_HeadLineActivity extends Activity {
 				getPicsNewsTask.execute();
 				break;
 			case MSG_GET_HEADNEWS:
-				if(getHeadNewsTask!=null){
+				if (getHeadNewsTask != null) {
 					getHeadNewsTask.cancel(true);
 					getHeadNewsTask = null;
 				}
@@ -94,8 +99,6 @@ public class DM_HeadLineActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_headline);
 		init();
-
-		// thread.start();
 	}
 
 	private void init() {
@@ -108,11 +111,32 @@ public class DM_HeadLineActivity extends Activity {
 
 		mInfalater = getLayoutInflater();
 		listView = (ListView) findViewById(R.id.list);
+		footer = mInfalater.inflate(R.layout.news_list_footer, null);
+		btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+		listView.addFooterView(footer);
 		mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
 		mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
 		mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
 		mPager.setOnScreenSwitchListener(onScreenSwitchListener);
 		mPager.setCurrentScreen(0, true);
+
+		progressDialog = new ProgressDialog(getParent());
+		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		progressDialog.setOnCancelListener(new OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface dialog) {
+
+				if (getHeadNewsTask != null) {
+					getHeadNewsTask.cancel(true);
+					getHeadNewsTask = null;
+				}
+				if (getPicsNewsTask != null) {
+					getPicsNewsTask.cancel(true);
+					getPicsNewsTask = null;
+				}
+			}
+		});
 
 		handler.sendEmptyMessage(MSG_GET_PICSNEWS);
 		handler.sendEmptyMessage(MSG_GET_HEADNEWS);
@@ -120,26 +144,19 @@ public class DM_HeadLineActivity extends Activity {
 
 	private class GetPicsNewsTask extends
 			AsyncTask<Void, Void, ArrayList<PicsNews>> {
-
+		Exception reason = null;
 		@Override
 		protected ArrayList<PicsNews> doInBackground(Void... arg0) {
 			ArrayList<PicsNews> picsNews = null;
+
 			try {
 				picsNews = (new WH_DM()).getPicsNews();
-
-			} catch (WH_DMException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnKnownException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
 				return picsNews;
+			} catch (Exception e) {
+				reason = e;
+				e.printStackTrace();
+				return null;
 			}
-
 		}
 
 		@Override
@@ -154,6 +171,10 @@ public class DM_HeadLineActivity extends Activity {
 					thread.destroy();
 				}
 				thread.start();
+
+			} else {
+				Toast.makeText(HeadNewsActivity.this, reason.toString(),
+						Toast.LENGTH_SHORT).show();
 			}
 			super.onPostExecute(result);
 		}
@@ -162,34 +183,49 @@ public class DM_HeadLineActivity extends Activity {
 	private class GetHeadNewsTask extends
 			AsyncTask<Void, Void, ArrayList<PicWithTxtNews>> {
 
+		Exception reason = null;
+		@Override
+		protected void onPreExecute() {
+			progressDialog.show();
+			super.onPreExecute();
+		}
+
 		@Override
 		protected ArrayList<PicWithTxtNews> doInBackground(Void... params) {
 			ArrayList<PicWithTxtNews> headNews = null;
 			try {
 				headNews = (new WH_DM()).getHeadNews();
-			} catch (WH_DMException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnKnownException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
 				return headNews;
+			} catch (Exception e) {
+				reason = e;
+				e.printStackTrace();
+				return null;
 			}
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<PicWithTxtNews> result) {
+		protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 			if (result != null) {
-				HeadlineAdapter adapter = new HeadlineAdapter(DM_HeadLineActivity.this,result);
-				footer = mInfalater.inflate(R.layout.news_list_footer, null);
-				btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
-				listView.addFooterView(footer);
+				HeadlineAdapter adapter = new HeadlineAdapter(
+						HeadNewsActivity.this, result);
+
 				listView.setAdapter(adapter);
+				listView.setOnItemClickListener(new OnItemClickListener(){
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long arg3) {
+						Intent intent = new Intent(HeadNewsActivity.this,NewsDetailsActivity.class);
+						intent.putExtra("id", result.get(position).getId());
+						startActivity(intent);
+					}
+
+				});
+			} else {
+				Toast.makeText(HeadNewsActivity.this, reason.toString(),
+						Toast.LENGTH_SHORT).show();
 			}
+			progressDialog.dismiss();
 			super.onPostExecute(result);
 		}
 

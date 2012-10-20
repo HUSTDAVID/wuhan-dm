@@ -150,4 +150,6 @@
     <string name="aboutus_text9">欢迎内容接入合作</string>
     <string name="aboutus">关于我们</string>
 	<string name="download">下载</string>
+	<!-- Exception -->
+	<string name="network_exception">网络连接异常</string>
 </resources>

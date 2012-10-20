@@ -129,16 +129,16 @@
         android:orientation="vertical"
         android:paddingLeft="15dip"
         android:paddingRight="15dip" >
-
+
         <TextView
             android:id="@+id/txt_magazine_3_title5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="20dip"
+            android:layout_marginTop="10dip"
             android:text="市政府与中国医药集团签订合作协议"
             android:textColor="@color/mzine_txt_normal"
-            android:textSize="17sp" />
+            android:textSize="@dimen/mzine_title" />
 
         <LinearLayout
             android:layout_width="fill_parent"
