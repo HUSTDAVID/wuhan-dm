@@ -37,6 +37,7 @@
             android:layout_alignParentTop="true"
             android:text="@string/headline_title"
             android:textColor="@color/black"
+            android:singleLine="true"
             android:textSize="15sp" />
 
         <TextView
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/txt_gray"
             android:layout_alignParentBottom="true"
+            android:lines="2"
             android:text="@string/headline_body"
             android:textSize="11sp" />
 
@@ -55,6 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/txt_headline_item_body"
+            android:layout_alignBottom="@+id/txt_headline_item_body"
             android:text="213跟帖"
             android:textColor="@color/txt_gray"
             android:textSize="11sp" />
