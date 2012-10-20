@@ -113,8 +113,8 @@
 
         <ImageView
             android:id="@+id/img_magazine_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="138dip"
             android:scaleType="fitXY"
             android:src="@drawable/mzine1_11" />
 
@@ -230,7 +230,7 @@
             android:layout_marginTop="5dp"
             android:text="豹澥 百年古镇走向科学新城"
             android:textColor="@color/mzine_txt_normal"
-            android:textSize="@dimen/mzine_title" />
+            android:textSize="@dimen/mzine_long_title" />
 
         <LinearLayout
             android:layout_width="fill_parent"

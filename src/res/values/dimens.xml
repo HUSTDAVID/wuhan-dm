@@ -12,6 +12,7 @@
     <dimen name="toolbar_margin">3dip</dimen>
     <dimen name="rbtn_width">10dip</dimen>
     
-    <dimen name="mzine_title">21sp</dimen>
+    <dimen name="mzine_title">18sp</dimen>
+    <dimen name="mzine_long_title">22sp</dimen>
 
 </resources>

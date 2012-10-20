@@ -15,8 +15,8 @@
 	             android:id="@+id/img_mzine_long_1"
 	             android:layout_alignParentLeft="true"
 	             android:layout_alignParentTop="true"	             
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"	             	             
+	             android:layout_width="210dip"
+	             android:layout_height="99dip"	             	             
 	             android:src="@drawable/temp_dm_2x_1" />
 	         
 	       
@@ -40,8 +40,8 @@
 	   
 	         <ImageView
 	             android:id="@+id/img_mzine_long_3"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
+	             android:layout_width="105dip"
+	             android:layout_height="99dip"
 	             android:layout_alignBottom="@+id/img_mzine_long_2"
 	             android:layout_alignLeft="@+id/img_mzine_long_1"
 	             android:layout_below="@+id/img_mzine_long_1"
@@ -61,8 +61,8 @@
 
 	         <ImageView
 	             android:id="@+id/img_mzine_long_4"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
+	             android:layout_width="105dip"
+	             android:layout_height="99dip"
 	             android:layout_alignBottom="@+id/img_mzine_long_2"
 	             android:layout_alignRight="@+id/img_mzine_long_1"
 	             android:layout_alignTop="@+id/img_mzine_long_3"
@@ -82,8 +82,8 @@
 
 	      <ImageView
 	          android:id="@+id/img_mzine_long_2"
-	          android:layout_width="wrap_content"
-	          android:layout_height="wrap_content"
+	          android:layout_width="105dip"
+	             android:layout_height="198dip"
 	          android:layout_alignTop="@+id/img_mzine_long_1"
 	          android:layout_marginLeft="1.5dip"
 	          android:layout_toRightOf="@+id/img_mzine_long_1"
@@ -91,8 +91,8 @@
 
          <ImageView
              android:id="@+id/img_mzine_long_5"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
+             android:layout_width="105dip"
+	             android:layout_height="99dip"
              android:layout_alignLeft="@+id/img_mzine_long_3"
              android:layout_alignRight="@+id/img_mzine_long_3"
              android:layout_below="@+id/img_mzine_long_3"
@@ -101,8 +101,8 @@
 
          <ImageView
              android:id="@+id/img_mzine_long_6"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
+             android:layout_width="105dip"
+	         android:layout_height="99dip"
              android:layout_alignBottom="@+id/img_mzine_long_5"
              android:layout_alignLeft="@+id/img_mzine_long_4"
              android:layout_alignRight="@+id/img_mzine_long_4"
@@ -113,8 +113,8 @@
          
          <ImageView
              android:id="@+id/img_mzine_long_7"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
+             android:layout_width="105dip"
+	         android:layout_height="99dip"
              android:layout_alignBottom="@+id/img_mzine_long_6"
              android:layout_alignTop="@+id/img_mzine_long_6"
              android:layout_below="@+id/img_mzine_long_2"

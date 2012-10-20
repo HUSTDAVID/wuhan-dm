@@ -102,8 +102,8 @@
 
     <ImageView
         android:id="@+id/img_magazine_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="92dip"
         android:layout_weight="1"
         android:scaleType="fitXY"
         android:src="@drawable/temp_magazine_img" />
@@ -220,7 +220,7 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/mag_title5"
                 android:textColor="@color/mzine_txt_normal"
-                android:textSize="@dimen/mzine_title" />
+                android:textSize="@dimen/mzine_long_title" />
 
             <TextView
                 android:id="@+id/txt_magazine_1_body5"
