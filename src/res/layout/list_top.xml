@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_list_top"
     android:layout_width="fill_parent"
-    android:layout_height="35dip"
+    android:layout_height="36dip"
     android:background="@drawable/list_topbg"
     android:orientation="horizontal"
     android:weightSum="6" >
 
     <TableRow
+        android:id="@+id/table_top"        
         android:layout_width="fill_parent"
         android:layout_height="35dip" >
 
@@ -47,5 +48,11 @@
             android:text="@string/traval" />
 
     </TableRow>
+    
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#c0c0c0"
+        android:layout_below="@+id/table_top"/>
 
-</LinearLayout>
+</RelativeLayout>
