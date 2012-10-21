@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
+import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 
@@ -40,5 +41,8 @@ public class WH_DM {
 	}
 	public ArrayList<PicWithTxtNews> getTravelNews() throws WH_DMException, UnKnownException, IOException{
 		return mWH_DMHttpApiV1.getTravelNews();
+	}
+	public NewsContent[] getNewsContent(int id) throws WH_DMException, UnKnownException, IOException{
+		return mWH_DMHttpApiV1.getNewsContent(id);
 	}
 }

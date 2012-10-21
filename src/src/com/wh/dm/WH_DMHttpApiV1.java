@@ -122,4 +122,15 @@ public class WH_DMHttpApiV1 {
 		Type type = new TypeToken<ArrayList<PicWithTxtNews>>(){}.getType();
 		return gson.fromJson(content,type);
 	}
+	public NewsContent[] getNewsContent(int id) throws WH_DMException, UnKnownException, IOException{
+		HttpGet httpget = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act","listd"),
+				new BasicNameValuePair("id",String.valueOf(id)));
+		String content = mHttpApi.doHttpRequest(httpget);
+		if(DEBUG){
+			Log.d("getTravelNews","getTravelNews");
+			Log.d("gson",content);
+
+		}
+		return gson.fromJson(content, NewsContent[].class);
+	}
 }
