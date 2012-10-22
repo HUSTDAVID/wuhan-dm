@@ -86,7 +86,11 @@ public class CarNewsActivity extends Activity {
 			if (result != null) {
 				HeadlineAdapter adapter = new HeadlineAdapter(
 						CarNewsActivity.this, result);
-				
+				if(result.size()<20){
+					lv.removeFooterView(footer);
+				}else{
+					lv.addFooterView(footer);
+				}
 				lv.setAdapter(adapter);
 				lv.setOnItemClickListener(new OnItemClickListener() {
 

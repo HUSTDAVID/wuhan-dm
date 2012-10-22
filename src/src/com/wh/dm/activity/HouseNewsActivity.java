@@ -103,6 +103,11 @@ public class HouseNewsActivity extends Activity {
 		protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 			if(result!=null){
 				HeadlineAdapter adapter = new HeadlineAdapter(HouseNewsActivity.this,result);
+				if(result.size()<20){
+					lv.removeFooterView(footer);
+				}else{
+					lv.addFooterView(footer);
+				}
 				lv.setAdapter(adapter);
 				lv.setOnItemClickListener(new OnItemClickListener(){
 

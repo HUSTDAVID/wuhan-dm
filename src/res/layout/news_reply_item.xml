@@ -6,35 +6,35 @@
     android:paddingRight="10dip"
     android:paddingTop="5dip"
     android:paddingBottom="5dip"
-    android:orientation="vertical" 
+    android:orientation="vertical"
     android:background="@color/bg_normal">
-    
+
     <LinearLayout
-        android:id="@+id/layout_for_lv" 
+        android:id="@+id/layout_for_lv"
         android:layout_width="fill_parent"
         android:layout_marginTop="10dip"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
-        
-         <View 
-            android:layout_width="fill_parent"
-            android:layout_height="0.8dip"
-            android:background="@color/floor_line"/>
-    
-    <ListView 
-        android:id="@+id/lv_news_floor"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"        
-        android:divider="@color/floor_line"
-        android:dividerHeight="0.8dip"/>
-    
-    <View 
+
+         <View
             android:layout_width="fill_parent"
             android:layout_height="0.8dip"
             android:background="@color/floor_line"/>
 
-      
+    <ListView
+        android:id="@+id/lv_news_floor"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/floor_line"
+        android:dividerHeight="0.8dip"/>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.8dip"
+            android:background="@color/floor_line"/>
+
+
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" 
+        android:orientation="vertical"
         android:paddingBottom="8dip">
 
         <TextView
@@ -72,7 +72,7 @@
             android:textSize="@dimen/news_normal"
             android:layout_height="wrap_content"
             android:textColor="#404040"
-            android:text="真搞笑，银行给多了就要要回，少给了离柜不负责" />
+            android:text="什么逻辑，真他妈坑爹" />
 
     </LinearLayout>
 

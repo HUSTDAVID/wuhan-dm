@@ -10,6 +10,7 @@ import com.wh.dm.type.NewsContent;
 import com.wh.dm.widget.NewsReplyAdapter;
 import com.wh.dm.*;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -55,9 +56,11 @@ public class NewsDetailsActivity extends Activity {
 	private Button btnMore;
 	private ImageButton btnBack;
 	private NewsReplyAdapter adapter;
+	private ProgressDialog progressDialog;
 
 	LinearLayout bottomLayout1;
 	RelativeLayout bottomLayout2;
+
 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -86,6 +89,9 @@ public class NewsDetailsActivity extends Activity {
 
 	private void initViews() {
 
+		progressDialog = new ProgressDialog(NewsDetailsActivity.this);
+		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
 		mInflater = getLayoutInflater();
 
 		lvNews = (ListView) findViewById(R.id.lv_news_details);
@@ -99,6 +105,7 @@ public class NewsDetailsActivity extends Activity {
 				.findViewById(R.id.txt_news_source);
 		webViewNewsBody = (WebView) newsMessage
 				.findViewById(R.id.webview_news_body);
+		webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
 		//webViewNewsBody.loadUrl("file:///android_asset/news.html");
 
 		// add news body data
@@ -120,7 +127,7 @@ public class NewsDetailsActivity extends Activity {
 
 		adapter = new NewsReplyAdapter(this);
 		// for (int i = 0; i < 3; i++) {
-		adapter.addItem("ÊÖ»ú°æÍøÓÑ", "13Ð¡Ê±Ç°", "Ã»Ê²Ã´Ì¸µÄ£¬ÈË²»¾´ÎÒ£¬ÎÒºÎ±Ø¾´ÈË¡£", "¶¥1212");
+		 adapter.addItem("æ‰‹æœºç‰ˆç½‘å‹", "13å°æ—¶å‰", "æ²¡ä»€ä¹ˆè°ˆçš„ï¼Œäººä¸æ•¬æˆ‘ï¼Œæˆ‘ä½•å¿…æ•¬äººã€‚", "é¡¶1212");
 		// }
 		lvNews.setAdapter(adapter);
 
@@ -208,7 +215,7 @@ public class NewsDetailsActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+			progressDialog.show();
 			super.onPreExecute();
 		}
 
@@ -236,6 +243,7 @@ public class NewsDetailsActivity extends Activity {
 				Toast.makeText(NewsDetailsActivity.this, reason.getMessage(),
 						Toast.LENGTH_LONG).show();
 			}
+			progressDialog.dismiss();
 			super.onPostExecute(result);
 		}
 
