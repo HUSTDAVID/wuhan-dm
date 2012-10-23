@@ -36,8 +36,8 @@ public class DownloadAdapter extends BaseAdapter {
         HashMap<String, Object> map2 = new HashMap<String, Object>();
         map2.put("title", "Dior");
         map2.put("num", "22496人下载");
-        map2.put("addition", "暂停下载");
-        map2.put("btnStatus", "正在下载");
+        map2.put("addition", "继续下载");
+        map2.put("btnStatus", "暂停下载");
         map2.put("status", true);
         dms.add(map2);
         HashMap<String, Object> map3 = new HashMap<String, Object>();

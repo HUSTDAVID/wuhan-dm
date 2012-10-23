@@ -69,15 +69,16 @@
         android:id="@+id/pbar_download"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
-        android:max="100"
-        android:progress="50"        
+        android:max="100"  
+        android:progress="20"    
         android:layout_height="10dip"
         android:layout_alignLeft="@+id/txt_download_ad"
         android:layout_below="@+id/txt_sub_manage_title"
         android:layout_marginTop="8dip"
         android:layout_marginRight="15dip"
-        android:layout_toLeftOf="@+id/btn_download_status"        
-        android:background="@drawable/progress_barbg"
+        android:layout_toLeftOf="@+id/btn_download_status" 
+        android:background="@drawable/progress_barbg"       
+        android:progressDrawable="@drawable/progress_bar"        
         android:visibility="visible" />
 
 </RelativeLayout>
