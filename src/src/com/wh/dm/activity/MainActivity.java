@@ -1,6 +1,7 @@
 package com.wh.dm.activity;
 
 import com.wh.dm.R;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Cover;
 import com.wh.dm.widget.Configure;
 import com.wh.dm.widget.DragGrid;
@@ -128,6 +129,7 @@ public class MainActivity extends Activity {
 		});
 
 		runAnimation();
+		DatabaseImpl databaseImpl = new DatabaseImpl(this);
 
 	}
 

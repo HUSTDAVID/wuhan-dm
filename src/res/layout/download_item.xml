@@ -50,7 +50,7 @@
         android:layout_marginTop="8dip"
         android:text="下载已完成"
         android:textColor="#747474"
-        android:textSize="12sp" 
+        android:textSize="12sp"
         android:visibility="visible"/>
 
     <Button
@@ -63,22 +63,20 @@
         android:background="@drawable/btn_subscription"
         android:focusable="false"
         android:text="查看DM"
-        android:textColor="#5b5b5b" />
-
-    <ProgressBar
+        android:textColor="#5b5b5b" /><ProgressBar
         android:id="@+id/pbar_download"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
-        android:max="100"  
-        android:progress="20"    
         android:layout_height="10dip"
         android:layout_alignLeft="@+id/txt_download_ad"
         android:layout_below="@+id/txt_sub_manage_title"
-        android:layout_marginTop="8dip"
         android:layout_marginRight="15dip"
-        android:layout_toLeftOf="@+id/btn_download_status" 
-        android:background="@drawable/progress_barbg"       
-        android:progressDrawable="@drawable/progress_bar"        
-        android:visibility="visible" />
+        android:layout_marginTop="8dip"
+        android:layout_toLeftOf="@+id/btn_download_status"
+        android:background="@color/blue"
+        android:max="100"
+        android:progress="50"
+        android:progressDrawable="@drawable/progress_barbg"
+        android:visibility="gone" />
 
 </RelativeLayout>

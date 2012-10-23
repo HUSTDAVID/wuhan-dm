@@ -1,121 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_normal">
-
+    android:background="@color/bg_normal" >
+
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/VI"
         android:layout_marginLeft="10dip"
         android:layout_marginTop="15dip"
+        android:layout_weight="1"
         android:background="@null" >
+
+        <RelativeLayout
+            android:id="@+id/rel_left_sub_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="3dip" >
+
+            <ImageView
+                android:id="@+id/img_left_sub"
+                android:layout_width="match_parent"
+                android:layout_height="152.7dip"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/temp_subscription_bigimg" />
 
-	    <RelativeLayout
-	        android:id="@+id/rel_left_sub_img"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:padding="3dip"        
-	        android:background="@color/white" >
-	    
-	    <ImageView
-	        android:id="@+id/img_left_sub"
-	        android:layout_width="134dip"
-	        android:layout_height="152.7dip"
-	        android:layout_centerInParent="true"
-	        android:src="@drawable/temp_subscription_bigimg" />
-	    
-	     <TextView
-	        android:id="@+id/txt_left_sub_title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="20dip"
-	        android:layout_alignBottom="@+id/img_left_sub"
-	        android:layout_alignRight="@+id/img_left_sub"
-	        android:layout_alignLeft="@+id/img_left_sub"
-	        android:text="时尚"
-	        android:background="@color/translucence_black"
-	        android:textColor="@color/white"
-	        android:gravity="center" />
-	    </RelativeLayout>
-		
-	   
-			
-	    <Button
-	        android:id="@+id/btn_left_sub"
-	        android:layout_width="wrap_content"
-	        android:layout_height="24dip"
-	        android:layout_centerHorizontal="true"
-	        android:layout_alignRight="@+id/rel_left_sub_img"
-	        android:layout_alignLeft="@+id/rel_left_sub_img"
-	        android:layout_below="@+id/rel_left_sub_img"
-	        android:layout_marginTop="2dip"
-	        android:background="@drawable/btn_sub_no"
-	        android:text="我要订阅" />
-	    
-	    </RelativeLayout>
-	    
-    
-     <View
-            android:id="@+id/VI"
-            android:layout_width="1.5dip"
-            android:layout_height="10dip"
+            <TextView
+                android:id="@+id/txt_left_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="20dip"
+                android:layout_alignBottom="@+id/img_left_sub"
+                android:layout_alignLeft="@+id/img_left_sub"
+                android:layout_alignRight="@+id/img_left_sub"
+                android:background="@color/translucence_black"
+                android:gravity="center"
+                android:text="时尚"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_left_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_alignLeft="@+id/rel_left_sub_img"
+            android:layout_alignRight="@+id/rel_left_sub_img"
+            android:layout_below="@+id/rel_left_sub_img"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:background="@drawable/double_line_ver"
-            android:visibility="invisible" >
+            android:layout_marginTop="2dip"
+            android:background="@drawable/btn_sub_no"
+            android:text="我要订阅" />
+    </RelativeLayout>
 
-        </View>
-	    
-     <RelativeLayout
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_toRightOf="@+id/VI"
-         android:layout_marginRight="10dip"
-         android:layout_marginTop="15dip"
-         android:background="@null" >
+    <View
+        android:id="@+id/VI"
+        android:layout_width="1.5dip"
+        android:layout_height="10dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/double_line_ver"
+        android:visibility="invisible" >
+    </View>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="15dip"
+        android:layout_weight="1"
+        android:background="@null" >
+
+        <RelativeLayout
+            android:id="@+id/rel_right_sub_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="3dip" >
+
+            <ImageView
+                android:id="@+id/img_right_sub"
+                android:layout_width="match_parent"
+                android:layout_height="152.7dip"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/temp_subscription_bigimg" />
 
-	    <RelativeLayout
-	        android:id="@+id/rel_right_sub_img"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:padding="3dip"        
-	        android:background="@color/white" >
-	    
-	    <ImageView
-	        android:id="@+id/img_right_sub"
-	        android:layout_width="134dip"
-	        android:layout_height="152.7dip"
-	        android:layout_centerInParent="true"
-	        android:src="@drawable/temp_subscription_bigimg" />
-	    
-	     <TextView
-	        android:id="@+id/txt_right_sub_title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="20dip"
-	        android:layout_alignBottom="@+id/img_right_sub"
-	        android:layout_alignRight="@+id/img_right_sub"
-	        android:layout_alignLeft="@+id/img_right_sub"
-	        android:text="时尚"
-	        android:background="@color/translucence_black"
-	        android:textColor="@color/white"
-	        android:gravity="center" />
-	    </RelativeLayout>
-	
-	
-	    <Button
-	        android:id="@+id/btn_right_sub"
-	        android:layout_width="wrap_content"
-	        android:layout_height="24dip"
-	        android:layout_centerHorizontal="true"
-	        android:layout_alignRight="@+id/rel_right_sub_img"
-	        android:layout_alignLeft="@+id/rel_right_sub_img"
-	        android:layout_below="@+id/rel_right_sub_img"
-	        android:layout_marginTop="2dip"
-	        android:background="@drawable/btn_sub_no"
-	        android:text="我要订阅" />
-	    
-	    </RelativeLayout>
+            <TextView
+                android:id="@+id/txt_right_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="20dip"
+                android:layout_alignBottom="@+id/img_right_sub"
+                android:layout_alignLeft="@+id/img_right_sub"
+                android:layout_alignRight="@+id/img_right_sub"
+                android:background="@color/translucence_black"
+                android:gravity="center"
+                android:text="时尚"
+                android:textColor="@color/white" />
+        </RelativeLayout>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btn_right_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_alignLeft="@+id/rel_right_sub_img"
+            android:layout_alignRight="@+id/rel_right_sub_img"
+            android:layout_below="@+id/rel_right_sub_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dip"
+            android:background="@drawable/btn_sub_no"
+            android:text="我要订阅" />
+    </RelativeLayout>
+
+</LinearLayout>
