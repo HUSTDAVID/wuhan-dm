@@ -130,7 +130,8 @@ public class MainActivity extends Activity {
 
 		runAnimation();
 		DatabaseImpl databaseImpl = new DatabaseImpl(this);
-
+		
+		
 	}
 
 	public void menu_init() {

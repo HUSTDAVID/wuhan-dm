@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.wh.dm.R;
 import com.wh.dm.WH_DM;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
 
@@ -25,16 +26,17 @@ import android.widget.AdapterView.OnItemClickListener;
 public class CarNewsActivity extends Activity {
 
 	private ListView lv;
+	private HeadlineAdapter adapter;
 	private static int MSG_GET_CARNEWS = 0;
 	private GetCarNewsTask getCarNewsTask = null;
 	private ProgressDialog progressDialog = null;
 	private View footer;
 	private Button btnFoolter;
 	private LayoutInflater mInfalater;
-	private Handler handler = new Handler(){
+	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			if(msg.what==MSG_GET_CARNEWS){
-				if(getCarNewsTask!=null){
+			if (msg.what == MSG_GET_CARNEWS) {
+				if (getCarNewsTask != null) {
 					getCarNewsTask.cancel(true);
 					getCarNewsTask = null;
 				}
@@ -43,10 +45,14 @@ public class CarNewsActivity extends Activity {
 			}
 		};
 	};
+
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.activity_news_house);
+		adapter = new HeadlineAdapter(CarNewsActivity.this);
 		lv = (ListView) findViewById(R.id.news_list_house);
+		lv.setAdapter(adapter);
+
 		mInfalater = getLayoutInflater();
 		footer = mInfalater.inflate(R.layout.news_list_footer, null);
 		btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
@@ -59,9 +65,7 @@ public class CarNewsActivity extends Activity {
 
 	private class GetCarNewsTask extends
 			AsyncTask<Void, Void, ArrayList<PicWithTxtNews>> {
-
 		Exception reason = null;
-
 		@Override
 		protected void onPreExecute() {
 			progressDialog.show();
@@ -70,10 +74,12 @@ public class CarNewsActivity extends Activity {
 
 		@Override
 		protected ArrayList<PicWithTxtNews> doInBackground(Void... params) {
-			ArrayList<PicWithTxtNews> houseNews = null;
+			ArrayList<PicWithTxtNews> headNews = null;
 			try {
-				houseNews = (new WH_DM()).getCarNews();
-				return houseNews;
+				headNews = (new WH_DM()).getCarNews();
+				(new DatabaseImpl(CarNewsActivity.this))
+						.addCarNews(headNews);
+				return headNews;
 			} catch (Exception e) {
 				reason = e;
 				e.printStackTrace();
@@ -84,14 +90,7 @@ public class CarNewsActivity extends Activity {
 		@Override
 		protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 			if (result != null) {
-				HeadlineAdapter adapter = new HeadlineAdapter(
-						CarNewsActivity.this, result);
-				if(result.size()<20){
-					lv.removeFooterView(footer);
-				}else{
-					lv.addFooterView(footer);
-				}
-				lv.setAdapter(adapter);
+				adapter.setList(result);
 				lv.setOnItemClickListener(new OnItemClickListener() {
 
 					@Override
@@ -101,10 +100,28 @@ public class CarNewsActivity extends Activity {
 								NewsDetailsActivity.class);
 						intent.putExtra("id", result.get(position).getId());
 						startActivity(intent);
+
 					}
 
 				});
 			} else {
+				ArrayList<PicWithTxtNews> savedNews = (new DatabaseImpl(
+						CarNewsActivity.this)).getCarNews();
+				if (savedNews != null && savedNews.size() > 0) {
+					adapter.setList(savedNews);
+					lv.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long arg3) {
+							Intent intent = new Intent(CarNewsActivity.this,
+									NewsDetailsActivity.class);
+							intent.putExtra("id", result.get(position).getId());
+							startActivity(intent);
+						}
+
+					});
+				}
 				Toast.makeText(CarNewsActivity.this, reason.toString(),
 						Toast.LENGTH_SHORT).show();
 			}

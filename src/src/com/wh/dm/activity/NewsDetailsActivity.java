@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.wh.dm.R;
 import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
+import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.widget.NewsReplyAdapter;
 import com.wh.dm.*;
@@ -35,8 +36,11 @@ public class NewsDetailsActivity extends Activity {
 
 	View headerView;
 	private final int MSG_GET_NEWSDETAIL = 0;
+	private final int MSG_GET_COMMENT = 1;
 	private int id;
+	private int fid;
 	private GetNewsDetailTask getNewsDetailTask = null;
+    private GetCommentTask getCommentTask = null;
 	TextView newsTitle;
 	TextView newsTime;
 	TextView newsSource;
@@ -64,13 +68,23 @@ public class NewsDetailsActivity extends Activity {
 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			if (msg.what == MSG_GET_NEWSDETAIL) {
+			switch(msg.what){
+			case MSG_GET_NEWSDETAIL:
 				if (getNewsDetailTask != null) {
 					getNewsDetailTask.cancel(true);
 					getNewsDetailTask = null;
 				}
 				getNewsDetailTask = new GetNewsDetailTask();
 				getNewsDetailTask.execute(id);
+				break;
+			case MSG_GET_COMMENT:
+				if(getCommentTask!=null){
+					getCommentTask.cancel(true);
+					getCommentTask = null;
+				}
+				getCommentTask =  new GetCommentTask();
+				getCommentTask.execute(fid);
+				break;
 			}
 		};
 	};
@@ -236,7 +250,7 @@ public class NewsDetailsActivity extends Activity {
 		@Override
 		protected void onPostExecute(NewsContent result) {
 			if (result != null) {
-				webViewNewsBody.loadData(result.getBody(), "text/html","UTF-8");
+				webViewNewsBody.loadDataWithBaseURL(null, result.getBody(), "text/html", "utf-8", null);
 				newsTitle.setText(result.getTitle());
 				newsTime.setText(result.getPubdate());
 			} else {
@@ -248,5 +262,32 @@ public class NewsDetailsActivity extends Activity {
 		}
 
 	}
+    private class GetCommentTask extends AsyncTask<Integer,Void,ArrayList<Comment>>{
+    	Exception reason = null;
+    	ArrayList<Comment> comments = null;
+
+    	@Override
+    	protected void onPreExecute() {
+    		// TODO Auto-generated method stub
+    		super.onPreExecute();
+    	}
+		@Override
+		protected ArrayList<Comment> doInBackground(Integer... params) {
+			try{
+	    		comments = (new WH_DM()).getComment(params[0]);
+	    		return comments;
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    		reason = e;
+	    	}
+			return comments;
+		}
+		@Override
+		protected void onPostExecute(ArrayList<Comment> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+		}
+
+    }
 
 }

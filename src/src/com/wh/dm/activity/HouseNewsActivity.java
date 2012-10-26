@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import java.util.*;
 
@@ -34,11 +36,12 @@ public class HouseNewsActivity extends Activity {
 	private View footer;
 	private Button btnFoolter;
 	private LayoutInflater mInfalater;
+	private HeadlineAdapter adapter;
 
-	private Handler handler = new Handler(){
+	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			if(msg.what==MSG_GET_HOUSENEWS){
-				if(getHouseNewsTask!=null){
+			if (msg.what == MSG_GET_HOUSENEWS) {
+				if (getHouseNewsTask != null) {
 					getHouseNewsTask.cancel(true);
 					getHouseNewsTask = null;
 				}
@@ -54,7 +57,10 @@ public class HouseNewsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_news_house);
+		adapter = new HeadlineAdapter(HouseNewsActivity.this);
 		lv = (ListView) findViewById(R.id.news_list_house);
+        lv.setAdapter(adapter);
+
 		mInfalater = getLayoutInflater();
 		footer = mInfalater.inflate(R.layout.news_list_footer, null);
 		btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
@@ -62,12 +68,12 @@ public class HouseNewsActivity extends Activity {
 
 		progressDialog = new ProgressDialog(getParent());
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		progressDialog.setOnCancelListener(new OnCancelListener(){
+		progressDialog.setOnCancelListener(new OnCancelListener() {
 
 			@Override
 			public void onCancel(DialogInterface dialog) {
 
-				if(getHouseNewsTask!=null){
+				if (getHouseNewsTask != null) {
 					getHouseNewsTask.cancel(true);
 					getHouseNewsTask = null;
 				}
@@ -81,6 +87,7 @@ public class HouseNewsActivity extends Activity {
 			AsyncTask<Void, Void, ArrayList<PicWithTxtNews>> {
 
 		Exception reason = null;
+
 		@Override
 		protected void onPreExecute() {
 			progressDialog.show();
@@ -89,38 +96,54 @@ public class HouseNewsActivity extends Activity {
 
 		@Override
 		protected ArrayList<PicWithTxtNews> doInBackground(Void... params) {
-			ArrayList<PicWithTxtNews> houseNews = null;
-			try{
-				houseNews = (new WH_DM()).getHouseNews();
-				return houseNews;
-			}catch(Exception e){
+			ArrayList<PicWithTxtNews> headNews = null;
+			try {
+				headNews = (new WH_DM()).getHouseNews();
+				(new DatabaseImpl(HouseNewsActivity.this))
+						.addHouseNews(headNews);
+				return headNews;
+			} catch (Exception e) {
 				reason = e;
 				e.printStackTrace();
 				return null;
 			}
 		}
+
 		@Override
 		protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
-			if(result!=null){
-				HeadlineAdapter adapter = new HeadlineAdapter(HouseNewsActivity.this,result);
-				if(result.size()<20){
-					lv.removeFooterView(footer);
-				}else{
-					lv.addFooterView(footer);
-				}
-				lv.setAdapter(adapter);
-				lv.setOnItemClickListener(new OnItemClickListener(){
+			if (result != null) {
+				adapter.setList(result);
+				lv.setOnItemClickListener(new OnItemClickListener() {
 
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long arg3) {
-						Intent intent = new Intent(HouseNewsActivity.this,NewsDetailsActivity.class);
+						Intent intent = new Intent(HouseNewsActivity.this,
+								NewsDetailsActivity.class);
 						intent.putExtra("id", result.get(position).getId());
 						startActivity(intent);
+
 					}
 
 				});
-			}else{
+			} else {
+				ArrayList<PicWithTxtNews> savedNews = (new DatabaseImpl(
+						HouseNewsActivity.this)).getHouseNews();
+				if (savedNews != null && savedNews.size() > 0) {
+					adapter.setList(savedNews);
+					lv.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long arg3) {
+							Intent intent = new Intent(HouseNewsActivity.this,
+									NewsDetailsActivity.class);
+							intent.putExtra("id", result.get(position).getId());
+							startActivity(intent);
+						}
+
+					});
+				}
 				Toast.makeText(HouseNewsActivity.this, reason.toString(),
 						Toast.LENGTH_SHORT).show();
 			}

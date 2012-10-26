@@ -127,10 +127,23 @@ public class WH_DMHttpApiV1 {
 				new BasicNameValuePair("id",String.valueOf(id)));
 		String content = mHttpApi.doHttpRequest(httpget);
 		if(DEBUG){
-			Log.d("getTravelNews","getTravelNews");
+			Log.d("getNewsContent","getNewsContent");
 			Log.d("gson",content);
 
 		}
 		return gson.fromJson(content, NewsContent[].class);
 	}
+	public ArrayList<Comment> getComment(int fid) throws WH_DMException, UnKnownException, IOException{
+		HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act","listrp"),
+				new BasicNameValuePair("fid",String.valueOf(fid)));
+		String content = mHttpApi.doHttpRequest(httpGet);
+		if(DEBUG){
+			Log.d("getComment","getComment");
+			Log.d("gson",content);
+
+		}
+		Type type = new TypeToken<ArrayList<Comment>>(){}.getType();
+		return gson.fromJson(content, type);
+	}
+
 }

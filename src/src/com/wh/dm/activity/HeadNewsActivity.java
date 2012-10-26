@@ -1,10 +1,13 @@
 package com.wh.dm.activity;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.wh.dm.R;
 import com.wh.dm.WH_DM;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.PicWithTxtNews;
@@ -24,6 +27,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,6 +71,7 @@ public class HeadNewsActivity extends Activity {
 	private GetHeadNewsTask getHeadNewsTask = null;
 
 	private ArrayList<PicsNews> picsNews = null;
+    private HeadlineAdapter adapter;
 
 	private Handler handler = new Handler() {
 		@Override
@@ -110,7 +116,10 @@ public class HeadNewsActivity extends Activity {
 		txtNews = (TextView) findViewById(R.id.txt_horizontal_title);
 
 		mInfalater = getLayoutInflater();
+		adapter = new HeadlineAdapter(this);
 		listView = (ListView) findViewById(R.id.list);
+		listView.setAdapter(adapter);
+
 		footer = mInfalater.inflate(R.layout.news_list_footer, null);
 		btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
 		listView.addFooterView(footer);
@@ -148,7 +157,6 @@ public class HeadNewsActivity extends Activity {
 		@Override
 		protected ArrayList<PicsNews> doInBackground(Void... arg0) {
 			ArrayList<PicsNews> picsNews = null;
-
 			try {
 				picsNews = (new WH_DM()).getPicsNews();
 				return picsNews;
@@ -195,6 +203,7 @@ public class HeadNewsActivity extends Activity {
 			ArrayList<PicWithTxtNews> headNews = null;
 			try {
 				headNews = (new WH_DM()).getHeadNews();
+				(new DatabaseImpl(HeadNewsActivity.this)).addHeadNews(headNews);
 				return headNews;
 			} catch (Exception e) {
 				reason = e;
@@ -206,10 +215,7 @@ public class HeadNewsActivity extends Activity {
 		@Override
 		protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 			if (result != null) {
-				HeadlineAdapter adapter = new HeadlineAdapter(
-						HeadNewsActivity.this, result);
-
-				listView.setAdapter(adapter);
+				adapter.setList(result);
 				listView.setOnItemClickListener(new OnItemClickListener(){
 
 					@Override
@@ -218,10 +224,26 @@ public class HeadNewsActivity extends Activity {
 						Intent intent = new Intent(HeadNewsActivity.this,NewsDetailsActivity.class);
 						intent.putExtra("id", result.get(position).getId());
 						startActivity(intent);
+
 					}
 
 				});
 			} else {
+				ArrayList<PicWithTxtNews> savedNews = (new DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
+				if(savedNews!=null&&savedNews.size()>0){
+					adapter.setList(savedNews);
+					listView.setOnItemClickListener(new OnItemClickListener(){
+
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view,
+								int position, long arg3) {
+							Intent intent = new Intent(HeadNewsActivity.this,NewsDetailsActivity.class);
+							intent.putExtra("id", result.get(position).getId());
+							startActivity(intent);
+						}
+
+					});
+				}
 				Toast.makeText(HeadNewsActivity.this, reason.toString(),
 						Toast.LENGTH_SHORT).show();
 			}
