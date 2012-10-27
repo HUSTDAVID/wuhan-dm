@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.widget.CollectAdapter;
 
@@ -64,6 +65,18 @@ public class CollectActivity extends Activity {
         CollectAdapter adapter = new CollectAdapter(this, list);
         collect_list.setAdapter(adapter);
 
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

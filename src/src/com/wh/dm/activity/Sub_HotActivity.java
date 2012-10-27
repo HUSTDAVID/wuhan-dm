@@ -1,7 +1,10 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.widget.PullToRefreshListView;
+import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 import com.wh.dm.widget.SubscribeAdapter;
 
 import android.app.Activity;
@@ -12,9 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ListView;
-import com.wh.dm.widget.PullToRefreshListView;
-import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
 public class Sub_HotActivity extends Activity {
 
@@ -22,6 +22,7 @@ public class Sub_HotActivity extends Activity {
     View footer;
     Button btnFooter;
     LayoutInflater mInflater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,6 +31,18 @@ public class Sub_HotActivity extends Activity {
         setContentView(R.layout.activity_sub_item);
         mInflater = getLayoutInflater();
         initViews();
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initViews() {
@@ -51,26 +64,28 @@ public class Sub_HotActivity extends Activity {
 
         lvSub.setOnRefreshListener(new OnRefreshListener() {
 
-			@Override
-			public void onRefresh() {
-				// Your code to refresh the list contents goes here
+            @Override
+            public void onRefresh() {
 
-				// Make sure you call listView.onRefreshComplete()
-				// when the loading is done. This can be done from here or any
-				// other place, like on a broadcast receive from your loading
-				// service or the onPostExecute of your AsyncTask.
+                // Your code to refresh the list contents goes here
 
-				// For the sake of this sample, the code will pause here to
-				// force a delay when invoking the refresh
-				lvSub.postDelayed(new Runnable() {
+                // Make sure you call listView.onRefreshComplete()
+                // when the loading is done. This can be done from here or any
+                // other place, like on a broadcast receive from your loading
+                // service or the onPostExecute of your AsyncTask.
 
-					@Override
-					public void run() {
-						lvSub.onRefreshComplete();
-					}
-				}, 2000);
-			}
-		});
+                // For the sake of this sample, the code will pause here to
+                // force a delay when invoking the refresh
+                lvSub.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        lvSub.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+        });
         lvSub.setAdapter(adapter);
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         footer.setBackgroundColor(getResources().getColor(R.color.bg_normal));

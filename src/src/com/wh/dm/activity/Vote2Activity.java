@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.Activity;
@@ -17,6 +18,7 @@ public class Vote2Activity extends Activity {
     private Button votebutton2;
     private Button votebutton3;
     private ImageButton btnBack;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -55,12 +57,25 @@ public class Vote2Activity extends Activity {
 
             }
         });
-        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener(){
-        	public void onClick(View view){
-        		finish();
-        	}
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+
+                finish();
+            }
         });
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     public void init() {
