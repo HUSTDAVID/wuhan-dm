@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.widget.SubManagerAdapter;
 
@@ -19,6 +20,7 @@ public class SubManagerActivity extends Activity {
 
     private ListView lvSubManager;
     private ImageButton btnBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,19 +31,32 @@ public class SubManagerActivity extends Activity {
         initViews();
     }
 
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
     private void initViews() {
 
         // init header
         TextView txtTitle = (TextView) findViewById(R.id.txt_header3_title);
         TextView txtQRCode = (TextView) findViewById(R.id.txt_total_reply);
-        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener(){
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				finish();
+            @Override
+            public void onClick(View v) {
 
-			}
+                finish();
+
+            }
 
         });
         txtTitle.setText(getResources().getString(R.string.subscribe));

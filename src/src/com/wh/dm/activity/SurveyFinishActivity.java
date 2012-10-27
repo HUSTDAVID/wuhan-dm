@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.Activity;
@@ -26,6 +27,18 @@ public class SurveyFinishActivity extends Activity implements OnClickListener {
         initViews();
     }
 
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
     private void initViews() {
 
         txtTitle = (TextView) findViewById(R.id.txt_header_title2);
@@ -47,11 +60,10 @@ public class SurveyFinishActivity extends Activity implements OnClickListener {
                 SurveyFinishActivity.this.finish();
                 break;
             case R.id.btn_survey_finish:
-            	Intent intent = new Intent(SurveyFinishActivity.this,
-						DM_Tab_2Activity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(intent);
+                Intent intent = new Intent(SurveyFinishActivity.this, DM_Tab_2Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
                 break;
         }
 

@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.Activity;
@@ -63,11 +64,12 @@ public class VotedListActivity extends Activity {
                 startActivity(intent);
             }
         });
-        btnBack = (ImageButton)v1.findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener(){
-        	public void onClick(View view){
-        		finish();
-        	}
+        btnBack = (ImageButton) v1.findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+
+                finish();
+            }
         });
 
         pageViews = new ArrayList<View>();
@@ -108,6 +110,18 @@ public class VotedListActivity extends Activity {
         viewPager.setAdapter(new GuidePageAdapter());
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
 
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private class TextViewOnClickListener implements OnClickListener {

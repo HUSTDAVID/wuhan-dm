@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.Activity;
@@ -13,13 +14,26 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class VoteWatchResultActivity extends Activity {
-	private ImageButton btnBack;
+    private ImageButton btnBack;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dm_voteitem1);
         initViews();
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initViews() {
@@ -39,14 +53,15 @@ public class VoteWatchResultActivity extends Activity {
                 startActivity(intent);
             }
         });
-        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener(){
-        	public void onClick(View view){
-        		Intent intent = new Intent(VoteWatchResultActivity.this,VotedListActivity.class);
-        		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        		startActivity(intent);
-        	}
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+
+                Intent intent = new Intent(VoteWatchResultActivity.this, VotedListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
         });
     }
 }

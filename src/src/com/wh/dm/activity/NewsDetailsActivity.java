@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DM;
 import com.wh.dm.type.NewsContent;
@@ -92,7 +93,14 @@ public class NewsDetailsActivity extends Activity {
 
         webSettings = webViewNewsBody.getSettings();
         setTextSize();
+        MobclickAgent.onResume(this);
         super.onResume();
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initViews() {

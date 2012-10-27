@@ -1,8 +1,7 @@
 
 package com.wh.dm.activity;
 
-import java.util.zip.Inflater;
-
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.widget.PhotoAdapter;
 import com.wh.dm.widget.PullToRefreshListView;
@@ -18,9 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +30,7 @@ public class Photos_AllActivity extends Activity {
     View footer;
     Button btnFooter;
     LayoutInflater mInflater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,6 +39,18 @@ public class Photos_AllActivity extends Activity {
         setContentView(R.layout.activity_dm_photos_all);
         mInflater = getLayoutInflater();
         initViews();
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initViews() {
@@ -63,26 +73,28 @@ public class Photos_AllActivity extends Activity {
 
         lvPhotos.setOnRefreshListener(new OnRefreshListener() {
 
-			@Override
-			public void onRefresh() {
-				// Your code to refresh the list contents goes here
+            @Override
+            public void onRefresh() {
 
-				// Make sure you call listView.onRefreshComplete()
-				// when the loading is done. This can be done from here or any
-				// other place, like on a broadcast receive from your loading
-				// service or the onPostExecute of your AsyncTask.
+                // Your code to refresh the list contents goes here
 
-				// For the sake of this sample, the code will pause here to
-				// force a delay when invoking the refresh
-				lvPhotos.postDelayed(new Runnable() {
+                // Make sure you call listView.onRefreshComplete()
+                // when the loading is done. This can be done from here or any
+                // other place, like on a broadcast receive from your loading
+                // service or the onPostExecute of your AsyncTask.
 
-					@Override
-					public void run() {
-						lvPhotos.onRefreshComplete();
-					}
-				}, 2000);
-			}
-		});
+                // For the sake of this sample, the code will pause here to
+                // force a delay when invoking the refresh
+                lvPhotos.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        lvPhotos.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+        });
 
         lvPhotos.setAdapter(adapter);
 

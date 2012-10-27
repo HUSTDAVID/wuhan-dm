@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.ActivityGroup;
@@ -43,6 +44,18 @@ public class LocalNewsActivity extends ActivityGroup {
         setContentView(R.layout.activity_dm_news);
 
         initViews();
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initViews() {
@@ -108,7 +121,8 @@ public class LocalNewsActivity extends ActivityGroup {
                 case R.id.txt_listtop_4:
                     setCurTxt(4);
                     intent.setClass(LocalNewsActivity.this, FashionNewsActivity.class);
-                    vMain = getLocalActivityManager().startActivity("Fashion", intent).getDecorView();
+                    vMain = getLocalActivityManager().startActivity("Fashion", intent)
+                            .getDecorView();
                     break;
 
                 case R.id.txt_listtop_5:
@@ -120,7 +134,8 @@ public class LocalNewsActivity extends ActivityGroup {
                 case R.id.txt_listtop_6:
                     setCurTxt(6);
                     intent.setClass(LocalNewsActivity.this, TravelNewsActivity.class);
-                    vMain = getLocalActivityManager().startActivity("Travel", intent).getDecorView();
+                    vMain = getLocalActivityManager().startActivity("Travel", intent)
+                            .getDecorView();
                     break;
             }
 

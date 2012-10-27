@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.widget.NewsReplyFloorAdapter;
 import com.wh.dm.widget.NewsReplyMoreAdapter;
@@ -42,6 +43,18 @@ public class DM_NewsMoreReplyActivity extends Activity {
         setContentView(R.layout.activity_news_reply);
 
         initViews();
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initViews() {

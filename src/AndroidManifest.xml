@@ -247,6 +247,10 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
+        
+        <meta-data android:value="508bd46952701530be00014d" android:name="UMENG_APPKEY"></meta-data>
+		<meta-data android:value="umeng" android:name="UMENG_CHANNEL"/>
+		
     </application>
 
     <supports-screens
@@ -257,5 +261,9 @@
     </supports-screens>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- umeng -->
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
 
 </manifest>

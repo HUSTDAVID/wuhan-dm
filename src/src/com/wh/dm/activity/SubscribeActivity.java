@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.ActivityGroup;
@@ -52,6 +53,18 @@ public class SubscribeActivity extends ActivityGroup {
         initViews();
     }
 
+    public void onResume() {
+
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
     private void initViews() {
 
         linearListTop = (LinearLayout) findViewById(R.id.linear_sub_list_top);
@@ -86,16 +99,17 @@ public class SubscribeActivity extends ActivityGroup {
         txtPhotograph = (TextView) findViewById(R.id.txt_sub_photograph);
         txtFun = (TextView) findViewById(R.id.txt_sub_fun);
         imgSearch = (ImageView) findViewById(R.id.img_sub_search);
-        btnBack =(ImageButton)findViewById(R.id.img_header3_back);
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				finish();
+            @Override
+            public void onClick(View v) {
 
-			}
+                finish();
 
-		});
+            }
+
+        });
 
         itemWidth = txtHot.getWidth();
 

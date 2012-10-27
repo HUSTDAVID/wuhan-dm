@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.content.SharedPreferences;
@@ -31,6 +32,7 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
 
         listPreference.setSummary(getString(R.string.current_text_size) + getTextSize());
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        MobclickAgent.onResume(this);
         super.onResume();
     }
 
@@ -40,6 +42,7 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(
                 this);
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     public void init() {
