@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DM;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
 
@@ -25,7 +26,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class FashionNewsActivity extends Activity {
+
     private ListView lv;
+    ArrayList<PicWithTxtNews> savedNews = null;
+    private HeadlineAdapter adapter;
     private View footer;
     private Button btnFoolter;
     private LayoutInflater mInfalater;
@@ -55,9 +59,9 @@ public class FashionNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
+        adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
-        lv.addFooterView(footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         handler.sendEmptyMessage(MSG_GET_FASHIONNEWS);
@@ -106,14 +110,11 @@ public class FashionNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
+            lv.addFooterView(footer);
+            lv.setAdapter(adapter);
             if (result != null) {
-                HeadlineAdapter adapter = new HeadlineAdapter(FashionNewsActivity.this, result);
-                if (result.size() < 20) {
-                    lv.removeFooterView(footer);
-                } else {
-                    lv.addFooterView(footer);
-                }
-                lv.setAdapter(adapter);
+                adapter.setList(result);
+                (new DatabaseImpl(FashionNewsActivity.this)).addFashionNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -124,16 +125,44 @@ public class FashionNewsActivity extends Activity {
                                 NewsDetailsActivity.class);
                         intent.putExtra("id", result.get(position).getId());
                         startActivity(intent);
+
                     }
 
                 });
+                if (result.size() < 20) {
+                    lv.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
+
             } else {
+                savedNews = (new DatabaseImpl(FashionNewsActivity.this)).getHouseNews();
+                if (savedNews != null && savedNews.size() > 0) {
+                    adapter.setList(savedNews);
+                    lv.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long arg3) {
+
+                            Intent intent = new Intent(FashionNewsActivity.this,
+                                    NewsDetailsActivity.class);
+                            intent.putExtra("id", savedNews.get(position).getId());
+                            startActivity(intent);
+                        }
+
+                    });
+                }
+                if (savedNews.size() < 20) {
+                    lv.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
                 Toast.makeText(FashionNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT)
                         .show();
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
         }
-
     }
 }

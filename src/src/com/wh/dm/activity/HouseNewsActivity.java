@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DM;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
 
@@ -29,6 +30,9 @@ import java.util.ArrayList;
 public class HouseNewsActivity extends Activity {
 
     private ListView lv;
+    ArrayList<PicWithTxtNews> savedNews = null;
+    private HeadlineAdapter adapter;
+
     private ProgressDialog progressDialog;
     private GetHouseNewsTask getHouseNewsTask = null;
     private static int MSG_GET_HOUSENEWS = 0;
@@ -36,7 +40,8 @@ public class HouseNewsActivity extends Activity {
     private Button btnFoolter;
     private LayoutInflater mInfalater;
 
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
+        @Override
         public void handleMessage(android.os.Message msg) {
 
             if (msg.what == MSG_GET_HOUSENEWS) {
@@ -58,10 +63,9 @@ public class HouseNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
+        adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
-        lv.addFooterView(footer);
-
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setOnCancelListener(new OnCancelListener() {
@@ -79,12 +83,14 @@ public class HouseNewsActivity extends Activity {
         handler.sendEmptyMessage(MSG_GET_HOUSENEWS);
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -119,14 +125,11 @@ public class HouseNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
+            lv.addFooterView(footer);
+            lv.setAdapter(adapter);
             if (result != null) {
-                HeadlineAdapter adapter = new HeadlineAdapter(HouseNewsActivity.this, result);
-                if (result.size() < 20) {
-                    lv.removeFooterView(footer);
-                } else {
-                    lv.addFooterView(footer);
-                }
-                lv.setAdapter(adapter);
+                adapter.setList(result);
+                (new DatabaseImpl(HouseNewsActivity.this)).addHouseNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -137,10 +140,42 @@ public class HouseNewsActivity extends Activity {
                                 NewsDetailsActivity.class);
                         intent.putExtra("id", result.get(position).getId());
                         startActivity(intent);
+
                     }
 
                 });
+                if (result.size() < 20) {
+                    lv.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
+
             } else {
+                savedNews = (new DatabaseImpl(HouseNewsActivity.this)).getHouseNews();
+                if (savedNews != null && savedNews.size() > 0) {
+                    lv.addFooterView(footer);
+                    lv.setAdapter(adapter);
+                    adapter.setList(savedNews);
+                    lv.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long arg3) {
+
+                            Intent intent = new Intent(HouseNewsActivity.this,
+                                    NewsDetailsActivity.class);
+                            intent.putExtra("id", savedNews.get(position).getId());
+                            startActivity(intent);
+                        }
+
+                    });
+
+                }
+                if (savedNews.size() < 20) {
+                    lv.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
                 Toast.makeText(HouseNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT)
                         .show();
             }

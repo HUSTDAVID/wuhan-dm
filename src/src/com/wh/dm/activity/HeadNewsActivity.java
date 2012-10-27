@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class HeadNewsActivity extends Activity {
 
-    private String URL_DOMAIN = "http://test1.jbr.net.cn:809";
+    private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
     private String[] titles;
     private int currentItem = 0;
     private View headerView;
@@ -67,7 +67,7 @@ public class HeadNewsActivity extends Activity {
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
 
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
 
@@ -102,12 +102,14 @@ public class HeadNewsActivity extends Activity {
         init();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -125,11 +127,8 @@ public class HeadNewsActivity extends Activity {
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
         listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(adapter);
-
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
-        listView.addFooterView(footer);
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
@@ -224,15 +223,17 @@ public class HeadNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
+            listView.addFooterView(footer);
+            listView.setAdapter(adapter);
             if (result != null) {
                 adapter.setList(result);
+                (new DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
                 listView.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long arg3) {
 
-                        (new DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
                         Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
                         intent.putExtra("id", result.get(position).getId());
                         startActivity(intent);
@@ -240,6 +241,11 @@ public class HeadNewsActivity extends Activity {
                     }
 
                 });
+                if (result.size() < 20) {
+                    listView.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
             } else {
                 savedNews = (new DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
                 if (savedNews != null && savedNews.size() > 0) {
@@ -257,6 +263,11 @@ public class HeadNewsActivity extends Activity {
                         }
 
                     });
+                }
+                if (savedNews.size() < 20) {
+                    listView.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
                 }
                 Toast.makeText(HeadNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT).show();
             }
