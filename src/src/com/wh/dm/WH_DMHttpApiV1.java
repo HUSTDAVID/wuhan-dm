@@ -133,6 +133,7 @@ public class WH_DMHttpApiV1 {
 		}
 		return gson.fromJson(content, NewsContent[].class);
 	}
+	
 	public ArrayList<Comment> getComment(int fid) throws WH_DMException, UnKnownException, IOException{
 		HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act","listrp"),
 				new BasicNameValuePair("fid",String.valueOf(fid)));

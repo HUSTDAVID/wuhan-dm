@@ -30,6 +30,9 @@ public class FashionNewsActivity extends Activity {
 	private Button btnFoolter;
 	private LayoutInflater mInfalater;
 	private static int MSG_GET_FASHIONNEWS = 0;
+	private static final int NETWORK_NORMAL =1;
+	private static final int NETWORK_FAILS = 0;
+
 	private GetFashionNewsTask getFashionNewsTask = null;
 	private ProgressDialog progressDialog = null;
 	private Handler handler = new Handler() {
@@ -100,6 +103,7 @@ public class FashionNewsActivity extends Activity {
 						Intent intent = new Intent(FashionNewsActivity.this,
 								NewsDetailsActivity.class);
 						intent.putExtra("id", result.get(position).getId());
+						intent.putExtra("status", NETWORK_NORMAL);
 						startActivity(intent);
 
 					}
@@ -118,6 +122,7 @@ public class FashionNewsActivity extends Activity {
 							Intent intent = new Intent(FashionNewsActivity.this,
 									NewsDetailsActivity.class);
 							intent.putExtra("id", result.get(position).getId());
+							intent.putExtra("status", NETWORK_FAILS);
 							startActivity(intent);
 						}
 

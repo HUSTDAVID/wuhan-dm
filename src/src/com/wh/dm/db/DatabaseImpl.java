@@ -2,6 +2,8 @@ package com.wh.dm.db;
 
 import java.util.ArrayList;
 
+import com.wh.dm.type.Comment;
+import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.PicWithTxtNews;
 
 import android.content.ContentValues;
@@ -19,6 +21,7 @@ public class DatabaseImpl implements Database {
 	private static final String TABLE_FASHION = "fashion";
 	private static final String TABLE_LIFE = "life";
 	private static final String TABLE_TRAVEL = "travel";
+	private static final String TABLE_NEWSDETAIL ="newsdetail";
 	private Context context;
 
 	public DatabaseImpl(Context _context) {
@@ -53,6 +56,10 @@ public class DatabaseImpl implements Database {
 				+ TABLE_TRAVEL
 				+ " (no INTEGER UNIQUE, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
 				+ " description VARCHAR, sortrank INTEGER, isfirst INTEGER, ishot INTEGER, date VARCHAR, isUrl VARCHAR)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS "
+				+ TABLE_NEWSDETAIL
+				+ " (uid INTEGER PRIMARY KEY AUTOINCREMENT,no INTEGER, id INTEGER, typeid INTEGER, sortrank INTEGER, title VARCHAR, source VARCHAR,"
+				+ " litpic VARCHAR, pubdate VARCHAR, isfirst INTEGER, ishot INTEGER, isUrl VARCHAR, body VARCHAR)");
 		db.close();
 	}
 
@@ -140,6 +147,13 @@ public class DatabaseImpl implements Database {
 		db.delete(TABLE_TRAVEL, null, null);
 		db.close();
 
+	}
+
+	@Override
+	public void deleteNewsContent() {
+		SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+		db.delete(TABLE_NEWSDETAIL, null, null);
+		db.close();
 	}
 
 	@Override
@@ -372,6 +386,39 @@ public class DatabaseImpl implements Database {
 			}
 		}
 		db.close();
+
+	}
+
+	@Override
+	public void addNewsContent(NewsContent content) {
+		SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, 
+				Context.MODE_PRIVATE, null);
+		ContentValues values = new ContentValues();
+		values.putAll((new NewsContentBuilder()).deconstruct(content));
+		try {
+			db.insert(TABLE_NEWSDETAIL, null, values);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			db.close();
+		}
+	}
+
+	@Override
+	public NewsContent getNewsContent(int id) {
+		NewsContent newsContent = null;
+		SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+		String[] selectionArgs ={""+id};
+		Cursor query = db.query(TABLE_NEWSDETAIL, null, "id = ?", selectionArgs, null, null, null);
+		if(query!=null&&query.getCount()>0){
+			query.moveToFirst();
+			newsContent = (new NewsContentBuilder()).build(query);
+			query.close();
+			db.close();
+			return newsContent;
+		}else{
+			return null;
+		}
 
 	}
 

@@ -28,11 +28,15 @@ public class CarNewsActivity extends Activity {
 	private ListView lv;
 	private HeadlineAdapter adapter;
 	private static int MSG_GET_CARNEWS = 0;
+	private static final int NETWORK_NORMAL =1;
+	private static final int NETWORK_FAILS = 0;
+
 	private GetCarNewsTask getCarNewsTask = null;
 	private ProgressDialog progressDialog = null;
 	private View footer;
 	private Button btnFoolter;
 	private LayoutInflater mInfalater;
+
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == MSG_GET_CARNEWS) {
@@ -99,6 +103,7 @@ public class CarNewsActivity extends Activity {
 						Intent intent = new Intent(CarNewsActivity.this,
 								NewsDetailsActivity.class);
 						intent.putExtra("id", result.get(position).getId());
+						intent.putExtra("status",NETWORK_NORMAL);
 						startActivity(intent);
 
 					}
@@ -117,6 +122,7 @@ public class CarNewsActivity extends Activity {
 							Intent intent = new Intent(CarNewsActivity.this,
 									NewsDetailsActivity.class);
 							intent.putExtra("id", result.get(position).getId());
+							intent.putExtra("status",NETWORK_FAILS);
 							startActivity(intent);
 						}
 

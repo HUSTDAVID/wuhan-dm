@@ -111,6 +111,7 @@ public class HouseNewsActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
+
 			if (result != null) {
 				adapter.setList(result);
 				lv.setOnItemClickListener(new OnItemClickListener() {

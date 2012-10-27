@@ -11,4 +11,24 @@
         <item>key2</item>
         <item>key3</item>
     </string-array>
+    
+    <!-- text size -->
+	<string-array name="text_size_key">
+	    <item>key0</item>
+        <item>key1</item>
+        <item>key2</item>
+        <item>key3</item>
+        <item>key4</item>
+	</string-array>
+	
+	<string-array name="text_size">
+	    <item>较大</item>
+	    <item>超大</item>
+	    <item>正常</item>
+	    <item>较小</item>
+	    <item>超小</item>
+	</string-array>
+	
+	
+	
 </resources>

@@ -28,6 +28,9 @@ public class LifeNewsActivity extends Activity {
 	private ListView lv;
 	private HeadlineAdapter adapter;
 	private static int MSG_GET_LIFENEWS = 0;
+	private static final int NETWORK_NORMAL =1;
+	private static final int NETWORK_FAILS = 0;
+
 	private GetLifeNewsTask getLifeNewsTask = null;
 	private ProgressDialog progressDialog = null;
 	private View footer;
@@ -100,6 +103,7 @@ public class LifeNewsActivity extends Activity {
 						Intent intent = new Intent(LifeNewsActivity.this,
 								NewsDetailsActivity.class);
 						intent.putExtra("id", result.get(position).getId());
+						intent.putExtra("status", NETWORK_NORMAL);
 						startActivity(intent);
 
 					}
@@ -118,6 +122,7 @@ public class LifeNewsActivity extends Activity {
 							Intent intent = new Intent(LifeNewsActivity.this,
 									NewsDetailsActivity.class);
 							intent.putExtra("id", result.get(position).getId());
+							intent.putExtra("status", NETWORK_FAILS);
 							startActivity(intent);
 						}
 

@@ -65,12 +65,14 @@ public class HeadNewsActivity extends Activity {
 
 	private TextView txtNews;
 	private ProgressDialog progressDialog;
+
 	private static final int MSG_GET_PICSNEWS = 0;
 	private static final int MSG_GET_HEADNEWS = 1;
 	private GetPicsNewsTask getPicsNewsTask = null;
 	private GetHeadNewsTask getHeadNewsTask = null;
-
 	private ArrayList<PicsNews> picsNews = null;
+
+	ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
 
 	private Handler handler = new Handler() {
@@ -150,7 +152,6 @@ public class HeadNewsActivity extends Activity {
 		handler.sendEmptyMessage(MSG_GET_PICSNEWS);
 		handler.sendEmptyMessage(MSG_GET_HEADNEWS);
 	}
-
 	private class GetPicsNewsTask extends
 			AsyncTask<Void, Void, ArrayList<PicsNews>> {
 		Exception reason = null;
@@ -203,7 +204,7 @@ public class HeadNewsActivity extends Activity {
 			ArrayList<PicWithTxtNews> headNews = null;
 			try {
 				headNews = (new WH_DM()).getHeadNews();
-				(new DatabaseImpl(HeadNewsActivity.this)).addHeadNews(headNews);
+				//(new DatabaseImpl(HeadNewsActivity.this)).addHeadNews(headNews);
 				return headNews;
 			} catch (Exception e) {
 				reason = e;
@@ -221,6 +222,7 @@ public class HeadNewsActivity extends Activity {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long arg3) {
+						(new DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
 						Intent intent = new Intent(HeadNewsActivity.this,NewsDetailsActivity.class);
 						intent.putExtra("id", result.get(position).getId());
 						startActivity(intent);
@@ -229,7 +231,7 @@ public class HeadNewsActivity extends Activity {
 
 				});
 			} else {
-				ArrayList<PicWithTxtNews> savedNews = (new DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
+				savedNews = (new DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
 				if(savedNews!=null&&savedNews.size()>0){
 					adapter.setList(savedNews);
 					listView.setOnItemClickListener(new OnItemClickListener(){
@@ -238,7 +240,7 @@ public class HeadNewsActivity extends Activity {
 						public void onItemClick(AdapterView<?> parent, View view,
 								int position, long arg3) {
 							Intent intent = new Intent(HeadNewsActivity.this,NewsDetailsActivity.class);
-							intent.putExtra("id", result.get(position).getId());
+							intent.putExtra("id", savedNews.get(position).getId());
 							startActivity(intent);
 						}
 

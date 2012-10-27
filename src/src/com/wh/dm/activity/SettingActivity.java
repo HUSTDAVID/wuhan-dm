@@ -24,6 +24,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     Preference pref_about;
 
     private ImageButton btnBack;
+
     @Override
     public void onCreate(Bundle bundle) {
 
@@ -37,14 +38,15 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 
         txt_title = (TextView) findViewById(R.id.txt_header_title2);
         txt_title.setText(getResources().getString(R.string.setting));
-        btnBack =(ImageButton)findViewById(R.id.Btn_back_header2);
-        btnBack.setOnClickListener(new OnClickListener(){
+        btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
+        btnBack.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				finish();
+            @Override
+            public void onClick(View v) {
 
-			}
+                finish();
+
+            }
 
         });
         getListView().setDivider(getResources().getDrawable(R.drawable.divider_horizontal_line));
@@ -86,4 +88,5 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         }
         return false;
     }
+
 }
