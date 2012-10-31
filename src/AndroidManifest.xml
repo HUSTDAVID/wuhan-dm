@@ -256,10 +256,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name="com.umeng.api.activity.OauthActivity"
+                  android:screenOrientation="unspecified"
+                  android:windowSoftInputMode="adjustResize"
+                  android:configChanges="orientation|keyboardHidden">
+        </activity>
+        <activity android:name="com.umeng.api.activity.UpdateStatusActivity"
+                  android:theme="@style/Theme.IOSched"
+                  android:windowSoftInputMode="stateVisible|adjustResize"
+                  android:screenOrientation="unspecified"
+                  android:configChanges="orientation|keyboardHidden">
+		</activity>
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="508bd46952701530be00014d" >
+            android:value="508b875b52701571dd000026" >
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
@@ -275,11 +285,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- umeng -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.READ_LOGS" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
 
 </manifest>

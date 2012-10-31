@@ -38,8 +38,8 @@
               android:textSize="19sp" >
        </TextView>
             
-            <ImageView
-                android:id="@+id/weibo_imageView2"
+            <ImageButton
+                android:id="@+id/weibo_imagebtn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -47,7 +47,7 @@
                 android:layout_marginBottom="18.67dp"
                 android:layout_marginRight="22.67dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/site_t_add" />
+                android:background="@drawable/site_t_add" />
      
      </RelativeLayout>
      
@@ -87,8 +87,8 @@
        </TextView>
             
 
-            <ImageView
-                android:id="@+id/weibo_imageView4"
+            <ImageButton
+                android:id="@+id/weibo_imagebtn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -96,7 +96,7 @@
                 android:layout_marginBottom="18.67dp"
                 android:layout_marginRight="22.67dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/site_t_add" />
+                android:background="@drawable/site_t_add" />
      
      </RelativeLayout>
      

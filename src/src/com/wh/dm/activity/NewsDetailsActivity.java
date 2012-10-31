@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.db.DatabaseImpl;
@@ -111,6 +112,19 @@ public class NewsDetailsActivity extends Activity {
         initViews();
         databaseImpl = new DatabaseImpl(NewsDetailsActivity.this);
         handler.sendEmptyMessage(MSG_GET_NEWSDETAIL);
+        UMSnsService.UseLocation = true;
+        UMSnsService.LocationAuto = true;
+        UMSnsService.LOCATION_VALID_TIME = 180000; // 30MINS
+        Button sharetxt = (Button) findViewById(R.id.btn_news_share);
+
+        sharetxt.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                UMSnsService.share(NewsDetailsActivity.this, "说些什么...", null);
+            }
+        });
     }
 
     private void initViews() {
