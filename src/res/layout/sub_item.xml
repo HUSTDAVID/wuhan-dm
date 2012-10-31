@@ -26,7 +26,7 @@
                 android:layout_height="152.7dip"
                 android:layout_centerInParent="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/temp_subscription_bigimg" />
+                />
 
             <TextView
                 android:id="@+id/txt_left_sub_title"
@@ -85,7 +85,7 @@
                 android:layout_height="152.7dip"
                 android:layout_centerInParent="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/temp_subscription_bigimg" />
+             />
 
             <TextView
                 android:id="@+id/txt_right_sub_title"

@@ -1,14 +1,14 @@
 
 package com.wh.dm.type;
 
-public class Comment {
+public class Reply {
     private int no;
     private int id;
     private int aid;
     private int typeid;
     private int pid;
     private String username;
-    private String artctitle;
+    private String arctitle;
     private String ip;
     private int ischeck;
     private String dtime;
@@ -78,24 +78,19 @@ public class Comment {
         return username;
     }
 
-    public void setArtctitle(String _artctitle) {
+    public void setArctitle(String _arctitle) {
 
-        artctitle = _artctitle;
+        arctitle = _arctitle;
     }
 
-    public String getArtctitle() {
+    public String getArctitle() {
 
-        return artctitle;
+        return arctitle;
     }
 
     public void setIp(String _ip) {
 
         ip = _ip;
-    }
-
-    public String getIp() {
-
-        return ip;
     }
 
     public void setIscheck(int _ischeck) {
@@ -113,11 +108,6 @@ public class Comment {
         dtime = _dtime;
     }
 
-    public String getDtime() {
-
-        return dtime;
-    }
-
     public void setMid(int _mid) {
 
         mid = _mid;
@@ -131,7 +121,6 @@ public class Comment {
     public void setBad(int _bad) {
 
         bad = _bad;
-
     }
 
     public int getBad() {
@@ -168,5 +157,4 @@ public class Comment {
 
         return msg;
     }
-
 }

@@ -3,7 +3,8 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -39,7 +40,8 @@ public class HouseNewsActivity extends Activity {
     private View footer;
     private Button btnFoolter;
     private LayoutInflater mInfalater;
-
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -80,6 +82,8 @@ public class HouseNewsActivity extends Activity {
             }
 
         });
+        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_HOUSENEWS);
     }
 
@@ -113,7 +117,8 @@ public class HouseNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = (new WH_DM()).getHouseNews();
+                // houseNews = (new WH_DMApi()).getHouseNews();
+                houseNews = wh_dmApi.getHouseNews();
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -129,7 +134,8 @@ public class HouseNewsActivity extends Activity {
             lv.setAdapter(adapter);
             if (result != null) {
                 adapter.setList(result);
-                (new DatabaseImpl(HouseNewsActivity.this)).addHouseNews(result);
+                databaseImpl.deleteHouseNews();
+                databaseImpl.addHouseNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -151,7 +157,9 @@ public class HouseNewsActivity extends Activity {
                 }
 
             } else {
-                savedNews = (new DatabaseImpl(HouseNewsActivity.this)).getHouseNews();
+                savedNews = databaseImpl.getHouseNews();
+                // savedNews = (new
+                // DatabaseImpl(HouseNewsActivity.this)).getHouseNews();
                 if (savedNews != null && savedNews.size() > 0) {
                     lv.addFooterView(footer);
                     lv.setAdapter(adapter);

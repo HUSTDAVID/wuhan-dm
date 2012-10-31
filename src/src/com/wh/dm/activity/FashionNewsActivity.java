@@ -3,7 +3,8 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -36,6 +37,8 @@ public class FashionNewsActivity extends Activity {
     private static int MSG_GET_FASHIONNEWS = 0;
     private GetFashionNewsTask getFashionNewsTask = null;
     private ProgressDialog progressDialog = null;
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -64,6 +67,8 @@ public class FashionNewsActivity extends Activity {
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        wh_dmApi = ((WH_DMApp) getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_FASHIONNEWS);
 
     }
@@ -98,7 +103,8 @@ public class FashionNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = (new WH_DM()).getFashionNews();
+                // houseNews = (new WH_DMApi()).getFashionNews();
+                houseNews = wh_dmApi.getFashionNews();
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -114,7 +120,10 @@ public class FashionNewsActivity extends Activity {
             lv.setAdapter(adapter);
             if (result != null) {
                 adapter.setList(result);
-                (new DatabaseImpl(FashionNewsActivity.this)).addFashionNews(result);
+                databaseImpl.deleteFashionNews();
+                databaseImpl.addFashionNews(result);
+                // (new
+                // DatabaseImpl(FashionNewsActivity.this)).addFashionNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -136,7 +145,9 @@ public class FashionNewsActivity extends Activity {
                 }
 
             } else {
-                savedNews = (new DatabaseImpl(FashionNewsActivity.this)).getHouseNews();
+                savedNews = databaseImpl.getHouseNews();
+                // savedNews = (new
+                // DatabaseImpl(FashionNewsActivity.this)).getHouseNews();
                 if (savedNews != null && savedNews.size() > 0) {
                     adapter.setList(savedNews);
                     lv.setOnItemClickListener(new OnItemClickListener() {

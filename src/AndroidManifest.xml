@@ -4,12 +4,17 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="8"
+    <uses-sdk
+        android:minSdkVersion="8"
         android:targetSdkVersion="15" />
-	<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".WH_DMApp"
+        android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:theme="@android:style/Theme.Black.NoTitleBar" >
         <activity
             android:name=".activity.DM_ImgActivity"
             android:label="@string/app_name"
@@ -20,11 +25,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.DM_SubActivity"
@@ -37,7 +37,7 @@
         </activity>
         <activity
             android:name=".activity.DM_InteractionActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.LocalNewsActivity"
@@ -49,19 +49,19 @@
         </activity>
         <activity
             android:name=".activity.CarNewsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.FashionNewsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.LifeNewsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.TravelNewsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.NewsDetailsActivity"
@@ -74,8 +74,7 @@
         </activity>
         <activity
             android:name=".activity.DM_Tab_2Activity"
-            android:screenOrientation="portrait"
-           >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.PhotosActivity"
@@ -118,7 +117,7 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name=".activity.DM_NewsMoreReplyActivity"
+            android:name=".activity.NewsMoreReplyActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -247,10 +246,24 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
-        
-        <meta-data android:value="508bd46952701530be00014d" android:name="UMENG_APPKEY"></meta-data>
-		<meta-data android:value="umeng" android:name="UMENG_CHANNEL"/>
-		
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="508bd46952701530be00014d" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="umeng" />
     </application>
 
     <supports-screens
@@ -260,10 +273,13 @@
         android:smallScreens="true" >
     </supports-screens>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- umeng -->
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-	<uses-permission android:name="android.permission.READ_LOGS"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_LOGS" >
+    </uses-permission>
 
 </manifest>

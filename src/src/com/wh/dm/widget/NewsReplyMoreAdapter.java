@@ -2,6 +2,8 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.type.Comment;
+import com.wh.dm.util.TimeUtil;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -24,6 +26,19 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
     List<Map<String, Object>> mData;
     LayoutInflater mInflater;
     Context context;
+
+    public void setList(ArrayList<Comment> comments) {
+
+        for (int i = 0; i < comments.size(); i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("name", context.getString(R.string.review_name));
+            map.put("time", comments.get(i).getDtime());
+            map.put("body", comments.get(i).getMsg());
+            map.put("top", comments.get(i).getGood());
+            mData.add(map);
+        }
+        notifyDataSetChanged();
+    }
 
     public NewsReplyMoreAdapter(Context context) {
 
@@ -86,8 +101,10 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
 
         holder.txtBody.setText(mData.get(position).get("body").toString());
         holder.txtName.setText(mData.get(position).get("name").toString());
-        holder.txtTime.setText(mData.get(position).get("time").toString());
-        holder.btnTop.setText(mData.get(position).get("top").toString());
+        holder.txtTime
+                .setText(TimeUtil.getTimeInterval(mData.get(position).get("time").toString()));
+        holder.btnTop.setText(context.getString(R.string.top)
+                + mData.get(position).get("top").toString());
 
         NewsReplyFloorAdapter adapter = (NewsReplyFloorAdapter) (mData.get(position)
                 .get("floor_adapter"));
@@ -95,6 +112,8 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
             holder.layout.setVisibility(View.VISIBLE);
             holder.lvFloor.setAdapter(adapter);
             setListViewHeightBasedOnChildren(holder.lvFloor);
+        } else {
+            holder.layout.setVisibility(View.GONE);
         }
 
         return convertView;

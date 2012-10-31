@@ -3,7 +3,8 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -35,6 +36,8 @@ public class TravelNewsActivity extends Activity {
     private static int MSG_GET_TRAVELNEWS = 0;
     private GetTravelNewsTask getTravelNewsTask = null;
     private ProgressDialog progressDialog = null;
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -62,6 +65,8 @@ public class TravelNewsActivity extends Activity {
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_TRAVELNEWS);
 
     }
@@ -96,7 +101,8 @@ public class TravelNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = (new WH_DM()).getTravelNews();
+                // houseNews = (new WH_DMApi()).getTravelNews();
+                houseNews = wh_dmApi.getTravelNews();
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -112,7 +118,10 @@ public class TravelNewsActivity extends Activity {
             lv.setAdapter(adapter);
             if (result != null) {
                 adapter.setList(result);
-                (new DatabaseImpl(TravelNewsActivity.this)).addTravelNews(result);
+                databaseImpl.deleteTravelNews();
+                // (new
+                // DatabaseImpl(TravelNewsActivity.this)).addTravelNews(result);
+                databaseImpl.addTravelNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -134,7 +143,9 @@ public class TravelNewsActivity extends Activity {
                 }
 
             } else {
-                savedNews = (new DatabaseImpl(TravelNewsActivity.this)).getTravelNews();
+                savedNews = databaseImpl.getTravelNews();
+                // savedNews = (new
+                // DatabaseImpl(TravelNewsActivity.this)).getTravelNews();
                 if (savedNews != null && savedNews.size() > 0) {
                     adapter.setList(savedNews);
                     lv.setOnItemClickListener(new OnItemClickListener() {

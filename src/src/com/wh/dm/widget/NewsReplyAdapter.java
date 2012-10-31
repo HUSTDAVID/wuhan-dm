@@ -79,7 +79,8 @@ public class NewsReplyAdapter extends BaseAdapter {
         holder.txtBody.setText(mData.get(position).get("body").toString());
         holder.txtName.setText(mData.get(position).get("name").toString());
         holder.txtTime.setText(mData.get(position).get("time").toString());
-        holder.btnTop.setText(mData.get(position).get("top").toString());
+        holder.btnTop.setText(context.getString(R.string.top)
+                + mData.get(position).get("top").toString());
 
         return convertView;
     }

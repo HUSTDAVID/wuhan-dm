@@ -2,6 +2,7 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.type.Reply;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,6 +27,19 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
         this.context = context;
         mInfalater = LayoutInflater.from(context);
         mData = new ArrayList<Map<String, Object>>();
+    }
+
+    public void setList(ArrayList<Reply> replys) {
+
+        for (int i = 0; i < replys.size(); i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("name", context.getString(R.string.review_name));
+            map.put("text", replys.get(i).getMsg());
+            map.put("floor", "" + (i + 1));
+            mData.add(map);
+        }
+
+        notifyDataSetChanged();
     }
 
     public void addItem(String name, String text, int floor) {

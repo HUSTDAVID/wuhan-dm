@@ -3,7 +3,8 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -35,6 +36,8 @@ public class CarNewsActivity extends Activity {
     private View footer;
     private Button btnFoolter;
     private LayoutInflater mInfalater;
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -62,6 +65,8 @@ public class CarNewsActivity extends Activity {
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_CARNEWS);
 
     }
@@ -96,7 +101,8 @@ public class CarNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = (new WH_DM()).getCarNews();
+                // houseNews = (new WH_DMApi()).getCarNews();
+                houseNews = wh_dmApi.getCarNews();
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -112,7 +118,9 @@ public class CarNewsActivity extends Activity {
             lv.setAdapter(adapter);
             if (result != null) {
                 adapter.setList(result);
-                (new DatabaseImpl(CarNewsActivity.this)).addCarNews(result);
+                databaseImpl.deleteCarNews();
+                databaseImpl.addCarNews(result);
+                // (new DatabaseImpl(CarNewsActivity.this)).addCarNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -133,7 +141,9 @@ public class CarNewsActivity extends Activity {
                 }
 
             } else {
-                savedNews = (new DatabaseImpl(CarNewsActivity.this)).getHouseNews();
+                savedNews = databaseImpl.getCarNews();
+                // savedNews = (new
+                // DatabaseImpl(CarNewsActivity.this)).getHouseNews();
                 if (savedNews != null && savedNews.size() > 0) {
                     adapter.setList(savedNews);
                     lv.setOnItemClickListener(new OnItemClickListener() {

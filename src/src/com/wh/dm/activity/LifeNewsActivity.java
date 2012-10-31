@@ -3,7 +3,8 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -36,6 +37,8 @@ public class LifeNewsActivity extends Activity {
     private View footer;
     private Button btnFoolter;
     private LayoutInflater mInfalater;
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -64,6 +67,8 @@ public class LifeNewsActivity extends Activity {
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_LIFENEWS);
 
     }
@@ -98,7 +103,8 @@ public class LifeNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = (new WH_DM()).getLifeNews();
+                // houseNews = (new WH_DMApi()).getLifeNews();
+                houseNews = wh_dmApi.getLifeNews();
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -114,7 +120,10 @@ public class LifeNewsActivity extends Activity {
             lv.setAdapter(adapter);
             if (result != null) {
                 adapter.setList(result);
-                (new DatabaseImpl(LifeNewsActivity.this)).addLifeNews(result);
+                databaseImpl.deleteLifeNews();
+                databaseImpl.addLifeNews(result);
+                // (new
+                // DatabaseImpl(LifeNewsActivity.this)).addLifeNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -135,7 +144,9 @@ public class LifeNewsActivity extends Activity {
                 }
 
             } else {
-                savedNews = (new DatabaseImpl(LifeNewsActivity.this)).getLifeNews();
+                savedNews = databaseImpl.getLifeNews();
+                // savedNews = (new
+                // DatabaseImpl(LifeNewsActivity.this)).getLifeNews();
                 if (savedNews != null && savedNews.size() > 0) {
                     adapter.setList(savedNews);
                     lv.setOnItemClickListener(new OnItemClickListener() {

@@ -3,7 +3,8 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
@@ -63,6 +64,8 @@ public class HeadNewsActivity extends Activity {
     private GetPicsNewsTask getPicsNewsTask = null;
     private GetHeadNewsTask getHeadNewsTask = null;
     private ArrayList<PicsNews> picsNews = null;
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
 
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
@@ -152,7 +155,8 @@ public class HeadNewsActivity extends Activity {
                 }
             }
         });
-
+        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_PICSNEWS);
         handler.sendEmptyMessage(MSG_GET_HEADNEWS);
     }
@@ -165,7 +169,8 @@ public class HeadNewsActivity extends Activity {
 
             ArrayList<PicsNews> picsNews = null;
             try {
-                picsNews = (new WH_DM()).getPicsNews();
+                // picsNews = (new WH_DMApi()).getPicsNews();
+                picsNews = wh_dmApi.getPicsNews();
                 return picsNews;
             } catch (Exception e) {
                 reason = e;
@@ -209,7 +214,8 @@ public class HeadNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> headNews = null;
             try {
-                headNews = (new WH_DM()).getHeadNews();
+                // headNews = (new WH_DMApi()).getHeadNews();
+                headNews = wh_dmApi.getHeadNews();
                 // (new
                 // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(headNews);
                 return headNews;
@@ -227,7 +233,10 @@ public class HeadNewsActivity extends Activity {
             listView.setAdapter(adapter);
             if (result != null) {
                 adapter.setList(result);
-                (new DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
+                databaseImpl.deleteHeadNews();
+                databaseImpl.addHeadNews(result);
+                // (new
+                // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
                 listView.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -247,7 +256,9 @@ public class HeadNewsActivity extends Activity {
                     footer.setVisibility(View.VISIBLE);
                 }
             } else {
-                savedNews = (new DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
+                savedNews = databaseImpl.getHeadNews();
+                // savedNews = (new
+                // DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
                 if (savedNews != null && savedNews.size() > 0) {
                     adapter.setList(savedNews);
                     listView.setOnItemClickListener(new OnItemClickListener() {
