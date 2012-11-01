@@ -18,6 +18,8 @@
         android:layout="@layout/set_pref_check"
         android:summaryOff="保持屏幕正常亮度"
         android:summaryOn="屏幕亮度调节关闭"
-        android:title="@string/screen" android:widgetLayout="@layout/set_checkbox"/>
+        android:title="@string/screen" 
+        android:key="wake_lock"
+        android:widgetLayout="@layout/set_checkbox"/>
 
 </PreferenceScreen>
