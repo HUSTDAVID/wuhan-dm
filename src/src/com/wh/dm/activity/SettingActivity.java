@@ -5,24 +5,31 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class SettingActivity extends PreferenceActivity implements OnPreferenceClickListener {
+public class SettingActivity extends PreferenceActivity implements OnPreferenceClickListener,
+        OnSharedPreferenceChangeListener {
 
     TextView txt_title;
     Preference pref_login;
     Preference pref_account;
+    Preference pref_flow;
     Preference pref_cache;
     Preference pref_more;
     Preference pref_feedback;
     Preference pref_about;
+
+    SharedPreferences sPreference;
 
     private ImageButton btnBack;
 
@@ -38,6 +45,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public void onResume() {
 
         super.onResume();
+        setFlowSummary(sPreference, pref_flow);
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         MobclickAgent.onResume(this);
     }
 
@@ -48,6 +57,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     }
 
     public void init() {
+
+        sPreference = PreferenceManager.getDefaultSharedPreferences(this);
 
         txt_title = (TextView) findViewById(R.id.txt_header_title2);
         txt_title.setText(getResources().getString(R.string.setting));
@@ -65,6 +76,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         getListView().setDivider(getResources().getDrawable(R.drawable.divider_horizontal_line));
         pref_login = findPreference("login");
         pref_account = findPreference("account");
+        pref_flow = findPreference("flow");
         pref_cache = findPreference("cache");
         pref_more = findPreference("more");
         pref_feedback = findPreference("feedback");
@@ -100,6 +112,27 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
             startActivity(intent);
         }
         return false;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        if (key.equals("flow")) {
+            setFlowSummary(sharedPreferences, pref_flow);
+        }
+
+    }
+
+    // set flow control preference
+    private void setFlowSummary(SharedPreferences sharedPreferences, Preference pref) {
+
+        if (sharedPreferences.getString("flow", "key0").equals("key0")) {
+            pref.setSummary(getResources().getStringArray(R.array.flow_control)[0]);
+        } else if (sharedPreferences.getString("flow", "key0").equals("key1")) {
+            pref.setSummary(getResources().getStringArray(R.array.flow_control)[1]);
+        } else if (sharedPreferences.getString("flow", "key0").equals("key2")) {
+            pref.setSummary(getResources().getStringArray(R.array.flow_control)[2]);
+        }
     }
 
 }

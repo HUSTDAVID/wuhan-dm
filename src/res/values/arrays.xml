@@ -8,8 +8,7 @@
     <string-array name="flow_control_key">
         <item>key0</item>
         <item>key1</item>
-        <item>key2</item>
-        <item>key3</item>
+        <item>key2</item>        
     </string-array>
     
     <!-- text size -->
