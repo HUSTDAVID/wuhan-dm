@@ -3,12 +3,12 @@ package com.wh.dm;
 
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Result;
+import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 
 public class WH_DMApp extends Application {
@@ -90,22 +90,15 @@ public class WH_DMApp extends Application {
 
     }
 
-    // two method for wakeLock
+    // two method for wake lock
     public void acquireWakeLock() {
 
-        if (wakeLock == null) {
-            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-            wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "Wake_Lock");
-            wakeLock.acquire();
-        }
+        wakeLock = SettingUtil.setAcquireWakeLock(mContext, wakeLock);
     }
 
     public void releaseWakeLock() {
 
-        if (wakeLock != null && wakeLock.isHeld()) {
-            wakeLock.release();
-            wakeLock = null;
-        }
+        wakeLock = SettingUtil.setReleaseWakeLock(wakeLock);
     }
 
 }
