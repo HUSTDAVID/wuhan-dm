@@ -1,11 +1,13 @@
+
 package com.wh.dm.http;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.error.UnKnownException;
+import com.wh.dm.error.WH_DMException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -16,112 +18,139 @@ import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
-import com.wh.dm.WH_DM;
-import com.wh.dm.error.UnKnownException;
-import com.wh.dm.error.WH_DMException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HttpApiBasic implements HttpApi {
 
-	protected static final boolean DEBUG = WH_DM.DEBUG;
-	private static final String DEFALUT_CLIENT_VERSION= "com.wh.dm";
-	private static final String CLIENT_VERSION_HEADER ="User-Agent";
-	private static final int TIMEOUT = 60;
+    protected static final boolean DEBUG = WH_DMApi.DEBUG;
+    private static final String DEFALUT_CLIENT_VERSION = "com.wh.dm";
+    private static final String CLIENT_VERSION_HEADER = "User-Agent";
+    private static final int TIMEOUT = 60;
 
-	private DefaultHttpClient mHttpClient;
-	private String mClientVersion;
+    private final DefaultHttpClient mHttpClient;
+    private String mClientVersion;
 
-	public HttpApiBasic(DefaultHttpClient httpClient,String clientVersion){
-		mHttpClient = httpClient;
-		if(clientVersion!=null){
-			mClientVersion = clientVersion;
+    public HttpApiBasic(DefaultHttpClient httpClient, String clientVersion) {
 
-		}else{
-			mClientVersion = DEFALUT_CLIENT_VERSION;
-		}
-	}
-	public HttpApiBasic(){
-		mHttpClient = new DefaultHttpClient();
-	}
+        mHttpClient = httpClient;
+        if (clientVersion != null) {
+            mClientVersion = clientVersion;
 
-	@Override
-	public HttpGet createHttpGet(String url, NameValuePair... nameValuePairs) {
-		String query = URLEncodedUtils.format(fullParams(nameValuePairs), HTTP.UTF_8);
-		HttpGet httpGet = new HttpGet(url+"?"+query);
-		//httpGet.addHeader(CLIENT_VERSION_HEADER, mClientVersion);
-		if(DEBUG){
-			Log.d("HttpGet", "HttpGet:");
-		}
-		return httpGet;
-	}
+        } else {
+            mClientVersion = DEFALUT_CLIENT_VERSION;
+        }
+    }
 
-	@Override
-	public HttpPost createHttpPost(String url, NameValuePair... nameValuePairs) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public HttpApiBasic() {
 
-	@Override
-	public String doHttpPost(String url, NameValuePair... nameValuePairs)
-			throws WH_DMException, UnKnownException {
+        mHttpClient = new DefaultHttpClient();
+    }
 
+    @Override
+    public HttpGet createHttpGet(String url, NameValuePair... nameValuePairs) {
 
-		if(DEBUG){
-			Log.d("doHttpPost", "doHttpPost executes");
-		}
+        String query = URLEncodedUtils.format(fullParams(nameValuePairs), HTTP.UTF_8);
+        HttpGet httpGet = new HttpGet(url + "?" + query);
+        // httpGet.addHeader(CLIENT_VERSION_HEADER, mClientVersion);
+        if (DEBUG) {
+            Log.d("HttpGet", "HttpGet:");
+        }
+        return httpGet;
+    }
 
-		return null;
-	}
+    @Override
+    public HttpPost createHttpPost(String url, NameValuePair... nameValuePairs) {
 
-	@Override
-	public String doHttpRequest(HttpRequestBase httpRequest)
-			throws WH_DMException, UnKnownException, IOException {
+        HttpPost httpost = new HttpPost(url);
+        try {
+            httpost.setEntity(new UrlEncodedFormEntity(fullParams(nameValuePairs), HTTP.UTF_8));
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException("Unable to encode http parameters.");
+        }
+        return httpost;
+    }
 
-		HttpResponse response = executeHttpRequest(httpRequest);
-		int statusCode = response.getStatusLine().getStatusCode();
-		switch(statusCode){
-		case 200:
-			String content = EntityUtils.toString(response.getEntity());
-			return content;
-		case 400:
-			throw new WH_DMException("");
+    @Override
+    public String doHttpRequest(HttpRequestBase httpRequest) throws WH_DMException,
+            UnKnownException, IOException {
 
-		case 401:
-			response.getEntity().consumeContent();
-			throw new WH_DMException("请求参数不符合API规定");
-		case 404:
-			response.getEntity().consumeContent();
-			throw new WH_DMException("未授权");
-		case 500:
-			response.getEntity().consumeContent();
-			throw new WH_DMException("资源不存在");
-		default:
-			response.getEntity().consumeContent();
-			throw new UnKnownException("内部错误");
-		}
+        HttpResponse response = executeHttpRequest(httpRequest);
+        int statusCode = response.getStatusLine().getStatusCode();
+        switch (statusCode) {
+            case 200:
+                String content = EntityUtils.toString(response.getEntity());
+                return content;
+            case 400:
+                throw new WH_DMException("");
 
-	}
+            case 401:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("请求参数不符合API规定");
+            case 404:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("未授权");
+            case 500:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("资源不存在");
+            default:
+                response.getEntity().consumeContent();
+                throw new UnKnownException("内部错误");
+        }
 
-	public HttpResponse executeHttpRequest(HttpRequestBase httpRequest) throws IOException{
+    }
 
-		if(DEBUG){
-			Log.d("executeHttpRequest","executeHttpRequest executes");
-		}
-		mHttpClient.getConnectionManager().closeExpiredConnections();
-		return mHttpClient.execute(httpRequest);
-	}
+    @Override
+    public String doHttpPost(HttpPost httpost) throws WH_DMException, UnKnownException, IOException {
 
-	private List<NameValuePair> fullParams(NameValuePair...nameValuePairs){
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		for(int i=0;i<nameValuePairs.length;i++){
-			NameValuePair param = nameValuePairs[i];
-			if(param.getValue()!=null){
-				if(DEBUG){
-					Log.d("fullParams","Param:"+param);
-				}
-				params.add(param);
-			}
-		}
-		return params;
-	}
+        HttpResponse response = mHttpClient.execute(httpost);
+        int statusCode = response.getStatusLine().getStatusCode();
+        switch (statusCode) {
+            case 200:
+                String content = EntityUtils.toString(response.getEntity());
+                return content;
+            case 400:
+                throw new WH_DMException("");
+
+            case 401:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("请求参数不符合API规定");
+            case 404:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("未授权");
+            case 500:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("资源不存在");
+            default:
+                response.getEntity().consumeContent();
+                throw new UnKnownException("内部错误");
+        }
+    }
+
+    public HttpResponse executeHttpRequest(HttpRequestBase httpRequest) throws IOException {
+
+        if (DEBUG) {
+            Log.d("executeHttpRequest", "executeHttpRequest executes");
+        }
+        mHttpClient.getConnectionManager().closeExpiredConnections();
+        return mHttpClient.execute(httpRequest);
+    }
+
+    private List<NameValuePair> fullParams(NameValuePair... nameValuePairs) {
+
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        for (int i = 0; i < nameValuePairs.length; i++) {
+            NameValuePair param = nameValuePairs[i];
+            if (param.getValue() != null) {
+                if (DEBUG) {
+                    Log.d("fullParams", "Param:" + param);
+                }
+                params.add(param);
+            }
+        }
+        return params;
+    }
 
 }

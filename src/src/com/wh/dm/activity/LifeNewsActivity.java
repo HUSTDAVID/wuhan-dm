@@ -3,7 +3,9 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.widget.HeadlineAdapter;
 
@@ -27,13 +29,18 @@ import java.util.ArrayList;
 public class LifeNewsActivity extends Activity {
 
     private ListView lv;
+    ArrayList<PicWithTxtNews> savedNews = null;
+    private HeadlineAdapter adapter;
     private static int MSG_GET_LIFENEWS = 0;
     private GetLifeNewsTask getLifeNewsTask = null;
     private ProgressDialog progressDialog = null;
     private View footer;
     private Button btnFoolter;
     private LayoutInflater mInfalater;
-    private Handler handler = new Handler() {
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
+    private final Handler handler = new Handler() {
+        @Override
         public void handleMessage(android.os.Message msg) {
 
             if (msg.what == MSG_GET_LIFENEWS) {
@@ -47,6 +54,7 @@ public class LifeNewsActivity extends Activity {
         };
     };
 
+    @Override
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
@@ -54,21 +62,25 @@ public class LifeNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
+        adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
-        lv.addFooterView(footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_LIFENEWS);
 
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -91,7 +103,8 @@ public class LifeNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = (new WH_DM()).getLifeNews();
+                // houseNews = (new WH_DMApi()).getLifeNews();
+                houseNews = wh_dmApi.getLifeNews();
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -103,14 +116,14 @@ public class LifeNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
+            lv.addFooterView(footer);
+            lv.setAdapter(adapter);
             if (result != null) {
-                HeadlineAdapter adapter = new HeadlineAdapter(LifeNewsActivity.this, result);
-                if (result.size() < 20) {
-                    lv.removeFooterView(footer);
-                } else {
-                    lv.addFooterView(footer);
-                }
-                lv.setAdapter(adapter);
+                adapter.setList(result);
+                databaseImpl.deleteLifeNews();
+                databaseImpl.addLifeNews(result);
+                // (new
+                // DatabaseImpl(LifeNewsActivity.this)).addLifeNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -120,11 +133,42 @@ public class LifeNewsActivity extends Activity {
                         Intent intent = new Intent(LifeNewsActivity.this, NewsDetailsActivity.class);
                         intent.putExtra("id", result.get(position).getId());
                         startActivity(intent);
+
                     }
 
                 });
+                if (result.size() < 20) {
+                    lv.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
+
             } else {
+                savedNews = databaseImpl.getLifeNews();
+                // savedNews = (new
+                // DatabaseImpl(LifeNewsActivity.this)).getLifeNews();
+                if (savedNews != null && savedNews.size() > 0) {
+                    adapter.setList(savedNews);
+                    lv.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long arg3) {
+
+                            Intent intent = new Intent(LifeNewsActivity.this,
+                                    NewsDetailsActivity.class);
+                            intent.putExtra("id", savedNews.get(position).getId());
+                            startActivity(intent);
+                        }
+
+                    });
+                }
                 Toast.makeText(LifeNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT).show();
+                if (savedNews.size() < 20) {
+                    lv.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
             }
             progressDialog.dismiss();
             super.onPostExecute(result);

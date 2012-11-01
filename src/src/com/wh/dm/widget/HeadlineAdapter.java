@@ -31,6 +31,10 @@ public class HeadlineAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
 
     }
+    public HeadlineAdapter(Context context){
+    	mInflater = LayoutInflater.from(context);
+        headNews = new ArrayList<PicWithTxtNews>();
+    }
 
     public int getCount() {
 

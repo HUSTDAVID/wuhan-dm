@@ -3,7 +3,9 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
 
 public class HeadNewsActivity extends Activity {
 
-    private String URL_DOMAIN = "http://test1.jbr.net.cn:809";
+    private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
     private String[] titles;
     private int currentItem = 0;
     private View headerView;
@@ -56,14 +58,19 @@ public class HeadNewsActivity extends Activity {
 
     private TextView txtNews;
     private ProgressDialog progressDialog;
+
     private static final int MSG_GET_PICSNEWS = 0;
     private static final int MSG_GET_HEADNEWS = 1;
     private GetPicsNewsTask getPicsNewsTask = null;
     private GetHeadNewsTask getHeadNewsTask = null;
-
     private ArrayList<PicsNews> picsNews = null;
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
 
-    private Handler handler = new Handler() {
+    ArrayList<PicWithTxtNews> savedNews = null;
+    private HeadlineAdapter adapter;
+
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
 
@@ -98,12 +105,14 @@ public class HeadNewsActivity extends Activity {
         init();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -119,10 +128,10 @@ public class HeadNewsActivity extends Activity {
         txtNews = (TextView) findViewById(R.id.txt_horizontal_title);
 
         mInfalater = getLayoutInflater();
+        adapter = new HeadlineAdapter(this);
         listView = (ListView) findViewById(R.id.list);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
-        listView.addFooterView(footer);
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
@@ -146,7 +155,8 @@ public class HeadNewsActivity extends Activity {
                 }
             }
         });
-
+        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
+        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
         handler.sendEmptyMessage(MSG_GET_PICSNEWS);
         handler.sendEmptyMessage(MSG_GET_HEADNEWS);
     }
@@ -158,9 +168,9 @@ public class HeadNewsActivity extends Activity {
         protected ArrayList<PicsNews> doInBackground(Void... arg0) {
 
             ArrayList<PicsNews> picsNews = null;
-
             try {
-                picsNews = (new WH_DM()).getPicsNews();
+                // picsNews = (new WH_DMApi()).getPicsNews();
+                picsNews = wh_dmApi.getPicsNews();
                 return picsNews;
             } catch (Exception e) {
                 reason = e;
@@ -204,7 +214,10 @@ public class HeadNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> headNews = null;
             try {
-                headNews = (new WH_DM()).getHeadNews();
+                // headNews = (new WH_DMApi()).getHeadNews();
+                headNews = wh_dmApi.getHeadNews();
+                // (new
+                // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(headNews);
                 return headNews;
             } catch (Exception e) {
                 reason = e;
@@ -216,10 +229,14 @@ public class HeadNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
+            listView.addFooterView(footer);
+            listView.setAdapter(adapter);
             if (result != null) {
-                HeadlineAdapter adapter = new HeadlineAdapter(HeadNewsActivity.this, result);
-
-                listView.setAdapter(adapter);
+                adapter.setList(result);
+                databaseImpl.deleteHeadNews();
+                databaseImpl.addHeadNews(result);
+                // (new
+                // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
                 listView.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -229,10 +246,40 @@ public class HeadNewsActivity extends Activity {
                         Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
                         intent.putExtra("id", result.get(position).getId());
                         startActivity(intent);
+
                     }
 
                 });
+                if (result.size() < 20) {
+                    listView.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
             } else {
+                savedNews = databaseImpl.getHeadNews();
+                // savedNews = (new
+                // DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
+                if (savedNews != null && savedNews.size() > 0) {
+                    adapter.setList(savedNews);
+                    listView.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long arg3) {
+
+                            Intent intent = new Intent(HeadNewsActivity.this,
+                                    NewsDetailsActivity.class);
+                            intent.putExtra("id", savedNews.get(position).getId());
+                            startActivity(intent);
+                        }
+
+                    });
+                }
+                if (savedNews.size() < 20) {
+                    listView.removeFooterView(footer);
+                } else {
+                    footer.setVisibility(View.VISIBLE);
+                }
                 Toast.makeText(HeadNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT).show();
             }
             progressDialog.dismiss();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">艾猫</string>
+    <string name="app_name">每刻</string>
     <string name="collections">我的收藏</string>
     <string name="favorites">猜你喜欢</string>
     <string name="interaction">互动</string>
@@ -152,13 +152,14 @@
 	<string name="download">下载</string>
 	<!-- Exception -->
 	<string name="network_exception">网络连接异常</string>
-	
+
 	<string name="larger">较大</string>
 	<string name="largest">超大</string>
 	<string name="nomal">正常</string>
 	<string name="smaller">较小</string>
 	<string name="smallest">超小</string>
 	<string name="current_text_size">当前字体大小为</string>
-	
-	
+	<string name="review_name">手机版网友</string>
+	<string name="top">顶顶</string>
+
 </resources>

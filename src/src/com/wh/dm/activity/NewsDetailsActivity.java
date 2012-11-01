@@ -1,10 +1,13 @@
 
 package com.wh.dm.activity;
 
-import com.umeng.analytics.MobclickAgent;
+import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
-import com.wh.dm.WH_DM;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
+import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
@@ -14,6 +17,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,12 +35,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class NewsDetailsActivity extends Activity {
 
     View headerView;
     private final int MSG_GET_NEWSDETAIL = 0;
+    private final int MSG_GET_COMMENT = 1;
+    private final int curStatus = 0;
+
     private int id;
+    private int fid;
+    private int time;
     private GetNewsDetailTask getNewsDetailTask = null;
+    private GetCommentTask getCommentTask = null;
     TextView newsTitle;
     TextView newsTime;
     TextView newsSource;
@@ -58,20 +70,31 @@ public class NewsDetailsActivity extends Activity {
     private ImageButton btnBack;
     private NewsReplyAdapter adapter;
     private ProgressDialog progressDialog;
-
+    private DatabaseImpl databaseImpl;
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
 
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
+        @Override
         public void handleMessage(android.os.Message msg) {
 
-            if (msg.what == MSG_GET_NEWSDETAIL) {
-                if (getNewsDetailTask != null) {
-                    getNewsDetailTask.cancel(true);
-                    getNewsDetailTask = null;
-                }
-                getNewsDetailTask = new GetNewsDetailTask();
-                getNewsDetailTask.execute(id);
+            switch (msg.what) {
+                case MSG_GET_NEWSDETAIL:
+                    if (getNewsDetailTask != null) {
+                        getNewsDetailTask.cancel(true);
+                        getNewsDetailTask = null;
+                    }
+                    getNewsDetailTask = new GetNewsDetailTask();
+                    getNewsDetailTask.execute(id);
+                    break;
+                case MSG_GET_COMMENT:
+                    if (getCommentTask != null) {
+                        getCommentTask.cancel(true);
+                        getCommentTask = null;
+                    }
+                    getCommentTask = new GetCommentTask();
+                    getCommentTask.execute(fid);
+                    break;
             }
         };
     };
@@ -84,23 +107,24 @@ public class NewsDetailsActivity extends Activity {
         setContentView(R.layout.activity_news_details);
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 211);
+        Log.d("id", "" + id);
+        Log.d("status", "" + curStatus);
         initViews();
+        databaseImpl = new DatabaseImpl(NewsDetailsActivity.this);
         handler.sendEmptyMessage(MSG_GET_NEWSDETAIL);
-    }
+        UMSnsService.UseLocation = true;
+        UMSnsService.LocationAuto = true;
+        UMSnsService.LOCATION_VALID_TIME = 180000; // 30MINS
+        Button sharetxt = (Button) findViewById(R.id.btn_news_share);
 
-    @Override
-    protected void onResume() {
+        sharetxt.setOnClickListener(new OnClickListener() {
 
-        webSettings = webViewNewsBody.getSettings();
-        setTextSize();
-        MobclickAgent.onResume(this);
-        super.onResume();
-    }
+            @Override
+            public void onClick(View v) {
 
-    public void onPause() {
-
-        super.onPause();
-        MobclickAgent.onPause(this);
+                UMSnsService.share(NewsDetailsActivity.this, "说些什么...", null);
+            }
+        });
     }
 
     private void initViews() {
@@ -112,15 +136,12 @@ public class NewsDetailsActivity extends Activity {
 
         lvNews = (ListView) findViewById(R.id.lv_news_details);
         // news body message
-        newsMessage = (View) mInflater.inflate(R.layout.news_details, null);
+        newsMessage = mInflater.inflate(R.layout.news_details, null);
         newsTitle = (TextView) newsMessage.findViewById(R.id.txt_news_title);
         newsTime = (TextView) newsMessage.findViewById(R.id.txt_news_time);
         newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
-
-        webSettings = webViewNewsBody.getSettings();
-        setTextSize();
         // webViewNewsBody.loadUrl("file:///android_asset/news.html");
 
         // add news body data
@@ -137,7 +158,7 @@ public class NewsDetailsActivity extends Activity {
         lvNews.addHeaderView(newsMessage, null, false);
 
         // watch more comments
-        footer = (View) mInflater.inflate(R.layout.news_more_comment, null);
+        footer = mInflater.inflate(R.layout.news_more_comment, null);
         lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);
@@ -160,7 +181,7 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(NewsDetailsActivity.this, DM_NewsMoreReplyActivity.class);
+                Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
                 startActivity(intent);
 
             }
@@ -215,54 +236,19 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(NewsDetailsActivity.this, DM_NewsMoreReplyActivity.class);
+                Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
                 startActivity(intent);
             }
         });
 
     }
 
-    private class GetNewsDetailTask extends AsyncTask<Integer, Void, NewsContent> {
-        Exception reason = null;
+    @Override
+    protected void onResume() {
 
-        @Override
-        protected void onPreExecute() {
-
-            progressDialog.show();
-            super.onPreExecute();
-        }
-
-        @Override
-        protected NewsContent doInBackground(Integer... params) {
-
-            NewsContent[] content = null;
-            try {
-                content = (new WH_DM()).getNewsContent(params[0]);
-                return content[0];
-            } catch (Exception e) {
-                e.printStackTrace();
-                reason = e;
-                return null;
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(NewsContent result) {
-
-            if (result != null) {
-                webViewNewsBody.loadDataWithBaseURL(null, result.getBody(), "text/html", "UTF-8",
-                        null);
-                newsTitle.setText(result.getTitle());
-                newsTime.setText(result.getPubdate());
-            } else {
-                Toast.makeText(NewsDetailsActivity.this, reason.getMessage(), Toast.LENGTH_LONG)
-                        .show();
-            }
-            progressDialog.dismiss();
-            super.onPostExecute(result);
-        }
-
+        webSettings = webViewNewsBody.getSettings();
+        setTextSize();
+        super.onResume();
     }
 
     private void setTextSize() {
@@ -282,6 +268,98 @@ public class NewsDetailsActivity extends Activity {
         } else {
             webSettings.setTextSize(TextSize.NORMAL); // 出现其他情况设置正在字号
         }
+    }
+
+    private class GetNewsDetailTask extends AsyncTask<Integer, Void, NewsContent> {
+        Exception reason = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected NewsContent doInBackground(Integer... params) {
+
+            NewsContent[] content = null;
+
+            try {
+                content = (new WH_DMApi()).getNewsContent(params[0]);
+                return content[0];
+            } catch (Exception e) {
+                e.printStackTrace();
+                reason = e;
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(NewsContent result) {
+
+            if (result != null) {
+                databaseImpl.addNewsContent(result);
+                time++;
+                Log.d("time", "" + time);
+                webViewNewsBody.loadDataWithBaseURL(null, result.getBody(), "text/html", "utf-8",
+                        null);
+                newsTitle.setText(result.getTitle());
+                newsTime.setText(result.getPubdate());
+            } else {
+                result = databaseImpl.getNewsContent(id);
+                if (result != null) {
+
+                    webViewNewsBody.loadDataWithBaseURL(null, result.getBody(), "text/html",
+                            "utf-8", null);
+                    newsTitle.setText(result.getTitle());
+                    newsTime.setText(result.getPubdate());
+                }
+                Toast.makeText(NewsDetailsActivity.this, reason.getMessage(), Toast.LENGTH_LONG)
+                        .show();
+            }
+            progressDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+    }
+
+    private class GetCommentTask extends AsyncTask<Integer, Void, ArrayList<Comment>> {
+        Exception reason = null;
+        ArrayList<Comment> comments = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<Comment> doInBackground(Integer... params) {
+
+            if (NetworkConnection.checkInternetConnection()) {
+                try {
+                    comments = (new WH_DMApi()).getComment(params[0]);
+                    return comments;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    reason = e;
+                }
+                return comments;
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Comment> result) {
+
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+        }
+
     }
 
 }

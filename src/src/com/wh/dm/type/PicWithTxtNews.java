@@ -10,7 +10,7 @@ public class PicWithTxtNews {
 	private int sortrank;
 	private boolean isfirst;
 	private boolean ishot;
-	private String date;
+	private String pubdate;
 	private String isUrl;
 
 	public void setNo(int _no) {
@@ -85,12 +85,12 @@ public class PicWithTxtNews {
 		return ishot;
 	}
 
-	public void setDate(String _date) {
-		date = _date;
+	public void setDate(String _pubdate) {
+		pubdate = _pubdate;
 	}
 
 	public String getDate() {
-		return date;
+		return pubdate;
 	}
 
 	public void setIsUrl(String _isUrl) {
