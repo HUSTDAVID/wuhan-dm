@@ -2,6 +2,7 @@
 package com.wh.dm.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 
@@ -25,6 +26,19 @@ public class SettingUtil {
             wakeLock = null;
         }
         return wakeLock;
+
+    }
+
+    public static boolean isDownloadImg(SharedPreferences pref, Context context) {
+
+        String key = pref.getString("flow", "key0");
+        if (key.equals("key0")) {
+            return ConnetivityUtil.isWifi(context);
+        } else if (key.equals("key1")) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 

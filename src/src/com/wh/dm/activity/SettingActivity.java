@@ -3,6 +3,8 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.util.SettingUtil;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,7 +47,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public void onResume() {
 
         super.onResume();
-        setFlowSummary(sPreference, pref_flow);
+        setFlowChange(sPreference, pref_flow);
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         MobclickAgent.onResume(this);
     }
@@ -118,13 +120,13 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
         if (key.equals("flow")) {
-            setFlowSummary(sharedPreferences, pref_flow);
+            setFlowChange(sharedPreferences, pref_flow);
         }
 
     }
 
     // set flow control preference
-    private void setFlowSummary(SharedPreferences sharedPreferences, Preference pref) {
+    private void setFlowChange(SharedPreferences sharedPreferences, Preference pref) {
 
         if (sharedPreferences.getString("flow", "key0").equals("key0")) {
             pref.setSummary(getResources().getStringArray(R.array.flow_control)[0]);
@@ -133,6 +135,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         } else if (sharedPreferences.getString("flow", "key0").equals("key2")) {
             pref.setSummary(getResources().getStringArray(R.array.flow_control)[2]);
         }
+
+        WH_DMApp.isLoadImg = SettingUtil.isDownloadImg(sharedPreferences, this);
     }
 
 }
