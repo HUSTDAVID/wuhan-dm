@@ -95,10 +95,10 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
 
         if (preference.getKey().equals("wake_lock")) {
 
-            if (sPreference.getBoolean("wake_lock", false)) {
-                wh_app.acquireWakeLock();
-            } else {
+            if (sPreference.getBoolean("wake_lock", true)) {
                 wh_app.releaseWakeLock();
+            } else {
+                wh_app.acquireWakeLock();
             }
 
         }

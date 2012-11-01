@@ -271,11 +271,12 @@ public class MainActivity extends Activity {
         WH_DMApp whApp = (WH_DMApp) getApplication();
         whApp.mContext = this;
         SharedPreferences sharePreference = getSharedPreferences("com.wh.dm_preferences", 1);
-        boolean isWake = sharePreference.getBoolean("wake_lock", false);
+        // when the checkboxpreference is seleted ,it return false
+        boolean isWake = sharePreference.getBoolean("wake_lock", true);
         if (isWake) {
-            whApp.acquireWakeLock();
-        } else {
             whApp.releaseWakeLock();
+        } else {
+            whApp.acquireWakeLock();
         }
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
