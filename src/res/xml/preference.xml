@@ -26,7 +26,8 @@
             android:key="flow"
             android:layout="@layout/set_pref_list"
             android:summary="任何网络情况下均加载照片"
-            android:title="@string/flow" />
+            android:title="@string/flow" 
+            android:defaultValue="key1"/>
 
         <PreferenceScreen
             android:key="cache"

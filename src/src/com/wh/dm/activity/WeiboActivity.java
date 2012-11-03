@@ -21,6 +21,7 @@ public class WeiboActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_toweibo);
 
+        initViews();
         UMSnsService.UseLocation = true;
         UMSnsService.LocationAuto = true;
         UMSnsService.LOCATION_VALID_TIME = 180000; // 30MINS

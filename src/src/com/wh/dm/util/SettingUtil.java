@@ -31,7 +31,7 @@ public class SettingUtil {
 
     public static boolean isDownloadImg(SharedPreferences pref, Context context) {
 
-        String key = pref.getString("flow", "key0");
+        String key = pref.getString("flow", "key1");
         if (key.equals("key0")) {
             return ConnetivityUtil.isWifi(context);
         } else if (key.equals("key1")) {

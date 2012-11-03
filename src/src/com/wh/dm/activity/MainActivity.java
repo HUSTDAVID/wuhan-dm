@@ -2,6 +2,7 @@
 package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
@@ -117,6 +118,10 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
+
         init();
         menu_init();
         initData();
