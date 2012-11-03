@@ -97,11 +97,6 @@ public class DatabaseImpl implements Database {
 
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         db.delete(TABLE_HEAD, null, null);
-        db.delete(TABLE_HOUSE, null, null);
-        db.delete(TABLE_CAR, null, null);
-        db.delete(TABLE_FASHION, null, null);
-        db.delete(TABLE_LIFE, null, null);
-        db.delete(TABLE_TRAVEL, null, null);
         db.close();
     }
 

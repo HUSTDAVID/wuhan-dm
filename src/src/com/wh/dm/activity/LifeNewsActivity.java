@@ -161,9 +161,11 @@ public class LifeNewsActivity extends Activity {
 
             } else {
                 if (!FLAG_PAGE_UP) {
-                    lv.setAdapter(adapter);
                     savedNews = databaseImpl.getLifeNews();
                     if (savedNews != null && savedNews.size() > 0) {
+                        if (isFirstLanucher) {
+                            lv.setAdapter(adapter);
+                        }
                         adapter.setList(savedNews);
                         lv.setOnItemClickListener(new OnItemClickListener() {
 

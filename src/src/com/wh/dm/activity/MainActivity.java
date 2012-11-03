@@ -4,7 +4,7 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.wh.dm.R;
-import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.type.Cover;
 import com.wh.dm.widget.Configure;
 import com.wh.dm.widget.DragGrid;
@@ -13,6 +13,7 @@ import com.wh.dm.widget.ScrollLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -117,7 +118,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UmengUpdateAgent.setUpdateOnlyWifi(false);
-        UmengUpdateAgent.setUpdateAutoPopup(true);
         UmengUpdateAgent.update(this);
         init();
         menu_init();
@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
         });
 
         runAnimation();
-        DatabaseImpl databaseImpl = new DatabaseImpl(this);
+        // DatabaseImpl databaseImpl = new DatabaseImpl(this);
 
     }
 
@@ -270,6 +270,18 @@ public class MainActivity extends Activity {
     }
 
     public void init() {
+
+        // set wakeLock
+        WH_DMApp whApp = (WH_DMApp) getApplication();
+        whApp.mContext = this;
+        SharedPreferences sharePreference = getSharedPreferences("com.wh.dm_preferences", 1);
+        // when the checkboxpreference is seleted ,it return false
+        boolean isWake = sharePreference.getBoolean("wake_lock", true);
+        if (isWake) {
+            whApp.releaseWakeLock();
+        } else {
+            whApp.acquireWakeLock();
+        }
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         scrollLayout = (ScrollLayout) findViewById(R.id.views);

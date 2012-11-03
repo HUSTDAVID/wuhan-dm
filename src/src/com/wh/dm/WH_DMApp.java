@@ -3,12 +3,19 @@ package com.wh.dm;
 
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Result;
+import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.PowerManager.WakeLock;
+import android.preference.PreferenceManager;
 
 public class WH_DMApp extends Application {
+
+    public static Context mContext;
+    WakeLock wakeLock = null;
 
     private WH_DMApi wh_dm;
     private DatabaseImpl databaseImpl;
@@ -18,6 +25,8 @@ public class WH_DMApp extends Application {
     private final boolean isSinaLogin = false;
     private final boolean isTencLogin = false;
 
+    public static boolean isLoadImg;
+
     private static final String INTENT_ACTION_LOGGED_IN = "com.wh.dm.intent.action.LOGGED_IN";
     private static final String INTENT_ACTION_LOGGED_OUT = "com.wh.dm.intent.action.LOGGED_OUT";
 
@@ -26,6 +35,8 @@ public class WH_DMApp extends Application {
 
         super.onCreate();
         loadWH_DM();
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
     }
 
     public WH_DMApi getWH_DMApi() {
@@ -82,6 +93,17 @@ public class WH_DMApp extends Application {
             super.onPostExecute(result);
         }
 
+    }
+
+    // two method for wake lock
+    public void acquireWakeLock() {
+
+        wakeLock = SettingUtil.setAcquireWakeLock(mContext, wakeLock);
+    }
+
+    public void releaseWakeLock() {
+
+        wakeLock = SettingUtil.setReleaseWakeLock(wakeLock);
     }
 
 }

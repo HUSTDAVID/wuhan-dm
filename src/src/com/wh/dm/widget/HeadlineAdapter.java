@@ -2,6 +2,7 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -21,16 +22,9 @@ public class HeadlineAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
     private ArrayList<PicWithTxtNews> headNews = null;
 
-    /*
-     * public HeadlineAdapter(Context context, ArrayList<PicWithTxtNews>
-     * _headNews) { headNews = _headNews; mInflater =
-     * LayoutInflater.from(context); }
-     */
-
     public HeadlineAdapter(Context context) {
 
         mInflater = LayoutInflater.from(context);
-        // headNews = new ArrayList<PicWithTxtNews>();
     }
 
     @Override
@@ -63,10 +57,7 @@ public class HeadlineAdapter extends BaseAdapter {
 
     public void addList(ArrayList<PicWithTxtNews> _headNews) {
 
-        // headNews.addAll(_headNews);
-        for (int i = 0; i < _headNews.size(); i++) {
-            headNews.add(_headNews.get(i));
-        }
+        headNews.addAll(_headNews);
         notifyDataSetChanged();
     }
 
@@ -97,9 +88,11 @@ public class HeadlineAdapter extends BaseAdapter {
 
         // UrlImageViewHelper.setUrlDrawable(holder.img,
         // WH_DMHttpApiV1.URL_DOMAIN+headNews.get(position).getLitpic());
-        UrlImageViewHelper.setUrlDrawable(holder.img,
-                WH_DMHttpApiV1.URL_DOMAIN + headNews.get(position).getLitpic(), R.drawable.test1_1,
-                null);
+        if (WH_DMApp.isLoadImg) {
+            UrlImageViewHelper.setUrlDrawable(holder.img,
+                    WH_DMHttpApiV1.URL_DOMAIN + headNews.get(position).getLitpic(),
+                    R.drawable.item_default, null);
+        }
         return view;
     }
 

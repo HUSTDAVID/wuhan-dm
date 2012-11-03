@@ -33,7 +33,7 @@
             android:id="@+id/txt_listtop_4"
             style="@style/list_top_txt"
             android:layout_height="match_parent"
-            android:text="@string/fashion" />
+            android:text="@string/digital" />
 
         <TextView
             android:id="@+id/txt_listtop_5"

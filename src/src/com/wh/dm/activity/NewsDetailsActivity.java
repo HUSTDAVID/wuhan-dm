@@ -281,6 +281,11 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
+            if (wh_dmApp.isLoadImg) {
+                webSettings.setBlockNetworkImage(true);
+            } else {
+                webSettings.setBlockNetworkImage(false);
+            }
             progressDialog.show();
             super.onPreExecute();
         }
