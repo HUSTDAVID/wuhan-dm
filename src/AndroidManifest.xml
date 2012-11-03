@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wh.dm"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -267,6 +267,17 @@
                   android:screenOrientation="unspecified"
                   android:configChanges="orientation|keyboardHidden">
 		</activity>
+		<service
+    		android:name="com.umeng.common.net.DownloadingService"
+   		 	android:exported="true"
+    		android:process=":DownloadingService" >
+		</service>
+		<receiver
+		    android:name=".receiver.ConnectityReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+		</receiver>
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="508b875b52701571dd000026" >
@@ -289,6 +300,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 </manifest>

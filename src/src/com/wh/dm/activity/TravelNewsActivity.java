@@ -7,6 +7,7 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
@@ -21,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -36,8 +36,12 @@ public class TravelNewsActivity extends Activity {
     private static int MSG_GET_TRAVELNEWS = 0;
     private GetTravelNewsTask getTravelNewsTask = null;
     private ProgressDialog progressDialog = null;
+    private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
+    private int curPage = 1;
+    private boolean FLAG_PAGE_UP = false;
+    private boolean isFirstLanucher = true;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -63,10 +67,21 @@ public class TravelNewsActivity extends Activity {
         adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFoolter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FLAG_PAGE_UP = true;
+                curPage++;
+                handler.sendEmptyMessage(MSG_GET_TRAVELNEWS);
+            }
+        });
+        lv.addFooterView(footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
-        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
         handler.sendEmptyMessage(MSG_GET_TRAVELNEWS);
 
     }
@@ -101,8 +116,7 @@ public class TravelNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                // houseNews = (new WH_DMApi()).getTravelNews();
-                houseNews = wh_dmApi.getTravelNews();
+                houseNews = wh_dmApi.getTravelNews(curPage);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -114,13 +128,20 @@ public class TravelNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
-            lv.addFooterView(footer);
-            lv.setAdapter(adapter);
-            if (result != null) {
-                adapter.setList(result);
-                databaseImpl.deleteTravelNews();
-                // (new
-                // DatabaseImpl(TravelNewsActivity.this)).addTravelNews(result);
+            if (result != null && result.size() > 0) {
+                if (isFirstLanucher) {
+                    lv.setAdapter(adapter);
+                    databaseImpl.deleteTravelNews();
+                    isFirstLanucher = false;
+                }
+                if (FLAG_PAGE_UP) {
+                    adapter.addList(result);
+                    FLAG_PAGE_UP = false;
+
+                } else {
+                    adapter.setList(result);
+                }
+
                 databaseImpl.addTravelNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -130,44 +151,42 @@ public class TravelNewsActivity extends Activity {
 
                         Intent intent = new Intent(TravelNewsActivity.this,
                                 NewsDetailsActivity.class);
-                        intent.putExtra("id", result.get(position).getId());
+                        intent.putExtra("id", adapter.getList().get(position).getId());
                         startActivity(intent);
 
                     }
 
                 });
-                if (result.size() < 20) {
-                    lv.removeFooterView(footer);
-                } else {
-                    footer.setVisibility(View.VISIBLE);
-                }
 
             } else {
-                savedNews = databaseImpl.getTravelNews();
-                // savedNews = (new
-                // DatabaseImpl(TravelNewsActivity.this)).getTravelNews();
-                if (savedNews != null && savedNews.size() > 0) {
-                    adapter.setList(savedNews);
-                    lv.setOnItemClickListener(new OnItemClickListener() {
+                if (!FLAG_PAGE_UP) {
+                    lv.setAdapter(adapter);
+                    savedNews = databaseImpl.getTravelNews();
+                    if (savedNews != null && savedNews.size() > 0) {
+                        adapter.setList(savedNews);
+                        lv.setOnItemClickListener(new OnItemClickListener() {
 
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long arg3) {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long arg3) {
 
-                            Intent intent = new Intent(TravelNewsActivity.this,
-                                    NewsDetailsActivity.class);
-                            intent.putExtra("id", savedNews.get(position).getId());
-                            startActivity(intent);
-                        }
+                                Intent intent = new Intent(TravelNewsActivity.this,
+                                        NewsDetailsActivity.class);
+                                intent.putExtra("id", savedNews.get(position).getId());
+                                startActivity(intent);
+                            }
 
-                    });
-                }
-                Toast.makeText(TravelNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT)
-                        .show();
-                if (savedNews.size() < 20) {
-                    lv.removeFooterView(footer);
+                        });
+                    }
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil.showShortToast(reason.toString(), TravelNewsActivity.this);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                                TravelNewsActivity.this);
+                    }
                 } else {
-                    footer.setVisibility(View.VISIBLE);
+                    NotificationUtil.showShortToast(getString(R.string.no_more_message),
+                            TravelNewsActivity.this);
                 }
             }
             progressDialog.dismiss();

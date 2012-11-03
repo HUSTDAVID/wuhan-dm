@@ -97,7 +97,7 @@ public class HttpApiBasic implements HttpApi {
                 throw new WH_DMException("资源不存在");
             default:
                 response.getEntity().consumeContent();
-                throw new UnKnownException("内部错误");
+                throw new UnKnownException("" + statusCode);
         }
 
     }
@@ -125,7 +125,7 @@ public class HttpApiBasic implements HttpApi {
                 throw new WH_DMException("资源不存在");
             default:
                 response.getEntity().consumeContent();
-                throw new UnKnownException("内部错误");
+                throw new UnKnownException("" + statusCode);
         }
     }
 

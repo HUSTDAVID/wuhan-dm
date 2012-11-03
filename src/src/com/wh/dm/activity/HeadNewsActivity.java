@@ -8,6 +8,7 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.HorizontalPager;
@@ -31,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -64,12 +64,15 @@ public class HeadNewsActivity extends Activity {
     private GetPicsNewsTask getPicsNewsTask = null;
     private GetHeadNewsTask getHeadNewsTask = null;
     private ArrayList<PicsNews> picsNews = null;
+    private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
 
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
-
+    private int curPage = 1;
+    private boolean FLAG_PAGE_UP = false;
+    private boolean isFirstLanucher = true;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -132,6 +135,16 @@ public class HeadNewsActivity extends Activity {
         listView = (ListView) findViewById(R.id.list);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFoolter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FLAG_PAGE_UP = true;
+                curPage++;
+                handler.sendEmptyMessage(MSG_GET_HEADNEWS);
+            }
+        });
+        listView.addFooterView(footer);
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
@@ -155,8 +168,9 @@ public class HeadNewsActivity extends Activity {
                 }
             }
         });
-        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
-        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
         handler.sendEmptyMessage(MSG_GET_PICSNEWS);
         handler.sendEmptyMessage(MSG_GET_HEADNEWS);
     }
@@ -186,13 +200,13 @@ public class HeadNewsActivity extends Activity {
                 picsNews = result;
                 UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + result.get(0).getLitpic());
                 UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + result.get(1).getLitpic());
+                UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + result.get(2).getLitpic());
+                UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + result.get(3).getLitpic());
                 if (thread.isAlive()) {
                     thread.destroy();
                 }
                 thread.start();
 
-            } else {
-                Toast.makeText(HeadNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(result);
         }
@@ -212,13 +226,10 @@ public class HeadNewsActivity extends Activity {
         @Override
         protected ArrayList<PicWithTxtNews> doInBackground(Void... params) {
 
-            ArrayList<PicWithTxtNews> headNews = null;
+            ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                // headNews = (new WH_DMApi()).getHeadNews();
-                headNews = wh_dmApi.getHeadNews();
-                // (new
-                // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(headNews);
-                return headNews;
+                houseNews = wh_dmApi.getFashionNews(curPage);
+                return houseNews;
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -229,14 +240,21 @@ public class HeadNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
-            listView.addFooterView(footer);
-            listView.setAdapter(adapter);
-            if (result != null) {
-                adapter.setList(result);
-                databaseImpl.deleteHeadNews();
-                databaseImpl.addHeadNews(result);
-                // (new
-                // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
+            if (result != null && result.size() > 0) {
+                if (isFirstLanucher) {
+                    listView.setAdapter(adapter);
+                    databaseImpl.deleteFashionNews();
+                    isFirstLanucher = false;
+                }
+                if (FLAG_PAGE_UP) {
+                    adapter.addList(result);
+                    FLAG_PAGE_UP = false;
+
+                } else {
+                    adapter.setList(result);
+                }
+
+                databaseImpl.addFashionNews(result);
                 listView.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -244,46 +262,47 @@ public class HeadNewsActivity extends Activity {
                             long arg3) {
 
                         Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                        intent.putExtra("id", result.get(position).getId());
+                        intent.putExtra("id", adapter.getList().get(position).getId());
                         startActivity(intent);
 
                     }
 
                 });
-                if (result.size() < 20) {
-                    listView.removeFooterView(footer);
-                } else {
-                    footer.setVisibility(View.VISIBLE);
-                }
+
             } else {
-                savedNews = databaseImpl.getHeadNews();
-                // savedNews = (new
-                // DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
-                if (savedNews != null && savedNews.size() > 0) {
-                    adapter.setList(savedNews);
-                    listView.setOnItemClickListener(new OnItemClickListener() {
+                if (!FLAG_PAGE_UP) {
+                    listView.setAdapter(adapter);
+                    savedNews = databaseImpl.getFashionNews();
+                    if (savedNews != null && savedNews.size() > 0) {
+                        adapter.setList(savedNews);
+                        listView.setOnItemClickListener(new OnItemClickListener() {
 
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long arg3) {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long arg3) {
 
-                            Intent intent = new Intent(HeadNewsActivity.this,
-                                    NewsDetailsActivity.class);
-                            intent.putExtra("id", savedNews.get(position).getId());
-                            startActivity(intent);
-                        }
+                                Intent intent = new Intent(HeadNewsActivity.this,
+                                        NewsDetailsActivity.class);
+                                intent.putExtra("id", savedNews.get(position).getId());
+                                startActivity(intent);
+                            }
 
-                    });
-                }
-                if (savedNews.size() < 20) {
-                    listView.removeFooterView(footer);
+                        });
+                    }
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil.showShortToast(reason.toString(), HeadNewsActivity.this);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                                HeadNewsActivity.this);
+                    }
                 } else {
-                    footer.setVisibility(View.VISIBLE);
+                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                            HeadNewsActivity.this);
                 }
-                Toast.makeText(HeadNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT).show();
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
+
         }
 
     }

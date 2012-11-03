@@ -7,6 +7,7 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
@@ -22,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,8 +37,12 @@ public class FashionNewsActivity extends Activity {
     private static int MSG_GET_FASHIONNEWS = 0;
     private GetFashionNewsTask getFashionNewsTask = null;
     private ProgressDialog progressDialog = null;
+    private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
+    private int curPage = 1;
+    private boolean FLAG_PAGE_UP = false;
+    private boolean isFirstLanucher = true;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -65,10 +69,21 @@ public class FashionNewsActivity extends Activity {
         adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFoolter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FLAG_PAGE_UP = true;
+                curPage++;
+                handler.sendEmptyMessage(MSG_GET_FASHIONNEWS);
+            }
+        });
+        lv.addFooterView(footer);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        wh_dmApi = ((WH_DMApp) getApplication()).getWH_DMApi();
-        databaseImpl = ((WH_DMApp) getApplication()).getDatabase();
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
         handler.sendEmptyMessage(MSG_GET_FASHIONNEWS);
 
     }
@@ -103,8 +118,7 @@ public class FashionNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                // houseNews = (new WH_DMApi()).getFashionNews();
-                houseNews = wh_dmApi.getFashionNews();
+                houseNews = wh_dmApi.getFashionNews(curPage);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -116,14 +130,21 @@ public class FashionNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
-            lv.addFooterView(footer);
-            lv.setAdapter(adapter);
-            if (result != null) {
-                adapter.setList(result);
-                databaseImpl.deleteFashionNews();
+            if (result != null && result.size() > 0) {
+                if (isFirstLanucher) {
+                    lv.setAdapter(adapter);
+                    databaseImpl.deleteFashionNews();
+                    isFirstLanucher = false;
+                }
+                if (FLAG_PAGE_UP) {
+                    adapter.addList(result);
+                    FLAG_PAGE_UP = false;
+
+                } else {
+                    adapter.setList(result);
+                }
+
                 databaseImpl.addFashionNews(result);
-                // (new
-                // DatabaseImpl(FashionNewsActivity.this)).addFashionNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -132,45 +153,44 @@ public class FashionNewsActivity extends Activity {
 
                         Intent intent = new Intent(FashionNewsActivity.this,
                                 NewsDetailsActivity.class);
-                        intent.putExtra("id", result.get(position).getId());
+                        intent.putExtra("id", adapter.getList().get(position).getId());
                         startActivity(intent);
 
                     }
 
                 });
-                if (result.size() < 20) {
-                    lv.removeFooterView(footer);
-                } else {
-                    footer.setVisibility(View.VISIBLE);
-                }
 
             } else {
-                savedNews = databaseImpl.getHouseNews();
-                // savedNews = (new
-                // DatabaseImpl(FashionNewsActivity.this)).getHouseNews();
-                if (savedNews != null && savedNews.size() > 0) {
-                    adapter.setList(savedNews);
-                    lv.setOnItemClickListener(new OnItemClickListener() {
+                if (!FLAG_PAGE_UP) {
+                    lv.setAdapter(adapter);
+                    savedNews = databaseImpl.getFashionNews();
+                    if (savedNews != null && savedNews.size() > 0) {
+                        adapter.setList(savedNews);
+                        lv.setOnItemClickListener(new OnItemClickListener() {
 
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long arg3) {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long arg3) {
 
-                            Intent intent = new Intent(FashionNewsActivity.this,
-                                    NewsDetailsActivity.class);
-                            intent.putExtra("id", savedNews.get(position).getId());
-                            startActivity(intent);
-                        }
+                                Intent intent = new Intent(FashionNewsActivity.this,
+                                        NewsDetailsActivity.class);
+                                intent.putExtra("id", savedNews.get(position).getId());
+                                startActivity(intent);
+                            }
 
-                    });
-                }
-                if (savedNews.size() < 20) {
-                    lv.removeFooterView(footer);
+                        });
+                    }
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil
+                                .showShortToast(reason.toString(), FashionNewsActivity.this);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                                FashionNewsActivity.this);
+                    }
                 } else {
-                    footer.setVisibility(View.VISIBLE);
+                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                            FashionNewsActivity.this);
                 }
-                Toast.makeText(FashionNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT)
-                        .show();
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
