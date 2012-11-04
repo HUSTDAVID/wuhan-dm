@@ -27,6 +27,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -103,6 +104,18 @@ public class NewsMoreReplyActivity extends Activity {
         initViews();
         wh_dmApi = ((WH_DMApp) getApplication()).getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_COMMENT);
+
+        ImageButton btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+
+        });
     }
 
     @Override

@@ -91,7 +91,7 @@
     <string name="email">电子邮箱</string>
     <string name="password">密码</string>
     <string name="show_passwd">显示密码</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="goto_forget_passwd">忘记密码？</string>
 
     <!-- test data -->

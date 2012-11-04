@@ -6,7 +6,10 @@ import com.wh.dm.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class ForgetPasswdActivity extends Activity {
@@ -19,6 +22,18 @@ public class ForgetPasswdActivity extends Activity {
         setContentView(R.layout.activity_forget_password);
 
         initViews();
+
+        ImageButton btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+
+        });
     }
 
     public void onResume() {
