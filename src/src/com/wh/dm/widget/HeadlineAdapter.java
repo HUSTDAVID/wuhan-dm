@@ -19,31 +19,31 @@ import java.util.ArrayList;
 
 public class HeadlineAdapter extends BaseAdapter {
 
-    private LayoutInflater mInflater;
+    private final LayoutInflater mInflater;
     private ArrayList<PicWithTxtNews> headNews = null;
-
-    public HeadlineAdapter(Context context, ArrayList<PicWithTxtNews> _headNews) {
-
-        headNews = _headNews;
-        mInflater = LayoutInflater.from(context);
-    }
 
     public HeadlineAdapter(Context context) {
 
         mInflater = LayoutInflater.from(context);
-        headNews = new ArrayList<PicWithTxtNews>();
     }
 
+    @Override
     public int getCount() {
 
-        return headNews.size();
+        if (headNews == null) {
+            return 0;
+        } else {
+            return headNews.size();
+        }
     }
 
+    @Override
     public Object getItem(int position) {
 
         return headNews.get(position);
     }
 
+    @Override
     public long getItemId(int position) {
 
         return position;
@@ -55,6 +55,18 @@ public class HeadlineAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void addList(ArrayList<PicWithTxtNews> _headNews) {
+
+        headNews.addAll(_headNews);
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<PicWithTxtNews> getList() {
+
+        return headNews;
+    }
+
+    @Override
     public View getView(int position, View view, ViewGroup parent) {
 
         ViewHolder holder = null;
@@ -79,7 +91,7 @@ public class HeadlineAdapter extends BaseAdapter {
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.img,
                     WH_DMHttpApiV1.URL_DOMAIN + headNews.get(position).getLitpic(),
-                    R.drawable.test1_1, null);
+                    R.drawable.item_default, null);
         }
         return view;
     }

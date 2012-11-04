@@ -35,31 +35,31 @@ public class DatabaseImpl implements Database {
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_HEAD
-                + " (no INTEGER UNIQUE, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
+                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
                 + " description VARCHAR, sortrank INTEGER, isfirst INTEGER, ishot INTEGER, date VARCHAR, isUrl VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_HOUSE
-                + " (no INTEGER UNIQUE, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
+                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
                 + " description VARCHAR, sortrank INTEGER, isfirst INTEGER, ishot INTEGER, date VARCHAR, isUrl VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_CAR
-                + " (no INTEGER UNIQUE, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
+                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
                 + " description VARCHAR, sortrank INTEGER, isfirst INTEGER, ishot INTEGER, date VARCHAR, isUrl VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_FASHION
-                + " (no INTEGER UNIQUE, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
+                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
                 + " description VARCHAR, sortrank INTEGER, isfirst INTEGER, ishot INTEGER, date VARCHAR, isUrl VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_LIFE
-                + " (no INTEGER UNIQUE, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
+                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
                 + " description VARCHAR, sortrank INTEGER, isfirst INTEGER, ishot INTEGER, date VARCHAR, isUrl VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_TRAVEL
-                + " (no INTEGER UNIQUE, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
+                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, typeid INTEGER, title VARCHAR, litpic VARCHAR,"
                 + " description VARCHAR, sortrank INTEGER, isfirst INTEGER, ishot INTEGER, date VARCHAR, isUrl VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_NEWSDETAIL
-                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT,no INTEGER, id INTEGER, typeid INTEGER, sortrank INTEGER, title VARCHAR, source VARCHAR,"
+                + " (uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, typeid INTEGER, sortrank INTEGER, title VARCHAR, source VARCHAR,"
                 + " litpic VARCHAR, pubdate VARCHAR, isfirst INTEGER, ishot INTEGER, isUrl VARCHAR, body VARCHAR)");
         db.close();
     }
@@ -97,11 +97,6 @@ public class DatabaseImpl implements Database {
 
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         db.delete(TABLE_HEAD, null, null);
-        db.delete(TABLE_HOUSE, null, null);
-        db.delete(TABLE_CAR, null, null);
-        db.delete(TABLE_FASHION, null, null);
-        db.delete(TABLE_LIFE, null, null);
-        db.delete(TABLE_TRAVEL, null, null);
         db.close();
     }
 

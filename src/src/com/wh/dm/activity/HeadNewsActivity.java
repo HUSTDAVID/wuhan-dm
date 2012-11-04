@@ -8,6 +8,7 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.HorizontalPager;
@@ -23,6 +24,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,11 +33,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class HeadNewsActivity extends Activity {
+public class HeadNewsActivity extends Activity implements OnClickListener {
 
     private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
     private String[] titles;
@@ -64,12 +65,17 @@ public class HeadNewsActivity extends Activity {
     private GetPicsNewsTask getPicsNewsTask = null;
     private GetHeadNewsTask getHeadNewsTask = null;
     private ArrayList<PicsNews> picsNews = null;
+    private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
 
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
-
+    private int curPage = 1;
+    private boolean FLAG_PAGE_UP = false;
+    private boolean isFirstLanucher = true;
+    private boolean isFirstLoad = true;
+    private boolean isAdapter = false;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -122,9 +128,13 @@ public class HeadNewsActivity extends Activity {
     private void init() {
 
         pic0 = (ImageView) findViewById(R.id.pic0);
+        pic0.setOnClickListener(this);
         pic1 = (ImageView) findViewById(R.id.pic1);
+        pic1.setOnClickListener(this);
         pic2 = (ImageView) findViewById(R.id.pic2);
+        pic2.setOnClickListener(this);
         pic3 = (ImageView) findViewById(R.id.pic3);
+        pic3.setOnClickListener(this);
         txtNews = (TextView) findViewById(R.id.txt_horizontal_title);
 
         mInfalater = getLayoutInflater();
@@ -132,6 +142,16 @@ public class HeadNewsActivity extends Activity {
         listView = (ListView) findViewById(R.id.list);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFoolter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FLAG_PAGE_UP = true;
+                curPage++;
+                handler.sendEmptyMessage(MSG_GET_HEADNEWS);
+            }
+        });
+        listView.addFooterView(footer);
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
@@ -155,10 +175,50 @@ public class HeadNewsActivity extends Activity {
                 }
             }
         });
-        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
-        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
         handler.sendEmptyMessage(MSG_GET_PICSNEWS);
         handler.sendEmptyMessage(MSG_GET_HEADNEWS);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.pic0:
+                if (picsNews != null) {
+                    Intent intent0 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent0.putExtra("id", picsNews.get(0).getId());
+                    startActivity(intent0);
+                }
+                break;
+            case R.id.pic1:
+                if (picsNews != null) {
+                    Intent intent1 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent1.putExtra("id", picsNews.get(1).getId());
+                    startActivity(intent1);
+                }
+                break;
+            case R.id.pic2:
+                if (picsNews != null) {
+                    Intent intent2 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent2.putExtra("id", picsNews.get(2).getId());
+                    startActivity(intent2);
+                }
+                break;
+            case R.id.pic3:
+                if (picsNews != null) {
+                    Intent intent3 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent3.putExtra("id", picsNews.get(3).getId());
+                    startActivity(intent3);
+                }
+                break;
+            default:
+                break;
+
+        }
+
     }
 
     private class GetPicsNewsTask extends AsyncTask<Void, Void, ArrayList<PicsNews>> {
@@ -184,15 +244,17 @@ public class HeadNewsActivity extends Activity {
 
             if (result != null) {
                 picsNews = result;
-                UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + result.get(0).getLitpic());
-                UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + result.get(1).getLitpic());
+                if (wh_dmApp.isLoadImg) {
+                    UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + result.get(0).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + result.get(1).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + result.get(2).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + result.get(3).getLitpic());
+                }
                 if (thread.isAlive()) {
                     thread.destroy();
                 }
                 thread.start();
 
-            } else {
-                Toast.makeText(HeadNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(result);
         }
@@ -205,61 +267,10 @@ public class HeadNewsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
-            super.onPreExecute();
-        }
-
-        @Override
-        protected ArrayList<PicWithTxtNews> doInBackground(Void... params) {
-
-            ArrayList<PicWithTxtNews> headNews = null;
-            try {
-                // headNews = (new WH_DMApi()).getHeadNews();
-                headNews = wh_dmApi.getHeadNews();
-                // (new
-                // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(headNews);
-                return headNews;
-            } catch (Exception e) {
-                reason = e;
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
-
-            listView.addFooterView(footer);
-            listView.setAdapter(adapter);
-            if (result != null) {
-                adapter.setList(result);
-                databaseImpl.deleteHeadNews();
-                databaseImpl.addHeadNews(result);
-                // (new
-                // DatabaseImpl(HeadNewsActivity.this)).addHeadNews(result);
-                listView.setOnItemClickListener(new OnItemClickListener() {
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long arg3) {
-
-                        Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                        intent.putExtra("id", result.get(position).getId());
-                        startActivity(intent);
-
-                    }
-
-                });
-                if (result.size() < 20) {
-                    listView.removeFooterView(footer);
-                } else {
-                    footer.setVisibility(View.VISIBLE);
-                }
-            } else {
-                savedNews = databaseImpl.getHeadNews();
-                // savedNews = (new
-                // DatabaseImpl(HeadNewsActivity.this)).getHeadNews();
+            if (isFirstLanucher) {
+                savedNews = databaseImpl.getFashionNews();
                 if (savedNews != null && savedNews.size() > 0) {
+                    listView.setAdapter(adapter);
                     adapter.setList(savedNews);
                     listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -274,16 +285,83 @@ public class HeadNewsActivity extends Activity {
                         }
 
                     });
-                }
-                if (savedNews.size() < 20) {
-                    listView.removeFooterView(footer);
                 } else {
-                    footer.setVisibility(View.VISIBLE);
+                    isAdapter = true;
                 }
-                Toast.makeText(HeadNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT).show();
+                isFirstLanucher = false;
+            }
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<PicWithTxtNews> doInBackground(Void... params) {
+
+            ArrayList<PicWithTxtNews> houseNews = null;
+            try {
+                houseNews = wh_dmApi.getFashionNews(curPage);
+                return houseNews;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
+
+            if (result != null && result.size() > 0) {
+                if (isFirstLoad) {
+                    databaseImpl.deleteFashionNews();
+                    isFirstLoad = false;
+                }
+                if (FLAG_PAGE_UP) {
+                    adapter.addList(result);
+                    FLAG_PAGE_UP = false;
+
+                } else {
+                    if (isAdapter) {
+                        listView.setAdapter(adapter);
+                        isAdapter = false;
+                    }
+                    adapter.setList(result);
+                }
+
+                databaseImpl.addFashionNews(result);
+                listView.setOnItemClickListener(new OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long arg3) {
+
+                        Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                        intent.putExtra("id", adapter.getList().get(position).getId());
+                        startActivity(intent);
+
+                    }
+
+                });
+
+            } else {
+                if (!FLAG_PAGE_UP) {
+                    if (wh_dmApp.isConnected()) {
+                        // NotificationUtil.showShortToast(reason.toString(),
+                        // HeadNewsActivity.this);
+                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                                HeadNewsActivity.this);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                                HeadNewsActivity.this);
+                    }
+                } else {
+                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                            HeadNewsActivity.this);
+                }
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
+
         }
 
     }

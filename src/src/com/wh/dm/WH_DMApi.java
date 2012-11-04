@@ -32,40 +32,40 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getPicsNews();
     }
 
-    public ArrayList<PicWithTxtNews> getHeadNews() throws WH_DMException, UnKnownException,
+    public ArrayList<PicWithTxtNews> getHeadNews(int page) throws WH_DMException, UnKnownException,
             IOException {
 
-        return mWH_DMHttpApiV1.getHeadNews();
+        return mWH_DMHttpApiV1.getHeadNews(page);
     }
 
-    public ArrayList<PicWithTxtNews> getHouseNews() throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<PicWithTxtNews> getHouseNews(int page) throws WH_DMException,
+            UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getHouseNews();
+        return mWH_DMHttpApiV1.getHouseNews(page);
     }
 
-    public ArrayList<PicWithTxtNews> getCarNews() throws WH_DMException, UnKnownException,
+    public ArrayList<PicWithTxtNews> getCarNews(int page) throws WH_DMException, UnKnownException,
             IOException {
 
-        return mWH_DMHttpApiV1.getCarNews();
+        return mWH_DMHttpApiV1.getCarNews(page);
     }
 
-    public ArrayList<PicWithTxtNews> getFashionNews() throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<PicWithTxtNews> getFashionNews(int page) throws WH_DMException,
+            UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getFashionNews();
+        return mWH_DMHttpApiV1.getFashionNews(page);
     }
 
-    public ArrayList<PicWithTxtNews> getLifeNews() throws WH_DMException, UnKnownException,
+    public ArrayList<PicWithTxtNews> getLifeNews(int page) throws WH_DMException, UnKnownException,
             IOException {
 
-        return mWH_DMHttpApiV1.getLifeNews();
+        return mWH_DMHttpApiV1.getLifeNews(page);
     }
 
-    public ArrayList<PicWithTxtNews> getTravelNews() throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<PicWithTxtNews> getTravelNews(int page) throws WH_DMException,
+            UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getTravelNews();
+        return mWH_DMHttpApiV1.getTravelNews(page);
     }
 
     public NewsContent[] getNewsContent(int id) throws WH_DMException, UnKnownException,

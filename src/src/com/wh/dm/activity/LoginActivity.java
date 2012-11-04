@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,6 +79,18 @@ public class LoginActivity extends Activity {
 
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+            }
+
+        });
+
+        ImageButton btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
             }
 
         });

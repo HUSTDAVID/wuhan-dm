@@ -91,7 +91,7 @@
     <string name="email">电子邮箱</string>
     <string name="password">密码</string>
     <string name="show_passwd">显示密码</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="goto_forget_passwd">忘记密码？</string>
 
     <!-- test data -->
@@ -153,7 +153,8 @@
 	<string name="download">下载</string>
 	<!-- Exception -->
 	<string name="network_exception">网络连接异常</string>
-
+	<string name="check_network">请检查网络连接</string>
+	<string name="no_more_message">没有更多消息了</string>
 	<string name="larger">较大</string>
 	<string name="largest">超大</string>
 	<string name="nomal">正常</string>

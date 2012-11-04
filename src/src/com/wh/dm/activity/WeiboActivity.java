@@ -20,6 +20,7 @@ public class WeiboActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_toweibo);
+        initViews();
 
         initViews();
         UMSnsService.UseLocation = true;
@@ -46,11 +47,23 @@ public class WeiboActivity extends Activity {
                 UMSnsService.oauthSina(WeiboActivity.this, null);
             }
         });
+        ImageButton btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+
+        });
     }
 
     private void initViews() {
 
         TextView txtHeader = (TextView) findViewById(R.id.txt_header_title2);
         txtHeader.setText(getResources().getString(R.string.toweibo));
+
     }
-};
+}

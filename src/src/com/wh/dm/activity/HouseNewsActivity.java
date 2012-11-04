@@ -7,6 +7,7 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -40,8 +41,12 @@ public class HouseNewsActivity extends Activity {
     private View footer;
     private Button btnFoolter;
     private LayoutInflater mInfalater;
+    private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
+    private int curPage = 1;
+    private boolean FLAG_PAGE_UP = false;
+    private boolean isFirstLanucher = true;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -68,6 +73,18 @@ public class HouseNewsActivity extends Activity {
         adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFoolter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FLAG_PAGE_UP = true;
+                curPage++;
+                handler.sendEmptyMessage(MSG_GET_HOUSENEWS);
+            }
+        });
+        lv.addFooterView(footer);
+        lv.setCacheColorHint(Color.TRANSPARENT);
+        lv.requestFocus(0);
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setOnCancelListener(new OnCancelListener() {
@@ -82,8 +99,9 @@ public class HouseNewsActivity extends Activity {
             }
 
         });
-        wh_dmApi = ((WH_DMApp) this.getApplication()).getWH_DMApi();
-        databaseImpl = ((WH_DMApp) this.getApplication()).getDatabase();
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
         handler.sendEmptyMessage(MSG_GET_HOUSENEWS);
     }
 
@@ -117,8 +135,7 @@ public class HouseNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                // houseNews = (new WH_DMApi()).getHouseNews();
-                houseNews = wh_dmApi.getHouseNews();
+                houseNews = wh_dmApi.getHouseNews(curPage);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -130,11 +147,20 @@ public class HouseNewsActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
-            lv.addFooterView(footer);
-            lv.setAdapter(adapter);
-            if (result != null) {
-                adapter.setList(result);
-                databaseImpl.deleteHouseNews();
+            if (result != null && result.size() > 0) {
+                if (isFirstLanucher) {
+                    lv.setAdapter(adapter);
+                    databaseImpl.deleteHouseNews();
+                    isFirstLanucher = false;
+                }
+                if (FLAG_PAGE_UP) {
+                    adapter.addList(result);
+                    FLAG_PAGE_UP = false;
+
+                } else {
+                    adapter.setList(result);
+                }
+
                 databaseImpl.addHouseNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -144,48 +170,45 @@ public class HouseNewsActivity extends Activity {
 
                         Intent intent = new Intent(HouseNewsActivity.this,
                                 NewsDetailsActivity.class);
-                        intent.putExtra("id", result.get(position).getId());
+                        intent.putExtra("id", adapter.getList().get(position).getId());
                         startActivity(intent);
 
                     }
 
                 });
-                if (result.size() < 20) {
-                    lv.removeFooterView(footer);
-                } else {
-                    footer.setVisibility(View.VISIBLE);
-                }
 
             } else {
-                savedNews = databaseImpl.getHouseNews();
-                // savedNews = (new
-                // DatabaseImpl(HouseNewsActivity.this)).getHouseNews();
-                if (savedNews != null && savedNews.size() > 0) {
-                    lv.addFooterView(footer);
-                    lv.setAdapter(adapter);
-                    adapter.setList(savedNews);
-                    lv.setOnItemClickListener(new OnItemClickListener() {
-
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long arg3) {
-
-                            Intent intent = new Intent(HouseNewsActivity.this,
-                                    NewsDetailsActivity.class);
-                            intent.putExtra("id", savedNews.get(position).getId());
-                            startActivity(intent);
+                if (!FLAG_PAGE_UP) {
+                    savedNews = databaseImpl.getHouseNews();
+                    if (savedNews != null && savedNews.size() > 0) {
+                        if (isFirstLanucher) {
+                            lv.setAdapter(adapter);
                         }
+                        adapter.setList(savedNews);
+                        lv.setOnItemClickListener(new OnItemClickListener() {
 
-                    });
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long arg3) {
 
-                }
-                if (savedNews.size() < 20) {
-                    lv.removeFooterView(footer);
+                                Intent intent = new Intent(HouseNewsActivity.this,
+                                        NewsDetailsActivity.class);
+                                intent.putExtra("id", savedNews.get(position).getId());
+                                startActivity(intent);
+                            }
+
+                        });
+                    }
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil.showShortToast(reason.toString(), HouseNewsActivity.this);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                                HouseNewsActivity.this);
+                    }
                 } else {
-                    footer.setVisibility(View.VISIBLE);
+                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                            HouseNewsActivity.this);
                 }
-                Toast.makeText(HouseNewsActivity.this, reason.toString(), Toast.LENGTH_SHORT)
-                        .show();
             }
             progressDialog.dismiss();
             super.onPostExecute(result);

@@ -6,10 +6,13 @@ import com.wh.dm.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class RegisterActivity extends Activity {
@@ -27,6 +30,18 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         initViews();
+
+        ImageButton btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+
+        });
     }
 
     public void onResume() {

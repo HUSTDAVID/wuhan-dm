@@ -4,10 +4,12 @@ package com.wh.dm.activity;
 import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.util.NetworkConnection;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
@@ -33,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -70,6 +71,8 @@ public class NewsDetailsActivity extends Activity {
     private ImageButton btnBack;
     private NewsReplyAdapter adapter;
     private ProgressDialog progressDialog;
+    private WH_DMApp wh_dmApp;
+    private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
@@ -110,7 +113,9 @@ public class NewsDetailsActivity extends Activity {
         Log.d("id", "" + id);
         Log.d("status", "" + curStatus);
         initViews();
-        databaseImpl = new DatabaseImpl(NewsDetailsActivity.this);
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        databaseImpl = wh_dmApp.getDatabase();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_NEWSDETAIL);
         UMSnsService.UseLocation = true;
         UMSnsService.LocationAuto = true;
@@ -276,6 +281,11 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
+            if (wh_dmApp.isLoadImg) {
+                webSettings.setBlockNetworkImage(true);
+            } else {
+                webSettings.setBlockNetworkImage(false);
+            }
             progressDialog.show();
             super.onPreExecute();
         }
@@ -286,7 +296,7 @@ public class NewsDetailsActivity extends Activity {
             NewsContent[] content = null;
 
             try {
-                content = (new WH_DMApi()).getNewsContent(params[0]);
+                content = wh_dmApi.getNewsContent(params[0]);
                 return content[0];
             } catch (Exception e) {
                 e.printStackTrace();
@@ -316,8 +326,12 @@ public class NewsDetailsActivity extends Activity {
                     newsTitle.setText(result.getTitle());
                     newsTime.setText(result.getPubdate());
                 }
-                Toast.makeText(NewsDetailsActivity.this, reason.getMessage(), Toast.LENGTH_LONG)
-                        .show();
+                if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast(reason.toString(), NewsDetailsActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            NewsDetailsActivity.this);
+                }
             }
             progressDialog.dismiss();
             super.onPostExecute(result);

@@ -5,7 +5,6 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
-import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Cover;
 import com.wh.dm.widget.Configure;
 import com.wh.dm.widget.DragGrid;
@@ -118,10 +117,8 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
-
         init();
         menu_init();
         initData();
@@ -138,16 +135,18 @@ public class MainActivity extends Activity {
         });
 
         runAnimation();
-        DatabaseImpl databaseImpl = new DatabaseImpl(this);
+        // DatabaseImpl databaseImpl = new DatabaseImpl(this);
 
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -325,6 +324,7 @@ public class MainActivity extends Activity {
         });
         btn_download = (ImageButton) findViewById(R.id.btn_download);
         btn_download.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
