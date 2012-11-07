@@ -1,7 +1,7 @@
 
 package com.wh.dm.type;
 
-public class Result {
+public class PostResult {
     boolean result;
     String msg;
 

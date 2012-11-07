@@ -2,7 +2,7 @@
 package com.wh.dm;
 
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.type.Result;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
@@ -77,17 +77,17 @@ public class WH_DMApp extends Application {
         isConnected = _isConnected;
     }
 
-    private class LoginTask extends AsyncTask<String, Void, Result> {
+    private class LoginTask extends AsyncTask<String, Void, PostResult> {
 
         @Override
-        protected Result doInBackground(String... params) {
+        protected PostResult doInBackground(String... params) {
 
             // TODO Auto-generated method stub
             return null;
         }
 
         @Override
-        protected void onPostExecute(Result result) {
+        protected void onPostExecute(PostResult result) {
 
             // TODO Auto-generated method stub
             super.onPostExecute(result);

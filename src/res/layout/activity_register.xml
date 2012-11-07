@@ -29,7 +29,7 @@
             android:textColorHint="#a7a7a7"
             android:textColor="#a7a7a7"
             android:textSize="18dip" />
-
+
     <EditText
         android:id="@+id/edt_register_passwd"
         android:layout_width="match_parent"
@@ -40,8 +40,9 @@
         android:hint="@string/password"
         android:paddingBottom="5dip"
         android:paddingTop="5dip"
-        android:textColorHint="#a7a7a7"
+        android:password="true"
         android:textColor="#a7a7a7"
+        android:textColorHint="#a7a7a7"
         android:textSize="18dip" />
     
      <TableRow

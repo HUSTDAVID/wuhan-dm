@@ -93,7 +93,10 @@
     <string name="show_passwd">显示密码</string>
     <string name="login">登陆</string>
     <string name="goto_forget_passwd">忘记密码？</string>
-
+    <string name="mail_toast">邮箱不能为空</string>
+	<string name="password_toast">密码不能为空</string>
+	<string name="register_sucesses">注册成功</string>
+	<string name="register_fails">注册失败</string>
     <!-- test data -->
     <string name="title01">为何美国人拿的奥运奖牌比我们多很多呢啊啊啊</string>
     <string name="body01">收藏时间：2012-12-30  16:12</string>

@@ -14,9 +14,6 @@ import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.HorizontalPager;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,7 +55,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
     private ImageView pic3;
 
     private TextView txtNews;
-    private ProgressDialog progressDialog;
 
     private static final int MSG_GET_PICSNEWS = 0;
     private static final int MSG_GET_HEADNEWS = 1;
@@ -158,23 +154,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         mPager.setOnScreenSwitchListener(onScreenSwitchListener);
         mPager.setCurrentScreen(0, true);
 
-        progressDialog = new ProgressDialog(getParent());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setOnCancelListener(new OnCancelListener() {
-
-            @Override
-            public void onCancel(DialogInterface dialog) {
-
-                if (getHeadNewsTask != null) {
-                    getHeadNewsTask.cancel(true);
-                    getHeadNewsTask = null;
-                }
-                if (getPicsNewsTask != null) {
-                    getPicsNewsTask.cancel(true);
-                    getPicsNewsTask = null;
-                }
-            }
-        });
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
@@ -290,7 +269,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                 }
                 isFirstLanucher = false;
             }
-            progressDialog.show();
             super.onPreExecute();
         }
 
@@ -359,7 +337,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                             HeadNewsActivity.this);
                 }
             }
-            progressDialog.dismiss();
             super.onPostExecute(result);
 
         }

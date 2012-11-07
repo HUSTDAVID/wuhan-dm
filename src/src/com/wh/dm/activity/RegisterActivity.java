@@ -3,9 +3,16 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,10 +21,28 @@ import android.widget.TextView;
 
 public class RegisterActivity extends Activity {
 
-    EditText edtEmail;
-    EditText edtPasswd;
-    CheckBox cbShowPw;
-    Button btnRigester;
+    private static final int MSG_REGISTER = 0;
+    private EditText edtEmail;
+    private EditText edtPasswd;
+    private CheckBox cbShowPw;
+    private Button btnRigester;
+    private WH_DMApi wh_dmApi;
+    private RegisterTask registerTask = null;
+    private final Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (msg.what == MSG_REGISTER) {
+                if (registerTask != null) {
+                    registerTask.cancel(true);
+                    registerTask = null;
+                }
+                registerTask = new RegisterTask();
+                registerTask.execute(getEmail(), getPassword());
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +50,18 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register);
-
+        wh_dmApi = ((WH_DMApp) getApplication()).getWH_DMApi();
         initViews();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -52,6 +79,84 @@ public class RegisterActivity extends Activity {
         edtPasswd = (EditText) findViewById(R.id.edt_register_passwd);
         cbShowPw = (CheckBox) findViewById(R.id.cb_show_passwd);
         btnRigester = (Button) findViewById(R.id.btn_register_send);
+        btnRigester.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (IsValidate()) {
+                    handler.sendEmptyMessage(MSG_REGISTER);
+                }
+
+            }
+
+        });
+
+    }
+
+    private String getEmail() {
+
+        return edtEmail.getText().toString();
+    }
+
+    private String getPassword() {
+
+        return edtPasswd.getText().toString();
+    }
+
+    private boolean IsValidate() {
+
+        String email = edtEmail.getText().toString();
+        String password = edtPasswd.getText().toString();
+        if (email.length() == 0 || email == null) {
+            NotificationUtil.showShortToast(getString(R.string.mail_toast), RegisterActivity.this);
+            return false;
+        }
+        if (password.length() == 0 || password == null) {
+            NotificationUtil.showShortToast(getString(R.string.password_toast),
+                    RegisterActivity.this);
+            return false;
+        }
+        return true;
+
+    }
+
+    private class RegisterTask extends AsyncTask<String, Void, Boolean> {
+        Exception reason = null;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean isRegister = false;
+            try {
+                isRegister = wh_dmApi.register("1520830133@qq.com", "911029");
+                // isRegister = wh_dmApi.register(params[0], params[1]);
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+            if (isRegister) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.register_sucesses),
+                        RegisterActivity.this);
+            } else {
+                NotificationUtil.showShortToast(getString(R.string.register_fails),
+                        RegisterActivity.this);
+            }
+            super.onPostExecute(result);
+        }
+
     }
 
 }

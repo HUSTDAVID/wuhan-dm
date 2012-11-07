@@ -102,4 +102,10 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.addReview(content, id);
     }
 
+    public boolean register(String regemail, String regepass) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.register(regemail, regepass);
+    }
+
 }

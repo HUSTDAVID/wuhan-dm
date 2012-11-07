@@ -33,4 +33,22 @@ public class TimeUtil {
         }
         return date;
     }
+
+    public static long getCurtime(String time) {
+
+        Date curdate = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date date = dateFormat.parse(time);
+            curdate.setHours(date.getHours());
+            curdate.setMinutes(date.getMinutes());
+            curdate.setSeconds(date.getSeconds());
+            return curdate.getTime();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

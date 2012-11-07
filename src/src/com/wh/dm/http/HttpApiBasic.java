@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
@@ -64,47 +65,27 @@ public class HttpApiBasic implements HttpApi {
     @Override
     public HttpPost createHttpPost(String url, NameValuePair... nameValuePairs) {
 
-        HttpPost httpost = new HttpPost(url);
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.addHeader(CLIENT_VERSION_HEADER, mClientVersion);
         try {
-            httpost.setEntity(new UrlEncodedFormEntity(fullParams(nameValuePairs), HTTP.UTF_8));
-        } catch (UnsupportedEncodingException e) {
+            httpPost.setEntity(new UrlEncodedFormEntity(stripNulls(nameValuePairs), HTTP.UTF_8));
+        } catch (UnsupportedEncodingException e1) {
             throw new IllegalArgumentException("Unable to encode http parameters.");
         }
-        return httpost;
-    }
-
-    @Override
-    public String doHttpRequest(HttpRequestBase httpRequest) throws WH_DMException,
-            UnKnownException, IOException {
-
-        HttpResponse response = executeHttpRequest(httpRequest);
-        int statusCode = response.getStatusLine().getStatusCode();
-        switch (statusCode) {
-            case 200:
-                String content = EntityUtils.toString(response.getEntity());
-                return content;
-            case 400:
-                throw new WH_DMException("");
-
-            case 401:
-                response.getEntity().consumeContent();
-                throw new WH_DMException("请求参数不符合API规定");
-            case 404:
-                response.getEntity().consumeContent();
-                throw new WH_DMException("未授权");
-            case 500:
-                response.getEntity().consumeContent();
-                throw new WH_DMException("资源不存在");
-            default:
-                response.getEntity().consumeContent();
-                throw new UnKnownException("" + statusCode);
-        }
-
+        return httpPost;
     }
 
     @Override
     public String doHttpPost(HttpPost httpost) throws WH_DMException, UnKnownException, IOException {
 
+        // HttpResponse response = executeHttpRequest(httpRequest);
+        HttpPost xhttpost = new HttpPost("http://test1.jbr.net.cn:809/api/Mem.aspx");
+        // HttpResponse response = executeHttpRequest();
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+        nameValuePairs.add(new BasicNameValuePair("act", "reg"));
+        nameValuePairs.add(new BasicNameValuePair("Regmail", "1520830133@qq.com"));
+        nameValuePairs.add(new BasicNameValuePair("Regepass", "911029"));
+        httpost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
         HttpResponse response = mHttpClient.execute(httpost);
         int statusCode = response.getStatusLine().getStatusCode();
         switch (statusCode) {
@@ -127,15 +108,46 @@ public class HttpApiBasic implements HttpApi {
                 response.getEntity().consumeContent();
                 throw new UnKnownException("" + statusCode);
         }
+
+    }
+
+    @Override
+    public String doHttpRequest(HttpRequestBase httpRequest) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpResponse response = mHttpClient.execute(httpRequest);
+        int statusCode = response.getStatusLine().getStatusCode();
+        switch (statusCode) {
+            case 200:
+                String content = EntityUtils.toString(response.getEntity());
+                return content;
+            case 400:
+                throw new WH_DMException("请求参数不符合API规定");
+
+            case 401:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("未授权");
+            case 404:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("资源不存在");
+            case 500:
+                response.getEntity().consumeContent();
+                throw new WH_DMException("内部错误");
+            default:
+                response.getEntity().consumeContent();
+                throw new UnKnownException("" + statusCode);
+        }
     }
 
     public HttpResponse executeHttpRequest(HttpRequestBase httpRequest) throws IOException {
 
-        if (DEBUG) {
-            Log.d("executeHttpRequest", "executeHttpRequest executes");
+        try {
+            mHttpClient.getConnectionManager().closeExpiredConnections();
+            return mHttpClient.execute(httpRequest);
+        } catch (IOException e) {
+            httpRequest.abort();
+            throw e;
         }
-        mHttpClient.getConnectionManager().closeExpiredConnections();
-        return mHttpClient.execute(httpRequest);
     }
 
     private List<NameValuePair> fullParams(NameValuePair... nameValuePairs) {
@@ -147,6 +159,18 @@ public class HttpApiBasic implements HttpApi {
                 if (DEBUG) {
                     Log.d("fullParams", "Param:" + param);
                 }
+                params.add(param);
+            }
+        }
+        return params;
+    }
+
+    private List<NameValuePair> stripNulls(NameValuePair... nameValuePairs) {
+
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        for (int i = 0; i < nameValuePairs.length; i++) {
+            NameValuePair param = nameValuePairs[i];
+            if (param.getValue() != null) {
                 params.add(param);
             }
         }

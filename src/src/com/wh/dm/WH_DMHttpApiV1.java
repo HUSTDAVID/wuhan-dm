@@ -10,8 +10,8 @@ import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
-import com.wh.dm.type.Result;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -37,9 +37,10 @@ import java.util.List;
 public class WH_DMHttpApiV1 {
     private Gson gson = null;
     private static final boolean DEBUG = WH_DMApi.DEBUG;
-    public static final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
+    public static final String URL_DOMAIN = "http://test1.jbr.net.cn:809/api";
     private static final String URL_API_DOMAIN = "http://test1.jbr.net.cn:809/api/News.aspx";
     private static final String URL_API_NEWS = "/News.aspx";
+    private static final String URL_API_MEM = "/Mem.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -226,7 +227,7 @@ public class WH_DMHttpApiV1 {
          * String content = mHttpApi.doHttpPost(httPost);
          */
         String content = UseHttpClientPost();
-        Result result = gson.fromJson(content, Result.class);
+        PostResult result = gson.fromJson(content, PostResult.class);
         Log.d("review", content);
         return result.getResult();
 
@@ -272,7 +273,7 @@ public class WH_DMHttpApiV1 {
                 "Reply"), new BasicNameValuePair("id", String.valueOf(id)), new BasicNameValuePair(
                 "fcontent", rcontent));
         String content = mHttpApi.doHttpPost(httPost);
-        Result result = gson.fromJson(content, Result.class);
+        PostResult result = gson.fromJson(content, PostResult.class);
         Log.d("review", content);
         return result.getResult();
     }
@@ -283,7 +284,20 @@ public class WH_DMHttpApiV1 {
                 new BasicNameValuePair("act", "ftop"),
                 new BasicNameValuePair("fid", String.valueOf(fid)));
         String content = mHttpApi.doHttpPost(httPost);
-        Result result = gson.fromJson(content, Result.class);
+        PostResult result = gson.fromJson(content, PostResult.class);
         return result.getResult();
+    }
+
+    public boolean register(String regemail, String regepass) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
+                new BasicNameValuePair("act", "reg"), new BasicNameValuePair("regemail", regemail),
+                new BasicNameValuePair("regepass", regepass));
+        String content = mHttpApi.doHttpRequest(httPost);
+        Log.d("content", content);
+        PostResult result = gson.fromJson(content, PostResult.class);
+        return result.getResult();
+
     }
 }

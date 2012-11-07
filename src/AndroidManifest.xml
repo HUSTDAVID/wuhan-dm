@@ -263,7 +263,7 @@
                   android:theme="@style/Theme.IOSched"
                   android:windowSoftInputMode="stateVisible|adjustResize"
                   android:screenOrientation="unspecified"
-                  android:configChanges="orientation|keyboardHidden">
+                  android:configChanges="orientation|keyboardHidden">  
 		</activity>
 		<receiver
 		    android:name=".receiver.ConnectityReceiver">
@@ -271,6 +271,15 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
 		</receiver>
+		<receiver
+		    android:name=".receiver.AlarmReceiver">
+		</receiver>
+		<service
+		    android:name=".service.PushService">
+            <intent-filter>
+                <action android:name="com.wh.dm.pushservice"/>
+            </intent-filter>
+		</service>
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="508b875b52701571dd000026" >
