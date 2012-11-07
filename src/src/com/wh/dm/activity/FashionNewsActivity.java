@@ -11,7 +11,6 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,7 +35,6 @@ public class FashionNewsActivity extends Activity {
     private LayoutInflater mInfalater;
     private static int MSG_GET_FASHIONNEWS = 0;
     private GetFashionNewsTask getFashionNewsTask = null;
-    private ProgressDialog progressDialog = null;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -79,8 +77,7 @@ public class FashionNewsActivity extends Activity {
             }
         });
         lv.addFooterView(footer);
-        progressDialog = new ProgressDialog(getParent());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
@@ -109,7 +106,6 @@ public class FashionNewsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
             super.onPreExecute();
         }
 
@@ -194,7 +190,6 @@ public class FashionNewsActivity extends Activity {
                             FashionNewsActivity.this);
                 }
             }
-            progressDialog.dismiss();
             super.onPostExecute(result);
         }
     }

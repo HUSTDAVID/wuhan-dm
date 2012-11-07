@@ -2,10 +2,19 @@
 package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.type.PhotoDetails;
+import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -35,12 +44,13 @@ public class PhotosDetailsActivity extends Activity {
     private ImageButton btnBack;
 
     TextView txtBody;
+    TextView txtTitle;
     TextView txtPage;
     ImageView imgArrow;
     int totalPhotos = 0;
     int currentPhoto = 1;
 
-    Button btnVote;
+    LayoutInflater inflater;
 
     // bottom
     RelativeLayout RelBottom1;
@@ -48,6 +58,39 @@ public class PhotosDetailsActivity extends Activity {
     EditText edtChangeToReply;
     EditText edtReply;
     Button btnReply;
+    Button btnDownload;
+    Button btnStore;
+    Button btnShare;
+
+    private static final int MSG_GET_ALL = 0;
+    private static final int MSG_GET_ONG_IMG = 1;
+    private GetPhotoDetailsTask getPhotoDetailsTask = null;
+    private ArrayList<PhotoDetails> photosDetails;
+    private int aid;
+    private WH_DMApp wh_dmApp;
+    private WH_DMApi wh_dmApi;
+    private final Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case MSG_GET_ALL:
+                    if (getPhotoDetailsTask != null) {
+                        getPhotoDetailsTask.cancel(true);
+                        getPhotoDetailsTask = null;
+                    }
+                    getPhotoDetailsTask = new GetPhotoDetailsTask();
+                    getPhotoDetailsTask.execute(aid);
+                    break;
+                case MSG_GET_ONG_IMG:
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +117,10 @@ public class PhotosDetailsActivity extends Activity {
     // init views
     private void initViews() {
 
-        LayoutInflater inflater = getLayoutInflater();
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        aid = getIntent().getIntExtra("aid", 0);
+        inflater = getLayoutInflater();
         View v1 = inflater.inflate(R.layout.activity_photos_details, null);
         View v2 = inflater.inflate(R.layout.activity_photos_details1, null);
         View v3 = inflater.inflate(R.layout.activity_photos_details, null);
@@ -113,10 +159,15 @@ public class PhotosDetailsActivity extends Activity {
 
         //
         RelativeLayout rel = (RelativeLayout) main.findViewById(R.id.rel_photosmain_details);
+
+        txtTitle = (TextView) main.findViewById(R.id.txt_photos_details_title);
         txtBody = (TextView) main.findViewById(R.id.txt_photos_details_body);
         txtPage = (TextView) main.findViewById(R.id.txt_photos_details_num);
         txtPage.setText(currentPhoto + "/" + totalPhotos);
         imgArrow = (ImageView) main.findViewById(R.id.img_photos_details_arrow);
+
+        txtBody.setText(getIntent().getStringExtra("description"));
+        txtTitle.setText(getIntent().getStringExtra("title"));
 
         rel.setOnClickListener(new OnClickListener() {
 
@@ -178,6 +229,31 @@ public class PhotosDetailsActivity extends Activity {
             }
 
         });
+
+        btnShare = (Button) main.findViewById(R.id.btn_photos_share);
+        btnShare.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                String head = getResources().getString(R.string.share_info);
+                String info = txtTitle.getText().toString();
+                UMSnsService.share(PhotosDetailsActivity.this, head + info, null);
+            }
+        });
+
+        btnDownload = (Button) main.findViewById(R.id.btn_photos_down);
+        btnDownload.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+        handler.sendEmptyMessage(MSG_GET_ALL);
     }
 
     private class TextViewOnClickListener implements OnClickListener {
@@ -275,5 +351,47 @@ public class PhotosDetailsActivity extends Activity {
             txtPage.setText(currentPhoto + "/" + totalPhotos);
 
         }
+    }
+
+    private class GetPhotoDetailsTask extends AsyncTask<Integer, Void, ArrayList<PhotoDetails>> {
+
+        Exception reason = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<PhotoDetails> doInBackground(Integer... params) {
+
+            try {
+                photosDetails = wh_dmApi.getPhotoDetails(aid);
+                return photosDetails;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<PhotoDetails> result) {
+
+            if (result != null && result.size() > 0) {
+
+                View v1 = inflater.inflate(R.layout.activity_photos_details, null);
+                ImageView inflater = (ImageView) v1.findViewById(R.id.img_photos);
+                UrlImageViewHelper.setUrlDrawable(inflater,
+                        WH_DMHttpApiV1.URL_DOMAIN + result.get(0).getPic(),
+                        R.drawable.item_default, null);
+            } else {
+
+            }
+            super.onPostExecute(result);
+        }
+
     }
 }

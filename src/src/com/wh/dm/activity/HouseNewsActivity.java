@@ -11,9 +11,6 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -35,7 +32,6 @@ public class HouseNewsActivity extends Activity {
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
 
-    private ProgressDialog progressDialog;
     private GetHouseNewsTask getHouseNewsTask = null;
     private static int MSG_GET_HOUSENEWS = 0;
     private View footer;
@@ -85,20 +81,7 @@ public class HouseNewsActivity extends Activity {
         lv.addFooterView(footer);
         lv.setCacheColorHint(Color.TRANSPARENT);
         lv.requestFocus(0);
-        progressDialog = new ProgressDialog(getParent());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setOnCancelListener(new OnCancelListener() {
 
-            @Override
-            public void onCancel(DialogInterface dialog) {
-
-                if (getHouseNewsTask != null) {
-                    getHouseNewsTask.cancel(true);
-                    getHouseNewsTask = null;
-                }
-            }
-
-        });
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
@@ -126,7 +109,6 @@ public class HouseNewsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
             super.onPreExecute();
         }
 
@@ -210,7 +192,6 @@ public class HouseNewsActivity extends Activity {
                             HouseNewsActivity.this);
                 }
             }
-            progressDialog.dismiss();
             super.onPostExecute(result);
         }
 

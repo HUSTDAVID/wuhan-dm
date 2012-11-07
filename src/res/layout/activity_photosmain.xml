@@ -81,11 +81,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_toLeftOf="@+id/btn_nphotos_down"
+                    android:layout_toLeftOf="@+id/btn_photos_down"
                     android:src="@drawable/bottom_review_black_right" />
 
                 <Button
-                    android:id="@+id/btn_nphotos_down"
+                    android:id="@+id/btn_photos_down"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"

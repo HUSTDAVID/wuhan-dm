@@ -5,9 +5,11 @@ import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
+import com.wh.dm.type.PhotoDetails;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.Reply;
+import com.wh.dm.type.TwoPhotos;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,6 +102,49 @@ public class WH_DMApi {
             IOException {
 
         return mWH_DMHttpApiV1.addReview(content, id);
+    }
+
+    // photo
+    public ArrayList<TwoPhotos> getPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getHotPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getHotPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getCarPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getCarPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getGirdPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getGirlPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getPhotographPhotos(int page) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPhotographPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getFunPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getFunPhotos(page);
+    }
+
+    public ArrayList<PhotoDetails> getPhotoDetails(int aid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPhotoDetails(aid);
     }
 
 }

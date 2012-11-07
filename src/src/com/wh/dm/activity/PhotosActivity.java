@@ -116,22 +116,33 @@ public class PhotosActivity extends ActivityGroup {
                     break;
 
                 case R.id.txt_listtop_2:
+                    intent.setClass(PhotosActivity.this, HotPhotosActivity.class);
+                    vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
                     setCurTxt(2);
                     break;
 
                 case R.id.txt_listtop_3:
+                    intent.setClass(PhotosActivity.this, CarPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("car", intent).getDecorView();
                     setCurTxt(3);
                     break;
 
                 case R.id.txt_listtop_4:
+                    intent.setClass(PhotosActivity.this, GirlPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("girl", intent).getDecorView();
                     setCurTxt(4);
                     break;
 
                 case R.id.txt_listtop_5:
+                    intent.setClass(PhotosActivity.this, PhotographPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("photograph", intent)
+                            .getDecorView();
                     setCurTxt(5);
                     break;
 
                 case R.id.txt_listtop_6:
+                    intent.setClass(PhotosActivity.this, FunPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("fun", intent).getDecorView();
                     setCurTxt(6);
                     break;
             }

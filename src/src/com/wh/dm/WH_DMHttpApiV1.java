@@ -8,10 +8,14 @@ import com.wh.dm.error.WH_DMException;
 import com.wh.dm.http.HttpApiBasic;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
+import com.wh.dm.type.Photo;
+import com.wh.dm.type.PhotoDetails;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.Result;
+import com.wh.dm.type.TwoPhotos;
+import com.wh.dm.util.PhotoUtil;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -285,5 +289,107 @@ public class WH_DMHttpApiV1 {
         String content = mHttpApi.doHttpPost(httPost);
         Result result = gson.fromJson(content, Result.class);
         return result.getResult();
+    }
+
+    // photos
+    public ArrayList<TwoPhotos> getPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "lista"), new BasicNameValuePair("spage", "12"), new BasicNameValuePair("page",
+                String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<TwoPhotos> getHotPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listta"), new BasicNameValuePair("cid", "216"), new BasicNameValuePair("spage",
+                "12"), new BasicNameValuePair("page", String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<TwoPhotos> getCarPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listta"), new BasicNameValuePair("cid", "217"), new BasicNameValuePair("spage",
+                "12"), new BasicNameValuePair("page", String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<TwoPhotos> getGirlPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listta"), new BasicNameValuePair("cid", "218"), new BasicNameValuePair("spage",
+                "12"), new BasicNameValuePair("page", String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<TwoPhotos> getPhotographPhotos(int page) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listta"), new BasicNameValuePair("cid", "219"), new BasicNameValuePair("spage",
+                "12"), new BasicNameValuePair("page", String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<TwoPhotos> getFunPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listta"), new BasicNameValuePair("cid", "220"), new BasicNameValuePair("spage",
+                "12"), new BasicNameValuePair("page", String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<PhotoDetails> getPhotoDetails(int aid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listpic"), new BasicNameValuePair("aid", String.valueOf(aid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<PhotoDetails>>() {
+        }.getType();
+        return gson.fromJson(content, type);
     }
 }

@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Photos_AllActivity extends Activity {
+public class CarPhotoActivity extends Activity {
 
     RelativeLayout relPhotosHeader;
     TextView txtPhotosHeader;
@@ -161,7 +161,7 @@ public class Photos_AllActivity extends Activity {
         protected void onPreExecute() {
 
             if (isFirstLanucher) {
-                savePhotos = PhotoUtil.chagePhoto(databaseImp1.getAllPhoto());
+                savePhotos = PhotoUtil.chagePhoto(databaseImp1.getCarPhoto());
                 if (savePhotos != null && savePhotos.size() > 0) {
                     lvPhotos.setAdapter(adapter);
                     adapter.setList(savePhotos);
@@ -179,7 +179,7 @@ public class Photos_AllActivity extends Activity {
 
             ArrayList<TwoPhotos> photos = null;
             try {
-                photos = wh_dmApi.getPhotos(curPage);
+                photos = wh_dmApi.getCarPhotos(curPage);
                 return photos;
             } catch (Exception e) {
                 reason = e;
@@ -194,7 +194,7 @@ public class Photos_AllActivity extends Activity {
             if (result != null && result.size() > 0) {
 
                 if (isFirstLoad) {
-                    databaseImp1.deleteAllPhoto();
+                    databaseImp1.deleteCarNews();
                     isFirstLoad = false;
                 }
                 if (FLAG_PAGE_UP) {
@@ -208,11 +208,11 @@ public class Photos_AllActivity extends Activity {
                     adapter.setList(result);
                 }
 
-                databaseImp1.addAllPhoto(PhotoUtil.chageOnePhoto(result));
+                databaseImp1.addCarPhoto(PhotoUtil.chageOnePhoto(result));
 
             } else {
                 if (!FLAG_PAGE_UP) {
-                    savePhotos = PhotoUtil.chagePhoto(databaseImp1.getAllPhoto());
+                    savePhotos = PhotoUtil.chagePhoto(databaseImp1.getCarPhoto());
                     if (savePhotos != null && savePhotos.size() > 0) {
                         if (isFirstLanucher) {
                             lvPhotos.setAdapter(adapter);
@@ -221,14 +221,14 @@ public class Photos_AllActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(reason.toString(), Photos_AllActivity.this);
+                        NotificationUtil.showShortToast(reason.toString(), CarPhotoActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
-                                Photos_AllActivity.this);
+                                CarPhotoActivity.this);
                     }
                 } else {
                     NotificationUtil.showLongToast(getString(R.string.no_more_message),
-                            Photos_AllActivity.this);
+                            CarPhotoActivity.this);
                 }
             }
 
@@ -236,5 +236,4 @@ public class Photos_AllActivity extends Activity {
         }
 
     }
-
 }
