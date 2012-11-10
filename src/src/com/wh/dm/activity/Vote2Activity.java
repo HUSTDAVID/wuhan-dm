@@ -6,32 +6,56 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.type.VoteItem;
+import com.wh.dm.widget.VoteChoiceAdapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class Vote2Activity extends Activity {
     private Button btn_close;
-    private Button votebutton1;
-    private Button votebutton2;
-    private Button votebutton3;
+
     private ImageButton btnBack;
     private TextView txtName;
+    private ListView listView;
+    private VoteChoiceAdapter adapter;
+    private GetVoteitemsTask getVoteitemsTask = null;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private ArrayList<VoteItem> voteItems;
     private int aid;
     private String voteName;
+    private final int MSG_GET_VOTE_ITEM = 0;
+    private final Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case MSG_GET_VOTE_ITEM:
+                    if (getVoteitemsTask != null) {
+                        getVoteitemsTask.cancel(true);
+                        getVoteitemsTask = null;
+                    }
+                    getVoteitemsTask = new GetVoteitemsTask();
+                    getVoteitemsTask.execute();
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,44 +64,6 @@ public class Vote2Activity extends Activity {
         setContentView(R.layout.activity_vote2);
 
         init();
-
-        votebutton1 = (Button) findViewById(R.id.vote_button1);
-        votebutton1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        votebutton2 = (Button) findViewById(R.id.vote_button2);
-        votebutton2.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        votebutton3 = (Button) findViewById(R.id.vote_button3);
-        votebutton3.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                finish();
-            }
-        });
     }
 
     public void onResume() {
@@ -101,6 +87,11 @@ public class Vote2Activity extends Activity {
         txtName = (TextView) findViewById(R.id.vote_ing_2);
         txtName.setText(voteName);
 
+        listView = (ListView) findViewById(R.id.lv_vote_choice);
+        listView.setDivider(null);
+        adapter = new VoteChoiceAdapter(this);
+        handler.sendEmptyMessage(MSG_GET_VOTE_ITEM);
+
         btn_close = (Button) findViewById(R.id.vote_button_close);
         btn_close.setOnClickListener(new OnClickListener() {
             @Override
@@ -110,9 +101,17 @@ public class Vote2Activity extends Activity {
             }
         });
 
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+
     }
 
-    class getVoteitemsTask extends AsyncTask<Void, Void, ArrayList<VoteItem>> {
+    class GetVoteitemsTask extends AsyncTask<Void, Void, ArrayList<VoteItem>> {
 
         Exception reason;
 
@@ -131,7 +130,8 @@ public class Vote2Activity extends Activity {
         @Override
         protected void onPostExecute(ArrayList<VoteItem> result) {
 
-            // TODO Auto-generated method stub
+            adapter.setList(result);
+            listView.setAdapter(adapter);
             super.onPostExecute(result);
         }
 

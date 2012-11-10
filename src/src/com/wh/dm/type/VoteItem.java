@@ -7,7 +7,18 @@ public class VoteItem {
     private int id;
     private int aid;
     private String used_ips;
-    private String votedaddtime;
+    private String voteaddtime;
+    private String votenote;
+
+    public String getVotenote() {
+
+        return votenote;
+    }
+
+    public void setVotenote(String votenote) {
+
+        this.votenote = votenote;
+    }
 
     public int getNo() {
 
@@ -49,13 +60,14 @@ public class VoteItem {
         this.used_ips = used_ips;
     }
 
-    public String getVotedaddtime() {
+    public String getVoteaddtime() {
 
-        return votedaddtime;
+        return voteaddtime;
     }
 
-    public void setVotedaddtime(String votedaddtime) {
+    public void setVoteaddtime(String voteaddtime) {
 
-        this.votedaddtime = votedaddtime;
+        this.voteaddtime = voteaddtime;
     }
+
 }
