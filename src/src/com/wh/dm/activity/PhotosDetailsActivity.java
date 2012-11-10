@@ -133,9 +133,7 @@ public class PhotosDetailsActivity extends Activity {
         wh_dmApi = wh_dmApp.getWH_DMApi();
         aid = getIntent().getIntExtra("aid", 0);
         inflater = getLayoutInflater();
-        View v1 = inflater.inflate(R.layout.activity_photos_details, null);
         pageViews = new ArrayList<View>();
-        pageViews.add(v1);
 
         main = (ViewGroup) inflater.inflate(R.layout.activity_photosmain, null);
 
@@ -344,7 +342,7 @@ public class PhotosDetailsActivity extends Activity {
             ImageView imageView = (ImageView) ((View) pageViews.get(arg0))
                     .findViewById(R.id.img_photos);
             UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
-                    + photosDetails.get(arg0).getPic(), R.drawable.photos_img_background_nr, null);
+                    + photosDetails.get(arg0).getPic(), R.drawable.item_default, null);
             txtPage.setText(currentPhoto + "/" + totalPhotos);
             txtBody.setText(photosDetails.get(arg0).getDescription());
 
@@ -390,7 +388,7 @@ public class PhotosDetailsActivity extends Activity {
                 ImageView imageView = (ImageView) ((View) pageViews.get(0))
                         .findViewById(R.id.img_photos);
                 UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
-                        + photosDetails.get(0).getPic(), R.drawable.photos_img_background_nr, null);
+                        + photosDetails.get(0).getPic(), R.drawable.item_default, null);
                 txtPage.setText(currentPhoto + "/" + totalPhotos);
                 txtBody.setText(photosDetails.get(0).getDescription());
 

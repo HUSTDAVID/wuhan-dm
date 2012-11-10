@@ -149,7 +149,7 @@ public class PhotoAdapter extends BaseAdapter {
                     null);
 
             UrlImageViewHelper.setUrlDrawable(holder.imgRight, WH_DMHttpApiV1.URL_DOMAIN
-                    + rightPhot.getLitpic(), R.drawable.photos_img_background_nr, null);
+                    + rightPhot.getLitpic(), R.drawable.item_default, null);
         }
 
         return convertView;
