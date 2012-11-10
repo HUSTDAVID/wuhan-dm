@@ -22,6 +22,9 @@ public class PhotoBuilder extends DatabaseBuilder<Photo> {
     private static final String Photo_Isflash = "isflash";
     private static final String Photo_Ordernum = "ordernum";
     private static final String Photo_Addtime = "addtime";
+    private static final String Photo_Pcount = "pcount";
+    private static final String Photo_Fcount = "fcount";
+    private static final String Photo_Cname = "cname";
 
     @Override
     public Photo build(Cursor c) {
@@ -40,6 +43,9 @@ public class PhotoBuilder extends DatabaseBuilder<Photo> {
         int columnisflash = c.getColumnIndex(Photo_Isflash);
         int columnOrderNum = c.getColumnIndex(Photo_Ordernum);
         int columnAddTime = c.getColumnIndex(Photo_Addtime);
+        int conlumnPcount = c.getColumnIndex(Photo_Pcount);
+        int conlumnFcount = c.getColumnIndex(Photo_Fcount);
+        int conlumnCname = c.getColumnIndex(Photo_Cname);
 
         Photo photo = new Photo();
 
@@ -57,6 +63,9 @@ public class PhotoBuilder extends DatabaseBuilder<Photo> {
         photo.setIsflash(c.getInt(columnisflash));
         photo.setOrdernum(c.getInt(columnOrderNum));
         photo.setAddtime(c.getString(columnAddTime));
+        photo.setPcount(c.getInt(conlumnPcount));
+        photo.setFcount(c.getInt(conlumnFcount));
+        photo.setCname(c.getString(conlumnCname));
 
         return photo;
     }
@@ -79,6 +88,9 @@ public class PhotoBuilder extends DatabaseBuilder<Photo> {
         contentValues.put(Photo_Isflash, photo.getIsflash());
         contentValues.put(Photo_Ordernum, photo.getOrdernum());
         contentValues.put(Photo_Addtime, photo.getAddtime());
+        contentValues.put(Photo_Pcount, photo.getPcount());
+        contentValues.put(Photo_Fcount, photo.getFcount());
+        contentValues.put(Photo_Cname, photo.getCname());
         return contentValues;
     }
 

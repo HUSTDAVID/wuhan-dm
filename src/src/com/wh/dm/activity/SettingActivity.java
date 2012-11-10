@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.util.FileUtil;
 import com.wh.dm.util.SettingUtil;
 
 import android.content.Intent;
@@ -90,6 +91,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         pref_more.setOnPreferenceClickListener(this);
         pref_feedback.setOnPreferenceClickListener(this);
         pref_about.setOnPreferenceClickListener(this);
+
+        pref_cache.setSummary(FileUtil.getCacheSize());
     }
 
     @Override
@@ -102,7 +105,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
             Intent intent = new Intent(SettingActivity.this, WeiboActivity.class);
             startActivity(intent);
         } else if (preference.getKey().equals("cache")) {
-
+            FileUtil.deleteCache();
+            pref_cache.setSummary(FileUtil.getCacheSize());
         } else if (preference.getKey().equals("more")) {
             Intent intent = new Intent(SettingActivity.this, MoreActivity.class);
             startActivity(intent);

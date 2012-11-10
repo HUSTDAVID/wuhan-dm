@@ -23,6 +23,7 @@
             android:layout_alignLeft="@+id/img_left_potos_item"
             android:paddingLeft="1dip"
             android:text="@string/photos_title"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="12sp" />
 
@@ -109,6 +110,7 @@
             android:id="@+id/txt_right_photos_title"
             android:layout_width="wrap_content"
             android:layout_height="17dip"
+            android:singleLine="true"
             android:layout_alignLeft="@+id/img_right_potos_item"
             android:text="@string/photos_title"
             android:textColor="@color/black"

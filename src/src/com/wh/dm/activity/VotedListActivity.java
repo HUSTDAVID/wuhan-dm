@@ -3,10 +3,17 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.type.Vote;
+import com.wh.dm.widget.GetVoteView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -31,85 +38,56 @@ public class VotedListActivity extends Activity {
     private ArrayList<View> pageViews;
     private View dot;
     private View[] dots;
-
     private ViewGroup main;
-
     private ViewGroup group;
-
     private Button btnVote;
     private ImageButton btnBack;
+
+    private WH_DMApp wh_dmApp;
+    private WH_DMApi wh_dmApi;
+    private ArrayList<Vote> votes;
+    private final int MSG_GET_VOTES = 1;
+    private GetVotesTask getVotesTask = null;
+    private int currentSelelct = 0;
+
+    private final Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (msg.what == MSG_GET_VOTES) {
+                if (getVotesTask != null) {
+                    getVotesTask.cancel(true);
+                    getVotesTask = null;
+                }
+                getVotesTask = new GetVotesTask();
+                getVotesTask.execute();
+
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        handler.sendEmptyMessage(MSG_GET_VOTES);
+
         LayoutInflater inflater = getLayoutInflater();
-        View v1 = inflater.inflate(R.layout.dm_voteitem1, null);
-        View v2 = inflater.inflate(R.layout.dm_voteitem1, null);
-        View v3 = inflater.inflate(R.layout.dm_voteitem1, null);
-        View v4 = inflater.inflate(R.layout.dm_voteitem1, null);
-        View v5 = inflater.inflate(R.layout.dm_voteitem1, null);
-        View v6 = inflater.inflate(R.layout.dm_voteitem1, null);
-        View v7 = inflater.inflate(R.layout.dm_voteitem1, null);
-
-        btnVote = (Button) v1.findViewById(R.id.btn_vote);
-        btnVote.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(VotedListActivity.this, Vote2Activity.class);
-                startActivity(intent);
-            }
-        });
-        btnBack = (ImageButton) v1.findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                finish();
-            }
-        });
-
         pageViews = new ArrayList<View>();
-        pageViews.add(v1);
-        pageViews.add(v2);
-        pageViews.add(v3);
-        pageViews.add(v4);
-        pageViews.add(v5);
-        pageViews.add(v6);
-        pageViews.add(v7);
-
-        dots = new View[pageViews.size()];
         main = (ViewGroup) inflater.inflate(R.layout.activity_votemain, null);
-
         group = (ViewGroup) main.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) main.findViewById(R.id.guidePages);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(12, 12);
-        params.setMargins(0, 0, 20, 10);
-        for (int i = 0; i < pageViews.size(); i++) {
-            dot = new ImageView(VotedListActivity.this);
-            dot.setLayoutParams(new LayoutParams(12, 12));
-            dot.setLayoutParams(params);
-            dots[i] = dot;
-
-            if (i == 0) {
-
-                dots[i].setBackgroundResource(R.drawable.dot_in_vote_focused);
-            } else {
-                dots[i].setBackgroundResource(R.drawable.dot_in_vote_normal);
-            }
-
-            group.addView(dots[i]);
-        }
-
+        View v1 = inflater.inflate(R.layout.dm_voteitem1, null);
+        pageViews.add(v1);
         setContentView(main);
-
         viewPager.setAdapter(new GuidePageAdapter());
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
-
     }
 
     public void onResume() {
@@ -218,6 +196,7 @@ public class VotedListActivity extends Activity {
         @Override
         public void onPageSelected(int arg0) {
 
+            currentSelelct = arg0;
             for (int i = 0; i < dots.length; i++) {
                 dots[arg0].setBackgroundResource(R.drawable.dot_in_vote_focused);
 
@@ -226,5 +205,66 @@ public class VotedListActivity extends Activity {
                 }
             }
         }
+    }
+
+    class GetVotesTask extends AsyncTask<Void, Void, ArrayList<Vote>> {
+
+        Exception reason;
+        {
+        }
+
+        @Override
+        protected ArrayList<Vote> doInBackground(Void... params) {
+
+            try {
+                votes = wh_dmApi.getVote();
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+            }
+            return votes;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Vote> result) {
+
+            if (result != null && result.size() > 0) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(12, 12);
+                params.setMargins(0, 0, 20, 10);
+                dots = new View[result.size()];
+                pageViews.clear();
+                for (int i = 0; i < result.size(); i++) {
+                    View view = GetVoteView.getView(result.get(i), VotedListActivity.this);
+                    Button btnVote = (Button) view.findViewById(R.id.btn_vote);
+                    btnVote.setOnClickListener(new OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent intent = new Intent(VotedListActivity.this, Vote2Activity.class);
+                            intent.putExtra("aid", votes.get(currentSelelct).getAid());
+                            intent.putExtra("name", votes.get(currentSelelct).getVotename());
+                            startActivity(intent);
+                        }
+                    });
+                    pageViews.add(view);
+                    dot = new ImageView(VotedListActivity.this);
+                    dot.setLayoutParams(new LayoutParams(12, 12));
+                    dot.setLayoutParams(params);
+                    dots[i] = dot;
+                    if (i == 0) {
+
+                        dots[i].setBackgroundResource(R.drawable.dot_in_vote_focused);
+                    } else {
+                        dots[i].setBackgroundResource(R.drawable.dot_in_vote_normal);
+                    }
+                    group.addView(dots[i]);
+                    viewPager.setAdapter(new GuidePageAdapter());
+                    viewPager.setOnPageChangeListener(new GuidePageChangeListener());
+                }
+            }
+            super.onPostExecute(result);
+        }
+
     }
 }

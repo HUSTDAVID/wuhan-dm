@@ -15,6 +15,8 @@ import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.Result;
 import com.wh.dm.type.TwoPhotos;
+import com.wh.dm.type.Vote;
+import com.wh.dm.type.VoteItem;
 import com.wh.dm.util.PhotoUtil;
 
 import org.apache.http.HttpEntity;
@@ -389,6 +391,28 @@ public class WH_DMHttpApiV1 {
                 "listpic"), new BasicNameValuePair("aid", String.valueOf(aid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<PhotoDetails>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    // vote
+    public ArrayList<Vote> getVote() throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listv"));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Vote>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    public ArrayList<VoteItem> getVoteItems(int vid) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listvr"), new BasicNameValuePair("vid", String.valueOf(vid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<VoteItem>>() {
         }.getType();
         return gson.fromJson(content, type);
     }

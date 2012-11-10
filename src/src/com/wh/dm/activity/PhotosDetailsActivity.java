@@ -8,9 +8,13 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.type.PhotoDetails;
+import com.wh.dm.util.FileUtil;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class PhotosDetailsActivity extends Activity {
@@ -47,7 +52,7 @@ public class PhotosDetailsActivity extends Activity {
     TextView txtTitle;
     TextView txtPage;
     ImageView imgArrow;
-    int totalPhotos = 0;
+    int totalPhotos = 1;
     int currentPhoto = 1;
 
     LayoutInflater inflater;
@@ -63,8 +68,9 @@ public class PhotosDetailsActivity extends Activity {
     Button btnShare;
 
     private static final int MSG_GET_ALL = 0;
-    private static final int MSG_GET_ONG_IMG = 1;
+    private static final int MSG_LOAD_IMAGE = 2;
     private GetPhotoDetailsTask getPhotoDetailsTask = null;
+    private LoadImageTask loadImageTask = null;
     private ArrayList<PhotoDetails> photosDetails;
     private int aid;
     private WH_DMApp wh_dmApp;
@@ -83,7 +89,13 @@ public class PhotosDetailsActivity extends Activity {
                     getPhotoDetailsTask = new GetPhotoDetailsTask();
                     getPhotoDetailsTask.execute(aid);
                     break;
-                case MSG_GET_ONG_IMG:
+                case MSG_LOAD_IMAGE:
+                    if (loadImageTask != null) {
+                        loadImageTask.cancel(true);
+                        loadImageTask = null;
+                    }
+                    loadImageTask = new LoadImageTask();
+                    loadImageTask.execute(photosDetails.get(currentPhoto - 1).getPic());
                     break;
             }
 
@@ -122,27 +134,8 @@ public class PhotosDetailsActivity extends Activity {
         aid = getIntent().getIntExtra("aid", 0);
         inflater = getLayoutInflater();
         View v1 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v2 = inflater.inflate(R.layout.activity_photos_details1, null);
-        View v3 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v4 = inflater.inflate(R.layout.activity_photos_details1, null);
-        View v5 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v6 = inflater.inflate(R.layout.activity_photos_details1, null);
-        View v7 = inflater.inflate(R.layout.activity_photos_details, null);
-        View v8 = inflater.inflate(R.layout.activity_photos_details1, null);
-        View v9 = inflater.inflate(R.layout.activity_photos_details, null);
-
-        totalPhotos = 9;
-
         pageViews = new ArrayList<View>();
         pageViews.add(v1);
-        pageViews.add(v2);
-        pageViews.add(v3);
-        pageViews.add(v4);
-        pageViews.add(v5);
-        pageViews.add(v6);
-        pageViews.add(v7);
-        pageViews.add(v8);
-        pageViews.add(v9);
 
         main = (ViewGroup) inflater.inflate(R.layout.activity_photosmain, null);
 
@@ -248,7 +241,7 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                // TODO Auto-generated method stub
+                handler.sendEmptyMessage(MSG_LOAD_IMAGE);
 
             }
         });
@@ -348,7 +341,12 @@ public class PhotosDetailsActivity extends Activity {
         public void onPageSelected(int arg0) {
 
             currentPhoto = 1 + arg0;
+            ImageView imageView = (ImageView) ((View) pageViews.get(arg0))
+                    .findViewById(R.id.img_photos);
+            UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
+                    + photosDetails.get(arg0).getPic(), R.drawable.photos_img_background_nr, null);
             txtPage.setText(currentPhoto + "/" + totalPhotos);
+            txtBody.setText(photosDetails.get(arg0).getDescription());
 
         }
     }
@@ -382,11 +380,20 @@ public class PhotosDetailsActivity extends Activity {
 
             if (result != null && result.size() > 0) {
 
-                View v1 = inflater.inflate(R.layout.activity_photos_details, null);
-                ImageView inflater = (ImageView) v1.findViewById(R.id.img_photos);
-                UrlImageViewHelper.setUrlDrawable(inflater,
-                        WH_DMHttpApiV1.URL_DOMAIN + result.get(0).getPic(),
-                        R.drawable.item_default, null);
+                pageViews.clear();
+                totalPhotos = result.size();
+                txtPage.setText(currentPhoto + "/" + totalPhotos);
+                for (int i = 0; i < result.size(); i++) {
+                    View view = inflater.inflate(R.layout.activity_photos_details, null);
+                    pageViews.add(view);
+                }
+                ImageView imageView = (ImageView) ((View) pageViews.get(0))
+                        .findViewById(R.id.img_photos);
+                UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
+                        + photosDetails.get(0).getPic(), R.drawable.photos_img_background_nr, null);
+                txtPage.setText(currentPhoto + "/" + totalPhotos);
+                txtBody.setText(photosDetails.get(0).getDescription());
+
             } else {
 
             }
@@ -394,4 +401,43 @@ public class PhotosDetailsActivity extends Activity {
         }
 
     }
+
+    // task for load and save image
+    class LoadImageTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean isSave = false;
+            InputStream is = null;
+            try {
+                String imageUrl = WH_DMHttpApiV1.URL_DOMAIN + params[0];
+                is = FileUtil.getImageStream(imageUrl);
+                if (is != null) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    isSave = FileUtil.savePicture(bitmap);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return isSave;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(
+                        getResources().getString(R.string.load_image_Success),
+                        PhotosDetailsActivity.this);
+            } else {
+                NotificationUtil.showShortToast(getResources().getString(R.string.load_image_fail),
+                        PhotosDetailsActivity.this);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+
 }

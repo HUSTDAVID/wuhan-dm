@@ -26,7 +26,6 @@ public class PhotoAdapter extends BaseAdapter {
     ArrayList<TwoPhotos> twoPhotos;
     LayoutInflater mInflater;
     Context context;
-    private int pos;
 
     public PhotoAdapter(Context context) {
 
@@ -88,7 +87,7 @@ public class PhotoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-        pos = position;
+        final int pos = position;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.photos_item, null);
@@ -110,18 +109,19 @@ public class PhotoAdapter extends BaseAdapter {
                 public void onClick(View v) {
 
                     int id = twoPhotos.get(pos).getLeftPhoto().getAid();
-                    String title = twoPhotos.get(pos).getLeftPhoto().getTitle();
+                    String title = twoPhotos.get(pos).getLeftPhoto().getAname();
                     String description = twoPhotos.get(pos).getLeftPhoto().getDescription();
                     startActivity(id, title, description);
                 }
             });
+
             holder.imgRight.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
 
                     int id = twoPhotos.get(pos).getRightPhoto().getAid();
-                    String title = twoPhotos.get(pos).getRightPhoto().getTitle();
+                    String title = twoPhotos.get(pos).getRightPhoto().getAname();
                     String description = twoPhotos.get(pos).getRightPhoto().getDescription();
                     startActivity(id, title, description);
                 }
@@ -135,13 +135,13 @@ public class PhotoAdapter extends BaseAdapter {
         Photo leftPhoto = (Photo) twoPhotos.get(position).getLeftPhoto();
         Photo rightPhot = (Photo) twoPhotos.get(position).getRightPhoto();
 
-        holder.txtLeftTitle.setText(leftPhoto.getTitle());
-        holder.txtLeftReview.setText(String.valueOf(leftPhoto.getClick()));
-        holder.txtLeftNum.setText(String.valueOf(leftPhoto.getClick()));
+        holder.txtLeftTitle.setText(leftPhoto.getAname());
+        holder.txtLeftReview.setText(String.valueOf(leftPhoto.getFcount()));
+        holder.txtLeftNum.setText(String.valueOf(leftPhoto.getPcount()));
 
-        holder.txtRightTitle.setText(rightPhot.getTitle());
-        holder.txtRightReview.setText(String.valueOf(rightPhot.getClick()));
-        holder.txtRightNum.setText(String.valueOf(rightPhot.getClick()));
+        holder.txtRightTitle.setText(rightPhot.getAname());
+        holder.txtRightReview.setText(String.valueOf(rightPhot.getFcount()));
+        holder.txtRightNum.setText(String.valueOf(rightPhot.getPcount()));
 
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.imgLeft,

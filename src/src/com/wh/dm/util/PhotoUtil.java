@@ -16,7 +16,6 @@ public class PhotoUtil {
             twoP.setLeftPhoto(photo.get(i));
             i++;
             twoP.setRightPhoto(photo.get(i));
-
             twoPhotos.add(twoP);
         }
 
