@@ -41,7 +41,6 @@ public class VotedListActivity extends Activity {
     private ViewGroup main;
     private ViewGroup group;
     private Button btnVote;
-    private ImageButton btnBack;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
@@ -88,6 +87,7 @@ public class VotedListActivity extends Activity {
         setContentView(main);
         viewPager.setAdapter(new GuidePageAdapter());
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
+
     }
 
     public void onResume() {
@@ -245,6 +245,15 @@ public class VotedListActivity extends Activity {
                             intent.putExtra("aid", votes.get(currentSelelct).getAid());
                             intent.putExtra("name", votes.get(currentSelelct).getVotename());
                             startActivity(intent);
+                        }
+                    });
+                    ImageButton btnBack = (ImageButton) view.findViewById(R.id.img_header3_back);
+                    btnBack.setOnClickListener(new OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+                            finish();
                         }
                     });
                     pageViews.add(view);
