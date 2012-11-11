@@ -11,6 +11,8 @@ import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
+import com.wh.dm.type.Vote;
+import com.wh.dm.type.VoteItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -150,6 +152,18 @@ public class WH_DMApi {
             UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.getPhotoDetails(aid);
+    }
+
+    // vote
+    public ArrayList<Vote> getVote() throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getVote();
+    }
+
+    public ArrayList<VoteItem> getVoteItems(int vid) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getVoteItems(vid);
     }
 
     public boolean register(String regemail, String regepass) throws WH_DMException,

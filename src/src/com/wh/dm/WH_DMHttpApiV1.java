@@ -16,6 +16,8 @@ import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
+import com.wh.dm.type.Vote;
+import com.wh.dm.type.VoteItem;
 import com.wh.dm.util.PhotoUtil;
 
 import org.apache.http.client.methods.HttpGet;
@@ -33,6 +35,7 @@ public class WH_DMHttpApiV1 {
     private Gson gson = null;
     private static final boolean DEBUG = WH_DMApi.DEBUG;
     public static final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
+    private static final String URL_API_DOMAIN = "http://test1.jbr.net.cn:809/api/News.aspx";
     private static final String URL_API_NEWS = "/api/News.aspx";
     private static final String URL_API_MEM = "/api/Mem.aspx";
     private DefaultHttpClient mHttpClient;
@@ -352,10 +355,32 @@ public class WH_DMHttpApiV1 {
     public ArrayList<PhotoDetails> getPhotoDetails(int aid) throws WH_DMException,
             UnKnownException, IOException {
 
-        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listpic"), new BasicNameValuePair("aid", String.valueOf(aid)));
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listpic"), new BasicNameValuePair("id", String.valueOf(aid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<PhotoDetails>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    // vote
+    public ArrayList<Vote> getVote() throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listv"));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Vote>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    public ArrayList<VoteItem> getVoteItems(int vid) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "listvr"), new BasicNameValuePair("vid", String.valueOf(vid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<VoteItem>>() {
         }.getType();
         return gson.fromJson(content, type);
     }
@@ -384,5 +409,4 @@ public class WH_DMHttpApiV1 {
         PostResult result = gson.fromJson(content, PostResult.class);
         return result.getResult();
     }
-
 }

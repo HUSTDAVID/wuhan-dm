@@ -97,6 +97,9 @@ public class DM_InteractionActivity extends Activity implements OnClickListener 
                 Intent intent_list = new Intent(DM_InteractionActivity.this,
                         VotedListActivity.class);
                 startActivity(intent_list);
+                // String text = FileUtil.getCacheSize();
+                // Toast.makeText(DM_InteractionActivity.this, text,
+                // Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rel_interaction_critic:
             case R.id.btn_interaction_critic:

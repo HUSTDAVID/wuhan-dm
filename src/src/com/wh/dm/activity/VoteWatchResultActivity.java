@@ -16,6 +16,9 @@ import android.widget.TextView;
 public class VoteWatchResultActivity extends Activity {
     private ImageButton btnBack;
 
+    private int voteId;
+    private String used_ips;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -37,6 +40,9 @@ public class VoteWatchResultActivity extends Activity {
     }
 
     private void initViews() {
+
+        voteId = getIntent().getIntExtra("id", 0);
+        used_ips = getIntent().getStringExtra("used_ips");
 
         TextView txtStatus = (TextView) findViewById(R.id.vote_ing_3);
         txtStatus.setText("¸ÐÐ»Í¶Æ±£¡");

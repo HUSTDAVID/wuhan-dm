@@ -12,7 +12,7 @@
         android:layout_below="@id/photos_top"
         android:layout_marginTop="38.67dp" >
     </android.support.v4.view.ViewPager>
-
+
     <RelativeLayout
         android:id="@+id/linearLayout02"
         android:layout_width="match_parent"
@@ -135,13 +135,68 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/rel_photosmain_details"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:focusable="false"
+            android:layout_above="@+id/layout_photos_detail_bottom"
+            android:background="@color/translucence_black" >
+            
+            <LinearLayout 
+                android:layout_width="fill_parent"
+                android:layout_above="@+id/txt_photos_details_body"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+		            <TextView
+		                android:id="@+id/txt_photos_details_title"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_alignParentLeft="true"
+		                android:layout_marginLeft="13.33dp"
+		                android:layout_marginRight="5dip"
+		                android:layout_toLeftOf="@+id/txt_photos_details_num"
+		                android:text="趴着上课的女孩"
+		                android:textColor="@color/white"
+		                android:textSize="17sp" />
+		
+		            <TextView
+		                android:id="@+id/txt_photos_details_num"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:layout_marginRight="5dip"
+		                android:layout_toLeftOf="@+id/img_photos_details_arrow"
+		                android:text=""
+		                android:textColor="@color/white"
+		                android:textSize="20sp" />
+		            
+		            <ImageView
+		                android:id="@+id/img_photos_details_arrow"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content" 
+		                android:layout_centerVertical="true"  
+		                android:layout_alignParentRight="true"             
+		                android:layout_marginBottom="5dp"
+		                android:layout_marginRight="13.33dp"
+		                android:focusable="false"
+                        android:src="@drawable/photos_arrow_up" />
+		            
+            </RelativeLayout>
+            </LinearLayout>
+            
+            <TextView
             android:id="@+id/txt_photos_details_body"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/layout_photos_detail_bottom"
-            android:layout_alignParentLeft="true"
             android:background="@color/translucence_black"
+            android:layout_alignParentBottom="true"
             android:paddingBottom="6.67dip"
             android:paddingLeft="13.33dip"
             android:paddingRight="13.33dip"
@@ -150,49 +205,10 @@
             android:textColor="@color/white"
             android:textSize="13sp"
             android:visibility="gone" />
-
-        <RelativeLayout
-            android:id="@+id/rel_photosmain_details"
-            android:layout_width="fill_parent"
-            android:layout_height="30dip"
-            android:layout_above="@+id/txt_photos_details_body"
-            android:layout_alignParentLeft="true"
-            android:background="@color/translucence_black" >
-
-            <TextView
-                android:id="@+id/txt_photos_details_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="13.33dp"
-                android:text="趴着上课的女孩"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/img_photos_details_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/txt_photos_details_title"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="13.33dp"
-                android:src="@drawable/photos_arrow_up" />
-
-            <TextView
-                android:id="@+id/txt_photos_details_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/txt_photos_details_title"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/img_photos_details_arrow"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="20sp" />
         </RelativeLayout>
+
+   
+
     </RelativeLayout>
 
 </RelativeLayout>

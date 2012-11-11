@@ -82,27 +82,27 @@ public class DatabaseImpl implements Database {
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_PHOTO
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, aid INTERGER, aname VARCHAR, title VARCHAR, litpic VARCHAR, atype INTEGER, author VARCHAR, "
-                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR)");
+                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR, pcount INTEGER, fcount INTEGER, cname VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_HOT_PHOTO
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, aid INTERGER, aname VARCHAR, title VARCHAR, litpic VARCHAR, atype INTEGER, author VARCHAR, "
-                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR)");
+                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR, pcount INTEGER, fcount INTEGER, cname VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_CAR_PHOTO
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, aid INTERGER, aname VARCHAR, title VARCHAR, litpic VARCHAR, atype INTEGER, author VARCHAR, "
-                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR)");
+                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR, pcount INTEGER, fcount INTEGER, cname VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_GIRL_PHOTO
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, aid INTERGER, aname VARCHAR, title VARCHAR, litpic VARCHAR, atype INTEGER, author VARCHAR, "
-                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR)");
+                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR, pcount INTEGER, fcount INTEGER, cname VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_PHOTOGRAPH_PHOTO
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, aid INTERGER, aname VARCHAR, title VARCHAR, litpic VARCHAR, atype INTEGER, author VARCHAR, "
-                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR)");
+                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR, pcount INTEGER, fcount INTEGER, cname VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_FUN_PHOTO
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, aid INTERGER, aname VARCHAR, title VARCHAR, litpic VARCHAR, atype INTEGER, author VARCHAR, "
-                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR)");
+                + "click INTEGER, description VARCHAR, isgood INTERGER, istop INTEGER, isflash INTEGER, ordernum INTERGER, addtime VARCHAR, pcount INTEGER, fcount INTEGER, cname VARCHAR)");
         // photo details
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_PHOTO_DET

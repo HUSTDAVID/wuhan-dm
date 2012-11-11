@@ -17,10 +17,43 @@ public class Photo {
     private int isflash;
     private int ordernum;
     private String addtime;
+    private int pcount;
+    private int fcount;
+    private String cname;
 
     public int getNo() {
 
         return no;
+    }
+
+    public int getPcount() {
+
+        return pcount;
+    }
+
+    public void setPcount(int pcount) {
+
+        this.pcount = pcount;
+    }
+
+    public int getFcount() {
+
+        return fcount;
+    }
+
+    public void setFcount(int fcount) {
+
+        this.fcount = fcount;
+    }
+
+    public String getCname() {
+
+        return cname;
+    }
+
+    public void setCname(String cname) {
+
+        this.cname = cname;
     }
 
     public void setNo(int no) {

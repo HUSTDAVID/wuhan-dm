@@ -64,6 +64,8 @@
     <string name="ptr_refreshing">正在载入数据</string>
     <string name="ptr_last_updated">Updated: %1$s</string>
     <string name="share_info">//分享每刻组图：</string>
+    <string name="load_image_Success">成功下载到相册</string>
+    <string name="load_image_fail">图片下载失败</string>
 
     <!-- 新闻详情 -->
     <string name="news_title">日媒称日本11日派官员赴华 欲讨论钓鱼岛问题</string>
@@ -94,6 +96,9 @@
     <string name="show_passwd">显示密码</string>
     <string name="login">登录</string>
     <string name="goto_forget_passwd">忘记密码？</string>
+    <string name="voting">投票进行中</string>
+    <string name="voted">投票已结束</string>
+
     <string name="mail_toast">邮箱不能为空</string>
 	<string name="password_toast">密码不能为空</string>
 	<string name="login_sucesses">登陆成功</string>
