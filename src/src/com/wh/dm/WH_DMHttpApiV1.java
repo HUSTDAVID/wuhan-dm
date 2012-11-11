@@ -388,7 +388,7 @@ public class WH_DMHttpApiV1 {
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
-                "listpic"), new BasicNameValuePair("aid", String.valueOf(aid)));
+                "listpic"), new BasicNameValuePair("id", String.valueOf(aid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<PhotoDetails>>() {
         }.getType();
