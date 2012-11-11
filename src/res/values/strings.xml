@@ -63,6 +63,7 @@
     <string name="ptr_release_to_refresh">松开可以刷新</string>
     <string name="ptr_refreshing">正在载入数据</string>
     <string name="ptr_last_updated">Updated: %1$s</string>
+    <string name="share_info">//分享每刻组图：</string>
 
     <!-- 新闻详情 -->
     <string name="news_title">日媒称日本11日派官员赴华 欲讨论钓鱼岛问题</string>
@@ -91,10 +92,12 @@
     <string name="email">电子邮箱</string>
     <string name="password">密码</string>
     <string name="show_passwd">显示密码</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="goto_forget_passwd">忘记密码？</string>
     <string name="mail_toast">邮箱不能为空</string>
 	<string name="password_toast">密码不能为空</string>
+	<string name="login_sucesses">登陆成功</string>
+	<string name="login_fails">登陆失败</string>
 	<string name="register_sucesses">注册成功</string>
 	<string name="register_fails">注册失败</string>
     <!-- test data -->
@@ -126,13 +129,13 @@
     <string name="account">帐号</string>
     <string name="setting">设置</string>
     <string name="others">其他</string>
-    <string name="set_login">登录AIMAO</string>
+    <string name="set_login">登录每刻</string>
     <string name="login_summary">登录后可同步收藏和订阅DM</string>
     <string name="account_manager">社交帐号管理</string>
     <string name="account_summary">绑定和管理新浪微博等社交帐号</string>
     <string name="settings">设置</string>
     <string name="flow">流量控制</string>
-    <string name="cache">清楚缓存</string>
+    <string name="cache">清除缓存</string>
     <string name="more">更多</string>
     <string name="more_summary">更多个性化设置</string>
     <string name="set_feedback">用户反馈</string>
@@ -145,15 +148,16 @@
     <string name="push_smmary">开启推送功能后，我们会第一时间内推送要闻给您</string>
     <string name="screen">屏幕亮度</string>
     <string name="screen_summary">保持屏幕正常亮度</string>
-    <string name="toweibo">社区账号管理</string>
+    <string name="toweibo">社交账号管理</string>
     <string name="aboutus_text4">联系我们</string>
-    <string name="aboutus_text5">官方网站：http：//www.aimao.com/</string>
-    <string name="aboutus_text6">新浪微博：@AIMAO</string>
-    <string name="aboutus_text7">电子邮箱：support@aimao.com</string>
+    <string name="aboutus_text5">官方网站：http：//www.meike15.com/</string>
+    <string name="aboutus_text6">新浪微博：@每刻</string>
+    <string name="aboutus_text7">电子邮箱：support@meike.com</string>
     <string name="aboutus_text8">联系电话：027-87888888/027-87778888</string>
     <string name="aboutus_text9">欢迎内容接入合作</string>
     <string name="aboutus">关于我们</string>
 	<string name="download">下载</string>
+	<string name="push_message">我的消息</string>
 	<!-- Exception -->
 	<string name="network_exception">网络连接异常</string>
 	<string name="check_network">请检查网络连接</string>
@@ -165,6 +169,19 @@
 	<string name="smallest">超小</string>
 	<string name="current_text_size">当前字体大小为</string>
 	<string name="review_name">手机版网友</string>
-	<string name="top">顶顶</string>
-
+	<string name="top">顶</string>
+	<string name="review_toast">没有评论</string>
+	<string name="review_no_more">没有更多评论了</string>
+	<string name="review_succeed">评论成功</string>
+	<string name="review_fail">评论失败</string>
+	<string name="review_null">评论内容为空</string>
+	<string name="review_day">天前</string>
+	<string name="review_hour">小时前</string>
+	<string name="review_min">分钟前</string>
+	<string name="review_sec">秒前</string>
+	<string name="please_login">请先登陆</string>
+	<string name="top_succeed">顶</string>
+	<string name="top_fail">操作失败</string>
+	<string name="reply_succeed">回复成功</string>
+	<string name="reply_fail">回复失败</string>
 </resources>

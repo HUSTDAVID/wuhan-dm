@@ -11,7 +11,6 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,7 +32,6 @@ public class LifeNewsActivity extends Activity {
     private HeadlineAdapter adapter;
     private static int MSG_GET_LIFENEWS = 0;
     private GetLifeNewsTask getLifeNewsTask = null;
-    private ProgressDialog progressDialog = null;
     private View footer;
     private Button btnFoolter;
     private LayoutInflater mInfalater;
@@ -79,8 +77,6 @@ public class LifeNewsActivity extends Activity {
             }
         });
         lv.addFooterView(footer);
-        progressDialog = new ProgressDialog(getParent());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
@@ -109,7 +105,6 @@ public class LifeNewsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
             super.onPreExecute();
         }
 
@@ -192,7 +187,6 @@ public class LifeNewsActivity extends Activity {
                             LifeNewsActivity.this);
                 }
             }
-            progressDialog.dismiss();
             super.onPostExecute(result);
         }
 

@@ -2,15 +2,17 @@
 package com.wh.dm;
 
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.type.PostResult;
 import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
+
+import java.util.ArrayList;
 
 public class WH_DMApp extends Application {
 
@@ -20,15 +22,14 @@ public class WH_DMApp extends Application {
     private WH_DMApi wh_dm;
     private DatabaseImpl databaseImpl;
     private SharedPreferences mPrefs;
-    private boolean isLogin = false;
-    private boolean isConnected = false;
-    private final boolean isSinaLogin = false;
-    private final boolean isTencLogin = false;
-
+    public static boolean isLogin = false;
+    public static boolean isConnected = false;
+    public static boolean isSinaLogin = false;
+    public static boolean isTencLogin = false;
     public static boolean isLoadImg;
 
-    private static final String INTENT_ACTION_LOGGED_IN = "com.wh.dm.intent.action.LOGGED_IN";
-    private static final String INTENT_ACTION_LOGGED_OUT = "com.wh.dm.intent.action.LOGGED_OUT";
+    public static final String INTENT_ACTION_LOG_SUCCESS = "com.wh.dm.intent.action.LOG_SUCCESS";
+    public static final String INTENT_ACTION_LOG_FAIL = "com.wh.dm.intent.action.LOG_FAIL";
 
     @Override
     public void onCreate() {
@@ -37,6 +38,8 @@ public class WH_DMApp extends Application {
         loadWH_DM();
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
+        login();
+
     }
 
     public WH_DMApi getWH_DMApi() {
@@ -72,27 +75,19 @@ public class WH_DMApp extends Application {
         return isConnected;
     }
 
+    public ArrayList<String> getUserInfo() {
+
+        ArrayList<String> users = new ArrayList<String>();
+        String email = mPrefs.getString("email", null);
+        String password = mPrefs.getString("password", null);
+        users.add(email);
+        users.add(password);
+        return users;
+    }
+
     public void setConnected(boolean _isConnected) {
 
         isConnected = _isConnected;
-    }
-
-    private class LoginTask extends AsyncTask<String, Void, PostResult> {
-
-        @Override
-        protected PostResult doInBackground(String... params) {
-
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(PostResult result) {
-
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-        }
-
     }
 
     // two method for wake lock
@@ -104,6 +99,49 @@ public class WH_DMApp extends Application {
     public void releaseWakeLock() {
 
         wakeLock = SettingUtil.setReleaseWakeLock(wakeLock);
+    }
+
+    private void login() {
+
+        LoginTask loginTask = new LoginTask();
+        ArrayList<String> users = getUserInfo();
+        if (users.get(0) == null || users.get(1) == null) {
+            return;
+        } else {
+            loginTask.execute(users.get(0), users.get(1));
+        }
+    }
+
+    private class LoginTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean login = false;
+            try {
+                login = wh_dm.login(params[0], params[1]);
+                return login;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
+                sendBroadcast(intent);
+                isLogin = true;
+            } else {
+                Intent intent = new Intent(INTENT_ACTION_LOG_FAIL);
+                sendBroadcast(intent);
+                isLogin = false;
+            }
+            super.onPostExecute(result);
+        }
+
     }
 
 }

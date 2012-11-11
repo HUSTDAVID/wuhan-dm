@@ -5,9 +5,12 @@ import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
+import com.wh.dm.type.NewsType;
+import com.wh.dm.type.PhotoDetails;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.Reply;
+import com.wh.dm.type.TwoPhotos;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +28,11 @@ public class WH_DMApi {
     public WH_DMApi() {
 
         mWH_DMHttpApiV1 = new WH_DMHttpApiV1();
+    }
+
+    public ArrayList<NewsType> getNewsType() throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getNewsType();
     }
 
     public ArrayList<PicsNews> getPicsNews() throws WH_DMException, UnKnownException, IOException {
@@ -74,10 +82,10 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getNewsContent(id);
     }
 
-    public ArrayList<Comment> getComment(int id) throws WH_DMException, UnKnownException,
+    public ArrayList<Comment> getComment(int id, int page) throws WH_DMException, UnKnownException,
             IOException {
 
-        return mWH_DMHttpApiV1.getComment(id);
+        return mWH_DMHttpApiV1.getComment(id, page);
     }
 
     public ArrayList<Reply> getReply(int fid) throws WH_DMException, UnKnownException, IOException {
@@ -85,12 +93,12 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getReply(fid);
     }
 
-    public boolean addTop(int fid) throws WH_DMException, UnKnownException, IOException {
+    public boolean addTop(String fid) throws WH_DMException, UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.addTop(fid);
     }
 
-    public boolean addReply(String rconent, int id, int fid) throws WH_DMException,
+    public boolean addReply(String rconent, String id, String fid) throws WH_DMException,
             UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.addReply(rconent, id, fid);
@@ -102,10 +110,58 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.addReview(content, id);
     }
 
+    public ArrayList<TwoPhotos> getPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getHotPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getHotPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getCarPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getCarPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getGirdPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getGirlPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getPhotographPhotos(int page) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPhotographPhotos(page);
+    }
+
+    public ArrayList<TwoPhotos> getFunPhotos(int page) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getFunPhotos(page);
+    }
+
+    public ArrayList<PhotoDetails> getPhotoDetails(int aid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPhotoDetails(aid);
+    }
+
     public boolean register(String regemail, String regepass) throws WH_DMException,
             UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.register(regemail, regepass);
+    }
+
+    public boolean login(String logemail, String logpassword) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.login(logemail, logpassword);
     }
 
 }

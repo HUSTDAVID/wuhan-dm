@@ -10,6 +10,7 @@ import com.wh.dm.type.Comment;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.util.TextUtil;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
@@ -43,14 +44,16 @@ public class NewsDetailsActivity extends Activity {
     View headerView;
     private final int MSG_GET_NEWSDETAIL = 0;
     private final int MSG_GET_COMMENT = 1;
+    private final int ADD_REVIEW = 2;
     private final int curStatus = 0;
-
     private int id;
     private int fid;
     private int time;
+    private final int curPage = 1;
     private GetNewsDetailTask getNewsDetailTask = null;
     private GetCommentTask getCommentTask = null;
-    TextView newsTitle;
+    private AddReviewTask addReviewTask = null;
+    private TextView newsTitle;
     TextView newsTime;
     TextView newsSource;
 
@@ -98,6 +101,19 @@ public class NewsDetailsActivity extends Activity {
                     getCommentTask = new GetCommentTask();
                     getCommentTask.execute(fid);
                     break;
+                case ADD_REVIEW:
+                    if (addReviewTask != null) {
+                        addReviewTask.cancel(true);
+                        addReviewTask = null;
+                    }
+                    if (!TextUtil.isEmpty(getFcontent())) {
+                        addReviewTask = new AddReviewTask();
+                        addReviewTask.execute(getFcontent());
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.review_null),
+                                NewsDetailsActivity.this);
+                    }
+                    break;
             }
         };
     };
@@ -110,26 +126,12 @@ public class NewsDetailsActivity extends Activity {
         setContentView(R.layout.activity_news_details);
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 211);
-        Log.d("id", "" + id);
-        Log.d("status", "" + curStatus);
         initViews();
         wh_dmApp = (WH_DMApp) this.getApplication();
         databaseImpl = wh_dmApp.getDatabase();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_NEWSDETAIL);
-        UMSnsService.UseLocation = true;
-        UMSnsService.LocationAuto = true;
-        UMSnsService.LOCATION_VALID_TIME = 180000; // 30MINS
-        Button sharetxt = (Button) findViewById(R.id.btn_news_share);
 
-        sharetxt.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                UMSnsService.share(NewsDetailsActivity.this, "说些什么...", null);
-            }
-        });
     }
 
     private void initViews() {
@@ -147,7 +149,6 @@ public class NewsDetailsActivity extends Activity {
         newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
-        // webViewNewsBody.loadUrl("file:///android_asset/news.html");
 
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
@@ -157,9 +158,7 @@ public class NewsDetailsActivity extends Activity {
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
         btnMyFavorite = (Button) findViewById(R.id.btn_news_my_favorite);
-
         edtxMyReplyforBtn.setFocusable(false);
-
         lvNews.addHeaderView(newsMessage, null, false);
 
         // watch more comments
@@ -167,19 +166,9 @@ public class NewsDetailsActivity extends Activity {
         lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);
-        // for (int i = 0; i < 3; i++) {
         adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212");
-        // }
+
         lvNews.setAdapter(adapter);
-
-        btnMyShare.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         btnMore = (Button) findViewById(R.id.btn_news_more);
         btnMore.setOnClickListener(new OnClickListener() {
 
@@ -187,6 +176,7 @@ public class NewsDetailsActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
+                intent.putExtra("id", id);
                 startActivity(intent);
 
             }
@@ -206,6 +196,7 @@ public class NewsDetailsActivity extends Activity {
                 edtReply.requestFocus();
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(
                         edtReply, 0);
+
             }
         });
 
@@ -221,7 +212,14 @@ public class NewsDetailsActivity extends Activity {
                 bottomLayout2.setVisibility(View.GONE);
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
-
+                if (WH_DMApp.isLogin) {
+                    handler.sendEmptyMessage(ADD_REVIEW);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.please_login),
+                            NewsDetailsActivity.this);
+                    Intent intent = new Intent(NewsDetailsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
@@ -242,7 +240,20 @@ public class NewsDetailsActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
+                intent.putExtra("id", id);
                 startActivity(intent);
+            }
+        });
+
+        UMSnsService.UseLocation = true;
+        UMSnsService.LocationAuto = true;
+        UMSnsService.LOCATION_VALID_TIME = 180000; // 30MINS
+        btnMyShare.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                UMSnsService.share(NewsDetailsActivity.this, "说些什么...", null);
             }
         });
 
@@ -254,6 +265,11 @@ public class NewsDetailsActivity extends Activity {
         webSettings = webViewNewsBody.getSettings();
         setTextSize();
         super.onResume();
+    }
+
+    private String getFcontent() {
+
+        return edtReply.getText().toString();
     }
 
     private void setTextSize() {
@@ -355,7 +371,7 @@ public class NewsDetailsActivity extends Activity {
 
             if (NetworkConnection.checkInternetConnection()) {
                 try {
-                    comments = (new WH_DMApi()).getComment(params[0]);
+                    comments = (new WH_DMApi()).getComment(params[0], curPage);
                     return comments;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -371,6 +387,46 @@ public class NewsDetailsActivity extends Activity {
         protected void onPostExecute(ArrayList<Comment> result) {
 
             // TODO Auto-generated method stub
+            super.onPostExecute(result);
+        }
+
+    }
+
+    private class AddReviewTask extends AsyncTask<String, Void, Boolean> {
+        boolean result = false;
+        Exception reason = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            try {
+                result = wh_dmApi.addReview(params[0], id);
+                return true;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.review_succeed),
+                        NewsDetailsActivity.this);
+            } else {
+                NotificationUtil.showShortToast(getString(R.string.review_fail),
+                        NewsDetailsActivity.this);
+            }
+            progressDialog.dismiss();
             super.onPostExecute(result);
         }
 

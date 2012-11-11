@@ -13,11 +13,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-public class LocalNewsActivity extends ActivityGroup {
+public class LocalNewsActivity extends ActivityGroup implements OnClickListener {
 
     private TextView txtTitle;
     private TextView txtSelectedItem;
@@ -32,6 +33,8 @@ public class LocalNewsActivity extends ActivityGroup {
     private TextView txtLift;
     private TextView txtTravel;
 
+    private ImageButton btnMessage;
+    private TextView txtNum;
     private View vMain;
     private int itemWidth = 0;
     Intent intent = null;
@@ -42,16 +45,19 @@ public class LocalNewsActivity extends ActivityGroup {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_dm_news);
-
         initViews();
+        showMessage();
+
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -240,6 +246,30 @@ public class LocalNewsActivity extends ActivityGroup {
                 txtLift.setTextColor(Color.BLACK);
                 txtTravel.setSelected(true);
                 txtTravel.setTextColor(Color.WHITE);
+                break;
+        }
+
+    }
+
+    public void showMessage() {
+
+        btnMessage = (ImageButton) findViewById(R.id.btn_message);
+        txtNum = (TextView) findViewById(R.id.txt_message_num);
+        btnMessage.setOnClickListener(this);
+        txtNum.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.btn_message:
+            case R.id.txt_message_num:
+                Intent intent = new Intent(LocalNewsActivity.this, MessageActivity.class);
+                startActivity(intent);
+                break;
+            default:
                 break;
         }
 

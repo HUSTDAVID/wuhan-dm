@@ -2,59 +2,80 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.activity.PhotosDetailsActivity;
+import com.wh.dm.type.Photo;
+import com.wh.dm.type.TwoPhotos;
+import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PhotoAdapter extends BaseAdapter {
 
-    ArrayList<Map<String, Object>> mData;
+    ArrayList<TwoPhotos> twoPhotos;
     LayoutInflater mInflater;
+    Context context;
+    private int pos;
 
     public PhotoAdapter(Context context) {
 
-        mData = new ArrayList<Map<String, Object>>();
+        this.context = context;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void addItem(Bitmap leftBmp, String leftTitle, int leftReview, int leftNum,
-            Bitmap rightBmp, String rightTitle, int rightReview, int rightNum) {
+    /*
+     * public void addItem(Bitmap leftBmp, String leftTitle, int leftReview, int
+     * leftNum, Bitmap rightBmp, String rightTitle, int rightReview, int
+     * rightNum) { HashMap<String, Object> map = new HashMap<String, Object>();
+     * // add left data map.put("leftImage", leftBmp); map.put("leftTitle",
+     * leftTitle); map.put("leftReview", leftReview); map.put("leftNum",
+     * leftNum); // add rigth data map.put("rightImage", rightBmp);
+     * map.put("rightTitle", rightTitle); map.put("rightReview", rightReview);
+     * map.put("rightNum", rightNum); mData.add(map); notifyDataSetChanged(); }
+     */
 
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        // add left data
-        map.put("leftImage", leftBmp);
-        map.put("leftTitle", leftTitle);
-        map.put("leftReview", leftReview);
-        map.put("leftNum", leftNum);
-        // add rigth data
-        map.put("rightImage", rightBmp);
-        map.put("rightTitle", rightTitle);
-        map.put("rightReview", rightReview);
-        map.put("rightNum", rightNum);
-        mData.add(map);
+    public void setList(ArrayList<TwoPhotos> _twoPhotos) {
+
+        twoPhotos = _twoPhotos;
         notifyDataSetChanged();
+    }
+
+    public void addList(ArrayList<TwoPhotos> _twoPhotos) {
+
+        twoPhotos.addAll(_twoPhotos);
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<TwoPhotos> getList() {
+
+        return twoPhotos;
     }
 
     @Override
     public int getCount() {
 
-        return mData.size();
+        if (twoPhotos == null) {
+            return 0;
+        } else {
+            return twoPhotos.size();
+        }
     }
 
     @Override
     public Object getItem(int position) {
 
-        return mData.get(position);
+        return twoPhotos.get(position);
     }
 
     @Override
@@ -67,6 +88,7 @@ public class PhotoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
+        pos = position;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.photos_item, null);
@@ -82,20 +104,53 @@ public class PhotoAdapter extends BaseAdapter {
                     .findViewById(R.id.txt_right_review_total);
             holder.txtRightNum = (TextView) convertView.findViewById(R.id.txt_right_num_total);
 
+            holder.imgLeft.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    int id = twoPhotos.get(pos).getLeftPhoto().getAid();
+                    String title = twoPhotos.get(pos).getLeftPhoto().getTitle();
+                    String description = twoPhotos.get(pos).getLeftPhoto().getDescription();
+                    startActivity(id, title, description);
+                }
+            });
+            holder.imgRight.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    int id = twoPhotos.get(pos).getRightPhoto().getAid();
+                    String title = twoPhotos.get(pos).getRightPhoto().getTitle();
+                    String description = twoPhotos.get(pos).getRightPhoto().getDescription();
+                    startActivity(id, title, description);
+                }
+            });
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.imgLeft.setImageBitmap((Bitmap) mData.get(position).get("leftImage"));
-        holder.txtLeftTitle.setText(mData.get(position).get("leftTitle").toString());
-        holder.txtLeftReview.setText(mData.get(position).get("leftReview").toString());
-        holder.txtLeftNum.setText(mData.get(position).get("leftNum").toString());
+        Photo leftPhoto = twoPhotos.get(position).getLeftPhoto();
+        Photo rightPhot = twoPhotos.get(position).getRightPhoto();
 
-        holder.imgRight.setImageBitmap((Bitmap) mData.get(position).get("rightImage"));
-        holder.txtRightTitle.setText(mData.get(position).get("rightTitle").toString());
-        holder.txtRightReview.setText(mData.get(position).get("rightReview").toString());
-        holder.txtRightNum.setText(mData.get(position).get("rightNum").toString());
+        holder.txtLeftTitle.setText(leftPhoto.getTitle());
+        holder.txtLeftReview.setText(String.valueOf(leftPhoto.getClick()));
+        holder.txtLeftNum.setText(String.valueOf(leftPhoto.getClick()));
+
+        holder.txtRightTitle.setText(rightPhot.getTitle());
+        holder.txtRightReview.setText(String.valueOf(rightPhot.getClick()));
+        holder.txtRightNum.setText(String.valueOf(rightPhot.getClick()));
+
+        if (WH_DMApp.isLoadImg) {
+            UrlImageViewHelper.setUrlDrawable(holder.imgLeft,
+                    WH_DMHttpApiV1.URL_DOMAIN + leftPhoto.getLitpic(), R.drawable.item_default,
+                    null);
+
+            UrlImageViewHelper.setUrlDrawable(holder.imgRight, WH_DMHttpApiV1.URL_DOMAIN
+                    + rightPhot.getLitpic(), R.drawable.photos_img_background_nr, null);
+        }
 
         return convertView;
     }
@@ -111,6 +166,15 @@ public class PhotoAdapter extends BaseAdapter {
         TextView txtRightReview;
         TextView txtRightNum;
 
+    }
+
+    private void startActivity(int aid, String title, String description) {
+
+        Intent intent = new Intent(context, PhotosDetailsActivity.class);
+        intent.putExtra("aid", aid);
+        intent.putExtra("title", title);
+        intent.putExtra("description", description);
+        context.startActivity(intent);
     }
 
 }

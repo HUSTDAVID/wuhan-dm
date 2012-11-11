@@ -3,15 +3,22 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
+import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,24 +29,41 @@ public class LoginActivity extends Activity {
     Button btnLogin;
     Button btnForgetPw;
     TextView txtRegister;
+    private static final int MSG_LOGIN = 0;
+    private LoginTask loginTask = null;
+    private final Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (msg.what == MSG_LOGIN) {
+                if (loginTask != null) {
+                    loginTask.cancel(true);
+                    loginTask = null;
+                }
+                loginTask = new LoginTask();
+                loginTask.execute(getEmail(), getPassword());
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
-
         initViews();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -60,6 +84,15 @@ public class LoginActivity extends Activity {
         edtEmail = (EditText) findViewById(R.id.edt_login_emial);
         edtPasswd = (EditText) findViewById(R.id.edt_login_passwd);
         btnLogin = (Button) findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (IsValidate()) {
+                    handler.sendEmptyMessage(MSG_LOGIN);
+                }
+            }
+        });
         btnForgetPw = (Button) findViewById(R.id.btn_login_forget_pw);
         btnForgetPw.setOnClickListener(new OnClickListener() {
 
@@ -81,6 +114,80 @@ public class LoginActivity extends Activity {
             }
 
         });
+
+        ImageButton btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+
+        });
+
+    }
+
+    private String getEmail() {
+
+        return edtEmail.getText().toString();
+    }
+
+    private String getPassword() {
+
+        return edtPasswd.getText().toString();
+    }
+
+    private boolean IsValidate() {
+
+        String email = edtEmail.getText().toString();
+        String password = edtPasswd.getText().toString();
+        if (email.length() == 0 || email == null) {
+            NotificationUtil.showShortToast(getString(R.string.mail_toast), LoginActivity.this);
+            return false;
+        }
+        if (password.length() == 0 || password == null) {
+            NotificationUtil.showShortToast(getString(R.string.password_toast), LoginActivity.this);
+            return false;
+        }
+        return true;
+
+    }
+
+    private class LoginTask extends AsyncTask<String, Void, Boolean> {
+        Exception reason = null;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean isLogin = false;
+            try {
+                isLogin = ((WH_DMApp) getApplication()).getWH_DMApi().login(params[0], params[1]);
+                return isLogin;
+            } catch (Exception e) {
+                e.printStackTrace();
+                reason = e;
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.login_sucesses),
+                        LoginActivity.this);
+                WH_DMApp.isLogin = true;
+                Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
+                finish();
+            } else {
+                NotificationUtil
+                        .showShortToast(getString(R.string.login_fails), LoginActivity.this);
+            }
+            super.onPostExecute(result);
+        }
+
     }
 
 }

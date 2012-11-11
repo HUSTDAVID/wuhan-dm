@@ -23,15 +23,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/test1_banner" >
+                android:src="@drawable/banner" >
             </ImageView>
 
             <ImageView
                 android:id="@+id/pic1"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="150dip"
                 android:scaleType="fitXY"
-                android:src="@drawable/test1_banner" >
+                android:src="@drawable/banner" >
             </ImageView>
 
             <ImageView
@@ -39,7 +39,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/test1_banner" >
+                android:src="@drawable/banner" >
             </ImageView>
 
             <ImageView
@@ -47,7 +47,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/test1_banner" >
+                android:src="@drawable/banner" >
             </ImageView>
         </com.wh.dm.widget.HorizontalPager>
 

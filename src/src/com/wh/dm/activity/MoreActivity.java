@@ -13,6 +13,9 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class MoreActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener,
@@ -30,6 +33,18 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
         addPreferencesFromResource(R.xml.preference_more);
         setContentView(R.layout.activity_setting);
         init();
+
+        ImageButton btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+
+        });
     }
 
     @Override

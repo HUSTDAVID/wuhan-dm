@@ -19,18 +19,20 @@ import java.util.Map;
 public class NewsReplyFloorAdapter extends BaseAdapter {
 
     List<Map<String, Object>> mData;
-    LayoutInflater mInfalater;
+    LayoutInflater mInflater;
     Context context;
 
     public NewsReplyFloorAdapter(Context context) {
 
         this.context = context;
-        mInfalater = LayoutInflater.from(context);
-        mData = new ArrayList<Map<String, Object>>();
+        mInflater = LayoutInflater.from(context);
     }
 
     public void setList(ArrayList<Reply> replys) {
 
+        if (mData == null) {
+            mData = new ArrayList<Map<String, Object>>();
+        }
         for (int i = 0; i < replys.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", context.getString(R.string.review_name));
@@ -44,6 +46,9 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
 
     public void addItem(String name, String text, int floor) {
 
+        if (mData == null) {
+            mData = new ArrayList<Map<String, Object>>();
+        }
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("name", name);
         map.put("text", text);
@@ -56,7 +61,11 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 
-        return mData.size();
+        if (mData == null) {
+            return 0;
+        } else {
+            return mData.size();
+        }
     }
 
     @Override
@@ -77,7 +86,7 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInfalater.inflate(R.layout.news_reply_floor_item, null);
+            convertView = mInflater.inflate(R.layout.news_reply_floor_item, null);
             holder.txtFloor = (TextView) convertView.findViewById(R.id.txt_floor);
             holder.txtName = (TextView) convertView.findViewById(R.id.txt_floor_name);
             holder.txtText = (TextView) convertView.findViewById(R.id.txt_floor_text);

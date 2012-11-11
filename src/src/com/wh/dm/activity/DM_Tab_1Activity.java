@@ -21,7 +21,6 @@ public class DM_Tab_1Activity extends TabActivity implements OnTabChangeListener
     private static final int PHOTOS = 1;
     private static final int SUBSCRIBE = 2;
     private static final int STORE = 3;
-
     TabHost tabHost;
 
     @Override
@@ -30,16 +29,17 @@ public class DM_Tab_1Activity extends TabActivity implements OnTabChangeListener
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_tab);
-
         initTabs();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -111,4 +111,5 @@ public class DM_Tab_1Activity extends TabActivity implements OnTabChangeListener
             }
         }
     }
+
 }

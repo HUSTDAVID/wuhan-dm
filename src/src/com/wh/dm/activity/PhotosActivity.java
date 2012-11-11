@@ -14,11 +14,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-public class PhotosActivity extends ActivityGroup {
+public class PhotosActivity extends ActivityGroup implements OnClickListener {
 
     private RelativeLayout relMain;
     private LayoutParams params = null;
@@ -30,6 +31,8 @@ public class PhotosActivity extends ActivityGroup {
     private TextView txtPhotograph;
     private TextView txtFun;
 
+    private ImageButton btnMessage;
+    private TextView txtNum;
     private View vMain;
     private int itemWidth = 0;
 
@@ -43,14 +46,17 @@ public class PhotosActivity extends ActivityGroup {
         setContentView(R.layout.activity_photos);
 
         initViews();
+        showMessage();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -116,22 +122,33 @@ public class PhotosActivity extends ActivityGroup {
                     break;
 
                 case R.id.txt_listtop_2:
+                    intent.setClass(PhotosActivity.this, HotPhotosActivity.class);
+                    vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
                     setCurTxt(2);
                     break;
 
                 case R.id.txt_listtop_3:
+                    intent.setClass(PhotosActivity.this, CarPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("car", intent).getDecorView();
                     setCurTxt(3);
                     break;
 
                 case R.id.txt_listtop_4:
+                    intent.setClass(PhotosActivity.this, GirlPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("girl", intent).getDecorView();
                     setCurTxt(4);
                     break;
 
                 case R.id.txt_listtop_5:
+                    intent.setClass(PhotosActivity.this, PhotographPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("photograph", intent)
+                            .getDecorView();
                     setCurTxt(5);
                     break;
 
                 case R.id.txt_listtop_6:
+                    intent.setClass(PhotosActivity.this, FunPhotoActivity.class);
+                    vMain = getLocalActivityManager().startActivity("fun", intent).getDecorView();
                     setCurTxt(6);
                     break;
             }
@@ -237,6 +254,30 @@ public class PhotosActivity extends ActivityGroup {
                 txtPhotograph.setTextColor(Color.BLACK);
                 txtFun.setSelected(true);
                 txtFun.setTextColor(Color.WHITE);
+                break;
+        }
+
+    }
+
+    public void showMessage() {
+
+        btnMessage = (ImageButton) findViewById(R.id.btn_message);
+        txtNum = (TextView) findViewById(R.id.txt_message_num);
+        btnMessage.setOnClickListener(this);
+        txtNum.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.btn_message:
+            case R.id.txt_message_num:
+                Intent intent = new Intent(PhotosActivity.this, MessageActivity.class);
+                startActivity(intent);
+                break;
+            default:
                 break;
         }
 

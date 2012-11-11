@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_normal"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
     
     <include 
         layout="@layout/header_title3"/>
@@ -30,8 +29,7 @@
             android:textColorHint="#a7a7a7"
             android:textColor="#a7a7a7"
             android:textSize="18dip" />
-
-
+
     <EditText
         android:id="@+id/edt_login_passwd"
         android:layout_width="match_parent"
@@ -42,11 +40,10 @@
         android:hint="@string/password"
         android:paddingBottom="5dip"
         android:paddingTop="5dip"
-        android:textColorHint="#a7a7a7"
+        android:password="true"
         android:textColor="#a7a7a7"
+        android:textColorHint="#a7a7a7"
         android:textSize="18dip" />
-    
-
 
      <TableRow
          android:layout_width="fill_parent"

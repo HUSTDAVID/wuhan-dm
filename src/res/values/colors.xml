@@ -14,7 +14,7 @@
     <color name="divider">#cdcdcd</color>
     <color name="translucence_black">#70000000</color>
     <color name="floor_line">#d9d7d7</color>
-    
+
 
     <color name="sub_left_bg">#474747</color>
     <color name="sub_right_bg">#141414</color>
@@ -52,4 +52,6 @@
     <color name="download_selected">#e7e7e7</color>
     <color name="download_normal">#efefef</color>
     <color name="progressbar">#d9d9d9</color>
+    <color name="account_binded">#d6d6d6</color>
+    <color name="account_unbind">#ffffff</color>
 </resources>

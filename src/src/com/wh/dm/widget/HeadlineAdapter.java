@@ -21,10 +21,13 @@ public class HeadlineAdapter extends BaseAdapter {
 
     private final LayoutInflater mInflater;
     private ArrayList<PicWithTxtNews> headNews = null;
+    private final Context context;
 
-    public HeadlineAdapter(Context context) {
+    public HeadlineAdapter(Context _context) {
 
-        mInflater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(_context);
+        context = _context;
+
     }
 
     @Override
@@ -85,13 +88,12 @@ public class HeadlineAdapter extends BaseAdapter {
 
         holder.txt_title.setText(headNews.get(position).getTitle());
         holder.txt_body.setText(headNews.get(position).getDescription());
-
-        // UrlImageViewHelper.setUrlDrawable(holder.img,
-        // WH_DMHttpApiV1.URL_DOMAIN+headNews.get(position).getLitpic());
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.img,
                     WH_DMHttpApiV1.URL_DOMAIN + headNews.get(position).getLitpic(),
                     R.drawable.item_default, null);
+        } else {
+            holder.img.setBackgroundResource(R.drawable.item_default);
         }
         return view;
     }

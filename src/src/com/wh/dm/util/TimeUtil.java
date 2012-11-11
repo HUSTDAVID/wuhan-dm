@@ -1,13 +1,17 @@
 
 package com.wh.dm.util;
 
+import com.wh.dm.R;
+
+import android.content.Context;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeUtil {
 
-    public static String getTimeInterval(String date) {
+    public static String getTimeInterval(String date, Context context) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -17,14 +21,18 @@ public class TimeUtil {
             long day = diff / (24 * 60 * 60 * 1000);
             long hour = (diff / (60 * 60 * 1000) - day * 24);
             long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
+            long sec = ((diff / (1000)) - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
             if (day != 0) {
-                return new String("" + day + "天前");
+                return new String("" + day + context.getString(R.string.review_day));
             }
             if (hour != 0) {
-                return new String("" + hour + "小时前");
+                return new String("" + hour + context.getString(R.string.review_hour));
             }
             if (min != 0) {
-                return new String("" + min + "分钟前");
+                return new String("" + min + context.getString(R.string.review_min));
+            }
+            if (sec != 0) {
+                return new String("" + sec + context.getString(R.string.review_sec));
             }
         } catch (ParseException e) {
             // TODO Auto-generated catch block

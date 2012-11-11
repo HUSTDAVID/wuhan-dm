@@ -37,7 +37,8 @@
             android:paddingLeft="1dip"
             android:paddingRight="1dip"
             android:scaleType="fitXY"
-            android:src="@drawable/temp_photos_img" />
+            android:clickable="true"
+            android:src="@drawable/photos_img_background_nr" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -121,8 +122,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="2.5dip"
             android:layout_marginRight="2.5dip"
+            android:clickable="true"
             android:scaleType="fitXY"
-            android:src="@drawable/temp_photos_img" />
+            android:src="@drawable/photos_img_background_nr" />
 
         <RelativeLayout
             android:layout_width="fill_parent"

@@ -5,6 +5,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
@@ -12,11 +13,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class RegisterActivity extends Activity {
@@ -78,6 +85,20 @@ public class RegisterActivity extends Activity {
         edtEmail = (EditText) findViewById(R.id.edt_register_emial);
         edtPasswd = (EditText) findViewById(R.id.edt_register_passwd);
         cbShowPw = (CheckBox) findViewById(R.id.cb_show_passwd);
+        cbShowPw.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+                    edtPasswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    edtPasswd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+
+            }
+
+        });
         btnRigester = (Button) findViewById(R.id.btn_register_send);
         btnRigester.setOnClickListener(new View.OnClickListener() {
 
@@ -87,6 +108,17 @@ public class RegisterActivity extends Activity {
                 if (IsValidate()) {
                     handler.sendEmptyMessage(MSG_REGISTER);
                 }
+
+            }
+
+        });
+        ImageButton btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
 
             }
 
@@ -129,8 +161,7 @@ public class RegisterActivity extends Activity {
 
             boolean isRegister = false;
             try {
-                isRegister = wh_dmApi.register("1520830133@qq.com", "911029");
-                // isRegister = wh_dmApi.register(params[0], params[1]);
+                isRegister = wh_dmApi.register(params[0], params[1]);
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -150,6 +181,8 @@ public class RegisterActivity extends Activity {
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.register_sucesses),
                         RegisterActivity.this);
+                Preferences.saveUser(RegisterActivity.this, getEmail(), getPassword());
+                RegisterActivity.this.finish();
             } else {
                 NotificationUtil.showShortToast(getString(R.string.register_fails),
                         RegisterActivity.this);

@@ -69,9 +69,8 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
     private HeadlineAdapter adapter;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
-    private boolean isFirstLanucher = true;
     private boolean isFirstLoad = true;
-    private boolean isAdapter = false;
+    private boolean isAdapter = true;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -157,8 +156,27 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
-        handler.sendEmptyMessage(MSG_GET_PICSNEWS);
+        savedNews = databaseImpl.getHeadNews();
+        if (savedNews != null && savedNews.size() > 0) {
+            listView.setAdapter(adapter);
+            adapter.setList(savedNews);
+            listView.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+
+                    Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent.putExtra("id", savedNews.get(position).getId());
+                    startActivity(intent);
+                }
+
+            });
+            isAdapter = false;
+
+        }
         handler.sendEmptyMessage(MSG_GET_HEADNEWS);
+        handler.sendEmptyMessage(MSG_GET_PICSNEWS);
+
     }
 
     @Override
@@ -208,7 +226,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
 
             ArrayList<PicsNews> picsNews = null;
             try {
-                // picsNews = (new WH_DMApi()).getPicsNews();
                 picsNews = wh_dmApi.getPicsNews();
                 return picsNews;
             } catch (Exception e) {
@@ -246,29 +263,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         @Override
         protected void onPreExecute() {
 
-            if (isFirstLanucher) {
-                savedNews = databaseImpl.getFashionNews();
-                if (savedNews != null && savedNews.size() > 0) {
-                    listView.setAdapter(adapter);
-                    adapter.setList(savedNews);
-                    listView.setOnItemClickListener(new OnItemClickListener() {
-
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long arg3) {
-
-                            Intent intent = new Intent(HeadNewsActivity.this,
-                                    NewsDetailsActivity.class);
-                            intent.putExtra("id", savedNews.get(position).getId());
-                            startActivity(intent);
-                        }
-
-                    });
-                } else {
-                    isAdapter = true;
-                }
-                isFirstLanucher = false;
-            }
             super.onPreExecute();
         }
 
@@ -277,7 +271,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = wh_dmApi.getFashionNews(curPage);
+                houseNews = wh_dmApi.getHeadNews(curPage);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -291,7 +285,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
 
             if (result != null && result.size() > 0) {
                 if (isFirstLoad) {
-                    databaseImpl.deleteFashionNews();
+                    databaseImpl.deleteHeadNews();
                     isFirstLoad = false;
                 }
                 if (FLAG_PAGE_UP) {
@@ -306,7 +300,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                     adapter.setList(result);
                 }
 
-                databaseImpl.addFashionNews(result);
+                databaseImpl.addHeadNews(result);
                 listView.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -324,8 +318,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        // NotificationUtil.showShortToast(reason.toString(),
-                        // HeadNewsActivity.this);
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 HeadNewsActivity.this);
                     } else {
@@ -333,14 +325,13 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                                 HeadNewsActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                    NotificationUtil.showShortToast(getString(R.string.no_more_message),
                             HeadNewsActivity.this);
                 }
             }
             super.onPostExecute(result);
 
         }
-
     }
 
     private final RadioGroup.OnCheckedChangeListener onCheckedChangedListener = new RadioGroup.OnCheckedChangeListener() {
@@ -386,9 +377,15 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                     break;
                 case 2:
                     mRadioGroup.check(R.id.radio_btn_2);
+                    if (picsNews != null) {
+                        txtNews.setText(picsNews.get(2).getTitle());
+                    }
                     break;
                 case 3:
                     mRadioGroup.check(R.id.radio_btn_3);
+                    if (picsNews != null) {
+                        txtNews.setText(picsNews.get(3).getTitle());
+                    }
                     break;
                 default:
                     break;

@@ -44,6 +44,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         init();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
@@ -52,6 +53,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -61,7 +63,6 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public void init() {
 
         sPreference = PreferenceManager.getDefaultSharedPreferences(this);
-
         txt_title = (TextView) findViewById(R.id.txt_header_title2);
         txt_title.setText(getResources().getString(R.string.setting));
         btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
@@ -128,15 +129,16 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     // set flow control preference
     private void setFlowChange(SharedPreferences sharedPreferences, Preference pref) {
 
-        if (sharedPreferences.getString("flow", "key0").equals("key0")) {
+        if (sharedPreferences.getString("flow", "key1").equals("key0")) {
             pref.setSummary(getResources().getStringArray(R.array.flow_control)[0]);
-        } else if (sharedPreferences.getString("flow", "key0").equals("key1")) {
+        } else if (sharedPreferences.getString("flow", "key1").equals("key1")) {
             pref.setSummary(getResources().getStringArray(R.array.flow_control)[1]);
-        } else if (sharedPreferences.getString("flow", "key0").equals("key2")) {
+        } else if (sharedPreferences.getString("flow", "key1").equals("key2")) {
             pref.setSummary(getResources().getStringArray(R.array.flow_control)[2]);
         }
 
-        WH_DMApp.isLoadImg = SettingUtil.isDownloadImg(sharedPreferences, this);
+        boolean isLoadImag = SettingUtil.isDownloadImg(sharedPreferences, this);
+        WH_DMApp.isLoadImg = isLoadImag;
     }
 
 }

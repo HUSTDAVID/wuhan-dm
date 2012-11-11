@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <CheckBoxPreference android:widgetLayout="@layout/set_account_widget" android:layout="@layout/set_account_layout1" android:title="新浪微博" android:key="sinaweibo"/>
+    <CheckBoxPreference android:title="腾讯微博" android:layout="@layout/set_account_layout2" android:widgetLayout="@layout/set_account_widget" android:key="tencweibo"/>
+
+
+</PreferenceScreen>

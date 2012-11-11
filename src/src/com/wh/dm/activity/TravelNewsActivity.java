@@ -11,7 +11,6 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,7 +34,6 @@ public class TravelNewsActivity extends Activity {
     private LayoutInflater mInfalater;
     private static int MSG_GET_TRAVELNEWS = 0;
     private GetTravelNewsTask getTravelNewsTask = null;
-    private ProgressDialog progressDialog = null;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -77,8 +75,6 @@ public class TravelNewsActivity extends Activity {
             }
         });
         lv.addFooterView(footer);
-        progressDialog = new ProgressDialog(getParent());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
@@ -107,7 +103,6 @@ public class TravelNewsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
             super.onPreExecute();
         }
 
@@ -191,7 +186,6 @@ public class TravelNewsActivity extends Activity {
                             TravelNewsActivity.this);
                 }
             }
-            progressDialog.dismiss();
             super.onPostExecute(result);
         }
 

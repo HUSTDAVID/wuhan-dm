@@ -2,12 +2,17 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.activity.NewsMoreReplyActivity;
 import com.wh.dm.type.Comment;
 import com.wh.dm.util.TimeUtil;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -26,15 +31,20 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
     List<Map<String, Object>> mData;
     LayoutInflater mInflater;
     Context context;
+    public Handler handler;
 
     public void setList(ArrayList<Comment> comments) {
 
+        if (mData == null) {
+            mData = new ArrayList<Map<String, Object>>();
+        }
         for (int i = 0; i < comments.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", context.getString(R.string.review_name));
             map.put("time", comments.get(i).getDtime());
             map.put("body", comments.get(i).getMsg());
             map.put("top", comments.get(i).getGood());
+            map.put("fid", comments.get(i).getId());
             mData.add(map);
         }
         notifyDataSetChanged();
@@ -44,27 +54,36 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
 
         this.context = context;
         mInflater = LayoutInflater.from(context);
-        mData = new ArrayList<Map<String, Object>>();
     }
 
     public void addItem(String name, String time, String body, String top,
-            NewsReplyFloorAdapter floorAdapter) {
+            NewsReplyFloorAdapter floorAdapter, int fid) {
 
+        if (mData == null) {
+            mData = new ArrayList<Map<String, Object>>();
+        }
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("name", name);
         map.put("time", time);
         map.put("body", body);
         map.put("top", top);
+        map.put("fid", fid);
         map.put("floor_adapter", floorAdapter);
 
         mData.add(map);
-        notifyDataSetInvalidated();
+        notifyDataSetChanged();
+        // notifyDataSetInvalidated();
     }
 
     @Override
     public int getCount() {
 
-        return mData.size();
+        if (mData == null) {
+            return 0;
+        } else {
+            return mData.size();
+        }
+
     }
 
     @Override
@@ -80,7 +99,7 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
         if (convertView == null) {
@@ -101,11 +120,40 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
 
         holder.txtBody.setText(mData.get(position).get("body").toString());
         holder.txtName.setText(mData.get(position).get("name").toString());
-        holder.txtTime
-                .setText(TimeUtil.getTimeInterval(mData.get(position).get("time").toString()));
+        holder.txtTime.setText(TimeUtil.getTimeInterval(mData.get(position).get("time").toString(),
+                context));
         holder.btnTop.setText(context.getString(R.string.top)
                 + mData.get(position).get("top").toString());
+        holder.btnTop.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Message message = new Message();
+                message.what = NewsMoreReplyActivity.MSG_PUSH_TOP;
+                Bundle bundle = new Bundle();
+                bundle.putString("fid", "" + mData.get(position).get("fid"));
+                message.setData(bundle);
+                handler.sendMessage(message);
+
+            }
+
+        });
+        holder.btnReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Message message = new Message();
+                message.what = NewsMoreReplyActivity.MSG_REPLY;
+                Bundle bundle = new Bundle();
+                bundle.putString("fid", "" + mData.get(position).get("fid"));
+                bundle.putBoolean("isReply", false);
+                message.setData(bundle);
+                handler.sendMessage(message);
+
+            }
+
+        });
         NewsReplyFloorAdapter adapter = (NewsReplyFloorAdapter) (mData.get(position)
                 .get("floor_adapter"));
         if (adapter != null && adapter.getCount() > 0) {
@@ -119,7 +167,13 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
         return convertView;
     }
 
-    static class ViewHolder {
+    public void setHandler(Handler _handler) {
+
+        handler = _handler;
+
+    }
+
+    public static class ViewHolder {
         LinearLayout layout;
         TextView txtName;
         TextView txtTime;

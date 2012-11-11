@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:paddingLeft="14.67dip"
         android:paddingRight="14.67dip"
-        android:text="        AIMAO(艾猫)，最受欢迎的生活服务类软件。目前支持iPhone、iPad、Android Phone、Android Pad平台"
+        android:text="        每刻资讯，最受欢迎的生活服务类软件。目前支持iPhone、iPad、Android Phone、Android Pad平台"
         android:textColor="@color/black"
         android:textSize="13sp" />
 
@@ -27,7 +27,7 @@
         android:layout_marginTop="10dp"
         android:paddingLeft="14.67dip"
         android:paddingRight="14.67dip"
-        android:text="        AIMAO聚合资讯。打折、微博、博客、报纸、杂志、图片、RSS、Google Reader等众多内容，您可以根据自己的喜好添加定制化内容"
+        android:text="        每刻资讯聚合资讯。打折、微博、博客、报纸、杂志、图片、RSS、Google Reader等众多内容，您可以根据自己的喜好添加定制化内容"
         android:textColor="@color/black"
         android:textSize="13sp" />
 
@@ -38,7 +38,7 @@
         android:layout_marginTop="10dp"
         android:paddingLeft="14.67dip"
         android:paddingRight="14.67dip"
-        android:text="        AIMAO还具有强大的社区交互分享功能，您可以通过绑定微博将喜欢的内容分享给好友"
+        android:text="        每刻资讯还具有强大的社区交互分享功能，您可以通过绑定微博将喜欢的内容分享给好友"
         android:textColor="@color/black"
         android:textSize="13sp" />
 
