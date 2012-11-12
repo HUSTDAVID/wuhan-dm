@@ -42,7 +42,9 @@ public class HouseNewsActivity extends Activity {
     private DatabaseImpl databaseImpl;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
-    private boolean isFirstLanucher = true;
+    private boolean isFirstLauncher = true;
+    private boolean isFirstLoad = true;
+    private boolean isAdapter = true;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -109,6 +111,30 @@ public class HouseNewsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
+            if (isFirstLauncher) {
+                savedNews = databaseImpl.getHouseNews();
+                if (savedNews != null && savedNews.size() > 0) {
+                    if (isAdapter) {
+                        lv.setAdapter(adapter);
+                        adapter.setList(savedNews);
+                        isAdapter = false;
+                    }
+                    lv.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long arg3) {
+
+                            Intent intent = new Intent(HouseNewsActivity.this,
+                                    NewsDetailsActivity.class);
+                            intent.putExtra("id", savedNews.get(position).getId());
+                            startActivity(intent);
+                        }
+
+                    });
+                }
+                isFirstLauncher = false;
+            }
             super.onPreExecute();
         }
 
@@ -130,19 +156,21 @@ public class HouseNewsActivity extends Activity {
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
             if (result != null && result.size() > 0) {
-                if (isFirstLanucher) {
-                    lv.setAdapter(adapter);
+                if (isFirstLoad) {
                     databaseImpl.deleteHouseNews();
-                    isFirstLanucher = false;
+                    isFirstLoad = false;
                 }
                 if (FLAG_PAGE_UP) {
                     adapter.addList(result);
                     FLAG_PAGE_UP = false;
 
                 } else {
+                    if (isAdapter) {
+                        lv.setAdapter(adapter);
+                        isAdapter = false;
+                    }
                     adapter.setList(result);
                 }
-
                 databaseImpl.addHouseNews(result);
                 lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -161,26 +189,6 @@ public class HouseNewsActivity extends Activity {
 
             } else {
                 if (!FLAG_PAGE_UP) {
-                    savedNews = databaseImpl.getHouseNews();
-                    if (savedNews != null && savedNews.size() > 0) {
-                        if (isFirstLanucher) {
-                            lv.setAdapter(adapter);
-                        }
-                        adapter.setList(savedNews);
-                        lv.setOnItemClickListener(new OnItemClickListener() {
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long arg3) {
-
-                                Intent intent = new Intent(HouseNewsActivity.this,
-                                        NewsDetailsActivity.class);
-                                intent.putExtra("id", savedNews.get(position).getId());
-                                startActivity(intent);
-                            }
-
-                        });
-                    }
                     if (wh_dmApp.isConnected()) {
                         NotificationUtil.showShortToast(reason.toString(), HouseNewsActivity.this);
                     } else {

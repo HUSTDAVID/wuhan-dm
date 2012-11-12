@@ -186,7 +186,7 @@ public class DatabaseImpl implements Database {
     public void deleteHouseNews() {
 
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
-        db.delete(TABLE_HEAD, null, null);
+        db.delete(TABLE_HOUSE, null, null);
         db.close();
 
     }

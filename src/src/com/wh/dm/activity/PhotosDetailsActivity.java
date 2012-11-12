@@ -69,6 +69,7 @@ public class PhotosDetailsActivity extends Activity {
 
     private static final int MSG_GET_ALL = 0;
     private static final int MSG_LOAD_IMAGE = 2;
+    private static final int MSG_ADD_REVIEW = 3;
     private GetPhotoDetailsTask getPhotoDetailsTask = null;
     private LoadImageTask loadImageTask = null;
     private ArrayList<PhotoDetails> photosDetails;
@@ -97,6 +98,7 @@ public class PhotosDetailsActivity extends Activity {
                     loadImageTask = new LoadImageTask();
                     loadImageTask.execute(photosDetails.get(currentPhoto - 1).getPic());
                     break;
+
             }
 
             super.handleMessage(msg);
@@ -114,12 +116,14 @@ public class PhotosDetailsActivity extends Activity {
 
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -339,8 +343,7 @@ public class PhotosDetailsActivity extends Activity {
         public void onPageSelected(int arg0) {
 
             currentPhoto = 1 + arg0;
-            ImageView imageView = (ImageView) ((View) pageViews.get(arg0))
-                    .findViewById(R.id.img_photos);
+            ImageView imageView = (ImageView) pageViews.get(arg0).findViewById(R.id.img_photos);
             UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
                     + photosDetails.get(arg0).getPic(), R.drawable.item_default, null);
             txtPage.setText(currentPhoto + "/" + totalPhotos);
@@ -385,8 +388,7 @@ public class PhotosDetailsActivity extends Activity {
                     View view = inflater.inflate(R.layout.activity_photos_details, null);
                     pageViews.add(view);
                 }
-                ImageView imageView = (ImageView) ((View) pageViews.get(0))
-                        .findViewById(R.id.img_photos);
+                ImageView imageView = (ImageView) pageViews.get(0).findViewById(R.id.img_photos);
                 UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
                         + photosDetails.get(0).getPic(), R.drawable.item_default, null);
                 txtPage.setText(currentPhoto + "/" + totalPhotos);
@@ -437,5 +439,19 @@ public class PhotosDetailsActivity extends Activity {
         }
 
     }
+
+    /*
+     * private class AddReviewTask extends AsyncTask<String, Void, Boolean> {
+     * boolean result = false; Exception reason = null;
+     * @Override protected void onPreExecute() { super.onPreExecute(); }
+     * @Override protected Boolean doInBackground(String... params) { try {
+     * result = wh_dmApi.addReview(params[0], id); return true; } catch
+     * (Exception e) { reason = e; e.printStackTrace(); return false; } }
+     * @Override protected void onPostExecute(Boolean result) { if (result) {
+     * NotificationUtil.showShortToast(getString(R.string.review_succeed),
+     * PhotosDetailsActivity.this); } else {
+     * NotificationUtil.showShortToast(getString(R.string.review_fail),
+     * PhotosDetailsActivity.this); } super.onPostExecute(result); } }
+     */
 
 }

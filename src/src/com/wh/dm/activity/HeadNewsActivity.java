@@ -40,7 +40,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
     private int currentItem = 0;
     private View headerView;
     private LayoutInflater mInfalater;
-    private ListView listView;
+    private ListView lv;
     private View footer;
     private Button btnFoolter;
 
@@ -65,10 +65,12 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
 
-    ArrayList<PicWithTxtNews> savedNews = null;
+    private ArrayList<PicWithTxtNews> savedNews = null;
+    private ArrayList<PicWithTxtNews> curNews = null;
     private HeadlineAdapter adapter;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
+    private boolean isFirstLauncher = true;
     private boolean isFirstLoad = true;
     private boolean isAdapter = true;
     private final Handler handler = new Handler() {
@@ -134,7 +136,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
 
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
-        listView = (ListView) findViewById(R.id.list);
+        lv = (ListView) findViewById(R.id.list);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
         btnFoolter.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +148,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                 handler.sendEmptyMessage(MSG_GET_HEADNEWS);
             }
         });
-        listView.addFooterView(footer);
+        lv.addFooterView(footer);
         mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
@@ -156,26 +158,9 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
-        savedNews = databaseImpl.getHeadNews();
-        if (savedNews != null && savedNews.size() > 0) {
-            listView.setAdapter(adapter);
-            adapter.setList(savedNews);
-            listView.setOnItemClickListener(new OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
-
-                    Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                    intent.putExtra("id", savedNews.get(position).getId());
-                    startActivity(intent);
-                }
-
-            });
-            isAdapter = false;
-
-        }
+        thread.start();
         handler.sendEmptyMessage(MSG_GET_HEADNEWS);
-        handler.sendEmptyMessage(MSG_GET_PICSNEWS);
+        // handler.sendEmptyMessage(MSG_GET_PICSNEWS);
 
     }
 
@@ -224,7 +209,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         @Override
         protected ArrayList<PicsNews> doInBackground(Void... arg0) {
 
-            ArrayList<PicsNews> picsNews = null;
             try {
                 picsNews = wh_dmApi.getPicsNews();
                 return picsNews;
@@ -239,17 +223,18 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         protected void onPostExecute(ArrayList<PicsNews> result) {
 
             if (result != null) {
-                picsNews = result;
+                // picsNews = result;
                 if (wh_dmApp.isLoadImg) {
-                    UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + result.get(0).getLitpic());
-                    UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + result.get(1).getLitpic());
-                    UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + result.get(2).getLitpic());
-                    UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + result.get(3).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN
+                            + picsNews.get(0).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN
+                            + picsNews.get(1).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN
+                            + picsNews.get(2).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN
+                            + picsNews.get(3).getLitpic());
                 }
-                if (thread.isAlive()) {
-                    thread.destroy();
-                }
-                thread.start();
+                NotificationUtil.showShortToast("danteng", HeadNewsActivity.this);
 
             }
             super.onPostExecute(result);
@@ -263,6 +248,30 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         @Override
         protected void onPreExecute() {
 
+            if (isFirstLauncher) {
+                savedNews = databaseImpl.getHeadNews();
+                if (savedNews != null && savedNews.size() > 0) {
+                    if (isAdapter) {
+                        lv.setAdapter(adapter);
+                        adapter.setList(savedNews);
+                        isAdapter = false;
+                    }
+                    lv.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long arg3) {
+
+                            Intent intent = new Intent(HeadNewsActivity.this,
+                                    NewsDetailsActivity.class);
+                            intent.putExtra("id", savedNews.get(position).getId());
+                            startActivity(intent);
+                        }
+
+                    });
+                }
+                isFirstLauncher = false;
+            }
             super.onPreExecute();
         }
 
@@ -272,6 +281,8 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
                 houseNews = wh_dmApi.getHeadNews(curPage);
+                curNews = houseNews;
+                picsNews = wh_dmApi.getPicsNews();
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
@@ -281,7 +292,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
+        protected void onPostExecute(ArrayList<PicWithTxtNews> result) {
 
             if (result != null && result.size() > 0) {
                 if (isFirstLoad) {
@@ -294,14 +305,14 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
 
                 } else {
                     if (isAdapter) {
-                        listView.setAdapter(adapter);
+                        lv.setAdapter(adapter);
                         isAdapter = false;
                     }
                     adapter.setList(result);
                 }
 
                 databaseImpl.addHeadNews(result);
-                listView.setOnItemClickListener(new OnItemClickListener() {
+                lv.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -314,6 +325,10 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                     }
 
                 });
+                UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + picsNews.get(0).getLitpic());
+                UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + picsNews.get(1).getLitpic());
+                UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + picsNews.get(2).getLitpic());
+                UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + picsNews.get(3).getLitpic());
 
             } else {
                 if (!FLAG_PAGE_UP) {
