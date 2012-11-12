@@ -13,7 +13,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
@@ -55,7 +54,6 @@ public class HttpApiBasic implements HttpApi {
 
         String query = URLEncodedUtils.format(fullParams(nameValuePairs), HTTP.UTF_8);
         HttpGet httpGet = new HttpGet(url + "?" + query);
-        // httpGet.addHeader(CLIENT_VERSION_HEADER, mClientVersion);
         if (DEBUG) {
             Log.d("HttpGet", "HttpGet:");
         }
@@ -73,42 +71,6 @@ public class HttpApiBasic implements HttpApi {
             throw new IllegalArgumentException("Unable to encode http parameters.");
         }
         return httpPost;
-    }
-
-    @Override
-    public String doHttpPost(HttpPost httpost) throws WH_DMException, UnKnownException, IOException {
-
-        // HttpResponse response = executeHttpRequest(httpRequest);
-        HttpPost xhttpost = new HttpPost("http://test1.jbr.net.cn:809/api/Mem.aspx");
-        // HttpResponse response = executeHttpRequest();
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-        nameValuePairs.add(new BasicNameValuePair("act", "reg"));
-        nameValuePairs.add(new BasicNameValuePair("Regmail", "1520830133@qq.com"));
-        nameValuePairs.add(new BasicNameValuePair("Regepass", "911029"));
-        httpost.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
-        HttpResponse response = mHttpClient.execute(httpost);
-        int statusCode = response.getStatusLine().getStatusCode();
-        switch (statusCode) {
-            case 200:
-                String content = EntityUtils.toString(response.getEntity());
-                return content;
-            case 400:
-                throw new WH_DMException("");
-
-            case 401:
-                response.getEntity().consumeContent();
-                throw new WH_DMException("请求参数不符合API规定");
-            case 404:
-                response.getEntity().consumeContent();
-                throw new WH_DMException("未授权");
-            case 500:
-                response.getEntity().consumeContent();
-                throw new WH_DMException("资源不存在");
-            default:
-                response.getEntity().consumeContent();
-                throw new UnKnownException("" + statusCode);
-        }
-
     }
 
     @Override

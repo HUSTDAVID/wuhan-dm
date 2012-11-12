@@ -100,10 +100,10 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.addTop(fid);
     }
 
-    public boolean addReply(String rconent, String id, String fid) throws WH_DMException,
-            UnKnownException, IOException {
+    public boolean addReply(String rconent, String fid) throws WH_DMException, UnKnownException,
+            IOException {
 
-        return mWH_DMHttpApiV1.addReply(rconent, id, fid);
+        return mWH_DMHttpApiV1.addReply(rconent, fid);
     }
 
     public boolean addReview(String content, int id) throws WH_DMException, UnKnownException,

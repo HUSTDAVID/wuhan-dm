@@ -240,12 +240,12 @@ public class WH_DMHttpApiV1 {
 
     }
 
-    public boolean addReply(String rcontent, String id, String fid) throws WH_DMException,
-            UnKnownException, IOException {
+    public boolean addReply(String rcontent, String fid) throws WH_DMException, UnKnownException,
+            IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_NEWS,
-                new BasicNameValuePair("act", "Reply"), new BasicNameValuePair("id", id),
-                new BasicNameValuePair("fid", fid), new BasicNameValuePair("fcontent", rcontent));
+                new BasicNameValuePair("act", "Reply"), new BasicNameValuePair("fid", fid),
+                new BasicNameValuePair("rcontent", rcontent));
         String content = mHttpApi.doHttpRequest(httPost);
         PostResult result = gson.fromJson(content, PostResult.class);
         Log.d("review", content);
@@ -296,7 +296,7 @@ public class WH_DMHttpApiV1 {
             IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "217"), new BasicNameValuePair(
+                "act", "listta"), new BasicNameValuePair("cid", "218"), new BasicNameValuePair(
                 "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
@@ -311,7 +311,7 @@ public class WH_DMHttpApiV1 {
             IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "218"), new BasicNameValuePair(
+                "act", "listta"), new BasicNameValuePair("cid", "217"), new BasicNameValuePair(
                 "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {

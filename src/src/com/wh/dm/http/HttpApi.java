@@ -16,9 +16,6 @@ public interface HttpApi {
     abstract public String doHttpRequest(HttpRequestBase httpRequest) throws WH_DMException,
             UnKnownException, IOException;
 
-    abstract public String doHttpPost(HttpPost httpost) throws WH_DMException, UnKnownException,
-            IOException;
-
     abstract public HttpGet createHttpGet(String url, NameValuePair... nameValuePairs);
 
     abstract public HttpPost createHttpPost(String url, NameValuePair... nameValuePairs);

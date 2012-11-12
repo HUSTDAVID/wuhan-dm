@@ -404,7 +404,7 @@ public class NewsMoreReplyActivity extends Activity {
 
             boolean isReply = false;
             try {
-                isReply = wh_dmApi.addReply(getFcontent(), "" + id, params[0]);
+                isReply = wh_dmApi.addReply(getFcontent(), params[0]);
                 return isReply;
             } catch (Exception e) {
                 e.printStackTrace();
