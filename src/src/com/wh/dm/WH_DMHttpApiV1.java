@@ -301,8 +301,8 @@ public class WH_DMHttpApiV1 {
             IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "216"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listh"), new BasicNameValuePair("spage", "12"), new BasicNameValuePair(
+                "page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getPhotos", "getPhotos");
