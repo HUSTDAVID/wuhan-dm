@@ -38,6 +38,7 @@ public class TravelNewsActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     private int curPage = 1;
+    private int id;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
@@ -62,6 +63,7 @@ public class TravelNewsActivity extends Activity {
 
         super.onCreate(bundle);
         setContentView(R.layout.activity_news_house);
+        id = getIntent().getIntExtra("id", 215);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
@@ -137,7 +139,7 @@ public class TravelNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = wh_dmApi.getTravelNews(curPage);
+                houseNews = wh_dmApi.getTravelNews(curPage, id);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;

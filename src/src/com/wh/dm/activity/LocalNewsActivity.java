@@ -3,11 +3,20 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
+import com.wh.dm.type.NewsType;
 
 import android.app.ActivityGroup;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +26,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class LocalNewsActivity extends ActivityGroup implements OnClickListener {
 
@@ -38,6 +49,30 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
     private View vMain;
     private int itemWidth = 0;
     Intent intent = null;
+
+    private WH_DMApp wh_dmApp;
+    private WH_DMApi wh_dmApi;
+    private int MSG_GET_NEWS_TYPE = 0;
+    private GetNewsTypeTask getNewsTypeTask = null;
+    private ArrayList<NewsType> newsSort = null;
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (msg.what == MSG_GET_NEWS_TYPE) {
+                if (getNewsTypeTask != null) {
+                    getNewsTypeTask.cancel(true);
+                    getNewsTypeTask = null;
+                }
+                getNewsTypeTask = new GetNewsTypeTask();
+                getNewsTypeTask.execute();
+            }
+
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +101,9 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
 
     private void initViews() {
 
+        wh_dmApp = (WH_DMApp) getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+
         txtTitle = (TextView) findViewById(R.id.txt_title);
         txtTitle.setText(getResources().getString(R.string.news));
 
@@ -75,6 +113,26 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
         txtFashion = (TextView) findViewById(R.id.txt_listtop_4);
         txtLift = (TextView) findViewById(R.id.txt_listtop_5);
         txtTravel = (TextView) findViewById(R.id.txt_listtop_6);
+
+        SharedPreferences preference = PreferenceManager
+                .getDefaultSharedPreferences(LocalNewsActivity.this);
+        String one = preference.getString(Preferences.NEWS_ONE,
+                getResources().getString(R.string.house));
+        String two = preference.getString(Preferences.NEWS_TWO,
+                getResources().getString(R.string.car));
+        String three = preference.getString(Preferences.NEWS_THREE,
+                getResources().getString(R.string.digital));
+        String four = preference.getString(Preferences.NEWS_FOUR,
+                getResources().getString(R.string.lift));
+        String five = preference.getString(Preferences.NEWS_FIVE,
+                getResources().getString(R.string.traval));
+        txtHouse.setText(one);
+        txtCar.setText(two);
+        txtFashion.setText(three);
+        txtLift.setText(four);
+        txtTravel.setText(five);
+
+        handler.sendEmptyMessage(MSG_GET_NEWS_TYPE);
 
         itemWidth = getScreenWidth() / 6;
 
@@ -115,18 +173,27 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 case R.id.txt_listtop_2:
                     setCurTxt(2);
                     intent.setClass(LocalNewsActivity.this, HouseNewsActivity.class);
+                    if (newsSort != null && newsSort.size() > 0) {
+                        intent.putExtra("id", newsSort.get(0).getId());
+                    }
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_3:
                     setCurTxt(3);
                     intent.setClass(LocalNewsActivity.this, CarNewsActivity.class);
+                    if (newsSort != null && newsSort.size() > 1) {
+                        intent.putExtra("id", newsSort.get(1).getId());
+                    }
                     vMain = getLocalActivityManager().startActivity("Car", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_4:
                     setCurTxt(4);
                     intent.setClass(LocalNewsActivity.this, FashionNewsActivity.class);
+                    if (newsSort != null && newsSort.size() > 2) {
+                        intent.putExtra("id", newsSort.get(2).getId());
+                    }
                     vMain = getLocalActivityManager().startActivity("Fashion", intent)
                             .getDecorView();
                     break;
@@ -134,12 +201,18 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 case R.id.txt_listtop_5:
                     setCurTxt(5);
                     intent.setClass(LocalNewsActivity.this, LifeNewsActivity.class);
+                    if (newsSort != null && newsSort.size() > 3) {
+                        intent.putExtra("id", newsSort.get(3).getId());
+                    }
                     vMain = getLocalActivityManager().startActivity("Life", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_6:
                     setCurTxt(6);
                     intent.setClass(LocalNewsActivity.this, TravelNewsActivity.class);
+                    if (newsSort != null && newsSort.size() > 4) {
+                        intent.putExtra("id", newsSort.get(4).getId());
+                    }
                     vMain = getLocalActivityManager().startActivity("Travel", intent)
                             .getDecorView();
                     break;
@@ -275,4 +348,43 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
 
     }
 
+    class GetNewsTypeTask extends AsyncTask<Void, Void, ArrayList<NewsType>> {
+
+        Exception reason;
+
+        @Override
+        protected ArrayList<NewsType> doInBackground(Void... params) {
+
+            try {
+                newsSort = wh_dmApi.getNewsType();
+                return newsSort;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<NewsType> result) {
+
+            if (result != null && result.size() > 0) {
+                String one = newsSort.get(0).getTypename();
+                String two = newsSort.get(1).getTypename();
+                String three = newsSort.get(2).getTypename();
+                String four = newsSort.get(3).getTypename();
+                String five = newsSort.get(4).getTypename();
+
+                txtHouse.setText(one);
+                txtCar.setText(two);
+                txtFashion.setText(three);
+                txtLift.setText(four);
+                txtTravel.setText(five);
+
+                Preferences.saveNewsType(LocalNewsActivity.this, one, two, three, four, five);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
 }

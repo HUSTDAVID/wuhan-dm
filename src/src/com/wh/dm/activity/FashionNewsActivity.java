@@ -43,6 +43,7 @@ public class FashionNewsActivity extends Activity {
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
     private boolean isFirstLoad = true;
+    private int id;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -64,6 +65,7 @@ public class FashionNewsActivity extends Activity {
         super.onCreate(bundle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_house);
+        id = getIntent().getIntExtra("id", 213);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
@@ -140,7 +142,7 @@ public class FashionNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = wh_dmApi.getFashionNews(curPage);
+                houseNews = wh_dmApi.getFashionNews(curPage, id);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
