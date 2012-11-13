@@ -39,7 +39,7 @@
             android:paddingRight="1dip"
             android:scaleType="fitXY"
             android:clickable="true"
-            android:src="@drawable/item_default" />
+            android:src="@drawable/photos_img_background_nr" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -126,7 +126,7 @@
             android:layout_marginRight="2.5dip"
             android:clickable="true"
             android:scaleType="fitXY"
-            android:src="@drawable/item_default" />
+            android:src="@drawable/photos_img_background_nr" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
