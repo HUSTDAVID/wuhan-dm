@@ -23,12 +23,13 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:src="@drawable/logo" />
-
+
     <TextView
         android:id="@+id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="3dp"
         android:layout_toRightOf="@+id/img_logo"
         android:gravity="center"
         android:text="@string/news"

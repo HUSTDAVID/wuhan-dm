@@ -7,6 +7,7 @@ import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.http.HttpApiBasic;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
 import com.wh.dm.type.Photo;
@@ -39,6 +40,7 @@ public class WH_DMHttpApiV1 {
     private static final String URL_API_DOMAIN = "http://test1.jbr.net.cn:809/api/News.aspx";
     private static final String URL_API_NEWS = "/api/News.aspx";
     private static final String URL_API_MEM = "/api/Mem.aspx";
+    public static final String URL_API_MAGAZINE = "/api/Magazine.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -432,5 +434,17 @@ public class WH_DMHttpApiV1 {
         String content = mHttpApi.doHttpRequest(httPost);
         PostResult result = gson.fromJson(content, PostResult.class);
         return result.getResult();
+    }
+
+    public ArrayList<Magazine> getMagazine() throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "list"),
+                new BasicNameValuePair("pi", String.valueOf(1)), new BasicNameValuePair("pz",
+                        String.valueOf(20)), new BasicNameValuePair("cid", null));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Magazine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
     }
 }

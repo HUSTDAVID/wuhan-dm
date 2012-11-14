@@ -4,6 +4,7 @@ package com.wh.dm;
 import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
 import com.wh.dm.type.PhotoDetails;
@@ -182,6 +183,11 @@ public class WH_DMApi {
             UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.login(logemail, logpassword);
+    }
+
+    public ArrayList<Magazine> getMagazine() throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getMagazine();
     }
 
 }

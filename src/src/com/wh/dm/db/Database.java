@@ -1,6 +1,7 @@
 
 package com.wh.dm.db;
 
+import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.Photo;
 import com.wh.dm.type.PhotoDetails;
@@ -129,5 +130,36 @@ public interface Database {
     public ArrayList<PhotoDetails> getPhotographPhotoDet();
 
     public ArrayList<PhotoDetails> getFunPhotoDet();
+
+    // magazine
+    public void deleteHotMagazine();
+
+    public void deleteCarMagazine();
+
+    public void deleteGirlMagazine();
+
+    public void deletePhotographMagazine();
+
+    public void deleteFunMagazine();
+
+    public void addHotMagazine(ArrayList<Magazine> magazine);
+
+    public void addCarMagazine(ArrayList<Magazine> magazine);
+
+    public void addGirlMagazine(ArrayList<Magazine> magazine);
+
+    public void addPhotographMagazine(ArrayList<Magazine> magazine);
+
+    public void addFunMagazine(ArrayList<Magazine> magazine);
+
+    public ArrayList<Magazine> getHotMagazine();
+
+    public ArrayList<Magazine> getCarMagazine();
+
+    public ArrayList<Magazine> getGirlMagazine();
+
+    public ArrayList<Magazine> getPhotographMagazine();
+
+    public ArrayList<Magazine> getFunMagazine();
 
 }

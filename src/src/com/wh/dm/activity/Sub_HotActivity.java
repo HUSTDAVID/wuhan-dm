@@ -3,18 +3,28 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApi;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.type.Magazine;
+import com.wh.dm.type.TwoMagazine;
+import com.wh.dm.util.MagazineUtil;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.PullToRefreshListView;
 import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 import com.wh.dm.widget.SubscribeAdapter;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 public class Sub_HotActivity extends Activity {
 
@@ -22,6 +32,35 @@ public class Sub_HotActivity extends Activity {
     View footer;
     Button btnFooter;
     LayoutInflater mInflater;
+
+    private WH_DMApp wh_dmApp;
+    private WH_DMApi wh_dmApi;
+    private final int MSG_GET_MAGAZINE = 0;
+    private GetMagazine getMagazine = null;
+    private ArrayList<TwoMagazine> savedMagazine = null;
+    private SubscribeAdapter adapter;
+    private int curPage = 1;
+    private DatabaseImpl databaseImpl;
+    private boolean FLAG_PAGE_UP = false;
+    private boolean isFirstLauncher = true;
+    private boolean isAdapter = true;
+    private boolean isFirstLoad = true;
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (MSG_GET_MAGAZINE == msg.what) {
+                if (getMagazine != null) {
+                    getMagazine.cancel(true);
+                    getMagazine = null;
+                }
+                getMagazine = new GetMagazine();
+                getMagazine.execute();
+            }
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +88,6 @@ public class Sub_HotActivity extends Activity {
 
         lvSub = (PullToRefreshListView) findViewById(R.id.lv_subscribe);
         lvSub.setDivider(null);
-
-        SubscribeAdapter adapter = new SubscribeAdapter(this);
-
-        Bitmap bmp1 = BitmapFactory.decodeResource(getResources(), R.drawable.tempdm1);
-        Bitmap bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.tempdm2);
-        Bitmap bmp3 = BitmapFactory.decodeResource(getResources(), R.drawable.dm_temp1);
-        Bitmap bmp4 = BitmapFactory.decodeResource(getResources(), R.drawable.dm_temp2);
-        Bitmap bmp5 = BitmapFactory.decodeResource(getResources(), R.drawable.dm_temp3);
-        Bitmap bmp6 = BitmapFactory.decodeResource(getResources(), R.drawable.fashion_travel);
-        adapter.addItem(bmp3, "爱帝", false, bmp4, "君顶会", false);
-        adapter.addItem(bmp5, "中国石油石化", false, bmp6, "时尚旅游", false);
-        adapter.addItem(bmp1, "光博会", true, bmp2, "今日光谷", true);
-
         lvSub.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -81,15 +107,99 @@ public class Sub_HotActivity extends Activity {
                     @Override
                     public void run() {
 
+                        handler.sendEmptyMessage(MSG_GET_MAGAZINE);
                         lvSub.onRefreshComplete();
                     }
                 }, 2000);
             }
         });
-        lvSub.setAdapter(adapter);
+
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         footer.setBackgroundColor(getResources().getColor(R.color.bg_normal));
         btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
         lvSub.addFooterView(footer);
+
+        wh_dmApp = (WH_DMApp) this.getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
+        adapter = new SubscribeAdapter(this);
+        handler.sendEmptyMessage(MSG_GET_MAGAZINE);
     }
+
+    class GetMagazine extends AsyncTask<Void, Void, ArrayList<TwoMagazine>> {
+
+        Exception reason;
+
+        @Override
+        protected void onPreExecute() {
+
+            if (isFirstLauncher) {
+                savedMagazine = MagazineUtil.toTwoMagazine(databaseImpl.getHotMagazine());
+                if (savedMagazine != null && savedMagazine.size() > 0) {
+                    if (isAdapter) {
+                        lvSub.setAdapter(adapter);
+                        adapter.setList(savedMagazine);
+                        isAdapter = false;
+                    }
+                }
+                isFirstLauncher = false;
+            }
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<TwoMagazine> doInBackground(Void... params) {
+
+            ArrayList<Magazine> one = null;
+            try {
+                one = wh_dmApi.getMagazine();
+                savedMagazine = MagazineUtil.toTwoMagazine(one);
+                return savedMagazine;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<TwoMagazine> result) {
+
+            if (result != null && result.size() > 0) {
+                if (isFirstLoad) {
+                    databaseImpl.deleteHotMagazine();
+                    isFirstLoad = false;
+                }
+                if (FLAG_PAGE_UP) {
+                    adapter.addList(result);
+                    FLAG_PAGE_UP = false;
+                } else {
+                    if (isAdapter) {
+                        lvSub.setAdapter(adapter);
+                        isAdapter = false;
+                    }
+                    adapter.setList(result);
+                }
+                databaseImpl.addHotMagazine(MagazineUtil.toOneMagazine(result));
+            } else {
+                if (!FLAG_PAGE_UP) {
+                    if (!FLAG_PAGE_UP) {
+                        if (wh_dmApp.isConnected()) {
+                            NotificationUtil
+                                    .showShortToast(reason.toString(), Sub_HotActivity.this);
+                        } else {
+                            NotificationUtil.showShortToast(getString(R.string.check_network),
+                                    Sub_HotActivity.this);
+                        }
+                    } else {
+                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                                Sub_HotActivity.this);
+                    }
+                }
+            }
+        }
+
+    }
+
 }

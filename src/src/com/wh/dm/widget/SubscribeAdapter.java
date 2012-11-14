@@ -2,9 +2,13 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.type.Magazine;
+import com.wh.dm.type.TwoMagazine;
+import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,47 +18,42 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SubscribeAdapter extends BaseAdapter {
 
-    ArrayList<Map<String, Object>> mData;
+    ArrayList<TwoMagazine> twoMagazine;
     LayoutInflater mInflater;
     Context context;
 
     public SubscribeAdapter(Context context) {
 
         this.context = context;
+        twoMagazine = new ArrayList<TwoMagazine>();
         mInflater = LayoutInflater.from(context);
-        mData = new ArrayList<Map<String, Object>>();
     }
 
-    public void addItem(Bitmap leftBmp, String leftTitle, boolean leftIsSub, Bitmap rightBmp,
-            String rightTitle, boolean rightIsSub) {
+    public void setList(ArrayList<TwoMagazine> _twoMagazine) {
 
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("leftImage", leftBmp);
-        map.put("leftTitle", leftTitle);
-        map.put("leftIsSub", leftIsSub);
+        twoMagazine = _twoMagazine;
+        notifyDataSetChanged();
+    }
 
-        map.put("rightImage", rightBmp);
-        map.put("rightTitle", rightTitle);
-        map.put("rightIsSub", rightIsSub);
-        mData.add(map);
+    public void addList(ArrayList<TwoMagazine> _twoMagazine) {
+
+        twoMagazine.addAll(_twoMagazine);
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
 
-        return mData.size();
+        return twoMagazine.size();
     }
 
     @Override
     public Object getItem(int position) {
 
-        return mData.get(position);
+        return twoMagazine.get(position);
     }
 
     @Override
@@ -82,10 +81,15 @@ public class SubscribeAdapter extends BaseAdapter {
             holder = (ViewHolder) conterView.getTag();
         }
 
+        Magazine left;
+        Magazine right;
+        left = twoMagazine.get(position).getLeftMagazine();
+        right = twoMagazine.get(position).getRightMagazine();
         // add left data
-        holder.leftImg.setImageBitmap((Bitmap) mData.get(position).get("leftImage"));
-        holder.leftTxt.setText(mData.get(position).get("leftTitle").toString());
-        boolean leftIsSub = (Boolean) mData.get(position).get("leftIsSub");
+
+        holder.leftTxt.setText(left.getSname());
+        // test data
+        boolean leftIsSub = false;
         if (leftIsSub) {
             holder.leftBtn.setBackgroundResource(R.drawable.btn_sub_have);
             holder.leftBtn.setText(context.getResources().getString(R.string.sub_have));
@@ -97,9 +101,10 @@ public class SubscribeAdapter extends BaseAdapter {
         }
 
         // add right data
-        holder.rightImg.setImageBitmap((Bitmap) mData.get(position).get("rightImage"));
-        holder.rightTxt.setText(mData.get(position).get("rightTitle").toString());
-        boolean rightIsSub = (Boolean) mData.get(position).get("rightIsSub");
+
+        holder.rightTxt.setText(right.getSname());
+        // test data
+        boolean rightIsSub = false;
         if (rightIsSub) {
             holder.rightBtn.setBackgroundResource(R.drawable.btn_sub_have);
             holder.rightBtn.setText(context.getResources().getString(R.string.sub_have));
@@ -108,6 +113,13 @@ public class SubscribeAdapter extends BaseAdapter {
             holder.rightBtn.setBackgroundResource(R.drawable.btn_sub_no);
             holder.rightBtn.setText(context.getResources().getString(R.string.sub_no));
             holder.rightBtn.setTextColor(context.getResources().getColor(R.color.white));
+        }
+
+        if (WH_DMApp.isLoadImg) {
+            UrlImageViewHelper.setUrlDrawable(holder.leftImg,
+                    WH_DMHttpApiV1.URL_DOMAIN + left.getPic(), R.drawable.item_default, null);
+            UrlImageViewHelper.setUrlDrawable(holder.rightImg,
+                    WH_DMHttpApiV1.URL_DOMAIN + right.getPic(), R.drawable.item_default, null);
         }
 
         return conterView;

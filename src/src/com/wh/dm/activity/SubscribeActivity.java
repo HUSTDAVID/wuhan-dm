@@ -40,7 +40,6 @@ public class SubscribeActivity extends ActivityGroup {
 
     private final int startX = 0;
     private int itemWidth = 0;
-
     Intent intent = null;
 
     @Override
@@ -241,4 +240,5 @@ public class SubscribeActivity extends ActivityGroup {
                 break;
         }
     }
+
 }
