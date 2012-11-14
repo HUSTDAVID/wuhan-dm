@@ -11,6 +11,7 @@ import com.wh.dm.type.NewsContent;
 import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.TextUtil;
+import com.wh.dm.util.TimeUtil;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
@@ -56,7 +57,7 @@ public class NewsDetailsActivity extends Activity {
     private TextView newsTitle;
     TextView newsTime;
     TextView newsSource;
-
+    TextView txtReplynum;
     WebView webViewNewsBody;
     WebSettings webSettings;
 
@@ -99,7 +100,7 @@ public class NewsDetailsActivity extends Activity {
                         getCommentTask = null;
                     }
                     getCommentTask = new GetCommentTask();
-                    getCommentTask.execute(fid);
+                    getCommentTask.execute(id);
                     break;
                 case ADD_REVIEW:
                     if (addReviewTask != null) {
@@ -166,9 +167,8 @@ public class NewsDetailsActivity extends Activity {
         lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);
-        adapter.addItem("手机版网友", "13小时前", "没什么谈的，人不敬我，我何必敬人。", "顶1212");
-
         lvNews.setAdapter(adapter);
+
         btnMore = (Button) findViewById(R.id.btn_news_more);
         btnMore.setOnClickListener(new OnClickListener() {
 
@@ -256,6 +256,7 @@ public class NewsDetailsActivity extends Activity {
                 UMSnsService.share(NewsDetailsActivity.this, "说些什么...", null);
             }
         });
+        txtReplynum = (TextView) findViewById(R.id.txt_total_reply);
 
     }
 
@@ -293,6 +294,7 @@ public class NewsDetailsActivity extends Activity {
 
     private class GetNewsDetailTask extends AsyncTask<Integer, Void, NewsContent> {
         Exception reason = null;
+        ArrayList<Comment> comments = null;
 
         @Override
         protected void onPreExecute() {
@@ -313,6 +315,7 @@ public class NewsDetailsActivity extends Activity {
 
             try {
                 content = wh_dmApi.getNewsContent(params[0]);
+                comments = wh_dmApi.getComment(id, curPage);
                 return content[0];
             } catch (Exception e) {
                 e.printStackTrace();
@@ -333,6 +336,16 @@ public class NewsDetailsActivity extends Activity {
                         null);
                 newsTitle.setText(result.getTitle());
                 newsTime.setText(result.getPubdate());
+                if (comments != null && comments.size() > 0) {
+                    Comment comment = comments.get(0);
+                    adapter.addItem(getString(R.string.news_user),
+                            TimeUtil.getTimeInterval(comment.getDtime(), NewsDetailsActivity.this),
+                            comment.getMsg(), getString(R.string.top) + comment.getGood());
+                } else {
+                    lvNews.removeFooterView(footer);
+                }
+                txtReplynum.setText("" + result.getFcount() + getString(R.string.news_reply_count));
+
             } else {
                 result = databaseImpl.getNewsContent(id);
                 if (result != null) {
@@ -352,7 +365,6 @@ public class NewsDetailsActivity extends Activity {
             progressDialog.dismiss();
             super.onPostExecute(result);
         }
-
     }
 
     private class GetCommentTask extends AsyncTask<Integer, Void, ArrayList<Comment>> {

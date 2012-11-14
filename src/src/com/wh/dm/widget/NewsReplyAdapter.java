@@ -26,11 +26,13 @@ public class NewsReplyAdapter extends BaseAdapter {
 
         this.context = context;
         mInflater = LayoutInflater.from(context);
-        mData = new ArrayList<Map<String, Object>>();
     }
 
     public void addItem(String name, String time, String body, String top) {
 
+        if (mData == null) {
+            mData = new ArrayList<Map<String, Object>>();
+        }
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("name", name);
         map.put("time", time);
@@ -43,7 +45,11 @@ public class NewsReplyAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 
-        return mData.size();
+        if (mData == null) {
+            return 0;
+        } else {
+            return mData.size();
+        }
     }
 
     @Override

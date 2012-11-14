@@ -325,10 +325,16 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                     }
 
                 });
-                UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + picsNews.get(0).getLitpic());
-                UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + picsNews.get(1).getLitpic());
-                UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + picsNews.get(2).getLitpic());
-                UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + picsNews.get(3).getLitpic());
+                if (wh_dmApp.isLoadImg) {
+                    UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN
+                            + picsNews.get(0).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN
+                            + picsNews.get(1).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN
+                            + picsNews.get(2).getLitpic());
+                    UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN
+                            + picsNews.get(3).getLitpic());
+                }
 
             } else {
                 if (!FLAG_PAGE_UP) {

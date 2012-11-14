@@ -78,6 +78,7 @@ public class HeadlineAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.headline_item, null);
             holder.txt_title = (TextView) view.findViewById(R.id.txt_headline_item_title);
             holder.txt_body = (TextView) view.findViewById(R.id.txt_headline_item_body);
+            holder.txt_reply = (TextView) view.findViewById(R.id.txt_headline_reply);
             holder.img = (ImageView) view.findViewById(R.id.img_headline_item);
             view.setTag(holder);
         } else
@@ -88,6 +89,8 @@ public class HeadlineAdapter extends BaseAdapter {
 
         holder.txt_title.setText(headNews.get(position).getTitle());
         holder.txt_body.setText(headNews.get(position).getDescription());
+        holder.txt_reply.setText("" + headNews.get(position).getFcount()
+                + context.getString(R.string.news_reply_count));
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.img,
                     WH_DMHttpApiV1.URL_DOMAIN + headNews.get(position).getLitpic(),
@@ -100,8 +103,8 @@ public class HeadlineAdapter extends BaseAdapter {
 
     static class ViewHolder {
         public TextView txt_title;
-
         public TextView txt_body;
+        public TextView txt_reply;
         public ImageView img;
     }
 

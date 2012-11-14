@@ -8,13 +8,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class WeiboActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class WeiboActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener,
+        OnPreferenceClickListener {
 
     private CheckBoxPreference pref_sina;
     private CheckBoxPreference pref_tenc;
@@ -75,5 +78,11 @@ public class WeiboActivity extends PreferenceActivity implements OnSharedPrefere
             }
         }
 
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+
+        return false;
     }
 }

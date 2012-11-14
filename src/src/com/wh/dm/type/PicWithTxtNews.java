@@ -1,103 +1,138 @@
+
 package com.wh.dm.type;
 
 public class PicWithTxtNews {
-	private int no;
-	private int id;
-	private int typeid;
-	private String title;
-	private String litpic;
-	private String description;
-	private int sortrank;
-	private boolean isfirst;
-	private boolean ishot;
-	private String pubdate;
-	private String isUrl;
+    private int no;
+    private int id;
+    private int typeid;
+    private String title;
+    private String litpic;
+    private String description;
+    private int sortrank;
+    private boolean isfirst;
+    private boolean ishot;
+    private String pubdate;
+    private String isUrl;
+    private int fcount;
 
-	public void setNo(int _no) {
-		no = _no;
-	}
+    public void setNo(int _no) {
 
-	public int getNo() {
-		return no;
-	}
+        no = _no;
+    }
 
-	public void setId(int _id) {
-		id = _id;
-	}
+    public int getNo() {
 
-	public int getId() {
-		return id;
-	}
+        return no;
+    }
 
-	public void setTypeId(int _typeid) {
-		typeid = _typeid;
-	}
+    public void setId(int _id) {
 
-	public int getTypeId() {
-		return typeid;
-	}
+        id = _id;
+    }
 
-	public void setTitle(String _title) {
-		title = _title;
-	}
+    public int getId() {
 
-	public String getTitle() {
-		return title;
-	}
+        return id;
+    }
 
-	public void setLitpic(String _litpic) {
-		litpic = _litpic;
-	}
+    public void setTypeId(int _typeid) {
 
-	public String getLitpic() {
-		return litpic;
-	}
+        typeid = _typeid;
+    }
 
-	public void setDescription(String _description) {
-		description = _description;
-	}
+    public int getTypeId() {
 
-	public String getDescription() {
-		return description;
-	}
+        return typeid;
+    }
 
-	public void setSortrank(int _sortrank) {
-		sortrank = _sortrank;
-	}
+    public void setTitle(String _title) {
 
-	public int getSortrank() {
-		return sortrank;
-	}
+        title = _title;
+    }
 
-	public void setIsfirst(boolean _isfirst) {
-		isfirst = _isfirst;
-	}
+    public String getTitle() {
 
-	public boolean getIsfirst() {
-		return isfirst;
-	}
+        return title;
+    }
 
-	public void setIshot(boolean _ishot) {
-		ishot = _ishot;
-	}
+    public void setLitpic(String _litpic) {
 
-	public boolean getIshot() {
-		return ishot;
-	}
+        litpic = _litpic;
+    }
 
-	public void setDate(String _pubdate) {
-		pubdate = _pubdate;
-	}
+    public String getLitpic() {
 
-	public String getDate() {
-		return pubdate;
-	}
+        return litpic;
+    }
 
-	public void setIsUrl(String _isUrl) {
-		isUrl = _isUrl;
-	}
+    public void setDescription(String _description) {
 
-	public String getIsUrl() {
-		return isUrl;
-	}
+        description = _description;
+    }
+
+    public String getDescription() {
+
+        return description;
+    }
+
+    public void setSortrank(int _sortrank) {
+
+        sortrank = _sortrank;
+    }
+
+    public int getSortrank() {
+
+        return sortrank;
+    }
+
+    public void setIsfirst(boolean _isfirst) {
+
+        isfirst = _isfirst;
+    }
+
+    public boolean getIsfirst() {
+
+        return isfirst;
+    }
+
+    public void setIshot(boolean _ishot) {
+
+        ishot = _ishot;
+    }
+
+    public boolean getIshot() {
+
+        return ishot;
+    }
+
+    public void setDate(String _pubdate) {
+
+        pubdate = _pubdate;
+    }
+
+    public String getDate() {
+
+        return pubdate;
+    }
+
+    public void setIsUrl(String _isUrl) {
+
+        isUrl = _isUrl;
+    }
+
+    public String getIsUrl() {
+
+        return isUrl;
+    }
+
+    public void setFcount(int _fcount) {
+
+        fcount = _fcount;
+
+    }
+
+    public int getFcount() {
+
+        return fcount;
+    }
 }

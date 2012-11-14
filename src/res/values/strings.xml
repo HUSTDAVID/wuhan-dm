@@ -76,6 +76,7 @@
     <string name="news_reply_body">没什么谈的，人不敬我，我何必敬人。</string>
     <string name="news_reply_top">顶1152</string>
     <string name="news_reply">回复</string>
+    <string name="news_reply_count">跟帖</string>
 
     <!-- 忘记密码 -->
     <string name="txt_forget_password">请填写您的注册邮箱，我们会重置连接发送到您的邮箱中。</string>
@@ -163,6 +164,8 @@
     <string name="aboutus">关于我们</string>
 	<string name="download">下载</string>
 	<string name="push_message">我的消息</string>
+	<string name="mymeike">我的每刻</string>
+	<string name="login_toast">用户已登陆</string>
 	<!-- Exception -->
 	<string name="network_exception">网络连接异常</string>
 	<string name="check_network">请检查网络连接</string>
