@@ -244,6 +244,7 @@ public class VotedListActivity extends Activity {
                             Intent intent = new Intent(VotedListActivity.this, Vote2Activity.class);
                             intent.putExtra("aid", votes.get(currentSelelct).getAid());
                             intent.putExtra("name", votes.get(currentSelelct).getVotename());
+                            intent.putExtra("ismore", votes.get(currentSelelct).isIsmore());
                             startActivity(intent);
                         }
                     });

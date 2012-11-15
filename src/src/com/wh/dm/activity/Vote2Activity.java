@@ -9,12 +9,15 @@ import com.wh.dm.type.VoteItem;
 import com.wh.dm.widget.VoteChoiceAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -29,6 +32,9 @@ public class Vote2Activity extends Activity {
     private TextView txtName;
     private ListView listView;
     private VoteChoiceAdapter adapter;
+    private boolean isMore = false;
+    private boolean[] choice;
+    private Button lastChoice;
     private GetVoteitemsTask getVoteitemsTask = null;
 
     private WH_DMApp wh_dmApp;
@@ -84,6 +90,7 @@ public class Vote2Activity extends Activity {
         wh_dmApi = wh_dmApp.getWH_DMApi();
         aid = getIntent().getIntExtra("aid", 0);
         voteName = getIntent().getStringExtra("name");
+        isMore = getIntent().getBooleanExtra("ismore", false);
         txtName = (TextView) findViewById(R.id.vote_ing_2);
         txtName.setText(voteName);
 
@@ -97,7 +104,11 @@ public class Vote2Activity extends Activity {
             @Override
             public void onClick(View v) {
 
-                finish();
+                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
+                // intent.putExtra("id", voteItems.get(index - 1).getId());
+                // intent.putExtra("used_ips", voteItems.get(index -
+                // 1).getUsed_ips());
+                startActivity(intent);
             }
         });
 
@@ -106,6 +117,39 @@ public class Vote2Activity extends Activity {
             public void onClick(View view) {
 
                 finish();
+            }
+        });
+
+        listView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+
+                if (isMore) {
+                    Button btn = (Button) view.findViewById(R.id.btn_vote_item);
+                    if (btn.isSelected()) {
+                        btn.setSelected(false);
+                        choice[position] = false;
+                    } else {
+                        btn.setSelected(true);
+                        choice[position] = true;
+                    }
+                } else {
+                    if (lastChoice != null) {
+                        lastChoice.setSelected(false);
+                    }
+                    Button btn = (Button) view.findViewById(R.id.btn_vote_item);
+                    lastChoice = btn;
+                    for (int i = 0; i < choice.length; i++) {
+                        if (i == position) {
+                            choice[i] = true;
+                            btn.setSelected(true);
+                        } else {
+                            choice[i] = false;
+                        }
+                    }
+                }
+
             }
         });
 
@@ -120,6 +164,7 @@ public class Vote2Activity extends Activity {
 
             try {
                 voteItems = wh_dmApi.getVoteItems(aid);
+                choice = new boolean[voteItems.size()];
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
