@@ -2,14 +2,11 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
-import com.wh.dm.activity.VoteWatchResultActivity;
 import com.wh.dm.type.VoteItem;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -68,18 +65,6 @@ public class VoteChoiceAdapter extends BaseAdapter {
 
         final int index = position + 1;
         holder.btnVoteItem.setText(String.valueOf(index) + "." + votes.get(position).getVotenote());
-        holder.btnVoteItem.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context, VoteWatchResultActivity.class);
-                intent.putExtra("id", votes.get(index - 1).getId());
-                intent.putExtra("used_ips", votes.get(index - 1).getUsed_ips());
-                context.startActivity(intent);
-
-            }
-        });
 
         return convertView;
     }
