@@ -27,16 +27,19 @@ public class Vote1Activity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_vote1);
         init();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -50,6 +53,7 @@ public class Vote1Activity extends Activity {
         progressBar3 = (ProgressBar) findViewById(R.id.pro_vote_result3);
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(Vote1Activity.this, VotedListActivity.class);
@@ -60,6 +64,7 @@ public class Vote1Activity extends Activity {
         });
         btnClose = (Button) findViewById(R.id.vote_button_close);
         btnClose.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(Vote1Activity.this, VotedListActivity.class);

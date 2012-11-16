@@ -35,6 +35,7 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         addPreferencesFromResource(R.xml.preference_more);
         setContentView(R.layout.activity_setting);
         init();

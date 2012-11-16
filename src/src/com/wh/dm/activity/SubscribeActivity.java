@@ -40,25 +40,27 @@ public class SubscribeActivity extends ActivityGroup {
 
     private final int startX = 0;
     private int itemWidth = 0;
-
     Intent intent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_subscribe);
 
         initViews();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -241,4 +243,5 @@ public class SubscribeActivity extends ActivityGroup {
                 break;
         }
     }
+
 }

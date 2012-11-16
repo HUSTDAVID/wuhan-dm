@@ -45,6 +45,7 @@ public class HouseNewsActivity extends Activity {
     private boolean isFirstLauncher = true;
     private boolean isFirstLoad = true;
     private boolean isAdapter = true;
+    private int id;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -64,8 +65,10 @@ public class HouseNewsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_house);
+        id = getIntent().getIntExtra("id", 211);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
@@ -143,7 +146,7 @@ public class HouseNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = wh_dmApi.getHouseNews(curPage);
+                houseNews = wh_dmApi.getHouseNews(curPage, id);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;

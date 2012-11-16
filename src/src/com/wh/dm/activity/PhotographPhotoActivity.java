@@ -50,6 +50,7 @@ public class PhotographPhotoActivity extends Activity {
     private GetPhotosTask getPhotosTask = null;
     private PhotoAdapter adapter;
     ArrayList<TwoPhotos> savePhotos = null;
+    private int id;
 
     private final Handler handler = new Handler() {
 
@@ -97,6 +98,8 @@ public class PhotographPhotoActivity extends Activity {
         // txtPhotosHeader = (TextView) findViewById(R.id.txt_header3_title);
         // relPhotosHeader.setBackgroundResource(R.drawable.topbar_black_bg);
         // txtPhotosHeader.setText(getResources().getString(R.string.photo));
+
+        id = getIntent().getIntExtra("id", 219);
 
         lvPhotos = (PullToRefreshListView) findViewById(R.id.lv_photos_all);
         lvPhotos.setDivider(null);
@@ -179,7 +182,7 @@ public class PhotographPhotoActivity extends Activity {
 
             ArrayList<TwoPhotos> photos = null;
             try {
-                photos = wh_dmApi.getPhotographPhotos(curPage);
+                photos = wh_dmApi.getPhotographPhotos(curPage, id);
                 return photos;
             } catch (Exception e) {
                 reason = e;

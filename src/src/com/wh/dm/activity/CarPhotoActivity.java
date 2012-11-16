@@ -50,6 +50,7 @@ public class CarPhotoActivity extends Activity {
     private GetPhotosTask getPhotosTask = null;
     private PhotoAdapter adapter;
     ArrayList<TwoPhotos> savePhotos = null;
+    private int id = 0;
 
     private final Handler handler = new Handler() {
 
@@ -72,18 +73,21 @@ public class CarPhotoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_dm_photos_all);
         mInflater = getLayoutInflater();
         initViews();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -97,6 +101,8 @@ public class CarPhotoActivity extends Activity {
         // txtPhotosHeader = (TextView) findViewById(R.id.txt_header3_title);
         // relPhotosHeader.setBackgroundResource(R.drawable.topbar_black_bg);
         // txtPhotosHeader.setText(getResources().getString(R.string.photo));
+
+        id = getIntent().getIntExtra("id", 218);
 
         lvPhotos = (PullToRefreshListView) findViewById(R.id.lv_photos_all);
         lvPhotos.setDivider(null);
@@ -179,7 +185,7 @@ public class CarPhotoActivity extends Activity {
 
             ArrayList<TwoPhotos> photos = null;
             try {
-                photos = wh_dmApi.getCarPhotos(curPage);
+                photos = wh_dmApi.getCarPhotos(curPage, id);
                 return photos;
             } catch (Exception e) {
                 reason = e;

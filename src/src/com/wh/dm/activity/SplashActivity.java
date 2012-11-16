@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.Activity;
@@ -14,6 +15,7 @@ public class SplashActivity extends Activity {
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_splash);
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -19,19 +19,23 @@ public class DownloadActivity extends Activity {
     private TextView txtTitle;
     private ImageButton btnBack;
 
+    @Override
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_download);
         init();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -44,6 +48,7 @@ public class DownloadActivity extends Activity {
         txtTitle.setText(getString(R.string.download));
         btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
         btnBack.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
 
                 finish();

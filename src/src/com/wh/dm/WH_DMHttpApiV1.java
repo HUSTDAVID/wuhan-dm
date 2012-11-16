@@ -7,10 +7,12 @@ import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.http.HttpApiBasic;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
 import com.wh.dm.type.Photo;
 import com.wh.dm.type.PhotoDetails;
+import com.wh.dm.type.PhotoSort;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.PostResult;
@@ -38,6 +40,7 @@ public class WH_DMHttpApiV1 {
     private static final String URL_API_DOMAIN = "http://test1.jbr.net.cn:809/api/News.aspx";
     private static final String URL_API_NEWS = "/api/News.aspx";
     private static final String URL_API_MEM = "/api/Mem.aspx";
+    public static final String URL_API_MAGAZINE = "/api/Magazine.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -94,12 +97,13 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public ArrayList<PicWithTxtNews> getHouseNews(int page) throws WH_DMException,
+    public ArrayList<PicWithTxtNews> getHouseNews(int page, int id) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listp"), new BasicNameValuePair("cid", "211"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listp"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getHouseNews", "getHouseNews");
@@ -111,12 +115,13 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public ArrayList<PicWithTxtNews> getCarNews(int page) throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<PicWithTxtNews> getCarNews(int page, int id) throws WH_DMException,
+            UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listp"), new BasicNameValuePair("cid", "212"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listp"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getCarNews", "getCarNews");
@@ -128,12 +133,13 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public ArrayList<PicWithTxtNews> getFashionNews(int page) throws WH_DMException,
+    public ArrayList<PicWithTxtNews> getFashionNews(int page, int id) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listp"), new BasicNameValuePair("cid", "213"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listp"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getFashionNews", "getFashionNews");
@@ -145,12 +151,13 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public ArrayList<PicWithTxtNews> getLifeNews(int page) throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<PicWithTxtNews> getLifeNews(int page, int id) throws WH_DMException,
+            UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listp"), new BasicNameValuePair("cid", "214"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listp"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getLifeNews", "getLifeNews");
@@ -162,12 +169,13 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public ArrayList<PicWithTxtNews> getTravelNews(int page) throws WH_DMException,
+    public ArrayList<PicWithTxtNews> getTravelNews(int page, int id) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listp"), new BasicNameValuePair("cid", "215"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listp"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getTravelNews", "getTravelNews");
@@ -262,6 +270,20 @@ public class WH_DMHttpApiV1 {
     }
 
     // photos
+
+    public ArrayList<PhotoSort> getPhotoSort() throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
+                "act", "listac"));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotoSort", "getPhotoSort");
+        }
+        Type type = new TypeToken<ArrayList<PhotoSort>>() {
+        }.getType();
+        return (ArrayList<PhotoSort>) gson.fromJson(content, type);
+    }
+
     public ArrayList<TwoPhotos> getPhotos(int page) throws WH_DMException, UnKnownException,
             IOException {
 
@@ -281,8 +303,8 @@ public class WH_DMHttpApiV1 {
             IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "216"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listh"), new BasicNameValuePair("spage", "12"), new BasicNameValuePair(
+                "page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getPhotos", "getPhotos");
@@ -292,42 +314,13 @@ public class WH_DMHttpApiV1 {
         return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
     }
 
-    public ArrayList<TwoPhotos> getCarPhotos(int page) throws WH_DMException, UnKnownException,
-            IOException {
-
-        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "218"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
-        String content = mHttpApi.doHttpRequest(httpGet);
-        if (DEBUG) {
-            Log.d("getPhotos", "getPhotos");
-        }
-        Type type = new TypeToken<ArrayList<Photo>>() {
-        }.getType();
-        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
-    }
-
-    public ArrayList<TwoPhotos> getGirlPhotos(int page) throws WH_DMException, UnKnownException,
-            IOException {
-
-        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "217"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
-        String content = mHttpApi.doHttpRequest(httpGet);
-        if (DEBUG) {
-            Log.d("getPhotos", "getPhotos");
-        }
-        Type type = new TypeToken<ArrayList<Photo>>() {
-        }.getType();
-        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
-    }
-
-    public ArrayList<TwoPhotos> getPhotographPhotos(int page) throws WH_DMException,
+    public ArrayList<TwoPhotos> getCarPhotos(int page, int id) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "219"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listta"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getPhotos", "getPhotos");
@@ -337,12 +330,45 @@ public class WH_DMHttpApiV1 {
         return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
     }
 
-    public ArrayList<TwoPhotos> getFunPhotos(int page) throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<TwoPhotos> getGirlPhotos(int page, int id) throws WH_DMException,
+            UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
-                "act", "listta"), new BasicNameValuePair("cid", "220"), new BasicNameValuePair(
-                "spage", "12"), new BasicNameValuePair("page", String.valueOf(page)));
+                "act", "listta"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<TwoPhotos> getPhotographPhotos(int page, int id) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
+                "act", "listta"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getPhotos", "getPhotos");
+        }
+        Type type = new TypeToken<ArrayList<Photo>>() {
+        }.getType();
+        return PhotoUtil.chagePhoto((ArrayList<Photo>) gson.fromJson(content, type));
+    }
+
+    public ArrayList<TwoPhotos> getFunPhotos(int page, int id) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
+                "act", "listta"), new BasicNameValuePair("cid", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"),
+                new BasicNameValuePair("page", String.valueOf(page)));
         String content = mHttpApi.doHttpRequest(httpGet);
         if (DEBUG) {
             Log.d("getPhotos", "getPhotos");
@@ -408,5 +434,17 @@ public class WH_DMHttpApiV1 {
         String content = mHttpApi.doHttpRequest(httPost);
         PostResult result = gson.fromJson(content, PostResult.class);
         return result.getResult();
+    }
+
+    public ArrayList<Magazine> getMagazine() throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "list"),
+                new BasicNameValuePair("pi", String.valueOf(1)), new BasicNameValuePair("pz",
+                        String.valueOf(20)), new BasicNameValuePair("cid", null));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Magazine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
     }
 }

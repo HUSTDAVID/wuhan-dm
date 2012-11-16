@@ -38,6 +38,7 @@
                 android:background="@color/translucence_black"
                 android:gravity="center"
                 android:text="时尚"
+                android:singleLine="true"
                 android:textColor="@color/white" />
         </RelativeLayout>
 
@@ -97,6 +98,7 @@
                 android:background="@color/translucence_black"
                 android:gravity="center"
                 android:text="时尚"
+                android:singleLine="true"
                 android:textColor="@color/white" />
         </RelativeLayout>
 

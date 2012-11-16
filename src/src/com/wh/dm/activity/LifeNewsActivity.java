@@ -39,6 +39,7 @@ public class LifeNewsActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     private int curPage = 1;
+    private int id;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
@@ -62,8 +63,10 @@ public class LifeNewsActivity extends Activity {
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_house);
+        id = getIntent().getIntExtra("id", 214);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
@@ -139,7 +142,7 @@ public class LifeNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = wh_dmApi.getLifeNews(curPage);
+                houseNews = wh_dmApi.getLifeNews(curPage, id);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;

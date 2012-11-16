@@ -40,6 +40,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         addPreferencesFromResource(R.xml.preference);
         setContentView(R.layout.activity_setting);
         init();

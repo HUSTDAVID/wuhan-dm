@@ -38,6 +38,7 @@ public class CarNewsActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     private int curPage = 1;
+    private int id;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
@@ -61,7 +62,9 @@ public class CarNewsActivity extends Activity {
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_news_house);
+        id = getIntent().getIntExtra("id", 212);
         lv = (ListView) findViewById(R.id.news_list_house);
         adapter = new HeadlineAdapter(this);
         mInfalater = getLayoutInflater();
@@ -137,7 +140,7 @@ public class CarNewsActivity extends Activity {
 
             ArrayList<PicWithTxtNews> houseNews = null;
             try {
-                houseNews = wh_dmApi.getCarNews(curPage);
+                houseNews = wh_dmApi.getCarNews(curPage, id);
                 return houseNews;
             } catch (Exception e) {
                 reason = e;
