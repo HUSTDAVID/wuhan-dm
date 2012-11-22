@@ -55,6 +55,7 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register);
         wh_dmApi = ((WH_DMApp) getApplication()).getWH_DMApi();

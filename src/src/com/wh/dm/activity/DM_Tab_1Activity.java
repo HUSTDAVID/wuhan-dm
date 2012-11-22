@@ -27,6 +27,7 @@ public class DM_Tab_1Activity extends TabActivity implements OnTabChangeListener
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_tab);
         initTabs();

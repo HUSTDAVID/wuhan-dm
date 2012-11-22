@@ -71,6 +71,7 @@ public class VotedListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         wh_dmApp = (WH_DMApp) this.getApplication();
@@ -90,12 +91,14 @@ public class VotedListActivity extends Activity {
 
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();

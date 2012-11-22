@@ -52,11 +52,11 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
-    private int MSG_GET_NEWS_TYPE = 0;
+    private final int MSG_GET_NEWS_TYPE = 0;
     private GetNewsTypeTask getNewsTypeTask = null;
     private ArrayList<NewsType> newsSort = null;
 
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -78,6 +78,7 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_dm_news);
         initViews();

@@ -40,6 +40,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         addPreferencesFromResource(R.xml.preference);
         setContentView(R.layout.activity_setting);
         init();
@@ -79,6 +80,10 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         });
         getListView().setDivider(getResources().getDrawable(R.drawable.divider_horizontal_line));
         pref_login = findPreference("login");
+        if (WH_DMApp.isLogin) {
+            pref_login.setTitle(getString(R.string.mymeike));
+            pref_login.setSummary(sPreference.getString("email", getString(R.string.login_toast)));
+        }
         pref_account = findPreference("account");
         pref_flow = findPreference("flow");
         pref_cache = findPreference("cache");

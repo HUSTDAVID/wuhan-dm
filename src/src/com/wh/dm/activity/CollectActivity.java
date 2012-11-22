@@ -27,6 +27,7 @@ public class CollectActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_dm_collect);
         collect_list = (ListView) findViewById(R.id.list);
         btnBack = (ImageButton) findViewById(R.id.BackButton);
@@ -67,12 +68,14 @@ public class CollectActivity extends Activity {
 
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();

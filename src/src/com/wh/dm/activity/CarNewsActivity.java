@@ -62,6 +62,7 @@ public class CarNewsActivity extends Activity {
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_news_house);
         id = getIntent().getIntExtra("id", 212);
         lv = (ListView) findViewById(R.id.news_list_house);

@@ -1,6 +1,7 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 
 import android.app.Activity;
@@ -18,6 +19,7 @@ public class MessageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_message);
         txtHead = (TextView) findViewById(R.id.textView3);
         txtHead.setText(getString(R.string.push_message));

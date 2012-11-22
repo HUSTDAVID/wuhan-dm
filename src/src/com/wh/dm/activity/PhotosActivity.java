@@ -50,7 +50,7 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_DMApi;
     private GetPhotoSortTask getPhotoSortTask = null;
-    private int MSG_GET_PHOTO_SORT = 0;
+    private final int MSG_GET_PHOTO_SORT = 0;
     private ArrayList<PhotoSort> sortList = null;
 
     private final Handler handler = new Handler() {
@@ -74,6 +74,7 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_photos);
 

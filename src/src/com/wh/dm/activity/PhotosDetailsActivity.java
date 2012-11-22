@@ -72,8 +72,10 @@ public class PhotosDetailsActivity extends Activity {
     private static final int MSG_ADD_REVIEW = 3;
     private GetPhotoDetailsTask getPhotoDetailsTask = null;
     private LoadImageTask loadImageTask = null;
+    private AddReviewTask addReviewTask = null;
     private ArrayList<PhotoDetails> photosDetails;
     private int aid;
+    private int id;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private final Handler handler = new Handler() {
@@ -98,6 +100,14 @@ public class PhotosDetailsActivity extends Activity {
                     loadImageTask = new LoadImageTask();
                     loadImageTask.execute(photosDetails.get(currentPhoto - 1).getPic());
                     break;
+                case MSG_ADD_REVIEW:
+                    if (addReviewTask != null) {
+                        addReviewTask.cancel(true);
+                        addReviewTask = null;
+                    }
+                    addReviewTask = new AddReviewTask();
+                    addReviewTask.execute();
+                    break;
 
             }
 
@@ -110,6 +120,7 @@ public class PhotosDetailsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         initViews();
@@ -211,6 +222,7 @@ public class PhotosDetailsActivity extends Activity {
                 RelBottom1.setVisibility(View.VISIBLE);
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
+                handler.sendEmptyMessage(MSG_ADD_REVIEW);
             }
         });
         btnBack = (ImageButton) findViewById(R.id.img_header3_black_back);
@@ -249,6 +261,12 @@ public class PhotosDetailsActivity extends Activity {
         });
 
         handler.sendEmptyMessage(MSG_GET_ALL);
+    }
+
+    public String getFcontent() {
+
+        return edtReply.getText().toString();
+
     }
 
     private class TextViewOnClickListener implements OnClickListener {
@@ -440,18 +458,42 @@ public class PhotosDetailsActivity extends Activity {
 
     }
 
-    /*
-     * private class AddReviewTask extends AsyncTask<String, Void, Boolean> {
-     * boolean result = false; Exception reason = null;
-     * @Override protected void onPreExecute() { super.onPreExecute(); }
-     * @Override protected Boolean doInBackground(String... params) { try {
-     * result = wh_dmApi.addReview(params[0], id); return true; } catch
-     * (Exception e) { reason = e; e.printStackTrace(); return false; } }
-     * @Override protected void onPostExecute(Boolean result) { if (result) {
-     * NotificationUtil.showShortToast(getString(R.string.review_succeed),
-     * PhotosDetailsActivity.this); } else {
-     * NotificationUtil.showShortToast(getString(R.string.review_fail),
-     * PhotosDetailsActivity.this); } super.onPostExecute(result); } }
-     */
+    private class AddReviewTask extends AsyncTask<String, Void, Boolean> {
+        boolean result = false;
+        Exception reason = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            try {
+                result = wh_dmApi.addReview(getFcontent(), aid);
+                return true;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.review_succeed),
+                        PhotosDetailsActivity.this);
+            } else {
+                NotificationUtil.showShortToast(getString(R.string.review_fail),
+                        PhotosDetailsActivity.this);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
 
 }

@@ -54,16 +54,19 @@ public class VoteWatchResultActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         setContentView(R.layout.dm_voteitem1);
         initViews();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -102,6 +105,7 @@ public class VoteWatchResultActivity extends Activity {
         });
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(VoteWatchResultActivity.this, VotedListActivity.class);

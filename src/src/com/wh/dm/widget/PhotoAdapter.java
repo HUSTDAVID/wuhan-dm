@@ -33,17 +33,6 @@ public class PhotoAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
     }
 
-    /*
-     * public void addItem(Bitmap leftBmp, String leftTitle, int leftReview, int
-     * leftNum, Bitmap rightBmp, String rightTitle, int rightReview, int
-     * rightNum) { HashMap<String, Object> map = new HashMap<String, Object>();
-     * // add left data map.put("leftImage", leftBmp); map.put("leftTitle",
-     * leftTitle); map.put("leftReview", leftReview); map.put("leftNum",
-     * leftNum); // add rigth data map.put("rightImage", rightBmp);
-     * map.put("rightTitle", rightTitle); map.put("rightReview", rightReview);
-     * map.put("rightNum", rightNum); mData.add(map); notifyDataSetChanged(); }
-     */
-
     public void setList(ArrayList<TwoPhotos> _twoPhotos) {
 
         twoPhotos = _twoPhotos;
@@ -87,7 +76,6 @@ public class PhotoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-        final int pos = position;
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.photos_item, null);
@@ -102,16 +90,20 @@ public class PhotoAdapter extends BaseAdapter {
             holder.txtRightReview = (TextView) convertView
                     .findViewById(R.id.txt_right_review_total);
             holder.txtRightNum = (TextView) convertView.findViewById(R.id.txt_right_num_total);
-
+            final PhotoMsg left = new PhotoMsg();
+            left.setAid(twoPhotos.get(position).getLeftPhoto().getAid());
+            left.setTitle(twoPhotos.get(position).getLeftPhoto().getTitle());
+            left.setDescription(twoPhotos.get(position).getLeftPhoto().getDescription());
+            final PhotoMsg right = new PhotoMsg();
+            right.setAid(twoPhotos.get(position).getRightPhoto().getAid());
+            right.setTitle(twoPhotos.get(position).getRightPhoto().getTitle());
+            right.setDescription(twoPhotos.get(position).getRightPhoto().getDescription());
             holder.imgLeft.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
 
-                    int id = twoPhotos.get(pos).getLeftPhoto().getAid();
-                    String title = twoPhotos.get(pos).getLeftPhoto().getAname();
-                    String description = twoPhotos.get(pos).getLeftPhoto().getDescription();
-                    startActivity(id, title, description);
+                    startActivity(left);
                 }
             });
 
@@ -120,10 +112,7 @@ public class PhotoAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
 
-                    int id = twoPhotos.get(pos).getRightPhoto().getAid();
-                    String title = twoPhotos.get(pos).getRightPhoto().getAname();
-                    String description = twoPhotos.get(pos).getRightPhoto().getDescription();
-                    startActivity(id, title, description);
+                    startActivity(right);
                 }
             });
 
@@ -155,7 +144,7 @@ public class PhotoAdapter extends BaseAdapter {
         return convertView;
     }
 
-    static class ViewHolder {
+    public static class ViewHolder {
         ImageView imgLeft;
         TextView txtLeftTitle;
         TextView txtLeftReview;
@@ -166,14 +155,50 @@ public class PhotoAdapter extends BaseAdapter {
         TextView txtRightReview;
         TextView txtRightNum;
 
+    };
+
+    public class PhotoMsg {
+        int aid;
+        String title;
+        String description;
+
+        public void setAid(int _aid) {
+
+            aid = new Integer(_aid);
+        }
+
+        public void setTitle(String _title) {
+
+            title = new String(_title);
+        }
+
+        public void setDescription(String _description) {
+
+            description = new String(_description);
+        }
+
+        public int getAid() {
+
+            return aid;
+        }
+
+        public String getTitle() {
+
+            return title;
+        }
+
+        public String getDescription() {
+
+            return description;
+        }
     }
 
-    private void startActivity(int aid, String title, String description) {
+    private void startActivity(PhotoMsg msg) {
 
         Intent intent = new Intent(context, PhotosDetailsActivity.class);
-        intent.putExtra("aid", aid);
-        intent.putExtra("title", title);
-        intent.putExtra("description", description);
+        intent.putExtra("aid", msg.getAid());
+        intent.putExtra("title", msg.getTitle());
+        intent.putExtra("description", msg.getDescription());
         context.startActivity(intent);
     }
 

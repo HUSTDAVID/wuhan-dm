@@ -63,6 +63,7 @@ public class LifeNewsActivity extends Activity {
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_house);
         id = getIntent().getIntExtra("id", 214);

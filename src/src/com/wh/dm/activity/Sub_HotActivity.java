@@ -39,13 +39,13 @@ public class Sub_HotActivity extends Activity {
     private GetMagazine getMagazine = null;
     private ArrayList<TwoMagazine> savedMagazine = null;
     private SubscribeAdapter adapter;
-    private int curPage = 1;
+    private final int curPage = 1;
     private DatabaseImpl databaseImpl;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
     private boolean isFirstLoad = true;
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -66,18 +66,21 @@ public class Sub_HotActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_sub_item);
         mInflater = getLayoutInflater();
         initViews();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();

@@ -63,17 +63,20 @@ public class Vote2Activity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_vote2);
 
         init();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();
@@ -127,6 +130,7 @@ public class Vote2Activity extends Activity {
 
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
 
                 finish();

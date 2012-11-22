@@ -38,18 +38,21 @@ public class DM_TempActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        MobclickAgent.onError(this);
         setContentView(R.layout.activity_dm_mzine_pics_txt);
         img = (ImageView) findViewById(R.id.img_header);
         img.setImageResource(R.drawable.temp_magazine_title);
         // initViews();
     }
 
+    @Override
     public void onResume() {
 
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
+    @Override
     public void onPause() {
 
         super.onPause();

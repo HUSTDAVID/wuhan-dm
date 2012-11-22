@@ -63,6 +63,7 @@ public class TravelNewsActivity extends Activity {
 
         super.onCreate(bundle);
         setContentView(R.layout.activity_news_house);
+        MobclickAgent.onError(this);
         id = getIntent().getIntExtra("id", 215);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();

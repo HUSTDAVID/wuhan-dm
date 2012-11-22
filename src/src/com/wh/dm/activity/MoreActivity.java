@@ -4,12 +4,16 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.service.PushService;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -23,6 +27,7 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
 
     TextView txt_title;
     ListPreference listPreference;
+    CheckBoxPreference checkPreference;
     SharedPreferences sPreference;
     WH_DMApp wh_app;
 
@@ -30,6 +35,7 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
     public void onCreate(Bundle bundle) {
 
         super.onCreate(bundle);
+        MobclickAgent.onError(this);
         addPreferencesFromResource(R.xml.preference_more);
         setContentView(R.layout.activity_setting);
         init();
@@ -70,7 +76,29 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
         wh_app = (WH_DMApp) getApplication();
         Preference pre_light = findPreference("wake_lock");
         pre_light.setOnPreferenceClickListener(this);
+        checkPreference = (CheckBoxPreference) findPreference("push");
+        checkPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                if (preference.getKey().equals("push")) {
+                    checkPreference.setChecked((Boolean) newValue);
+                    if ((Boolean) newValue) {
+                        Intent intent = new Intent(MoreActivity.this, PushService.class);
+                        stopService(intent);
+                    } else {
+                        Intent intent = new Intent(MoreActivity.this, PushService.class);
+                        startService(intent);
+                    }
+                } else {
+                    return false;
+                }
+
+                return true;
+            }
+
+        });
         txt_title = (TextView) findViewById(R.id.txt_header_title2);
         txt_title.setText(getResources().getString(R.string.setting));
         getListView().setDivider(getResources().getDrawable(R.drawable.divider_horizontal_line));
