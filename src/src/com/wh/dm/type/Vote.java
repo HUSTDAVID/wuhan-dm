@@ -9,7 +9,7 @@ public class Vote {
     private String endtime;
     private String starttime;
     private boolean ismore;
-    private String votenote;
+    private String[] votenote;
     private boolean isenable;
 
     public int getNo() {
@@ -72,12 +72,12 @@ public class Vote {
         this.ismore = ismore;
     }
 
-    public String getVotenote() {
+    public String[] getVotenote() {
 
         return votenote;
     }
 
-    public void setVotenote(String votenote) {
+    public void setVotenote(String[] votenote) {
 
         this.votenote = votenote;
     }

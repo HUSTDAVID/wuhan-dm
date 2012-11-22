@@ -5,7 +5,6 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
-import com.wh.dm.type.VoteItem;
 import com.wh.dm.widget.VoteChoiceAdapter;
 
 import android.app.Activity;
@@ -23,8 +22,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class Vote2Activity extends Activity {
     private Button btn_close;
 
@@ -32,33 +29,32 @@ public class Vote2Activity extends Activity {
     private TextView txtName;
     private ListView listView;
     private VoteChoiceAdapter adapter;
+    private TextView txtNum;
     private boolean isMore = false;
     private boolean[] choice;
+    private String[] notes;
     private Button lastChoice;
-    private GetVoteitemsTask getVoteitemsTask = null;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
-    private ArrayList<VoteItem> voteItems;
     private int aid;
     private String voteName;
-    private final int MSG_GET_VOTE_ITEM = 0;
+    private String voteNum = "0";
+    private int MSG_GET_VOTE_NUM = 0;
+    private GetVoteNumTask getVoteNumTask = null;
     private final Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
 
-            switch (msg.what) {
-                case MSG_GET_VOTE_ITEM:
-                    if (getVoteitemsTask != null) {
-                        getVoteitemsTask.cancel(true);
-                        getVoteitemsTask = null;
-                    }
-                    getVoteitemsTask = new GetVoteitemsTask();
-                    getVoteitemsTask.execute();
-                    break;
+            if (msg.what == MSG_GET_VOTE_NUM) {
+                if (getVoteNumTask != null) {
+                    getVoteNumTask.cancel(true);
+                    getVoteNumTask = null;
+                }
+                getVoteNumTask = new GetVoteNumTask();
+                getVoteNumTask.execute();
             }
-
             super.handleMessage(msg);
         }
     };
@@ -86,18 +82,24 @@ public class Vote2Activity extends Activity {
 
     public void init() {
 
-        wh_dmApp = (WH_DMApp) this.getApplication();
-        wh_dmApi = wh_dmApp.getWH_DMApi();
         aid = getIntent().getIntExtra("aid", 0);
         voteName = getIntent().getStringExtra("name");
         isMore = getIntent().getBooleanExtra("ismore", false);
+        notes = getIntent().getStringArrayExtra("votenote");
+        choice = new boolean[notes.length];
         txtName = (TextView) findViewById(R.id.vote_ing_2);
         txtName.setText(voteName);
+        txtNum = (TextView) findViewById(R.id.vote_ing_5);
+
+        wh_dmApp = (WH_DMApp) getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        handler.sendEmptyMessage(MSG_GET_VOTE_NUM);
 
         listView = (ListView) findViewById(R.id.lv_vote_choice);
         listView.setDivider(null);
         adapter = new VoteChoiceAdapter(this);
-        handler.sendEmptyMessage(MSG_GET_VOTE_ITEM);
+        adapter.setList(notes);
+        listView.setAdapter(adapter);
 
         btn_close = (Button) findViewById(R.id.vote_button_close);
         btn_close.setOnClickListener(new OnClickListener() {
@@ -105,9 +107,20 @@ public class Vote2Activity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
-                // intent.putExtra("id", voteItems.get(index - 1).getId());
-                // intent.putExtra("used_ips", voteItems.get(index -
-                // 1).getUsed_ips());
+                if (isMore) {
+                    intent.putExtra("ismore", true);
+                } else {
+                    intent.putExtra("ismore", false);
+                    String vtitle = "";
+                    for (int i = 0; i < choice.length; i++) {
+                        if (choice[i]) {
+                            vtitle = notes[i];
+                            break;
+                        }
+                    }
+                    intent.putExtra("vtitle", vtitle);
+                    intent.putExtra("aid", aid);
+                }
                 startActivity(intent);
             }
         });
@@ -155,30 +168,26 @@ public class Vote2Activity extends Activity {
 
     }
 
-    class GetVoteitemsTask extends AsyncTask<Void, Void, ArrayList<VoteItem>> {
-
-        Exception reason;
+    class GetVoteNumTask extends AsyncTask<Void, Void, String> {
 
         @Override
-        protected ArrayList<VoteItem> doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
 
             try {
-                voteItems = wh_dmApi.getVoteItems(aid);
-                choice = new boolean[voteItems.size()];
+                voteNum = wh_dmApi.getVoteNum(aid);
             } catch (Exception e) {
-                reason = e;
                 e.printStackTrace();
             }
-            return voteItems;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<VoteItem> result) {
+        protected void onPostExecute(String result) {
 
-            adapter.setList(result);
-            listView.setAdapter(adapter);
+            txtNum.setText(voteNum);
             super.onPostExecute(result);
         }
 
     }
+
 }

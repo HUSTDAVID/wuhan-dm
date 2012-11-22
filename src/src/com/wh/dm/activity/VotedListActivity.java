@@ -217,7 +217,7 @@ public class VotedListActivity extends Activity {
         protected ArrayList<Vote> doInBackground(Void... params) {
 
             try {
-                votes = wh_dmApi.getVote();
+                votes = wh_dmApi.getVote(4);
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -245,6 +245,8 @@ public class VotedListActivity extends Activity {
                             intent.putExtra("aid", votes.get(currentSelelct).getAid());
                             intent.putExtra("name", votes.get(currentSelelct).getVotename());
                             intent.putExtra("ismore", votes.get(currentSelelct).isIsmore());
+                            String[] temp = votes.get(currentSelelct).getVotenote();
+                            intent.putExtra("votenote", votes.get(currentSelelct).getVotenote());
                             startActivity(intent);
                         }
                     });
@@ -272,6 +274,8 @@ public class VotedListActivity extends Activity {
                     viewPager.setAdapter(new GuidePageAdapter());
                     viewPager.setOnPageChangeListener(new GuidePageChangeListener());
                 }
+            } else {
+                Toast.makeText(VotedListActivity.this, "没有获取到最新投票信息", Toast.LENGTH_SHORT).show();
             }
             super.onPostExecute(result);
         }
