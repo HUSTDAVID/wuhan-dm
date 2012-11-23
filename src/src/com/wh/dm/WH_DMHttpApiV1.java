@@ -21,6 +21,7 @@ import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
 import com.wh.dm.type.VoteItem;
 import com.wh.dm.type.VoteResult;
+import com.wh.dm.type.VoteResultPercent;
 import com.wh.dm.util.PhotoUtil;
 import com.wh.dm.util.VoteUitl;
 
@@ -433,6 +434,17 @@ public class WH_DMHttpApiV1 {
         String content = mHttpApi.doHttpRequest(httpPost);
         return content;
 
+    }
+
+    public ArrayList<VoteResultPercent> getVoteResultPercent(int vid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "result"), new BasicNameValuePair("vid", String.valueOf(vid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<VoteResultPercent>>() {
+        }.getType();
+        return gson.fromJson(content, type);
     }
 
     public boolean register(String regemail, String regepass) throws WH_DMException,

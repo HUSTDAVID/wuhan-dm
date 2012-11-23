@@ -31,7 +31,7 @@
             android:progressDrawable="@drawable/vote_pro_blue" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/txt_vote_percent1"
             style="@style/vote_result_percent"
             android:layout_alignBaseline="@+id/pro_vote_result1"
             android:layout_alignParentTop="true"
@@ -63,14 +63,14 @@
             android:progressDrawable="@drawable/vote_pro_green" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txt_vote_percent2"
             style="@style/vote_result_percent"
             android:layout_alignBaseline="@+id/pro_vote_result2"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/pro_vote_result2"
             android:text="15%" />
     </RelativeLayout>
-
+<!-- 
     <TextView
         android:id="@+id/txt_vote_result3"
         style="@style/vote_result_txt"
@@ -93,12 +93,13 @@
             android:progressDrawable="@drawable/vote_pro_red" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txt_vote_percent3"
             style="@style/vote_result_percent"
             android:layout_alignBaseline="@+id/pro_vote_result3"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/pro_vote_result3"
             android:text="42%" />
     </RelativeLayout>
+     -->
 
 </LinearLayout>

@@ -16,6 +16,7 @@ import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
 import com.wh.dm.type.VoteItem;
 import com.wh.dm.type.VoteResult;
+import com.wh.dm.type.VoteResultPercent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -183,6 +184,12 @@ public class WH_DMApi {
     public String getVoteNum(int vid) throws WH_DMException, UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.getVoteNum(vid);
+    }
+
+    public ArrayList<VoteResultPercent> getVoteResultPercent(int vid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getVoteResultPercent(vid);
     }
 
     public boolean register(String regemail, String regepass) throws WH_DMException,
