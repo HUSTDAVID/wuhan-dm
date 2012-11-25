@@ -23,7 +23,10 @@ import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
 import com.wh.dm.type.VoteItem;
+import com.wh.dm.type.VoteResult;
+import com.wh.dm.type.VoteResultPercent;
 import com.wh.dm.util.PhotoUtil;
+import com.wh.dm.util.VoteUitl;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -393,14 +396,15 @@ public class WH_DMHttpApiV1 {
     }
 
     // vote
-    public ArrayList<Vote> getVote() throws WH_DMException, UnKnownException, IOException {
+    public ArrayList<Vote> getVote(int sid) throws WH_DMException, UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
-                "listv"));
+                "listv"), new BasicNameValuePair("sid", String.valueOf(sid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<Vote>>() {
         }.getType();
-        return gson.fromJson(content, type);
+        // return gson.fromJson(content, type);
+        return VoteUitl.parseVote(content);
     }
 
     public ArrayList<VoteItem> getVoteItems(int vid) throws WH_DMException, UnKnownException,
@@ -410,6 +414,38 @@ public class WH_DMHttpApiV1 {
                 "listvr"), new BasicNameValuePair("vid", String.valueOf(vid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<VoteItem>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    public VoteResult postVote(int aid, String vtitle) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpPost httpPost = mHttpApi.createHttpPost(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "vote"), new BasicNameValuePair("vid", String.valueOf(aid)),
+                new BasicNameValuePair("vtitle", vtitle));
+        String content = mHttpApi.doHttpRequest(httpPost);
+        Type type = new TypeToken<VoteResult>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    public String getVoteNum(int vid) throws WH_DMException, UnKnownException, IOException {
+
+        HttpPost httpPost = mHttpApi.createHttpPost(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "vnum"), new BasicNameValuePair("vid", String.valueOf(vid)));
+        String content = mHttpApi.doHttpRequest(httpPost);
+        return content;
+
+    }
+
+    public ArrayList<VoteResultPercent> getVoteResultPercent(int vid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
+                "result"), new BasicNameValuePair("vid", String.valueOf(vid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<VoteResultPercent>>() {
         }.getType();
         return gson.fromJson(content, type);
     }

@@ -2,7 +2,6 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
-import com.wh.dm.type.VoteItem;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import java.util.ArrayList;
-
 public class VoteChoiceAdapter extends BaseAdapter {
 
-    ArrayList<VoteItem> votes;
+    // ArrayList<VoteItem> votes;
+    String[] votes;
     LayoutInflater inflater;
     Context context;
 
@@ -25,7 +23,7 @@ public class VoteChoiceAdapter extends BaseAdapter {
         context = c;
     }
 
-    public void setList(ArrayList<VoteItem> voteList) {
+    public void setList(String[] voteList) {
 
         votes = voteList;
         notifyDataSetChanged();
@@ -34,13 +32,13 @@ public class VoteChoiceAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 
-        return votes.size();
+        return votes.length;
     }
 
     @Override
     public Object getItem(int arg0) {
 
-        return votes.get(arg0);
+        return votes[arg0];
     }
 
     @Override
@@ -64,7 +62,7 @@ public class VoteChoiceAdapter extends BaseAdapter {
         }
 
         final int index = position + 1;
-        holder.btnVoteItem.setText(String.valueOf(index) + "." + votes.get(position).getVotenote());
+        holder.btnVoteItem.setText(String.valueOf(index) + "." + votes[position]);
 
         return convertView;
     }

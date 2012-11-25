@@ -18,6 +18,8 @@ import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
 import com.wh.dm.type.VoteItem;
+import com.wh.dm.type.VoteResult;
+import com.wh.dm.type.VoteResultPercent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -165,15 +167,32 @@ public class WH_DMApi {
     }
 
     // vote
-    public ArrayList<Vote> getVote() throws WH_DMException, UnKnownException, IOException {
+    public ArrayList<Vote> getVote(int sid) throws WH_DMException, UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getVote();
+        return mWH_DMHttpApiV1.getVote(sid);
     }
 
     public ArrayList<VoteItem> getVoteItems(int vid) throws WH_DMException, UnKnownException,
             IOException {
 
         return mWH_DMHttpApiV1.getVoteItems(vid);
+    }
+
+    public VoteResult postVote(int aid, String vtitle) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.postVote(aid, vtitle);
+    }
+
+    public String getVoteNum(int vid) throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getVoteNum(vid);
+    }
+
+    public ArrayList<VoteResultPercent> getVoteResultPercent(int vid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getVoteResultPercent(vid);
     }
 
     public boolean register(String regemail, String regepass) throws WH_DMException,
