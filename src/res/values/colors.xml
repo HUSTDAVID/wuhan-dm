@@ -45,6 +45,10 @@
     <color name="mzine_fullacreen">#e7e7e7</color>
 
     <color name="mzine_long">#eeeeee</color>
+    <color name="title_transparent">#aeb1ad</color>
+    <color name="mzine_blue">#2ca7ea</color>
+    <color name="mzine_yellow">#e9c21f</color>
+    <color name="mzine_orange">#f1671e</color>
     <!-- preference -->
     <color name="pref_txt_color">#343434</color>
     <color name="pref_category_bg">#7B7B7B</color>

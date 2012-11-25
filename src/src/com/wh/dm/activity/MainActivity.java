@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
         Cover cover3 = new Cover();
         String name3 = getResources().getString(R.string.temp3);
         cover3.setName(name3);
-        cover3.setDrawableId(R.drawable.t3);
+        cover3.setDrawableId(R.drawable.home);
         cover3.setId(2);
 
         Cover cover4 = new Cover();

@@ -151,18 +151,26 @@ public class SubscribeActivity extends ActivityGroup {
 
                 case R.id.txt_sub_car:
                     setCurTxt(2);
+                    intent.setClass(SubscribeActivity.this, Sub_CarActivity.class);
+                    vMain = getLocalActivityManager().startActivity("car", intent).getDecorView();
                     break;
 
                 case R.id.txt_sub_girl:
                     setCurTxt(3);
+                    intent.setClass(SubscribeActivity.this, Sub_GirlActivity.class);
+                    vMain = getLocalActivityManager().startActivity("girl", intent).getDecorView();
                     break;
 
                 case R.id.txt_sub_photograph:
                     setCurTxt(4);
+                    intent.setClass(SubscribeActivity.this, Sub_ShootActivity.class);
+                    vMain = getLocalActivityManager().startActivity("shoot", intent).getDecorView();
                     break;
 
                 case R.id.txt_sub_fun:
                     setCurTxt(5);
+                    intent.setClass(SubscribeActivity.this, Sub_FunActivity.class);
+                    vMain = getLocalActivityManager().startActivity("fun", intent).getDecorView();
                     break;
 
                 case R.id.img_sub_search:

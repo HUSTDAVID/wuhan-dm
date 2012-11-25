@@ -26,8 +26,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class Sub_HotActivity extends Activity {
-
+public class Sub_GirlActivity extends Activity {
     PullToRefreshListView lvSub;
     View footer;
     Button btnFooter;
@@ -131,7 +130,7 @@ public class Sub_HotActivity extends Activity {
 
     class GetMagazine extends AsyncTask<Void, Void, ArrayList<TwoMagazine>> {
 
-        Exception reason = null;
+        Exception reason;
 
         @Override
         protected void onPreExecute() {
@@ -185,21 +184,19 @@ public class Sub_HotActivity extends Activity {
                     adapter.setList(result);
                 }
                 databaseImpl.addHotMagazine(MagazineUtil.toOneMagazine(result));
-
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (!FLAG_PAGE_UP) {
                         if (wh_dmApp.isConnected()) {
-                            NotificationUtil
-                                    .showShortToast(reason.toString(), Sub_HotActivity.this);
+                            NotificationUtil.showShortToast(reason.toString(),
+                                    Sub_GirlActivity.this);
                         }
                     } else {
                         NotificationUtil.showLongToast(getString(R.string.no_more_message),
-                                Sub_HotActivity.this);
+                                Sub_GirlActivity.this);
                     }
                 }
             }
-
         }
 
     }
