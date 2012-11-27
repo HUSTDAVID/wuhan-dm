@@ -228,5 +228,9 @@ public class WH_DMApi {
 
         return mWH_DMHttpApiV1.getArticle(sid);
     }
+    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException, UnKnownException, IOException 
+    {
+    	return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);
+    }
 
 }

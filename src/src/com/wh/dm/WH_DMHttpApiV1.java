@@ -47,6 +47,7 @@ public class WH_DMHttpApiV1 {
     private static final String URL_API_NEWS = "/api/News.aspx";
     private static final String URL_API_MEM = "/api/Mem.aspx";
     public static final String URL_API_MAGAZINE = "/api/Magazine.aspx";
+    private static final String URL_API_FEEDBACK="/api/feedback.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -527,5 +528,13 @@ public class WH_DMHttpApiV1 {
         return article;
 
     }
-
+    public boolean commitFeedBack(String contactways, String fcontent) throws WH_DMException, UnKnownException, IOException
+    {
+    	 HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_FEEDBACK,
+                 new BasicNameValuePair("Act", "feedback"), new BasicNameValuePair("User",contactways ),
+                 new BasicNameValuePair("Memo", fcontent));
+         String content = mHttpApi.doHttpRequest(httPost);
+         PostResult result = gson.fromJson(content, PostResult.class);
+         return result.getResult();
+    }
 }
