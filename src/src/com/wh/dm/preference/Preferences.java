@@ -32,6 +32,16 @@ public class Preferences {
     public static final String PHOTO_THREE_ID = "id_photo_three";
     public static final String PHOTO_FOUR_ID = "id_photo_four";
 
+    public static final String MAGAZINE_ONE = "magazien_one";
+    public static final String MAGAZINE_TWO = "magazien_two";
+    public static final String MAGAZINE_THREE = "magazien_three";
+    public static final String MAGAZINE_FOUR = "magazien_four";
+
+    public static final String MAGAZINE_ONE_ID = "id_magazien_one";
+    public static final String MAGAZINE_TWO_ID = "id_magazien_two";
+    public static final String MAGAZINE_THREE_ID = "id_magazien_three";
+    public static final String MAGAZINE_FOUR_ID = "id_magazien_four";
+
     public static void saveUser(Context context, String email, String password) {
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
@@ -75,6 +85,22 @@ public class Preferences {
         editor.putInt(PHOTO_FOUR_ID, idFour);
         editor.commit();
 
+    }
+
+    public static void saveMagazienType(Context context, String one, String two, String three,
+            String four, int idOne, int idTwo, int idThree, int idFour) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor = preference.edit();
+        editor.putString(MAGAZINE_ONE, one);
+        editor.putString(MAGAZINE_TWO, two);
+        editor.putString(MAGAZINE_THREE, three);
+        editor.putString(MAGAZINE_FOUR, four);
+        editor.putInt(MAGAZINE_ONE_ID, idOne);
+        editor.putInt(MAGAZINE_TWO_ID, idTwo);
+        editor.putInt(MAGAZINE_THREE_ID, idThree);
+        editor.putInt(MAGAZINE_FOUR_ID, idFour);
+        editor.commit();
     }
 
 }

@@ -7,6 +7,7 @@ import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
 import com.wh.dm.type.PhotoDetails;
@@ -207,9 +208,22 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.login(logemail, logpassword);
     }
 
-    public ArrayList<Magazine> getMagazine() throws WH_DMException, UnKnownException, IOException {
+    public ArrayList<Magazine> getMagazine(int cid) throws WH_DMException, UnKnownException,
+            IOException {
 
-        return mWH_DMHttpApiV1.getMagazine();
+        return mWH_DMHttpApiV1.getMagazine(cid);
+    }
+
+    public ArrayList<Magazine> getSearchMagazine(String key) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getSearchMagazine(key);
+    }
+
+    public ArrayList<MagazineSort> getMagazineSort() throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getMagazineSort();
     }
 
     public ArrayList<ArticleMagzine> getArticleMagzine(int sid, int pid) throws WH_DMException,
@@ -228,9 +242,11 @@ public class WH_DMApi {
 
         return mWH_DMHttpApiV1.getArticle(sid);
     }
-    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException, UnKnownException, IOException 
-    {
-    	return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);
+
+    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);
     }
 
 }

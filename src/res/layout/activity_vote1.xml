@@ -140,7 +140,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/btn_vote_close"
-                android:text="提交"
+                android:text="关闭"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
      

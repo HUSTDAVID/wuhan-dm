@@ -311,6 +311,11 @@
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity
+            android:name=".activity.SearchMagazineActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        <activity
             android:name=".activity.MagazineDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">

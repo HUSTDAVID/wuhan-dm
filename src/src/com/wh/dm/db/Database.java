@@ -2,6 +2,7 @@
 package com.wh.dm.db;
 
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.Photo;
 import com.wh.dm.type.PhotoDetails;
@@ -161,5 +162,12 @@ public interface Database {
     public ArrayList<Magazine> getPhotographMagazine();
 
     public ArrayList<Magazine> getFunMagazine();
+
+    // magazine download
+    public ArrayList<MagazineBody> getMagazineBody(int sid);
+
+    public void deleteMagazineBody();
+
+    public void addMagazineBody(ArrayList<MagazineBody> magazineList);
 
 }
