@@ -6,6 +6,8 @@ import com.google.gson.reflect.TypeToken;
 import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.http.HttpApiBasic;
+import com.wh.dm.type.Article;
+import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
@@ -15,6 +17,7 @@ import com.wh.dm.type.PhotoDetails;
 import com.wh.dm.type.PhotoSort;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
+import com.wh.dm.type.PictureMagzine;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
@@ -44,6 +47,7 @@ public class WH_DMHttpApiV1 {
     private static final String URL_API_NEWS = "/api/News.aspx";
     private static final String URL_API_MEM = "/api/Mem.aspx";
     public static final String URL_API_MAGAZINE = "/api/Magazine.aspx";
+    private static final String URL_API_FEEDBACK="/api/feedback.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -477,10 +481,60 @@ public class WH_DMHttpApiV1 {
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
                 new BasicNameValuePair("act", "list"),
                 new BasicNameValuePair("pi", String.valueOf(1)), new BasicNameValuePair("pz",
-                        String.valueOf(20)), new BasicNameValuePair("cid", null));
+                        String.valueOf(20)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<Magazine>>() {
         }.getType();
         return gson.fromJson(content, type);
+    }
+
+    public ArrayList<ArticleMagzine> getArticleMagzine(int sid, int pid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "maglist"),
+                new BasicNameValuePair("sid", String.valueOf(sid)), new BasicNameValuePair("pid",
+                        String.valueOf(pid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<ArticleMagzine>>() {
+        }.getType();
+        ArrayList<ArticleMagzine> magzines = gson.fromJson(content, type);
+        return magzines;
+    }
+
+    public ArrayList<PictureMagzine> getPictureMagzine(int sid, int pid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "maglist"),
+                new BasicNameValuePair("sid", String.valueOf(sid)), new BasicNameValuePair("pid",
+                        String.valueOf(pid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<PictureMagzine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+
+    }
+
+    public Article getArticle(int sid) throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "cont"),
+                new BasicNameValuePair("id", String.valueOf(sid)));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Article>>() {
+        }.getType();
+        Article article = ((ArrayList<Article>) gson.fromJson(content, type)).get(0);
+        return article;
+
+    }
+    public boolean commitFeedBack(String contactways, String fcontent) throws WH_DMException, UnKnownException, IOException
+    {
+    	 HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_FEEDBACK,
+                 new BasicNameValuePair("Act", "feedback"), new BasicNameValuePair("User",contactways ),
+                 new BasicNameValuePair("Memo", fcontent));
+         String content = mHttpApi.doHttpRequest(httPost);
+         PostResult result = gson.fromJson(content, PostResult.class);
+         return result.getResult();
     }
 }

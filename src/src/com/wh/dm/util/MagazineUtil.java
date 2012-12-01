@@ -15,8 +15,18 @@ public class MagazineUtil {
             TwoMagazine two = new TwoMagazine();
             two.setLeftMagazine(magazineList.get(i));
             i++;
-            two.setRightMagazine(magazineList.get(i));
-            twoMagazine.add(two);
+            if (magazineList.size() <= i) {
+                // two.setRightMagazine(magazineList.get(i - 1));
+                Magazine mg = new Magazine();
+                mg.setAddtime("END");
+                two.setRightMagazine(mg);
+                twoMagazine.add(two);
+
+            } else {
+                two.setRightMagazine(magazineList.get(i));
+                twoMagazine.add(two);
+            }
+
         }
 
         return twoMagazine;

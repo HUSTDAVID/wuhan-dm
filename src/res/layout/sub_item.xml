@@ -64,8 +64,9 @@
         android:background="@drawable/double_line_ver"
         android:visibility="invisible" >
     </View>
-
+
     <RelativeLayout
+        android:id="@+id/sub_right"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dip"
