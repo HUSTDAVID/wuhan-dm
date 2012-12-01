@@ -14,6 +14,7 @@ public class VoteChoiceAdapter extends BaseAdapter {
 
     // ArrayList<VoteItem> votes;
     String[] votes;
+    boolean[] select;
     LayoutInflater inflater;
     Context context;
 
@@ -26,6 +27,12 @@ public class VoteChoiceAdapter extends BaseAdapter {
     public void setList(String[] voteList) {
 
         votes = voteList;
+        notifyDataSetChanged();
+    }
+
+    public void setSelect(boolean[] select) {
+
+        this.select = select;
         notifyDataSetChanged();
     }
 
@@ -63,6 +70,9 @@ public class VoteChoiceAdapter extends BaseAdapter {
 
         final int index = position + 1;
         holder.btnVoteItem.setText(String.valueOf(index) + "." + votes[position]);
+        if (select != null && select.length > position) {
+            holder.btnVoteItem.setSelected(select[position]);
+        }
 
         return convertView;
     }

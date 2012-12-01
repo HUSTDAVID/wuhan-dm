@@ -35,6 +35,7 @@ public class Vote1Activity extends Activity {
 
     private int aid = 0;
     private String voteNum;
+    private String voteName;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
@@ -94,6 +95,9 @@ public class Vote1Activity extends Activity {
     public void init() {
 
         aid = getIntent().getIntExtra("aid", 0);
+        voteName = getIntent().getStringExtra("name");
+        TextView txtTitle = (TextView) findViewById(R.id.vote_ing_2);
+        txtTitle.setText(voteName);
 
         txtNum = (TextView) findViewById(R.id.vote_ing_5);
         progressBar1 = (ProgressBar) findViewById(R.id.pro_vote_result1);

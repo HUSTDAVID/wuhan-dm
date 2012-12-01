@@ -17,13 +17,14 @@
         android:layout_height="192dip" >
 
         <ImageView
-            android:id="@+id/vote_imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/img_vote_pic"
+            android:layout_width="fill_parent"
+            android:layout_height="255dip"
+            android:scaleType="fitXY"
             android:src="@drawable/vote_banner" />
 
         <Button
-            android:id="@+id/btn_votelist"
+            android:id="@+id/btn_vote_des"
             android:layout_width="fill_parent"
             android:layout_height="54dip"
             android:layout_alignLeft="@+id/vote_imageView1"

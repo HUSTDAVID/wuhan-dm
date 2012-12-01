@@ -11,6 +11,61 @@ public class Vote {
     private boolean ismore;
     private String[] votenote;
     private boolean isenable;
+    private int interval;
+    private String code;
+    private String pic;
+    private String des;
+    private int click;
+
+    public int getInterval() {
+
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+
+        this.interval = interval;
+    }
+
+    public String getCode() {
+
+        return code;
+    }
+
+    public void setCode(String code) {
+
+        this.code = code;
+    }
+
+    public String getPic() {
+
+        return pic;
+    }
+
+    public void setPic(String pic) {
+
+        this.pic = pic;
+    }
+
+    public String getDes() {
+
+        return des;
+    }
+
+    public void setDes(String des) {
+
+        this.des = des;
+    }
+
+    public int getClick() {
+
+        return click;
+    }
+
+    public void setClick(int click) {
+
+        this.click = click;
+    }
 
     public int getNo() {
 

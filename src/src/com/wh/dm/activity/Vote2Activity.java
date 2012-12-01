@@ -5,6 +5,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.VoteChoiceAdapter;
 
 import android.app.Activity;
@@ -39,6 +40,8 @@ public class Vote2Activity extends Activity {
     private WH_DMApi wh_dmApi;
     private int aid;
     private String voteName;
+    private String pic;
+    private String des;
     private String voteNum = "0";
     private int MSG_GET_VOTE_NUM = 0;
     private GetVoteNumTask getVoteNumTask = null;
@@ -87,7 +90,9 @@ public class Vote2Activity extends Activity {
 
         aid = getIntent().getIntExtra("aid", 0);
         voteName = getIntent().getStringExtra("name");
+        pic = getIntent().getStringExtra("pic");
         isMore = getIntent().getBooleanExtra("ismore", false);
+        des = getIntent().getStringExtra("des");
         notes = getIntent().getStringArrayExtra("votenote");
         choice = new boolean[notes.length];
         txtName = (TextView) findViewById(R.id.vote_ing_2);
@@ -112,6 +117,29 @@ public class Vote2Activity extends Activity {
                 Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
                 if (isMore) {
                     intent.putExtra("ismore", true);
+                    String vtitle = "";
+                    for (int i = 0; i < choice.length; i++) {
+                        if (choice[i]) {
+                            if (vtitle.equals("")) {
+                                vtitle = notes[i];
+                            } else {
+                                vtitle = vtitle + "," + notes[i];
+                            }
+                        }
+                    }
+                    if (vtitle.equals("")) {
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.select_choice),
+                                Vote2Activity.this);
+                    } else {
+                        // intent.putExtra("vtitle", vtitle);
+                        intent.putExtra("aid", aid);
+                        intent.putExtra("des", des);
+                        intent.putExtra("pic", pic);
+                        intent.putExtra("name", voteName);
+                        startActivity(intent);
+                    }
+
                 } else {
                     intent.putExtra("ismore", false);
                     String vtitle = "";
@@ -121,10 +149,20 @@ public class Vote2Activity extends Activity {
                             break;
                         }
                     }
-                    intent.putExtra("vtitle", vtitle);
-                    intent.putExtra("aid", aid);
+                    if (vtitle.equals("")) {
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.select_choice),
+                                Vote2Activity.this);
+                    } else {
+                        // intent.putExtra("vtitle", vtitle);
+                        intent.putExtra("aid", aid);
+                        intent.putExtra("des", des);
+                        intent.putExtra("name", voteName);
+                        intent.putExtra("pic", pic);
+                        startActivity(intent);
+                    }
                 }
-                startActivity(intent);
+
             }
         });
 
@@ -166,7 +204,9 @@ public class Vote2Activity extends Activity {
                         }
                     }
                 }
-
+                if (adapter != null) {
+                    adapter.setSelect(choice);
+                }
             }
         });
 
