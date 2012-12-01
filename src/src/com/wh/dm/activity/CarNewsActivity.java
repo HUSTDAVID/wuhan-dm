@@ -6,15 +6,18 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -64,7 +67,9 @@ public class CarNewsActivity extends Activity {
         super.onCreate(bundle);
         MobclickAgent.onError(this);
         setContentView(R.layout.activity_news_house);
-        id = getIntent().getIntExtra("id", 212);
+        SharedPreferences preference = PreferenceManager
+                .getDefaultSharedPreferences(CarNewsActivity.this);
+        id = preference.getInt(Preferences.NEWS_TWO_ID, 212);
         lv = (ListView) findViewById(R.id.news_list_house);
         adapter = new HeadlineAdapter(this);
         mInfalater = getLayoutInflater();
