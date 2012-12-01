@@ -84,7 +84,7 @@ public class VoteWatchResultActivity extends Activity {
         wh_DmApi = wh_dmApp.getWH_DMApi();
 
         aid = getIntent().getIntExtra("aid", 0);
-        // vtitle = getIntent().getStringExtra("vtitle");
+        vtitle = getIntent().getStringExtra("vtitle");
         pic = getIntent().getStringExtra("pic");
         des = getIntent().getStringExtra("des");
         voteName = getIntent().getStringExtra("name");

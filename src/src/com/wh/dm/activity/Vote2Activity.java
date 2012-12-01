@@ -132,7 +132,7 @@ public class Vote2Activity extends Activity {
                                 getResources().getString(R.string.select_choice),
                                 Vote2Activity.this);
                     } else {
-                        // intent.putExtra("vtitle", vtitle);
+                        intent.putExtra("vtitle", vtitle);
                         intent.putExtra("aid", aid);
                         intent.putExtra("des", des);
                         intent.putExtra("pic", pic);
@@ -154,7 +154,7 @@ public class Vote2Activity extends Activity {
                                 getResources().getString(R.string.select_choice),
                                 Vote2Activity.this);
                     } else {
-                        // intent.putExtra("vtitle", vtitle);
+                        intent.putExtra("vtitle", vtitle);
                         intent.putExtra("aid", aid);
                         intent.putExtra("des", des);
                         intent.putExtra("name", voteName);

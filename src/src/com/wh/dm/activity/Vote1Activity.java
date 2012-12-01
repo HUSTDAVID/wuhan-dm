@@ -6,6 +6,8 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.type.VoteResultPercent;
+import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.widget.VoteResultAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,12 +29,11 @@ import java.util.ArrayList;
 public class Vote1Activity extends Activity {
     /** Called when the activity is first created. */
 
-    ProgressBar progressBar1;
-    ProgressBar progressBar2;
-    ProgressBar progressBar3;
+    private ListView listview;
     private ImageButton btnBack;
     private TextView txtNum;
     private Button btnClose;
+    private VoteResultAdapter adapter;
 
     private int aid = 0;
     private String voteNum;
@@ -100,8 +102,9 @@ public class Vote1Activity extends Activity {
         txtTitle.setText(voteName);
 
         txtNum = (TextView) findViewById(R.id.vote_ing_5);
-        progressBar1 = (ProgressBar) findViewById(R.id.pro_vote_result1);
-        progressBar2 = (ProgressBar) findViewById(R.id.pro_vote_result2);
+        listview = (ListView) findViewById(R.id.lv_vote_result);
+        listview.setDivider(null);
+        adapter = new VoteResultAdapter(this);
         // progressBar3 = (ProgressBar) findViewById(R.id.pro_vote_result3);
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -179,32 +182,12 @@ public class Vote1Activity extends Activity {
         protected void onPostExecute(ArrayList<VoteResultPercent> result) {
 
             if (result != null && result.size() > 0) {
-                setProgress(progressBar1, (int) result.get(0).getPercent());
-                TextView txtVote1 = (TextView) findViewById(R.id.txt_vote_result1);
-                txtVote1.setText("1." + result.get(0).getItem());
-                TextView txtPercent1 = (TextView) findViewById(R.id.txt_vote_percent1);
-                txtPercent1.setText(String.valueOf(result.get(0).getPercent()) + "%");
-
-                setProgress(progressBar2, (int) result.get(1).getPercent());
-                TextView txtVote2 = (TextView) findViewById(R.id.txt_vote_result2);
-                txtVote2.setText("2." + result.get(1).getItem());
-                TextView txtPercent2 = (TextView) findViewById(R.id.txt_vote_percent2);
-                txtPercent2.setText(String.valueOf(result.get(1).getPercent()) + "%");
-
-                // setProgress(progressBar3, (int) result.get(2).getPercent());
-                // TextView txtVote3 = (TextView)
-                // findViewById(R.id.txt_vote_result3);
-                // txtVote3.setText("3." + result.get(2).getItem());
-                // TextView txtPercent3 = (TextView)
-                // findViewById(R.id.txt_vote_percent3);
-                // txtPercent3.setText(String.valueOf(result.get(2).getPercent())
-                // + "%");
+                adapter.setList(result);
+                listview.setAdapter(adapter);
             } else {
-                setProgress(progressBar1, 43);
-                setProgress(progressBar2, 15);
-                // setProgress(progressBar3, 42);
+                NotificationUtil.showShortToast(getResources().getString(R.string.get_not_result),
+                        Vote1Activity.this);
             }
-
             super.onPostExecute(result);
         }
 
