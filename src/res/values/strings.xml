@@ -99,6 +99,10 @@
     <string name="goto_forget_passwd">忘记密码？</string>
     <string name="voting">投票进行中</string>
     <string name="voted">投票已结束</string>
+    <string name="select_choice">请选择你的选项！</string>
+    <string name="thx_voting">感谢投票!</string>
+    <string name="watch_result">查看结果</string>
+    <string name="get_not_result">抱歉！未能从服务器获取投票结果。</string>
 
     <string name="mail_toast">邮箱不能为空</string>
 	<string name="password_toast">密码不能为空</string>

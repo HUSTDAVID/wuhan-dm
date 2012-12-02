@@ -25,7 +25,11 @@ public class VoteUitl {
                 vote.setEndtime(obj.getString("endtime"));
                 vote.setIsmore(obj.getBoolean("ismore"));
                 vote.setIsenable(obj.getBoolean("isenable"));
-                // JSONArray notesArr = obj.getJSONArray("votenote");
+                vote.setDes(obj.getString("des"));
+                vote.setPic(obj.getString("pic"));
+                vote.setCode(obj.getString("code"));
+                vote.setClick(obj.getInt("click"));
+                vote.setInterval(obj.getInt("interval"));
                 String votenote = obj.getString("votenote");
                 votenote = "[" + votenote + "]";
                 JSONArray notesArr = new JSONArray(votenote);

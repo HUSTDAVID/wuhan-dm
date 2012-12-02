@@ -2,6 +2,7 @@
 package com.wh.dm.db;
 
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.Photo;
 import com.wh.dm.type.PhotoDetails;
@@ -48,6 +49,7 @@ public class DatabaseImpl implements Database {
     private static final String TABLE_MAGAZINE_FUN = "magazinefun";
     // subcribe
     private static final String TABLE_SUBCRIBE = "subcribe";
+    private static final String TABLE_MAGEZINE_BODY = "magazinebody";
     private final Context context;
 
     public DatabaseImpl(Context _context) {
@@ -148,6 +150,26 @@ public class DatabaseImpl implements Database {
                 + TABLE_SUBCRIBE
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGAZINE_CAR
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGAZINE_GIRL
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGAZINE_PHOTOGRAPH
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGAZINE_FUN
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGEZINE_BODY
+                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, cid INTEGER,template INTEGER, _limit INTEGER, pic VARCHAR, spic VARCHAR, sname VARCHAR,"
+                + "no INTEGER, id INTEGER, title VARCHAR, source VARCHAR, litpic VARCHAR, pubdate VARCHAR, body VARCHAR)");
         db.close();
     }
 
@@ -178,6 +200,7 @@ public class DatabaseImpl implements Database {
         db.delete(TABLE_FUN_PHOTO_DET, null, null);
         // magazine
         db.delete(TABLE_MAGAZINE_HOT, null, null);
+        db.delete(TABLE_MAGEZINE_BODY, null, null);
         db.close();
 
     }
@@ -1125,9 +1148,7 @@ public class DatabaseImpl implements Database {
             }
         }
         db.close();
-
     }
-
     @Override
     public void addGirlMagazine(ArrayList<Magazine> magazine) {
 
@@ -1184,7 +1205,7 @@ public class DatabaseImpl implements Database {
 
         ArrayList<Magazine> magazine = new ArrayList<Magazine>();
         MagazineBuilder builder = new MagazineBuilder();
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         Cursor query = db.query(TABLE_MAGAZINE_HOT, null, null, null, null, null, null);
         if (query != null) {
             query.moveToFirst();
@@ -1203,7 +1224,7 @@ public class DatabaseImpl implements Database {
 
         ArrayList<Magazine> magazine = new ArrayList<Magazine>();
         MagazineBuilder builder = new MagazineBuilder();
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         Cursor query = db.query(TABLE_MAGAZINE_CAR, null, null, null, null, null, null);
         if (query != null) {
             query.moveToFirst();
@@ -1222,7 +1243,7 @@ public class DatabaseImpl implements Database {
 
         ArrayList<Magazine> magazine = new ArrayList<Magazine>();
         MagazineBuilder builder = new MagazineBuilder();
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         Cursor query = db.query(TABLE_MAGAZINE_GIRL, null, null, null, null, null, null);
         if (query != null) {
             query.moveToFirst();
@@ -1241,7 +1262,7 @@ public class DatabaseImpl implements Database {
 
         ArrayList<Magazine> magazine = new ArrayList<Magazine>();
         MagazineBuilder builder = new MagazineBuilder();
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         Cursor query = db.query(TABLE_MAGAZINE_PHOTOGRAPH, null, null, null, null, null, null);
         if (query != null) {
             query.moveToFirst();
@@ -1260,7 +1281,7 @@ public class DatabaseImpl implements Database {
 
         ArrayList<Magazine> magazine = new ArrayList<Magazine>();
         MagazineBuilder builder = new MagazineBuilder();
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         Cursor query = db.query(TABLE_MAGAZINE_FUN, null, null, null, null, null, null);
         if (query != null) {
             query.moveToFirst();
@@ -1274,6 +1295,51 @@ public class DatabaseImpl implements Database {
         return magazine;
     }
 
+    @Override
+    public ArrayList<MagazineBody> getMagazineBody(int sid) {
+
+        ArrayList<MagazineBody> magazineList = new ArrayList<MagazineBody>();
+        MagazineBodyBuilder builder = new MagazineBodyBuilder();
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_MAGEZINE_BODY, null, "sid=?", new String[] {
+            String.valueOf(sid)
+        }, null, null, null);
+        if (query != null) {
+            query.moveToFirst();
+            while (!query.isAfterLast()) {
+                magazineList.add(builder.build(query));
+                query.moveToNext();
+            }
+        }
+        query.close();
+        db.close();
+        return magazineList;
+    }
+
+    @Override
+    public void deleteMagazineBody() {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        db.delete(TABLE_MAGEZINE_BODY, null, null);
+        db.close();
+
+    }
+
+    @Override
+    public void addMagazineBody(ArrayList<MagazineBody> magazineList) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        for (int i = 0; i < magazineList.size(); i++) {
+            try {
+                ContentValues values = new ContentValues();
+                values.putAll((new MagazineBodyBuilder()).deconstruct(magazineList.get(i)));
+                db.insert(TABLE_MAGEZINE_BODY, null, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        db.close();
+    }
     @Override
     public ArrayList<Magazine> getSubcribedMagazine() {
 

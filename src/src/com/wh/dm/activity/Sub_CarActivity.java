@@ -6,6 +6,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.TwoMagazine;
 import com.wh.dm.util.MagazineUtil;
@@ -15,10 +16,12 @@ import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 import com.wh.dm.widget.SubscribeAdapter;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -44,6 +47,7 @@ public class Sub_CarActivity extends Activity {
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
     private boolean isFirstLoad = true;
+    private int id;
     private final Handler handler = new Handler() {
 
         @Override
@@ -88,6 +92,9 @@ public class Sub_CarActivity extends Activity {
 
     private void initViews() {
 
+        SharedPreferences preference = PreferenceManager
+                .getDefaultSharedPreferences(Sub_CarActivity.this);
+        id = preference.getInt(Preferences.MAGAZINE_ONE_ID, 0);
         lvSub = (PullToRefreshListView) findViewById(R.id.lv_subscribe);
         lvSub.setDivider(null);
         lvSub.setOnRefreshListener(new OnRefreshListener() {
@@ -136,7 +143,7 @@ public class Sub_CarActivity extends Activity {
         protected void onPreExecute() {
 
             if (isFirstLauncher) {
-                savedMagazine = MagazineUtil.toTwoMagazine(databaseImpl.getHotMagazine());
+                savedMagazine = MagazineUtil.toTwoMagazine(databaseImpl.getCarMagazine());
                 if (savedMagazine != null && savedMagazine.size() > 0) {
                     if (isAdapter) {
                         lvSub.setAdapter(adapter);
@@ -154,7 +161,7 @@ public class Sub_CarActivity extends Activity {
 
             ArrayList<Magazine> one = null;
             try {
-                one = wh_dmApi.getMagazine();
+                one = wh_dmApi.getMagazine(id);
                 savedMagazine = MagazineUtil.toTwoMagazine(one);
                 return savedMagazine;
             } catch (Exception e) {
@@ -170,7 +177,7 @@ public class Sub_CarActivity extends Activity {
 
             if (result != null && result.size() > 0) {
                 if (isFirstLoad) {
-                    databaseImpl.deleteHotMagazine();
+                    databaseImpl.deleteCarMagazine();
                     isFirstLoad = false;
                 }
                 if (FLAG_PAGE_UP) {
@@ -183,7 +190,7 @@ public class Sub_CarActivity extends Activity {
                     }
                     adapter.setList(result);
                 }
-                databaseImpl.addHotMagazine(MagazineUtil.toOneMagazine(result));
+                databaseImpl.addCarMagazine(MagazineUtil.toOneMagazine(result));
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (!FLAG_PAGE_UP) {

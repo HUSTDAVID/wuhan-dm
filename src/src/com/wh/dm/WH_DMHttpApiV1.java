@@ -11,6 +11,7 @@ import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.Cover;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
 import com.wh.dm.type.Photo;
@@ -477,14 +478,37 @@ public class WH_DMHttpApiV1 {
         return result.getResult();
     }
 
-    public ArrayList<Magazine> getMagazine() throws WH_DMException, UnKnownException, IOException {
+    public ArrayList<Magazine> getMagazine(int cid) throws WH_DMException, UnKnownException,
+            IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
                 new BasicNameValuePair("act", "list"),
                 new BasicNameValuePair("pi", String.valueOf(1)), new BasicNameValuePair("pz",
-                        String.valueOf(20)));
+                        String.valueOf(20)), new BasicNameValuePair("cid", String.valueOf(cid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<Magazine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    public ArrayList<Magazine> getSearchMagazine(String key) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "list"), new BasicNameValuePair("key", key));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Magazine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    public ArrayList<MagazineSort> getMagazineSort() throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "cls"));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<MagazineSort>>() {
         }.getType();
         return gson.fromJson(content, type);
     }

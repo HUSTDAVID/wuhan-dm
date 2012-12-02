@@ -220,7 +220,7 @@ public class VotedListActivity extends Activity {
         protected ArrayList<Vote> doInBackground(Void... params) {
 
             try {
-                votes = wh_dmApi.getVote(4);
+                votes = wh_dmApi.getVote(6);
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -247,8 +247,9 @@ public class VotedListActivity extends Activity {
                             Intent intent = new Intent(VotedListActivity.this, Vote2Activity.class);
                             intent.putExtra("aid", votes.get(currentSelelct).getAid());
                             intent.putExtra("name", votes.get(currentSelelct).getVotename());
+                            intent.putExtra("des", votes.get(currentSelelct).getDes());
+                            intent.putExtra("pic", votes.get(currentSelelct).getPic());
                             intent.putExtra("ismore", votes.get(currentSelelct).isIsmore());
-                            String[] temp = votes.get(currentSelelct).getVotenote();
                             intent.putExtra("votenote", votes.get(currentSelelct).getVotenote());
                             startActivity(intent);
                         }

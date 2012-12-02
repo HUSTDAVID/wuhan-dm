@@ -5,7 +5,9 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.type.VoteResult;
+import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +28,9 @@ public class VoteWatchResultActivity extends Activity {
 
     private int aid;
     private String vtitle;
-    private boolean isMore;
+    private String des;
+    private String pic;
+    private String voteName;
     private VoteResult result;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_DmApi;
@@ -78,20 +83,25 @@ public class VoteWatchResultActivity extends Activity {
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_DmApi = wh_dmApp.getWH_DMApi();
 
-        isMore = getIntent().getBooleanExtra("ismore", false);
-        if (isMore) {
-
-        } else {
-            aid = getIntent().getIntExtra("aid", 0);
-            vtitle = getIntent().getStringExtra("vtitle");
-            handler.sendEmptyMessage(MSG_SINGLE_VOTE);
-        }
+        aid = getIntent().getIntExtra("aid", 0);
+        vtitle = getIntent().getStringExtra("vtitle");
+        pic = getIntent().getStringExtra("pic");
+        des = getIntent().getStringExtra("des");
+        voteName = getIntent().getStringExtra("name");
+        handler.sendEmptyMessage(MSG_SINGLE_VOTE);
 
         TextView txtStatus = (TextView) findViewById(R.id.vote_ing_3);
-        txtStatus.setText("感谢投票！");
+        txtStatus.setText(getResources().getString(R.string.thx_voting));
+        TextView txtDes = (TextView) findViewById(R.id.btn_vote_des);
+        txtDes.setText(des);
+        TextView txtTitle = (TextView) findViewById(R.id.vote_list_1);
+        txtTitle.setText(voteName);
+        ImageView img = (ImageView) findViewById(R.id.img_vote_pic);
+        UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN + pic,
+                R.drawable.vote_banner, null);
 
         Button btnWatchResult = (Button) findViewById(R.id.btn_vote);
-        btnWatchResult.setText("查看结果");
+        btnWatchResult.setText(getResources().getString(R.string.watch_result));
 
         btnWatchResult.setOnClickListener(new OnClickListener() {
 
@@ -100,6 +110,7 @@ public class VoteWatchResultActivity extends Activity {
 
                 Intent intent = new Intent(VoteWatchResultActivity.this, Vote1Activity.class);
                 intent.putExtra("aid", aid);
+                intent.putExtra("name", voteName);
                 startActivity(intent);
             }
         });

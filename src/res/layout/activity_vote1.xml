@@ -11,7 +11,36 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         layout="@layout/dm_vote_header"/>
-
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13.33dp"
+            android:src="@drawable/icon_vote_title" />
+
+        <TextView
+            android:id="@+id/vote_ing_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/imageView1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:text="投票问题"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+
+
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="fill_parent"
@@ -19,33 +48,6 @@
        android:layout_marginTop="19.33dp"
        android:background="@drawable/corners_bg"
        android:orientation="vertical" >
-
-       <RelativeLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="13dp"
-           android:orientation="horizontal" >
-
-           <ImageView
-               android:id="@+id/imageView1"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_centerVertical="true"
-               android:layout_marginLeft="13.33dp"
-               android:src="@drawable/icon_vote_title" />
-
-           <TextView
-               android:id="@+id/vote_ing_1"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignBaseline="@+id/imageView1"
-               android:layout_centerVertical="true"
-               android:layout_marginLeft="10dp"
-               android:layout_toRightOf="@+id/imageView1"
-               android:text="投票问题"
-               android:textColor="@color/black"
-               android:textSize="17sp" />
-       </RelativeLayout>
 
        <View
            android:layout_width="fill_parent"
@@ -75,8 +77,15 @@
            android:text="您的看法:"
            android:textSize="15sp"
            android:textColor="@color/vote_text1" />
+       
+       <RelativeLayout 
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content">
+           
+      
 
        <RelativeLayout
+           android:id="@+id/rel_title"
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:orientation="horizontal" >
@@ -101,54 +110,47 @@
                android:textColor="@color/red"
                android:textSize="15sp" />
        </RelativeLayout>
-       
-       <RelativeLayout 
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content">
-      
-       
-        <LinearLayout 
-           android:id="@+id/linear_vote_resul"
-           android:layout_width="fill_parent"
-           android:visibility="visible"
-           android:layout_marginTop="10dp"
-            android:layout_marginLeft="13.33dip"
-           android:layout_marginRight="13.33dip"
-           android:layout_height="wrap_content">
-
-           <include
-               android:layout_width="293.33dip"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center_horizontal"
-               android:layout_marginBottom="8dp"
-               android:layout_marginTop="5dp"
-               layout="@layout/vote_result" />
 
-       </LinearLayout>
-        </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/voti1_relative1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-       <Button
-           android:id="@+id/vote_button_close"
-           android:layout_width="wrap_content"
+
+       <RelativeLayout
+           android:layout_width="fill_parent"
            android:layout_height="wrap_content"
-           android:layout_alignParentTop="true"
-           android:layout_centerHorizontal="true"
-           android:layout_marginBottom="10dp"
-           android:background="@drawable/btn_vote_close"
-           android:text="关闭"
-           android:textColor="@color/white"
-           android:textSize="20sp" />
-       
-        </RelativeLayout>
-     
+           android:layout_marginBottom="20dip"
+           android:layout_below="@+id/rel_title"
+           android:orientation="vertical" >
 
+           <ListView 
+               android:id="@+id/lv_vote_result"
+               android:layout_width="fill_parent"
+               android:layout_marginTop="10dip"
+               android:layout_marginBottom="15dip"
+               android:layout_marginLeft="15dip"
+               android:layout_marginRight="15dip"
+               android:background="@drawable/conners_white_bg"
+               android:layout_above="@+id/vote_button_close"
+               android:layout_height="wrap_content"/>
+           
+
+            <Button
+                android:id="@+id/vote_button_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"                
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dip"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_vote_close"
+                android:text="关闭"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+     
+       </RelativeLayout>
+       
+     </RelativeLayout>
+       
+      
    </LinearLayout>
-    
-    
-    
    
+   
+
 </LinearLayout>

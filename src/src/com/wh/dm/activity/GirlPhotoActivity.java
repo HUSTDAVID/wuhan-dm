@@ -6,6 +6,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.PhotoUtil;
@@ -14,10 +15,12 @@ import com.wh.dm.widget.PullToRefreshListView;
 import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -101,7 +104,9 @@ public class GirlPhotoActivity extends Activity {
         // relPhotosHeader.setBackgroundResource(R.drawable.topbar_black_bg);
         // txtPhotosHeader.setText(getResources().getString(R.string.photo));
 
-        id = getIntent().getIntExtra("id", 217);
+        SharedPreferences preference = PreferenceManager
+                .getDefaultSharedPreferences(GirlPhotoActivity.this);
+        id = preference.getInt(Preferences.PHOTO_TWO_ID, 217);
 
         lvPhotos = (PullToRefreshListView) findViewById(R.id.lv_photos_all);
         lvPhotos.setDivider(null);
