@@ -2,9 +2,13 @@
 package com.wh.dm.type;
 
 public class Cover {
+
     private String name;
     private int drawableId;
     private int id;
+    private String mgname;
+    private String mgpic;
+    private int template;
 
     public void setId(int _id) {
 
@@ -34,5 +38,37 @@ public class Cover {
     public int getDrawableId() {
 
         return drawableId;
+    }
+
+    public void setMagazineName(String _mgname) {
+
+        mgname = _mgname;
+
+    }
+
+    public String getMagazineName() {
+
+        return mgname;
+    }
+
+    public void setMagazinePic(String _mgpic) {
+
+        mgpic = _mgpic;
+
+    }
+
+    public String getMagazinePic() {
+
+        return mgpic;
+    }
+
+    public void setTemplate(int _template) {
+
+        template = _template;
+    }
+
+    public int getTemplate() {
+
+        return template;
     }
 }

@@ -2,9 +2,13 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.type.Magazine;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,7 +17,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,9 +24,11 @@ import java.util.Map;
 
 public class SubManagerAdapter extends BaseAdapter {
 
-    ArrayList<Map<String, Object>> mData;
-    LayoutInflater mInflater;
-    Context context;
+    private final ArrayList<Map<String, Object>> mData;
+    private final LayoutInflater mInflater;
+    private final Context context;
+    private Handler handler;
+    private static final int MSG_UNSUBCRIBE = 1;
 
     public SubManagerAdapter(Context context) {
 
@@ -43,10 +48,46 @@ public class SubManagerAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setHandler(Handler _handler) {
+
+        handler = _handler;
+    }
+
+    public void setList(ArrayList<Magazine> magazines) {
+
+        mData.clear();
+        for (int i = 0; i < magazines.size(); i++) {
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            Magazine magazine = magazines.get(i);
+            map.put("id", magazine.getSid());
+            map.put("image", magazine.getSpic());
+            map.put("title", magazine.getSname());
+            mData.add(map);
+        }
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Map<String, Object>> getList() {
+
+        return mData;
+    }
+
+    public void clear() {
+
+        mData.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
 
-        return mData.size();
+        if (mData == null) {
+            mData.clear();
+            return 0;
+        } else {
+            return mData.size();
+        }
+
     }
 
     @Override
@@ -79,17 +120,22 @@ public class SubManagerAdapter extends BaseAdapter {
             holder = (ViewHolder) converView.getTag();
         }
 
-        holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
-        holder.txtAd.setText(mData.get(position).get("ad").toString());
+        // holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
+        // holder.txtAd.setText(mData.get(position).get("ad").toString());
         holder.txtTitie.setText(mData.get(position).get("title").toString());
-        holder.txtTotal.setText(mData.get(position).get("subTotal").toString());
-
+        // holder.txtTotal.setText(mData.get(position).get("subTotal").toString());
+        final int pos = position;
         holder.btnNoSub.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "È¡Ïû¶©ÔÄ", Toast.LENGTH_SHORT).show();
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", Integer.parseInt(mData.get(pos).get("id").toString()));
+                message.setData(bundle);
+                message.what = MSG_UNSUBCRIBE;
+                handler.sendMessage(message);
 
             }
         });

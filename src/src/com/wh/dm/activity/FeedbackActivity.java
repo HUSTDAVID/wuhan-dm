@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FeedbackActivity extends Activity {
 
@@ -47,20 +46,20 @@ public class FeedbackActivity extends Activity {
             }
 
         });
-        
-        btnSend.setOnClickListener(new OnClickListener(){
-        	@Override
-        	public void onClick(View v)
-        	{
-        		if(edtContack.getText().toString().trim().equals("")||edtFeedbackText.getText().toString().trim().equals(""))
-        		{
-        			NotificationUtil.showShortToast("请填写完整", FeedbackActivity.this);
-        		}
-        		else{
-        		  FeedbackTask feedbackTask=new FeedbackTask();
-        		  feedbackTask.execute(edtContack.getText().toString(),edtFeedbackText.getText().toString());
-        		}
-        	}
+
+        btnSend.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (edtContack.getText().toString().trim().equals("")
+                        || edtFeedbackText.getText().toString().trim().equals("")) {
+                    NotificationUtil.showShortToast("请填写完整", FeedbackActivity.this);
+                } else {
+                    FeedbackTask feedbackTask = new FeedbackTask();
+                    feedbackTask.execute(edtContack.getText().toString(), edtFeedbackText.getText()
+                            .toString());
+                }
+            }
         });
     }
 
@@ -92,37 +91,39 @@ public class FeedbackActivity extends Activity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
     }
-    private class FeedbackTask extends AsyncTask<String, Void, Boolean>
-    {
-    	@Override
-    	protected void onPreExecute()
-    	{
-    		progressDialog.show();
+
+    private class FeedbackTask extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected void onPreExecute() {
+
+            progressDialog.show();
             super.onPreExecute();
-    	}
-		@Override
-		protected Boolean doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			try{
-				return ((WH_DMApp) getApplication()).getWH_DMApi().commitFeedback(params[0], params[1]);
-			}
-			catch(Exception e){
-				e.printStackTrace();
-				return false;
-			}
-		}
-    	@Override
-    	protected void onPostExecute(Boolean result)
-    	{
-    		if(result)
-    		{
-    			NotificationUtil.showShortToast("提交成功", FeedbackActivity.this);
-    		}
-    		else{
-    			NotificationUtil.showShortToast("提交失败", FeedbackActivity.this);
-    		}
-    		progressDialog.dismiss();	
-    		super.onPostExecute(result);
-    	}
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            // TODO Auto-generated method stub
+            try {
+                return ((WH_DMApp) getApplication()).getWH_DMApi().commitFeedback(params[0],
+                        params[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast("提交成功", FeedbackActivity.this);
+                finish();
+            } else {
+                NotificationUtil.showShortToast("提交失败", FeedbackActivity.this);
+            }
+            progressDialog.dismiss();
+            super.onPostExecute(result);
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Cover;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
@@ -228,9 +229,26 @@ public class WH_DMApi {
 
         return mWH_DMHttpApiV1.getArticle(sid);
     }
-    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException, UnKnownException, IOException 
-    {
-    	return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);
+
+    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);
     }
 
+    public Cover subcribe(int id) throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.subcribe(id);
+    }
+
+    public boolean unsubcribe(int id) throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.unsubcribe(id);
+    }
+
+    public ArrayList<Magazine> getSubcribedMagazines() throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getSubcribedMagazines();
+    }
 }

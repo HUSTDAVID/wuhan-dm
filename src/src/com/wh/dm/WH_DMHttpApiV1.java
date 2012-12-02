@@ -9,6 +9,7 @@ import com.wh.dm.http.HttpApiBasic;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Cover;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
@@ -47,7 +48,7 @@ public class WH_DMHttpApiV1 {
     private static final String URL_API_NEWS = "/api/News.aspx";
     private static final String URL_API_MEM = "/api/Mem.aspx";
     public static final String URL_API_MAGAZINE = "/api/Magazine.aspx";
-    private static final String URL_API_FEEDBACK="/api/feedback.aspx";
+    private static final String URL_API_FEEDBACK = "/api/feedback.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -528,13 +529,54 @@ public class WH_DMHttpApiV1 {
         return article;
 
     }
-    public boolean commitFeedBack(String contactways, String fcontent) throws WH_DMException, UnKnownException, IOException
-    {
-    	 HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_FEEDBACK,
-                 new BasicNameValuePair("Act", "feedback"), new BasicNameValuePair("User",contactways ),
-                 new BasicNameValuePair("Memo", fcontent));
-         String content = mHttpApi.doHttpRequest(httPost);
-         PostResult result = gson.fromJson(content, PostResult.class);
-         return result.getResult();
+
+    public boolean commitFeedBack(String contactways, String fcontent) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_FEEDBACK,
+                new BasicNameValuePair("Act", "feedback"), new BasicNameValuePair("User",
+                        contactways), new BasicNameValuePair("Memo", fcontent));
+        String content = mHttpApi.doHttpRequest(httPost);
+        PostResult result = gson.fromJson(content, PostResult.class);
+        return result.getResult();
     }
+
+    public Cover subcribe(int id) throws WH_DMException, UnKnownException, IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "order"), new BasicNameValuePair("mid", "" + id));
+        String content = mHttpApi.doHttpRequest(httPost);
+        PostResult result = gson.fromJson(content, PostResult.class);
+        if (result.getResult()) {
+            Cover cover = new Cover();
+            String[] msg = (result.getMsg()).split(",", 3);
+            cover.setId(Integer.parseInt(msg[0]));
+            cover.setMagazineName(msg[1]);
+            cover.setMagazinePic(msg[2]);
+            return cover;
+        } else {
+            return null;
+        }
+    }
+
+    public boolean unsubcribe(int id) throws WH_DMException, UnKnownException, IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "orderc"), new BasicNameValuePair("mid", "" + id));
+        String content = mHttpApi.doHttpRequest(httPost);
+        PostResult result = gson.fromJson(content, PostResult.class);
+        return result.getResult();
+    }
+
+    public ArrayList<Magazine> getSubcribedMagazines() throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "orderlist"));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Magazine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
 }

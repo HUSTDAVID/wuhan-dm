@@ -4,14 +4,15 @@ package com.wh.dm.widget;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
-import com.wh.dm.activity.DM_Tab_2Activity;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.TwoMagazine;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,14 +32,25 @@ public class SubscribeAdapter extends BaseAdapter {
     ArrayList<TwoMagazine> twoMagazine;
     LayoutInflater mInflater;
     Context context;
-    private final Bundle bundle;
+    private Handler handler;
+    private final int MSG_SUBCRIBE = 1;
+    private DatabaseImpl databaseImpl;
 
     public SubscribeAdapter(Context context) {
 
         this.context = context;
         twoMagazine = new ArrayList<TwoMagazine>();
         mInflater = LayoutInflater.from(context);
-        bundle = new Bundle();
+    }
+
+    public void setHandler(Handler _handler) {
+
+        handler = _handler;
+    }
+
+    public void setDatabaseImpl(DatabaseImpl _databaseImpl) {
+
+        databaseImpl = _databaseImpl;
     }
 
     public void setList(ArrayList<TwoMagazine> _twoMagazine) {
@@ -63,6 +75,16 @@ public class SubscribeAdapter extends BaseAdapter {
     public Object getItem(int position) {
 
         return twoMagazine.get(position);
+    }
+
+    public Magazine getLeft(int position) {
+
+        return twoMagazine.get(position).getLeftMagazine();
+    }
+
+    public Magazine getRight(int position) {
+
+        return twoMagazine.get(position).getRightMagazine();
     }
 
     @Override
@@ -92,15 +114,14 @@ public class SubscribeAdapter extends BaseAdapter {
         }
 
         final Magazine left;
-        Magazine right;
+        final Magazine right;
         left = twoMagazine.get(position).getLeftMagazine();
         right = twoMagazine.get(position).getRightMagazine();
-        // add left data
 
+        // add left data
         holder.leftTxt.setText(left.getSname());
-        // test data
-        boolean leftIsSub = false;
-        if (leftIsSub) {
+        String leftStatus = left.getEditor();
+        if (leftStatus != null && leftStatus.equals("subcribed")) {
             holder.leftBtn.setBackgroundResource(R.drawable.btn_sub_have);
             holder.leftBtn.setText(context.getResources().getString(R.string.sub_have));
             holder.leftBtn.setTextColor(context.getResources().getColor(R.color.black));
@@ -108,33 +129,40 @@ public class SubscribeAdapter extends BaseAdapter {
             holder.leftBtn.setBackgroundResource(R.drawable.btn_sub_no);
             holder.leftBtn.setText(context.getResources().getString(R.string.sub_no));
             holder.leftBtn.setTextColor(context.getResources().getColor(R.color.white));
+
         }
-
         // add right data
-
         holder.rightTxt.setText(right.getSname());
-        // test data
-        boolean rightIsSub = false;
-        if (rightIsSub) {
+
+        String rightStatus = right.getEditor();
+        if (rightStatus != null && rightStatus.equals("subcribed")) {
             holder.rightBtn.setBackgroundResource(R.drawable.btn_sub_have);
             holder.rightBtn.setText(context.getResources().getString(R.string.sub_have));
             holder.rightBtn.setTextColor(context.getResources().getColor(R.color.black));
+
         } else {
             holder.rightBtn.setBackgroundResource(R.drawable.btn_sub_no);
             holder.rightBtn.setText(context.getResources().getString(R.string.sub_no));
             holder.rightBtn.setTextColor(context.getResources().getColor(R.color.white));
         }
+        final ViewHolder tmpHolder = holder;
         holder.leftBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                if (left.getShortname().equals("创意光谷")) {
-                    Intent intent = new Intent(context, DM_Tab_2Activity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    bundle.putInt("dm", DM_CON);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
+                if (WH_DMApp.isConnected) {
+                    Message message = new Message();
+                    message.what = MSG_SUBCRIBE;
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("cid", left.getSid());
+                    message.setData(bundle);
+                    handler.sendMessage(message);
+                    tmpHolder.leftBtn.setBackgroundResource(R.drawable.btn_sub_have);
+                    tmpHolder.leftBtn.setText(context.getResources().getString(R.string.sub_have));
+                    tmpHolder.leftBtn.setTextColor(context.getResources().getColor(R.color.black));
+                    left.setEditor("subcribed");
+                    databaseImpl.addMagazine(left);
                 }
 
             }
@@ -145,14 +173,6 @@ public class SubscribeAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                if (left.getShortname().equals("创意光谷")) {
-                    Intent intent = new Intent(context, DM_Tab_2Activity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    bundle.putInt("dm", DM_CON);
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                }
-
             }
 
         });
@@ -161,6 +181,19 @@ public class SubscribeAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
+                if (WH_DMApp.isConnected) {
+                    Message message = new Message();
+                    message.what = MSG_SUBCRIBE;
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("cid", right.getSid());
+                    message.setData(bundle);
+                    handler.sendMessage(message);
+                    tmpHolder.rightBtn.setBackgroundResource(R.drawable.btn_sub_have);
+                    tmpHolder.rightBtn.setText(context.getResources().getString(R.string.sub_have));
+                    tmpHolder.rightBtn.setTextColor(context.getResources().getColor(R.color.black));
+                    right.setEditor("subcribed");
+                    databaseImpl.addMagazine(right);
+                }
             }
 
         });

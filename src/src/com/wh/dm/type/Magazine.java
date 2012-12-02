@@ -11,6 +11,7 @@ public class Magazine {
     private String memo;
     private int isfeedback;
     private int limit;
+    private String pass;
     private String addtime;
     private String sname;
     private String shortname;
@@ -96,6 +97,16 @@ public class Magazine {
     public void setLimit(int limit) {
 
         this.limit = limit;
+    }
+
+    public String getPass() {
+
+        return pass;
+    }
+
+    public void setPass(String _pass) {
+
+        pass = _pass;
     }
 
     public String getAddtime() {
