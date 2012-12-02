@@ -493,7 +493,6 @@ public class WH_DMHttpApiV1 {
     public ArrayList<Magazine> getSearchMagazine(String key) throws WH_DMException,
             UnKnownException, IOException {
 
-        String temp = URL_DOMAIN + URL_API_MAGAZINE;
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
                 new BasicNameValuePair("act", "list"), new BasicNameValuePair("key", key));
         String content = mHttpApi.doHttpRequest(httpGet);
