@@ -13,6 +13,7 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -48,6 +49,7 @@ public class PhotosDetailsActivity extends Activity {
     private ViewGroup group;
     private ImageButton btnBack;
 
+    TextView txtFcounts;
     TextView txtBody;
     TextView txtTitle;
     TextView txtPage;
@@ -166,14 +168,28 @@ public class PhotosDetailsActivity extends Activity {
         //
         RelativeLayout rel = (RelativeLayout) main.findViewById(R.id.rel_photosmain_details);
 
+        txtFcounts = (TextView) main.findViewById(R.id.txt_total_black_reply);
         txtTitle = (TextView) main.findViewById(R.id.txt_photos_details_title);
         txtBody = (TextView) main.findViewById(R.id.txt_photos_details_body);
         txtPage = (TextView) main.findViewById(R.id.txt_photos_details_num);
         txtPage.setText(currentPhoto + "/" + totalPhotos);
         imgArrow = (ImageView) main.findViewById(R.id.img_photos_details_arrow);
 
+        txtFcounts.setText(getIntent().getIntExtra("fcount", 0)
+                + getResources().getString(R.string.reply));
         txtBody.setText(getIntent().getStringExtra("description"));
         txtTitle.setText(getIntent().getStringExtra("title"));
+        txtFcounts.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(PhotosDetailsActivity.this, PhotoReplyActivity.class);
+                intent.putExtra("id", aid);
+                startActivity(intent);
+
+            }
+        });
 
         rel.setOnClickListener(new OnClickListener() {
 
@@ -472,7 +488,7 @@ public class PhotosDetailsActivity extends Activity {
         protected Boolean doInBackground(String... params) {
 
             try {
-                result = wh_dmApi.addReview(getFcontent(), aid);
+                result = wh_dmApi.addPhotoReview(getFcontent(), aid);
                 return true;
             } catch (Exception e) {
                 reason = e;

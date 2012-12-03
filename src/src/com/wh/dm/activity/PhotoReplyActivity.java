@@ -36,8 +36,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NewsMoreReplyActivity extends Activity {
-
+public class PhotoReplyActivity extends Activity {
     private static final int MSG_GET_COMMENT = 0;
     public static final int MSG_PUSH_TOP = 1;
     public static final int MSG_REPLY = 2;
@@ -92,8 +91,8 @@ public class NewsMoreReplyActivity extends Activity {
                         pushTopTask.execute(bundle.getString("fid"));
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.please_login),
-                                NewsMoreReplyActivity.this);
-                        Intent intent = new Intent(NewsMoreReplyActivity.this, LoginActivity.class);
+                                PhotoReplyActivity.this);
+                        Intent intent = new Intent(PhotoReplyActivity.this, LoginActivity.class);
                         startActivity(intent);
                     }
 
@@ -134,7 +133,7 @@ public class NewsMoreReplyActivity extends Activity {
                         reviewTask.execute(getFcontent());
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.review_null),
-                                NewsMoreReplyActivity.this);
+                                PhotoReplyActivity.this);
                     }
 
             }
@@ -171,7 +170,7 @@ public class NewsMoreReplyActivity extends Activity {
     private void initViews() {
 
         // add data for listview
-        progressDialog = new ProgressDialog(NewsMoreReplyActivity.this);
+        progressDialog = new ProgressDialog(PhotoReplyActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         lv = (ListView) findViewById(R.id.lv_news_reply);
         adapter = new NewsReplyMoreAdapter(this);
@@ -200,7 +199,7 @@ public class NewsMoreReplyActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                NewsMoreReplyActivity.this.finish();
+                PhotoReplyActivity.this.finish();
 
             }
         });
@@ -238,8 +237,8 @@ public class NewsMoreReplyActivity extends Activity {
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
                 if (!WH_DMApp.isLogin) {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
-                            NewsMoreReplyActivity.this);
-                    Intent intent = new Intent(NewsMoreReplyActivity.this, LoginActivity.class);
+                            PhotoReplyActivity.this);
+                    Intent intent = new Intent(PhotoReplyActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
                 if (isReview) {
@@ -276,7 +275,7 @@ public class NewsMoreReplyActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UMSnsService.share(NewsMoreReplyActivity.this, "˵Щʲô...", null);
+                UMSnsService.share(PhotoReplyActivity.this, "˵Щʲô...", null);
             }
         });
 
@@ -306,7 +305,7 @@ public class NewsMoreReplyActivity extends Activity {
             ArrayList<Review> reviews = new ArrayList<Review>();
 
             try {
-                comments = wh_dmApi.getComment(params[0], curPage);
+                comments = wh_dmApi.getPhotoComment(params[0], curPage);
                 int length = comments.size();
                 for (int i = 0; i < length; i++) {
                     int id = comments.get(i).getId();
@@ -352,7 +351,7 @@ public class NewsMoreReplyActivity extends Activity {
 
             } else {
                 NotificationUtil.showShortToast(getString(R.string.review_no_more),
-                        NewsMoreReplyActivity.this);
+                        PhotoReplyActivity.this);
                 if (adapter.getCount() == 0) {
                     lv.setVisibility(View.INVISIBLE);
                 }
@@ -386,10 +385,10 @@ public class NewsMoreReplyActivity extends Activity {
 
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.top_succeed),
-                        NewsMoreReplyActivity.this);
+                        PhotoReplyActivity.this);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.top_fail),
-                        NewsMoreReplyActivity.this);
+                        PhotoReplyActivity.this);
             }
             super.onPostExecute(result);
         }
@@ -419,10 +418,10 @@ public class NewsMoreReplyActivity extends Activity {
 
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.reply_succeed),
-                        NewsMoreReplyActivity.this);
+                        PhotoReplyActivity.this);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.reply_fail),
-                        NewsMoreReplyActivity.this);
+                        PhotoReplyActivity.this);
             }
             super.onPostExecute(result);
         }
@@ -444,7 +443,7 @@ public class NewsMoreReplyActivity extends Activity {
 
             boolean result = false;
             try {
-                result = wh_dmApi.addReview(params[0], id);
+                result = wh_dmApi.addPhotoReview(params[0], id);
                 return true;
             } catch (Exception e) {
                 reason = e;
@@ -458,10 +457,10 @@ public class NewsMoreReplyActivity extends Activity {
 
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.review_succeed),
-                        NewsMoreReplyActivity.this);
+                        PhotoReplyActivity.this);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
-                        NewsMoreReplyActivity.this);
+                        PhotoReplyActivity.this);
             }
             progressDialog.dismiss();
             super.onPostExecute(result);

@@ -119,6 +119,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".activity.PhotoReplyActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".activity.Vote2Activity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >

@@ -99,6 +99,12 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getComment(id, page);
     }
 
+    public ArrayList<Comment> getPhotoComment(int id, int page) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPhotoComment(id, page);
+    }
+
     public ArrayList<Reply> getReply(int fid) throws WH_DMException, UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.getReply(fid);
@@ -119,6 +125,12 @@ public class WH_DMApi {
             IOException {
 
         return mWH_DMHttpApiV1.addReview(content, id);
+    }
+
+    public boolean addPhotoReview(String _content, int id) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.addPhotoReview(_content, id);
     }
 
     public ArrayList<PhotoSort> getPhotoSort() throws WH_DMException, UnKnownException, IOException {

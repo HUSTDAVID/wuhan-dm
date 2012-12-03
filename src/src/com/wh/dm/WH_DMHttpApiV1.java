@@ -227,6 +227,23 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
+    public ArrayList<Comment> getPhotoComment(int id, int page) throws WH_DMException,
+            UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
+                "act", "listtfb"), new BasicNameValuePair("id", String.valueOf(id)),
+                new BasicNameValuePair("spage", "12"), new BasicNameValuePair("page", "" + page));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        if (DEBUG) {
+            Log.d("getComment", "getComment");
+            Log.d("gson", content);
+
+        }
+        Type type = new TypeToken<ArrayList<Comment>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
     public ArrayList<Reply> getReply(int fid) throws WH_DMException, UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_NEWS, new BasicNameValuePair(
@@ -247,6 +264,21 @@ public class WH_DMHttpApiV1 {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_NEWS,
                 new BasicNameValuePair("act", "addfb"),
+                new BasicNameValuePair("id", String.valueOf(id)), new BasicNameValuePair(
+                        "fcontent", _content));
+        String content = mHttpApi.doHttpRequest(httPost);
+
+        PostResult result = gson.fromJson(content, PostResult.class);
+        Log.d("review", content);
+        return result.getResult();
+
+    }
+
+    public boolean addPhotoReview(String _content, int id) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_NEWS,
+                new BasicNameValuePair("act", "addtfb"),
                 new BasicNameValuePair("id", String.valueOf(id)), new BasicNameValuePair(
                         "fcontent", _content));
         String content = mHttpApi.doHttpRequest(httPost);
