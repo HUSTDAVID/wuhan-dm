@@ -12,6 +12,8 @@ import com.wh.dm.widget.DragGridAdapter;
 import com.wh.dm.widget.ScrollLayout;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -112,6 +114,15 @@ public class MainActivity extends Activity {
         }
     };
 
+    private class SubcribeRecevier extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -136,8 +147,6 @@ public class MainActivity extends Activity {
         });
 
         runAnimation();
-        // DatabaseImpl databaseImpl = new DatabaseImpl(this);
-
     }
 
     @Override

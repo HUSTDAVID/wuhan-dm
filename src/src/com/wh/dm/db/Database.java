@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public interface Database {
 
+    // local news
     public void deleteAllData();
 
     public void deleteAllNews();
@@ -163,6 +164,16 @@ public interface Database {
 
     public ArrayList<Magazine> getFunMagazine();
 
+    // subcribe
+    public ArrayList<Magazine> getSubcribedMagazine();
+
+    public void addMagazine(Magazine magazine);
+
+    public void addMagazines(ArrayList<Magazine> magazines);
+
+    public void delMagazine(int id);
+
+    public void delMagazines();
     // magazine download
     public ArrayList<MagazineBody> getMagazineBody(int sid);
 

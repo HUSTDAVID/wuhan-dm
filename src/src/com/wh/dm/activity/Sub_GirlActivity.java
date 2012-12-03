@@ -132,7 +132,7 @@ public class Sub_GirlActivity extends Activity {
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
         adapter = new SubscribeAdapter(this);
-        handler.sendEmptyMessage(MSG_GET_MAGAZINE);
+        // handler.sendEmptyMessage(MSG_GET_MAGAZINE);
     }
 
     class GetMagazine extends AsyncTask<Void, Void, ArrayList<TwoMagazine>> {
