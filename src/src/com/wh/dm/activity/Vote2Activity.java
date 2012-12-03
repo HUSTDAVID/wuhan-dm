@@ -31,7 +31,7 @@ public class Vote2Activity extends Activity {
     private ListView listView;
     private VoteChoiceAdapter adapter;
     private TextView txtNum;
-    private boolean isMore = false;
+    // private boolean isMore = false;
     private boolean[] choice;
     private String[] notes;
     private Button lastChoice;
@@ -91,7 +91,7 @@ public class Vote2Activity extends Activity {
         aid = getIntent().getIntExtra("aid", 0);
         voteName = getIntent().getStringExtra("name");
         pic = getIntent().getStringExtra("pic");
-        isMore = getIntent().getBooleanExtra("ismore", false);
+        // isMore = getIntent().getBooleanExtra("ismore", false);
         des = getIntent().getStringExtra("des");
         notes = getIntent().getStringArrayExtra("votenote");
         choice = new boolean[notes.length];
@@ -115,55 +115,26 @@ public class Vote2Activity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
-                if (isMore) {
-                    intent.putExtra("ismore", true);
-                    String vtitle = "";
-                    for (int i = 0; i < choice.length; i++) {
-                        if (choice[i]) {
-                            if (vtitle.equals("")) {
-                                vtitle = notes[i];
-                            } else {
-                                vtitle = vtitle + "," + notes[i];
-                            }
-                        }
-                    }
-                    if (vtitle.equals("")) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.select_choice),
-                                Vote2Activity.this);
-                    } else {
-                        intent.putExtra("vtitle", vtitle);
-                        intent.putExtra("aid", aid);
-                        intent.putExtra("des", des);
-                        intent.putExtra("pic", pic);
-                        intent.putExtra("name", voteName);
-                        startActivity(intent);
-                    }
-
-                } else {
-                    intent.putExtra("ismore", false);
-                    String vtitle = "";
-                    for (int i = 0; i < choice.length; i++) {
-                        if (choice[i]) {
-                            vtitle = notes[i];
-                            break;
-                        }
-                    }
-                    if (vtitle.equals("")) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.select_choice),
-                                Vote2Activity.this);
-                    } else {
-                        intent.putExtra("vtitle", vtitle);
-                        intent.putExtra("aid", aid);
-                        intent.putExtra("des", des);
-                        intent.putExtra("name", voteName);
-                        intent.putExtra("pic", pic);
-                        startActivity(intent);
+                String vtitle = "";
+                for (int i = 0; i < choice.length; i++) {
+                    if (choice[i]) {
+                        vtitle = notes[i];
+                        break;
                     }
                 }
-
+                if (vtitle.equals("")) {
+                    NotificationUtil.showShortToast(getResources()
+                            .getString(R.string.select_choice), Vote2Activity.this);
+                } else {
+                    intent.putExtra("vtitle", vtitle);
+                    intent.putExtra("aid", aid);
+                    intent.putExtra("des", des);
+                    intent.putExtra("name", voteName);
+                    intent.putExtra("pic", pic);
+                    startActivity(intent);
+                }
             }
+
         });
 
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
@@ -180,28 +151,17 @@ public class Vote2Activity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
 
-                if (isMore) {
-                    Button btn = (Button) view.findViewById(R.id.btn_vote_item);
-                    if (btn.isSelected()) {
-                        btn.setSelected(false);
-                        choice[position] = false;
-                    } else {
+                if (lastChoice != null) {
+                    lastChoice.setSelected(false);
+                }
+                Button btn = (Button) view.findViewById(R.id.btn_vote_item);
+                lastChoice = btn;
+                for (int i = 0; i < choice.length; i++) {
+                    if (i == position) {
+                        choice[i] = true;
                         btn.setSelected(true);
-                        choice[position] = true;
-                    }
-                } else {
-                    if (lastChoice != null) {
-                        lastChoice.setSelected(false);
-                    }
-                    Button btn = (Button) view.findViewById(R.id.btn_vote_item);
-                    lastChoice = btn;
-                    for (int i = 0; i < choice.length; i++) {
-                        if (i == position) {
-                            choice[i] = true;
-                            btn.setSelected(true);
-                        } else {
-                            choice[i] = false;
-                        }
+                    } else {
+                        choice[i] = false;
                     }
                 }
                 if (adapter != null) {
