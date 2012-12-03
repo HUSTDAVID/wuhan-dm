@@ -182,27 +182,18 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
 
                 case R.id.txt_listtop_3:
                     intent.setClass(PhotosActivity.this, CarPhotoActivity.class);
-                    if (sortList != null && sortList.size() > 0) {
-                        intent.putExtra("id", sortList.get(0).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("car", intent).getDecorView();
                     setCurTxt(3);
                     break;
 
                 case R.id.txt_listtop_4:
                     intent.setClass(PhotosActivity.this, GirlPhotoActivity.class);
-                    if (sortList != null && sortList.size() > 1) {
-                        intent.putExtra("id", sortList.get(1).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("girl", intent).getDecorView();
                     setCurTxt(4);
                     break;
 
                 case R.id.txt_listtop_5:
                     intent.setClass(PhotosActivity.this, PhotographPhotoActivity.class);
-                    if (sortList != null && sortList.size() > 2) {
-                        intent.putExtra("id", sortList.get(2).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("photograph", intent)
                             .getDecorView();
                     setCurTxt(5);
@@ -210,9 +201,6 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
 
                 case R.id.txt_listtop_6:
                     intent.setClass(PhotosActivity.this, FunPhotoActivity.class);
-                    if (sortList != null && sortList.size() > 3) {
-                        intent.putExtra("id", sortList.get(3).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("fun", intent).getDecorView();
                     setCurTxt(6);
                     break;
@@ -374,12 +362,18 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
                 String two = sortList.get(1).getTypename();
                 String three = sortList.get(2).getTypename();
                 String four = sortList.get(3).getTypename();
+                int idOne = sortList.get(0).getId();
+                int idTwo = sortList.get(1).getId();
+                int idThree = sortList.get(2).getId();
+                int idFour = sortList.get(3).getId();
+
                 txtCar.setText(one);
                 txtGirl.setText(two);
                 txtPhotograph.setText(three);
                 txtFun.setText(four);
 
-                Preferences.savePhotoType(PhotosActivity.this, one, two, three, four);
+                Preferences.savePhotoType(PhotosActivity.this, one, two, three, four, idOne, idTwo,
+                        idThree, idFour);
             }
             super.onPostExecute(result);
         }

@@ -23,13 +23,14 @@ public class WH_DMApp extends Application {
     private DatabaseImpl databaseImpl;
     private SharedPreferences mPrefs;
     public static boolean isLogin = false;
-    public static boolean isConnected = false;
+    public static boolean isConnected = true;
     public static boolean isSinaLogin = false;
     public static boolean isTencLogin = false;
     public static boolean isLoadImg;
 
     public static final String INTENT_ACTION_LOG_SUCCESS = "com.wh.dm.intent.action.LOG_SUCCESS";
     public static final String INTENT_ACTION_LOG_FAIL = "com.wh.dm.intent.action.LOG_FAIL";
+    public static final String INTENT_ACTION_SUBCRIBE_CHANGE = "com.wh.dm.intent.action.change";
 
     @Override
     public void onCreate() {

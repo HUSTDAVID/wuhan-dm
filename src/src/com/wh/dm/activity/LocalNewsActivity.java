@@ -174,27 +174,18 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 case R.id.txt_listtop_2:
                     setCurTxt(2);
                     intent.setClass(LocalNewsActivity.this, HouseNewsActivity.class);
-                    if (newsSort != null && newsSort.size() > 0) {
-                        intent.putExtra("id", newsSort.get(0).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_3:
                     setCurTxt(3);
                     intent.setClass(LocalNewsActivity.this, CarNewsActivity.class);
-                    if (newsSort != null && newsSort.size() > 1) {
-                        intent.putExtra("id", newsSort.get(1).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("Car", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_4:
                     setCurTxt(4);
                     intent.setClass(LocalNewsActivity.this, FashionNewsActivity.class);
-                    if (newsSort != null && newsSort.size() > 2) {
-                        intent.putExtra("id", newsSort.get(2).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("Fashion", intent)
                             .getDecorView();
                     break;
@@ -202,18 +193,12 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 case R.id.txt_listtop_5:
                     setCurTxt(5);
                     intent.setClass(LocalNewsActivity.this, LifeNewsActivity.class);
-                    if (newsSort != null && newsSort.size() > 3) {
-                        intent.putExtra("id", newsSort.get(3).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("Life", intent).getDecorView();
                     break;
 
                 case R.id.txt_listtop_6:
                     setCurTxt(6);
                     intent.setClass(LocalNewsActivity.this, TravelNewsActivity.class);
-                    if (newsSort != null && newsSort.size() > 4) {
-                        intent.putExtra("id", newsSort.get(4).getId());
-                    }
                     vMain = getLocalActivityManager().startActivity("Travel", intent)
                             .getDecorView();
                     break;
@@ -375,14 +360,21 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 String three = newsSort.get(2).getTypename();
                 String four = newsSort.get(3).getTypename();
                 String five = newsSort.get(4).getTypename();
+                int idOne = newsSort.get(0).getId();
+                int idTwo = newsSort.get(1).getId();
+                int idThree = newsSort.get(2).getId();
+                int idFour = newsSort.get(3).getId();
+                int idFive = newsSort.get(4).getId();
 
+                // refresh news sort
                 txtHouse.setText(one);
                 txtCar.setText(two);
                 txtFashion.setText(three);
                 txtLift.setText(four);
                 txtTravel.setText(five);
 
-                Preferences.saveNewsType(LocalNewsActivity.this, one, two, three, four, five);
+                Preferences.saveNewsType(LocalNewsActivity.this, one, two, three, four, five,
+                        idOne, idTwo, idThree, idFour, idFive);
             }
             super.onPostExecute(result);
         }

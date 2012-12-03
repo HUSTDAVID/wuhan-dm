@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wh.dm"
-    android:versionCode="12"
-    android:versionName="2.2" >
+    android:versionCode="13"
+    android:versionName="2.3" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -307,6 +307,11 @@
         </activity>
          <activity
             android:name=".activity.Sub_FunActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".activity.SearchMagazineActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>

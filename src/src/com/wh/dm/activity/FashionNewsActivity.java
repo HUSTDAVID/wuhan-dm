@@ -6,15 +6,18 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -66,7 +69,9 @@ public class FashionNewsActivity extends Activity {
         MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_house);
-        id = getIntent().getIntExtra("id", 213);
+        SharedPreferences preference = PreferenceManager
+                .getDefaultSharedPreferences(FashionNewsActivity.this);
+        id = preference.getInt(Preferences.NEWS_THREE_ID, 213);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
