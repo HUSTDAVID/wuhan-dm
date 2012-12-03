@@ -6,6 +6,7 @@ import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
@@ -14,6 +15,7 @@ import com.wh.dm.type.PhotoSort;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.PictureMagzine;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
@@ -228,9 +230,26 @@ public class WH_DMApi {
 
         return mWH_DMHttpApiV1.getArticle(sid);
     }
-    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException, UnKnownException, IOException 
-    {
+    
+    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException, 
+            UnKnownException, IOException {
+    	
     	return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);
+    }
+    
+    public PostResult addFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    	
+    	return mWH_DMHttpApiV1.addFav(nid);
+    }
+    
+    public ArrayList<Favorite> getFav(int pz,int pi) throws WH_DMException, UnKnownException, IOException{
+    	
+    	return mWH_DMHttpApiV1.getFav(pz, pi);
+    }
+    
+    public boolean delFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    	
+    	return mWH_DMHttpApiV1.delFav(nid);
     }
 
 }

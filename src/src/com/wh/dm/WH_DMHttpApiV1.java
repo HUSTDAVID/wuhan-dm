@@ -9,6 +9,7 @@ import com.wh.dm.http.HttpApiBasic;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
@@ -48,6 +49,7 @@ public class WH_DMHttpApiV1 {
     private static final String URL_API_MEM = "/api/Mem.aspx";
     public static final String URL_API_MAGAZINE = "/api/Magazine.aspx";
     private static final String URL_API_FEEDBACK="/api/feedback.aspx";
+    private static final String URL_API_FAV="/api/fav.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -536,5 +538,35 @@ public class WH_DMHttpApiV1 {
          String content = mHttpApi.doHttpRequest(httPost);
          PostResult result = gson.fromJson(content, PostResult.class);
          return result.getResult();
+    }
+    
+    public PostResult addFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    	HttpPost httpPost=mHttpApi.createHttpPost(URL_DOMAIN+URL_API_FAV, 
+    			new BasicNameValuePair("act","add"),
+    			new BasicNameValuePair("nid",String.valueOf(nid)));
+    	String content=mHttpApi.doHttpRequest(httpPost);
+    	Log.i("wy","Ìí¼Ó»Ø¸´"+content);
+    	PostResult result=gson.fromJson(content, PostResult.class);
+    	return result;
+    }
+    
+    public ArrayList<Favorite> getFav(int pz,int pi) throws WH_DMException, UnKnownException, IOException{
+    	HttpGet httpGet=mHttpApi.createHttpGet(URL_DOMAIN+URL_API_FAV, 
+    			new BasicNameValuePair("act","list"),
+    			new BasicNameValuePair("pz",String.valueOf(pz)),
+    			new BasicNameValuePair("pi",String.valueOf(pi)));
+    	String content=mHttpApi.doHttpRequest(httpGet);
+    	Log.i("wy",content);
+    	Type type=new TypeToken<ArrayList<Favorite>>(){}.getType();
+    	return gson.fromJson(content, type);
+    }
+    
+    public boolean delFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    	HttpPost httpPost=mHttpApi.createHttpPost(URL_DOMAIN+URL_API_FAV, 
+    			new BasicNameValuePair("act","del"),
+    			new BasicNameValuePair("nid",String.valueOf(nid)));
+    	String content=mHttpApi.doHttpRequest(httpPost);
+    	PostResult result=gson.fromJson(content, PostResult.class);
+    	return result.getResult();
     }
 }
