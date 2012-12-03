@@ -20,6 +20,7 @@ import com.wh.dm.type.PhotoSort;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.PictureMagzine;
+import com.wh.dm.type.PostMessage;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
@@ -50,6 +51,7 @@ public class WH_DMHttpApiV1 {
     private static final String URL_API_MEM = "/api/Mem.aspx";
     public static final String URL_API_MAGAZINE = "/api/Magazine.aspx";
     private static final String URL_API_FEEDBACK = "/api/feedback.aspx";
+    private static final String URL_API_LOADPIC = "/api/loadpic.aspx";
     private DefaultHttpClient mHttpClient;
     private final HttpApiBasic mHttpApi;
 
@@ -513,13 +515,12 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public ArrayList<ArticleMagzine> getArticleMagzine(int sid, int pid) throws WH_DMException,
+    public ArrayList<ArticleMagzine> getArticleMagzine(int sid) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
                 new BasicNameValuePair("act", "maglist"),
-                new BasicNameValuePair("sid", String.valueOf(sid)), new BasicNameValuePair("pid",
-                        String.valueOf(pid)));
+                new BasicNameValuePair("sid", String.valueOf(sid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<ArticleMagzine>>() {
         }.getType();
@@ -527,13 +528,12 @@ public class WH_DMHttpApiV1 {
         return magzines;
     }
 
-    public ArrayList<PictureMagzine> getPictureMagzine(int sid, int pid) throws WH_DMException,
+    public ArrayList<PictureMagzine> getPictureMagzine(int sid) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
                 new BasicNameValuePair("act", "maglist"),
-                new BasicNameValuePair("sid", String.valueOf(sid)), new BasicNameValuePair("pid",
-                        String.valueOf(pid)));
+                new BasicNameValuePair("sid", String.valueOf(sid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<PictureMagzine>>() {
         }.getType();
@@ -599,6 +599,24 @@ public class WH_DMHttpApiV1 {
                 new BasicNameValuePair("act", "orderlist"));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<Magazine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
+    public PostResult getLoadPic() throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_LOADPIC);
+        String content = mHttpApi.doHttpRequest(httpGet);
+        return gson.fromJson(content, PostResult.class);
+    }
+
+    public ArrayList<PostMessage> getMessages() throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "push"));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<PostMessage>>() {
         }.getType();
         return gson.fromJson(content, type);
     }

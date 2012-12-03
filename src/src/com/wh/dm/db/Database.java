@@ -174,11 +174,14 @@ public interface Database {
     public void delMagazine(int id);
 
     public void delMagazines();
+
     // magazine download
     public ArrayList<MagazineBody> getMagazineBody(int sid);
 
     public void deleteMagazineBody();
 
     public void addMagazineBody(ArrayList<MagazineBody> magazineList);
+
+    public Magazine getMagazine(int sid);
 
 }

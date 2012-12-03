@@ -3,15 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mzine_fullacreen" >
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/dm_full_screen" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/v_Pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </android.support.v4.view.ViewPager>
 
 </RelativeLayout>

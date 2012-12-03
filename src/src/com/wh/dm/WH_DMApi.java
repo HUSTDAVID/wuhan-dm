@@ -16,6 +16,8 @@ import com.wh.dm.type.PhotoSort;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.PictureMagzine;
+import com.wh.dm.type.PostMessage;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
@@ -227,16 +229,22 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getMagazineSort();
     }
 
-    public ArrayList<ArticleMagzine> getArticleMagzine(int sid, int pid) throws WH_DMException,
+    public ArrayList<ArticleMagzine> getArticleMagzine(int sid) throws WH_DMException,
             UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getArticleMagzine(sid, pid);
+        return mWH_DMHttpApiV1.getArticleMagzine(sid);
     }
 
-    public ArrayList<PictureMagzine> getContentMagzine(int sid, int pid) throws WH_DMException,
+    public ArrayList<PictureMagzine> getPictureMagzine(int sid) throws WH_DMException,
             UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getPictureMagzine(sid, pid);
+        return mWH_DMHttpApiV1.getPictureMagzine(sid);
+    }
+
+    public ArrayList<PictureMagzine> getContentMagzine(int sid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPictureMagzine(sid);
     }
 
     public Article getArticle(int sid) throws WH_DMException, UnKnownException, IOException {
@@ -264,5 +272,15 @@ public class WH_DMApi {
             IOException {
 
         return mWH_DMHttpApiV1.getSubcribedMagazines();
+    }
+
+    public PostResult getLoadPic() throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getLoadPic();
+    }
+
+    public ArrayList<PostMessage> getMessage() throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getMessages();
     }
 }

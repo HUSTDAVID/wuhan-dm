@@ -2,10 +2,10 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApp;
 import com.wh.dm.type.Magazine;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,12 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SubManagerAdapter extends BaseAdapter {
 
-    private final ArrayList<Map<String, Object>> mData;
+    private ArrayList<Magazine> magazines;
     private final LayoutInflater mInflater;
     private final Context context;
     private Handler handler;
@@ -33,19 +31,7 @@ public class SubManagerAdapter extends BaseAdapter {
     public SubManagerAdapter(Context context) {
 
         this.context = context;
-        mData = new ArrayList<Map<String, Object>>();
         mInflater = LayoutInflater.from(context);
-    }
-
-    public void addItem(Bitmap bmp, String title, String subTotal, String ad) {
-
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("image", bmp);
-        map.put("title", title);
-        map.put("subTotal", subTotal);
-        map.put("ad", ad);
-        mData.add(map);
-        notifyDataSetChanged();
     }
 
     public void setHandler(Handler _handler) {
@@ -53,39 +39,33 @@ public class SubManagerAdapter extends BaseAdapter {
         handler = _handler;
     }
 
-    public void setList(ArrayList<Magazine> magazines) {
+    public void setList(ArrayList<Magazine> _magazines) {
 
-        mData.clear();
-        for (int i = 0; i < magazines.size(); i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            Magazine magazine = magazines.get(i);
-            map.put("id", magazine.getSid());
-            map.put("image", magazine.getSpic());
-            map.put("title", magazine.getSname());
-            mData.add(map);
-        }
+        magazines = _magazines;
         notifyDataSetChanged();
     }
 
-    public ArrayList<Map<String, Object>> getList() {
+    public ArrayList<Magazine> getList() {
 
-        return mData;
+        return magazines;
     }
 
     public void clear() {
 
-        mData.clear();
-        notifyDataSetChanged();
+        if (magazines != null) {
+            magazines.clear();
+            notifyDataSetChanged();
+        }
+
     }
 
     @Override
     public int getCount() {
 
-        if (mData == null) {
-            mData.clear();
+        if (magazines == null) {
             return 0;
         } else {
-            return mData.size();
+            return magazines.size();
         }
 
     }
@@ -93,7 +73,7 @@ public class SubManagerAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
 
-        return mData.get(position);
+        return magazines.get(position);
     }
 
     @Override
@@ -120,10 +100,7 @@ public class SubManagerAdapter extends BaseAdapter {
             holder = (ViewHolder) converView.getTag();
         }
 
-        // holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
-        // holder.txtAd.setText(mData.get(position).get("ad").toString());
-        holder.txtTitie.setText(mData.get(position).get("title").toString());
-        // holder.txtTotal.setText(mData.get(position).get("subTotal").toString());
+        holder.txtTitie.setText(magazines.get(position).getSname());
         final int pos = position;
         holder.btnNoSub.setOnClickListener(new OnClickListener() {
 
@@ -132,10 +109,14 @@ public class SubManagerAdapter extends BaseAdapter {
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
-                bundle.putInt("id", Integer.parseInt(mData.get(pos).get("id").toString()));
+                bundle.putInt("id", magazines.get(pos).getSid());
                 message.setData(bundle);
                 message.what = MSG_UNSUBCRIBE;
                 handler.sendMessage(message);
+                if (WH_DMApp.isLogin) {
+                    magazines.remove(pos);
+                    notifyDataSetChanged();
+                }
 
             }
         });

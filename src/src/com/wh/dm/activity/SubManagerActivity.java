@@ -29,6 +29,7 @@ public class SubManagerActivity extends Activity {
 
     private static final int MSG_GET_MAGAZINE = 0;
     private static final int MSG_UNSUBCRIBE = 1;
+    private static final int MSG_REFRESH = 2;
     private GetSubcribedMagazine getMgzsTask = null;
     private UnSubcribeTask unSubcribeTask = null;
 
@@ -160,8 +161,15 @@ public class SubManagerActivity extends Activity {
                 databaseImpl.addMagazines(result);
             } else {
                 adapter.clear();
-                NotificationUtil.showShortToast(getString(R.string.no_subcribe),
-                        SubManagerActivity.this);
+                if (WH_DMApp.isLogin) {
+                    NotificationUtil.showShortToast(getString(R.string.no_subcribe),
+                            SubManagerActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.please_login),
+                            SubManagerActivity.this);
+                    Intent intent = new Intent(SubManagerActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
@@ -189,10 +197,8 @@ public class SubManagerActivity extends Activity {
         protected void onPostExecute(Integer result) {
 
             if (result != 0) {
-                databaseImpl.delMagazine(result);
-                handler.sendEmptyMessage(MSG_GET_MAGAZINE);
                 sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
-
+                databaseImpl.delMagazine(result);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.unsub_fail),
                         SubManagerActivity.this);

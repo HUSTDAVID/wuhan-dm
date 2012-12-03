@@ -19,6 +19,10 @@ public class Magazine {
     private String spic;
     private String titlepic;
 
+    private String name;
+    private int drawableId;
+    private int id;
+
     public int getNo() {
 
         return no;
@@ -167,6 +171,36 @@ public class Magazine {
     public void setTitlepic(String titlepic) {
 
         this.titlepic = titlepic;
+    }
+
+    public void setId(int _id) {
+
+        id = _id;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
+    public void setName(String _name) {
+
+        name = _name;
+    }
+
+    public void setDrawableId(int _drawableId) {
+
+        drawableId = _drawableId;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public int getDrawableId() {
+
+        return drawableId;
     }
 
 }

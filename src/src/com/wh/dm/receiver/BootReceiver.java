@@ -3,7 +3,7 @@ package com.wh.dm.receiver;
 
 import com.wh.dm.R;
 import com.wh.dm.activity.DM_Tab_1Activity;
-import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.service.PushService;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -22,14 +22,8 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         if (intent.getAction().equals(ACTION)) {
-            NotificationUtil.showLongToast("normal", context);
+            context.startService(new Intent(context, PushService.class));
         }
-        /*
-         * Intent start = new Intent(context, SplashActivity.class);
-         * start.setAction(action); start.addCategory(category);
-         * start.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-         * context.startActivity(start);
-         */
     }
 
     public void showNotification(Context context) {

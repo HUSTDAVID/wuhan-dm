@@ -50,6 +50,7 @@ public class DatabaseImpl implements Database {
     // subcribe
     private static final String TABLE_SUBCRIBE = "subcribe";
     private static final String TABLE_MAGEZINE_BODY = "magazinebody";
+    private static final String TABLE_MESSAGE = "postmessage";
     private final Context context;
 
     public DatabaseImpl(Context _context) {
@@ -201,6 +202,10 @@ public class DatabaseImpl implements Database {
         // magazine
         db.delete(TABLE_MAGAZINE_HOT, null, null);
         db.delete(TABLE_MAGEZINE_BODY, null, null);
+        // subcribe
+        db.delete(TABLE_SUBCRIBE, null, null);
+        // message
+        db.delete(TABLE_MESSAGE, null, null);
         db.close();
 
     }
@@ -1149,6 +1154,7 @@ public class DatabaseImpl implements Database {
         }
         db.close();
     }
+
     @Override
     public void addGirlMagazine(ArrayList<Magazine> magazine) {
 
@@ -1340,6 +1346,7 @@ public class DatabaseImpl implements Database {
         }
         db.close();
     }
+
     @Override
     public ArrayList<Magazine> getSubcribedMagazine() {
 
@@ -1420,6 +1427,23 @@ public class DatabaseImpl implements Database {
             e.printStackTrace();
         }
         db.close();
+    }
+
+    @Override
+    public Magazine getMagazine(int sid) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        String[] selectionArgs = {
+            "" + sid
+        };
+        Cursor query = db.query(TABLE_SUBCRIBE, null, "sid = ?", selectionArgs, null, null, null,
+                null);
+        if (query != null) {
+            query.moveToFirst();
+            return (new MagazineBuilder()).build(query);
+        } else {
+            return null;
+        }
     }
 
 }
