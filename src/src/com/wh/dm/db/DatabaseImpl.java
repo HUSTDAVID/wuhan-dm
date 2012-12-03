@@ -1,6 +1,7 @@
 
 package com.wh.dm.db;
 
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
@@ -47,6 +48,8 @@ public class DatabaseImpl implements Database {
     private static final String TABLE_MAGAZINE_GIRL = "magazinegirl";
     private static final String TABLE_MAGAZINE_PHOTOGRAPH = "magazinephotograph";
     private static final String TABLE_MAGAZINE_FUN = "magazinefun";
+    //favorite
+    private static final String TABLE_FAVORITE = "favorite";
     // subcribe
     private static final String TABLE_SUBCRIBE = "subcribe";
     private static final String TABLE_MAGEZINE_BODY = "magazinebody";
@@ -158,6 +161,11 @@ public class DatabaseImpl implements Database {
                 + TABLE_MAGAZINE_GIRL
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        // favorite
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+        		+ TABLE_FAVORITE
+        		+"( uid INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, title VARCHAR, litpic VARCHAR, pubdate VARCHAR)");
+        
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGAZINE_PHOTOGRAPH
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
@@ -200,6 +208,8 @@ public class DatabaseImpl implements Database {
         db.delete(TABLE_FUN_PHOTO_DET, null, null);
         // magazine
         db.delete(TABLE_MAGAZINE_HOT, null, null);
+        // favorite
+        db.delete(TABLE_FAVORITE, null, null);
         db.delete(TABLE_MAGEZINE_BODY, null, null);
         db.close();
 
@@ -1295,6 +1305,47 @@ public class DatabaseImpl implements Database {
         return magazine;
     }
 
+	@Override
+	public void addFavorite(ArrayList<Favorite> favorite) {
+		// TODO Auto-generated method stub
+		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+	        for (int i = 0; i < favorite.size(); i++) {
+	            try {
+	                ContentValues values = new ContentValues();
+	                values.putAll(new FavoriteBuilder().deconstruct(favorite.get(i)));
+	                db.insert(TABLE_FAVORITE, null, values);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	}
+
+	@Override
+	public ArrayList<Favorite> getFavorite() {
+		// TODO Auto-generated method stub
+		 ArrayList<Favorite> favorite = new ArrayList<Favorite>();
+	        FavoriteBuilder builder = new FavoriteBuilder();
+	        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+	        Cursor query = db.query(TABLE_FAVORITE, null, null, null, null, null, null);
+	        if (query != null) {
+	            query.moveToFirst();
+	            while (!query.isAfterLast()) {
+	                favorite.add(builder.build(query));
+	                query.moveToNext();
+	            }
+	        }
+	        query.close();
+	        db.close();
+	        return favorite;
+	}
+
+	@Override
+	public void deleteFavorite() {
+		// TODO Auto-generated method stub
+		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+	     db.delete(TABLE_FAVORITE, null, null);
+	     db.close();
+	}
     @Override
     public ArrayList<MagazineBody> getMagazineBody(int sid) {
 
