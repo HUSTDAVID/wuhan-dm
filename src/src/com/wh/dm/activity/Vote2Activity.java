@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -24,13 +25,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class Vote2Activity extends Activity {
-    private Button btn_close;
 
     private ImageButton btnBack;
-    private TextView txtName;
+
     private ListView listView;
-    private VoteChoiceAdapter adapter;
+    private View lvHeader;
     private TextView txtNum;
+    private TextView txtName;
+    private View lvFooter;
+    private Button btn_close;
+    private VoteChoiceAdapter adapter;
+
     // private boolean isMore = false;
     private boolean[] choice;
     private String[] notes;
@@ -88,6 +93,10 @@ public class Vote2Activity extends Activity {
 
     public void init() {
 
+        LayoutInflater inflater = getLayoutInflater();
+        lvHeader = inflater.inflate(R.layout.vote_info_header, null);
+        lvFooter = inflater.inflate(R.layout.vote_info_footer, null);
+
         aid = getIntent().getIntExtra("aid", 0);
         voteName = getIntent().getStringExtra("name");
         pic = getIntent().getStringExtra("pic");
@@ -95,21 +104,12 @@ public class Vote2Activity extends Activity {
         des = getIntent().getStringExtra("des");
         notes = getIntent().getStringArrayExtra("votenote");
         choice = new boolean[notes.length];
-        txtName = (TextView) findViewById(R.id.vote_ing_2);
+        txtName = (TextView) lvHeader.findViewById(R.id.vote_ing_2);
         txtName.setText(voteName);
-        txtNum = (TextView) findViewById(R.id.vote_ing_5);
-
-        wh_dmApp = (WH_DMApp) getApplication();
-        wh_dmApi = wh_dmApp.getWH_DMApi();
-        handler.sendEmptyMessage(MSG_GET_VOTE_NUM);
-
-        listView = (ListView) findViewById(R.id.lv_vote_choice);
-        listView.setDivider(null);
-        adapter = new VoteChoiceAdapter(this);
-        adapter.setList(notes);
-        listView.setAdapter(adapter);
-
-        btn_close = (Button) findViewById(R.id.vote_button_close);
+        txtNum = (TextView) lvHeader.findViewById(R.id.vote_ing_5);
+        // this button is not for close, it is for commit user's choice.
+        btn_close = (Button) lvFooter.findViewById(R.id.vote_button_close);
+        btn_close.setText("Ã·Ωª");
         btn_close.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +137,18 @@ public class Vote2Activity extends Activity {
 
         });
 
+        wh_dmApp = (WH_DMApp) getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        handler.sendEmptyMessage(MSG_GET_VOTE_NUM);
+
+        listView = (ListView) findViewById(R.id.lv_vote_choice);
+        listView.setDivider(null);
+        listView.addHeaderView(lvHeader);
+        listView.addFooterView(lvFooter);
+        adapter = new VoteChoiceAdapter(this);
+        adapter.setList(notes);
+        listView.setAdapter(adapter);
+
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new OnClickListener() {
             @Override
@@ -157,7 +169,9 @@ public class Vote2Activity extends Activity {
                 Button btn = (Button) view.findViewById(R.id.btn_vote_item);
                 lastChoice = btn;
                 for (int i = 0; i < choice.length; i++) {
-                    if (i == position) {
+                    // add header for listview position 0 is header.vote item is
+                    // begin from 1
+                    if (i == position - 1) {
                         choice[i] = true;
                         btn.setSelected(true);
                     } else {
