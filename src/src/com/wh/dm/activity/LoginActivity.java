@@ -206,7 +206,6 @@ public class LoginActivity extends Activity {
                 WH_DMApp.isLogin = true;
                 Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
                 handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
-                sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
                 finish();
             } else {
                 NotificationUtil
@@ -238,7 +237,7 @@ public class LoginActivity extends Activity {
 
             if (result != null) {
                 databaseImpl.addMagazines(result);
-
+                sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
             }
             super.onPostExecute(result);
         }

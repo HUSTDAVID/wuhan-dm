@@ -8,11 +8,14 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.type.PhotoDetails;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.FileUtil;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -48,6 +51,7 @@ public class PhotosDetailsActivity extends Activity {
     private ViewGroup group;
     private ImageButton btnBack;
 
+    TextView txtFcounts;
     TextView txtBody;
     TextView txtTitle;
     TextView txtPage;
@@ -70,9 +74,11 @@ public class PhotosDetailsActivity extends Activity {
     private static final int MSG_GET_ALL = 0;
     private static final int MSG_LOAD_IMAGE = 2;
     private static final int MSG_ADD_REVIEW = 3;
+    private static final int MSG_STORE_IMAGE = 4;
     private GetPhotoDetailsTask getPhotoDetailsTask = null;
     private LoadImageTask loadImageTask = null;
     private AddReviewTask addReviewTask = null;
+    private AddFavTask addFavTask=null;
     private ArrayList<PhotoDetails> photosDetails;
     private int aid;
     private int id;
@@ -107,6 +113,14 @@ public class PhotosDetailsActivity extends Activity {
                     }
                     addReviewTask = new AddReviewTask();
                     addReviewTask.execute();
+                    break;
+                case MSG_STORE_IMAGE:
+                	if(addFavTask!=null){
+                		addFavTask.cancel(true);
+                		addFavTask = null;
+                	}
+                	addFavTask = new AddFavTask();
+                	addFavTask.execute(aid);
                     break;
 
             }
@@ -166,14 +180,28 @@ public class PhotosDetailsActivity extends Activity {
         //
         RelativeLayout rel = (RelativeLayout) main.findViewById(R.id.rel_photosmain_details);
 
+        txtFcounts = (TextView) main.findViewById(R.id.txt_total_black_reply);
         txtTitle = (TextView) main.findViewById(R.id.txt_photos_details_title);
         txtBody = (TextView) main.findViewById(R.id.txt_photos_details_body);
         txtPage = (TextView) main.findViewById(R.id.txt_photos_details_num);
         txtPage.setText(currentPhoto + "/" + totalPhotos);
         imgArrow = (ImageView) main.findViewById(R.id.img_photos_details_arrow);
 
+        txtFcounts.setText(getIntent().getIntExtra("fcount", 0)
+                + getResources().getString(R.string.reply));
         txtBody.setText(getIntent().getStringExtra("description"));
         txtTitle.setText(getIntent().getStringExtra("title"));
+        txtFcounts.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(PhotosDetailsActivity.this, PhotoReplyActivity.class);
+                intent.putExtra("id", aid);
+                startActivity(intent);
+
+            }
+        });
 
         rel.setOnClickListener(new OnClickListener() {
 
@@ -255,9 +283,27 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                handler.sendEmptyMessage(MSG_LOAD_IMAGE);
+                if(WH_DMApp.isLogin){
+                    handler.sendEmptyMessage(MSG_LOAD_IMAGE);
+                }
+                else {
+                    NotificationUtil.showShortToast(getString(R.string.please_login),
+                            PhotosDetailsActivity.this);
+                    Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+			}
+        });
+        
+        btnStore=(Button)main.findViewById(R.id.btn_photos_favorite);
+        btnStore.setOnClickListener(new OnClickListener(){
 
-            }
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				handler.sendEmptyMessage(MSG_STORE_IMAGE);
+			}
+        	
         });
 
         handler.sendEmptyMessage(MSG_GET_ALL);
@@ -472,7 +518,7 @@ public class PhotosDetailsActivity extends Activity {
         protected Boolean doInBackground(String... params) {
 
             try {
-                result = wh_dmApi.addReview(getFcontent(), aid);
+                result = wh_dmApi.addPhotoReview(getFcontent(), aid);
                 return true;
             } catch (Exception e) {
                 reason = e;
@@ -494,6 +540,51 @@ public class PhotosDetailsActivity extends Activity {
             super.onPostExecute(result);
         }
 
+    }
+    
+    
+    private class AddFavTask extends AsyncTask<Integer, Void, Boolean>{
+    	boolean result = false;
+        Exception reason = null;
+        PostResult postresult=null;
+    	@Override
+        protected void onPreExecute() {
+            //progressDialog.show();
+            super.onPreExecute();
+        }
+		@Override
+		protected Boolean doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			try{
+				postresult=wh_dmApi.addFav(params[0]);
+				if(postresult.getResult())  
+					return true; 
+				else
+					return false;
+			}catch(Exception e){
+				reason=e;
+				e.printStackTrace();
+				return false;
+			}
+		}
+		@Override
+		protected void onPostExecute(Boolean result)
+		{
+			if (result) {
+                NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
+                        PhotosDetailsActivity.this);
+            } else {
+            	if(postresult==null)
+                    NotificationUtil.showShortToast(getString(R.string.favorite_fail)+":Î´ÖªÔ­Òò",
+                    		PhotosDetailsActivity.this);
+            	else
+            		NotificationUtil.showShortToast(postresult.getMsg(),
+            				PhotosDetailsActivity.this);
+            }
+            //progressDialog.dismiss();
+            super.onPostExecute(result);
+		}
+    	
     }
 
 }

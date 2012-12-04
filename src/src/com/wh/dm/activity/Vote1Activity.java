@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -30,9 +31,12 @@ public class Vote1Activity extends Activity {
     /** Called when the activity is first created. */
 
     private ListView listview;
-    private ImageButton btnBack;
+    private View lvHeader;
     private TextView txtNum;
+    private TextView txtName;
+    private View lvFooter;
     private Button btnClose;
+    private ImageButton btnBack;
     private VoteResultAdapter adapter;
 
     private int aid = 0;
@@ -96,18 +100,18 @@ public class Vote1Activity extends Activity {
 
     public void init() {
 
+        LayoutInflater inflater = getLayoutInflater();
+        lvHeader = inflater.inflate(R.layout.vote_info_header, null);
+        lvFooter = inflater.inflate(R.layout.vote_info_footer, null);
         aid = getIntent().getIntExtra("aid", 0);
         voteName = getIntent().getStringExtra("name");
-        TextView txtTitle = (TextView) findViewById(R.id.vote_ing_2);
-        txtTitle.setText(voteName);
 
-        txtNum = (TextView) findViewById(R.id.vote_ing_5);
-        listview = (ListView) findViewById(R.id.lv_vote_result);
-        listview.setDivider(null);
-        adapter = new VoteResultAdapter(this);
-        // progressBar3 = (ProgressBar) findViewById(R.id.pro_vote_result3);
-        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        txtName = (TextView) lvHeader.findViewById(R.id.vote_ing_2);
+        txtName.setText(voteName);
+
+        txtNum = (TextView) lvHeader.findViewById(R.id.vote_ing_5);
+        btnClose = (Button) lvFooter.findViewById(R.id.vote_button_close);
+        btnClose.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -117,8 +121,14 @@ public class Vote1Activity extends Activity {
                 startActivity(intent);
             }
         });
-        btnClose = (Button) findViewById(R.id.vote_button_close);
-        btnClose.setOnClickListener(new OnClickListener() {
+        listview = (ListView) findViewById(R.id.lv_vote_result);
+        listview.setDivider(null);
+        listview.addHeaderView(lvHeader);
+        listview.addFooterView(lvFooter);
+        adapter = new VoteResultAdapter(this);
+
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

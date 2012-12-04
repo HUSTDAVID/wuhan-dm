@@ -64,7 +64,8 @@ public class SubManagerActivity extends Activity {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             SubManagerActivity.this);
                     Intent intent = new Intent(SubManagerActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    intent.putExtra("activity", "submanager");
+                    startActivityForResult(intent, 0);
                 }
             }
         };
@@ -90,6 +91,7 @@ public class SubManagerActivity extends Activity {
 
         super.onResume();
         MobclickAgent.onResume(this);
+        handler.sendEmptyMessage(MSG_GET_MAGAZINE);
     }
 
     @Override
@@ -157,8 +159,10 @@ public class SubManagerActivity extends Activity {
         protected void onPostExecute(ArrayList<Magazine> result) {
 
             if (result != null) {
+                sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
                 adapter.setList(result);
                 databaseImpl.addMagazines(result);
+
             } else {
                 adapter.clear();
                 if (WH_DMApp.isLogin) {

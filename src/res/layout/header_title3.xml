@@ -46,6 +46,6 @@
             android:background="@drawable/btn_topbar_red"
             android:textColor="@color/white"
             android:gravity="center"
-            android:text="169跟帖" />
+            android:text="0跟帖" />
         
     </RelativeLayout>

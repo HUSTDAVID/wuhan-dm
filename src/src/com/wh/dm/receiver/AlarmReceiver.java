@@ -99,7 +99,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             if (result != null) {
                 if (msgNum < result.size()) {
                     int size = result.size();
-                    showNotification(_context, result.get(size - 1));
+                    // showNotification(_context, result.get(size - 1));
                     Preferences.setPostMessage(_context, (++msgNum));
                 }
             }

@@ -196,7 +196,8 @@
 	<string name="top_fail">操作失败</string>
 	<string name="reply_succeed">回复成功</string>
 	<string name="reply_fail">回复失败</string>
-	<!-- 订阅  -->
+	<string name="favorite_succeed">收藏成功</string>
+	<string name="favorite_fail">收藏失败</string>
 	<string name="sub_suceed">订阅成功</string>
 	<string name="sub_fail">已经订阅了</string>
 	<string name="unsub_fail">取消订阅失败</string>

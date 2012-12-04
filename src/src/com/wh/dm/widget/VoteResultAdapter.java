@@ -14,17 +14,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class VoteResultAdapter extends BaseAdapter {
 
     ArrayList<VoteResultPercent> list;
     LayoutInflater mInflater;
     Context context;
+    Random random;
 
     public VoteResultAdapter(Context context) {
 
         this.context = context;
         mInflater = LayoutInflater.from(context);
+        random = new Random(4);
     }
 
     public void setList(ArrayList<VoteResultPercent> _list) {
@@ -77,6 +80,7 @@ public class VoteResultAdapter extends BaseAdapter {
         LayoutParams params = holder.progressbar.getLayoutParams();
         params.width = (int) (list.get(position).getPercent() * 3.5);
         holder.progressbar.setLayoutParams(params);
+        holder.progressbar = setProColor(holder.progressbar, position);
 
         return convertView;
     }
@@ -85,5 +89,33 @@ public class VoteResultAdapter extends BaseAdapter {
         TextView txtItem;
         TextView txtPercent;
         ProgressBar progressbar;
+    }
+
+    private ProgressBar setProColor(ProgressBar pro, int index) {
+
+        index = index % 5;
+        switch (index) {
+            case 0:
+                pro.setProgressDrawable(context.getResources().getDrawable(
+                        R.drawable.vote_scroll_blue));
+                break;
+            case 1:
+                pro.setProgressDrawable(context.getResources().getDrawable(
+                        R.drawable.vote_scroll_green));
+                break;
+            case 2:
+                pro.setProgressDrawable(context.getResources().getDrawable(
+                        R.drawable.vote_scroll_red));
+                break;
+            case 3:
+                pro.setProgressDrawable(context.getResources().getDrawable(
+                        R.drawable.vote_scroll_orange));
+                break;
+            case 4:
+                pro.setProgressDrawable(context.getResources().getDrawable(
+                        R.drawable.vote_scroll_purple));
+                break;
+        }
+        return pro;
     }
 }

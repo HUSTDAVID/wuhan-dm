@@ -1,6 +1,7 @@
 
 package com.wh.dm.db;
 
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
@@ -164,6 +165,12 @@ public interface Database {
 
     public ArrayList<Magazine> getFunMagazine();
 
+    //favorite
+    public void addFavorite(ArrayList<Favorite> favorite);
+    
+    public ArrayList<Favorite> getFavorite();
+    
+    public void deleteFavorite();
     // subcribe
     public ArrayList<Magazine> getSubcribedMagazine();
 
