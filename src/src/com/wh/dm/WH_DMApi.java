@@ -6,6 +6,8 @@ import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Favorite;
+import com.wh.dm.type.Cover;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
@@ -15,6 +17,8 @@ import com.wh.dm.type.PhotoSort;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.type.PictureMagzine;
+import com.wh.dm.type.PostMessage;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
@@ -98,6 +102,12 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getComment(id, page);
     }
 
+    public ArrayList<Comment> getPhotoComment(int id, int page) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPhotoComment(id, page);
+    }
+
     public ArrayList<Reply> getReply(int fid) throws WH_DMException, UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.getReply(fid);
@@ -118,6 +128,12 @@ public class WH_DMApi {
             IOException {
 
         return mWH_DMHttpApiV1.addReview(content, id);
+    }
+
+    public boolean addPhotoReview(String _content, int id) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.addPhotoReview(_content, id);
     }
 
     public ArrayList<PhotoSort> getPhotoSort() throws WH_DMException, UnKnownException, IOException {
@@ -226,16 +242,22 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getMagazineSort();
     }
 
-    public ArrayList<ArticleMagzine> getArticleMagzine(int sid, int pid) throws WH_DMException,
+    public ArrayList<ArticleMagzine> getArticleMagzine(int sid) throws WH_DMException,
             UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getArticleMagzine(sid, pid);
+        return mWH_DMHttpApiV1.getArticleMagzine(sid);
     }
 
-    public ArrayList<PictureMagzine> getContentMagzine(int sid, int pid) throws WH_DMException,
+    public ArrayList<PictureMagzine> getPictureMagzine(int sid) throws WH_DMException,
             UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getPictureMagzine(sid, pid);
+        return mWH_DMHttpApiV1.getPictureMagzine(sid);
+    }
+
+    public ArrayList<PictureMagzine> getContentMagzine(int sid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPictureMagzine(sid);
     }
 
     public Article getArticle(int sid) throws WH_DMException, UnKnownException, IOException {
@@ -249,4 +271,44 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);
     }
 
+    public Cover subcribe(int id) throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.subcribe(id);
+    }
+
+    public boolean unsubcribe(int id) throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.unsubcribe(id);
+    }
+    
+    public PostResult addFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    	
+    	return mWH_DMHttpApiV1.addFav(nid);
+    }
+    
+    public ArrayList<Favorite> getFav(int pz,int pi) throws WH_DMException, UnKnownException, IOException{
+    	
+    	return mWH_DMHttpApiV1.getFav(pz, pi);
+    }
+    
+    public boolean delFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    	
+    	return mWH_DMHttpApiV1.delFav(nid);
+    }
+
+    public ArrayList<Magazine> getSubcribedMagazines() throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getSubcribedMagazines();
+    }
+
+    public PostResult getLoadPic() throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getLoadPic();
+    }
+
+    public ArrayList<PostMessage> getMessage() throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getMessages();
+    }
 }

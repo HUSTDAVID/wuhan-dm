@@ -2,10 +2,12 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.type.LoadInfo;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -14,40 +16,29 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DownloadAdapter extends BaseAdapter {
     private Activity context;
     private LayoutInflater inflater;
-    private ArrayList<HashMap<String, Object>> dms;
+    private ArrayList<LoadInfo> dms;
 
     public DownloadAdapter(Activity _context) {
 
         context = _context;
         inflater = context.getLayoutInflater();
-        dms = new ArrayList<HashMap<String, Object>>();
-        HashMap<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("title", "中百仓储");
-        map1.put("num", "22496人下载");
-        map1.put("addition", "下载已完成");
-        map1.put("btnStatus", "查看DM");
-        map1.put("status", false);
-        dms.add(map1);
-        HashMap<String, Object> map2 = new HashMap<String, Object>();
-        map2.put("title", "Dior");
-        map2.put("num", "22496人下载");
-        map2.put("addition", "继续下载");
-        map2.put("btnStatus", "暂停下载");
-        map2.put("status", true);
-        dms.add(map2);
-        HashMap<String, Object> map3 = new HashMap<String, Object>();
-        map3.put("title", "柏氏专卖");
-        map3.put("num", "22496人下载");
-        map3.put("addition", "暂停下载");
-        map3.put("btnStatus", "继续下载");
-        map3.put("status", false);
-        dms.add(map3);
+        dms = new ArrayList<LoadInfo>();
+    }
 
+    public void addItem(LoadInfo item) {
+
+        dms.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void setList(ArrayList<LoadInfo> dms) {
+
+        this.dms = dms;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -74,6 +65,7 @@ public class DownloadAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        final int pos = position;
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.download_item, null);
@@ -84,20 +76,50 @@ public class DownloadAdapter extends BaseAdapter {
             viewHolder.txtNum = (TextView) convertView.findViewById(R.id.txt_download_total);
             viewHolder.btnStatus = (Button) convertView.findViewById(R.id.btn_download_status);
             viewHolder.pbStatus = (ProgressBar) convertView.findViewById(R.id.pbar_download);
+            viewHolder.btnStatus.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    if (dms.get(pos).isFinish()) {
+
+                    } else if (dms.get(pos).isPause()) {
+                        dms.get(pos).setPause(false);
+                        notifyDataSetChanged();
+                    } else {
+                        dms.get(pos).setPause(true);
+                        notifyDataSetChanged();
+                    }
+
+                }
+            });
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.txtDM.setText((String) dms.get(position).get("title"));
-        viewHolder.txtAddition.setText((String) dms.get(position).get("addition"));
-        viewHolder.txtNum.setText((String) dms.get(position).get("num"));
-        viewHolder.btnStatus.setText((String) dms.get(position).get("btnStatus"));
-        if ((Boolean) dms.get(position).get("status")) {
-            viewHolder.pbStatus.setVisibility(View.VISIBLE);
-            viewHolder.txtAddition.setVisibility(View.GONE);
-        } else {
+        viewHolder.imgDM.setImageBitmap(dms.get(position).getBmpLogo());
+        viewHolder.txtDM.setText(dms.get(position).getTitle());
+        viewHolder.txtNum.setText(dms.get(position).getNum());
+        if (!dms.get(position).isStart()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
+            viewHolder.txtAddition.setText("未下载杂志");
+            viewHolder.btnStatus.setText("开始下载");
+        } else if (dms.get(position).isFinish()) {
+            viewHolder.pbStatus.setVisibility(View.GONE);
+            viewHolder.txtAddition.setVisibility(View.VISIBLE);
+            viewHolder.txtAddition.setText("下载已完成");
+            viewHolder.btnStatus.setText("查看DM");
+        } else if (dms.get(position).isPause()) {
+            viewHolder.pbStatus.setVisibility(View.GONE);
+            viewHolder.txtAddition.setVisibility(View.VISIBLE);
+            viewHolder.txtAddition.setText("暂停下载");
+            viewHolder.btnStatus.setText("继续下载");
+        } else {
+            viewHolder.pbStatus.setVisibility(View.VISIBLE);
+            viewHolder.txtAddition.setVisibility(View.GONE);
+            viewHolder.btnStatus.setText("暂停下载");
+            viewHolder.pbStatus.setProgress(dms.get(position).getPro());
         }
         return convertView;
     }

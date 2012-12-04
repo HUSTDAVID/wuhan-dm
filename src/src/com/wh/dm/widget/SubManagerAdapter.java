@@ -2,9 +2,13 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApp;
+import com.wh.dm.type.Magazine;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,46 +17,63 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SubManagerAdapter extends BaseAdapter {
 
-    ArrayList<Map<String, Object>> mData;
-    LayoutInflater mInflater;
-    Context context;
+    private ArrayList<Magazine> magazines;
+    private final LayoutInflater mInflater;
+    private final Context context;
+    private Handler handler;
+    private static final int MSG_UNSUBCRIBE = 1;
 
     public SubManagerAdapter(Context context) {
 
         this.context = context;
-        mData = new ArrayList<Map<String, Object>>();
         mInflater = LayoutInflater.from(context);
     }
 
-    public void addItem(Bitmap bmp, String title, String subTotal, String ad) {
+    public void setHandler(Handler _handler) {
 
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("image", bmp);
-        map.put("title", title);
-        map.put("subTotal", subTotal);
-        map.put("ad", ad);
-        mData.add(map);
+        handler = _handler;
+    }
+
+    public void setList(ArrayList<Magazine> _magazines) {
+
+        magazines = _magazines;
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Magazine> getList() {
+
+        return magazines;
+    }
+
+    public void clear() {
+
+        if (magazines != null) {
+            magazines.clear();
+            notifyDataSetChanged();
+        }
+
     }
 
     @Override
     public int getCount() {
 
-        return mData.size();
+        if (magazines == null) {
+            return 0;
+        } else {
+            return magazines.size();
+        }
+
     }
 
     @Override
     public Object getItem(int position) {
 
-        return mData.get(position);
+        return magazines.get(position);
     }
 
     @Override
@@ -79,17 +100,23 @@ public class SubManagerAdapter extends BaseAdapter {
             holder = (ViewHolder) converView.getTag();
         }
 
-        holder.img.setImageBitmap((Bitmap) mData.get(position).get("image"));
-        holder.txtAd.setText(mData.get(position).get("ad").toString());
-        holder.txtTitie.setText(mData.get(position).get("title").toString());
-        holder.txtTotal.setText(mData.get(position).get("subTotal").toString());
-
+        holder.txtTitie.setText(magazines.get(position).getSname());
+        final int pos = position;
         holder.btnNoSub.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "È¡Ïû¶©ÔÄ", Toast.LENGTH_SHORT).show();
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", magazines.get(pos).getSid());
+                message.setData(bundle);
+                message.what = MSG_UNSUBCRIBE;
+                handler.sendMessage(message);
+                if (WH_DMApp.isLogin) {
+                    magazines.remove(pos);
+                    notifyDataSetChanged();
+                }
 
             }
         });

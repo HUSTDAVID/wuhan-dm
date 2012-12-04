@@ -1,6 +1,7 @@
 
 package com.wh.dm.db;
 
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 public interface Database {
 
+    // local news
     public void deleteAllData();
 
     public void deleteAllNews();
@@ -163,11 +165,30 @@ public interface Database {
 
     public ArrayList<Magazine> getFunMagazine();
 
+    //favorite
+    public void addFavorite(ArrayList<Favorite> favorite);
+    
+    public ArrayList<Favorite> getFavorite();
+    
+    public void deleteFavorite();
+    // subcribe
+    public ArrayList<Magazine> getSubcribedMagazine();
+
+    public void addMagazine(Magazine magazine);
+
+    public void addMagazines(ArrayList<Magazine> magazines);
+
+    public void delMagazine(int id);
+
+    public void delMagazines();
+
     // magazine download
     public ArrayList<MagazineBody> getMagazineBody(int sid);
 
     public void deleteMagazineBody();
 
     public void addMagazineBody(ArrayList<MagazineBody> magazineList);
+
+    public Magazine getMagazine(int sid);
 
 }

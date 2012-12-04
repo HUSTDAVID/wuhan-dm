@@ -73,7 +73,7 @@ public class HouseNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(HouseNewsActivity.this);
-        id = preference.getInt(Preferences.NEWS_TWO_ID, 211);
+        id = preference.getInt(Preferences.NEWS_ONE_ID, 211);
         lv = (ListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);

@@ -3,8 +3,11 @@ package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
+import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
+import com.wh.dm.type.Magazine;
 import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
@@ -22,6 +25,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends Activity {
 
     EditText edtEmail;
@@ -30,7 +35,12 @@ public class LoginActivity extends Activity {
     Button btnForgetPw;
     TextView txtRegister;
     private static final int MSG_LOGIN = 0;
+    private static final int MSG_GET_SUBCRIBED = 1;
     private LoginTask loginTask = null;
+    private GetSubcribedMagazine getSubcribedTask = null;
+    private WH_DMApp wh_dmApp;
+    private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -42,6 +52,13 @@ public class LoginActivity extends Activity {
                 }
                 loginTask = new LoginTask();
                 loginTask.execute(getEmail(), getPassword());
+            } else if (msg.what == MSG_GET_SUBCRIBED) {
+                if (getSubcribedTask != null) {
+                    getSubcribedTask.cancel(true);
+                    getSubcribedTask = null;
+                }
+                getSubcribedTask = new GetSubcribedMagazine();
+                getSubcribedTask.execute();
             }
             super.handleMessage(msg);
         }
@@ -69,6 +86,13 @@ public class LoginActivity extends Activity {
 
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    public void init() {
+
+        wh_dmApp = (WH_DMApp) getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
     }
 
     private void initViews() {
@@ -181,10 +205,39 @@ public class LoginActivity extends Activity {
                         LoginActivity.this);
                 WH_DMApp.isLogin = true;
                 Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
+                handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
                 finish();
             } else {
                 NotificationUtil
                         .showShortToast(getString(R.string.login_fails), LoginActivity.this);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+
+    private class GetSubcribedMagazine extends AsyncTask<Void, Void, ArrayList<Magazine>> {
+        Exception reason = null;
+
+        @Override
+        protected ArrayList<Magazine> doInBackground(Void... params) {
+
+            ArrayList<Magazine> magazines = null;
+            try {
+                magazines = wh_dmApi.getSubcribedMagazines();
+                return magazines;
+            } catch (Exception e) {
+                reason = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Magazine> result) {
+
+            if (result != null) {
+                databaseImpl.addMagazines(result);
+                sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
             }
             super.onPostExecute(result);
         }

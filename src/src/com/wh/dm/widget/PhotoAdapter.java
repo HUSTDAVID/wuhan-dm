@@ -92,10 +92,12 @@ public class PhotoAdapter extends BaseAdapter {
             holder.txtRightNum = (TextView) convertView.findViewById(R.id.txt_right_num_total);
             final PhotoMsg left = new PhotoMsg();
             left.setAid(twoPhotos.get(position).getLeftPhoto().getAid());
+            left.setCounts(twoPhotos.get(position).getLeftPhoto().getFcount());
             left.setTitle(twoPhotos.get(position).getLeftPhoto().getTitle());
             left.setDescription(twoPhotos.get(position).getLeftPhoto().getDescription());
             final PhotoMsg right = new PhotoMsg();
             right.setAid(twoPhotos.get(position).getRightPhoto().getAid());
+            right.setCounts(twoPhotos.get(position).getRightPhoto().getFcount());
             right.setTitle(twoPhotos.get(position).getRightPhoto().getTitle());
             right.setDescription(twoPhotos.get(position).getRightPhoto().getDescription());
             holder.imgLeft.setOnClickListener(new OnClickListener() {
@@ -159,12 +161,18 @@ public class PhotoAdapter extends BaseAdapter {
 
     public class PhotoMsg {
         int aid;
+        int counts;
         String title;
         String description;
 
         public void setAid(int _aid) {
 
             aid = new Integer(_aid);
+        }
+
+        public void setCounts(int _counts) {
+
+            counts = new Integer(_counts);
         }
 
         public void setTitle(String _title) {
@@ -182,6 +190,11 @@ public class PhotoAdapter extends BaseAdapter {
             return aid;
         }
 
+        public int getCounts() {
+
+            return counts;
+        }
+
         public String getTitle() {
 
             return title;
@@ -197,6 +210,7 @@ public class PhotoAdapter extends BaseAdapter {
 
         Intent intent = new Intent(context, PhotosDetailsActivity.class);
         intent.putExtra("aid", msg.getAid());
+        intent.putExtra("fcount", msg.getCounts());
         intent.putExtra("title", msg.getTitle());
         intent.putExtra("description", msg.getDescription());
         context.startActivity(intent);

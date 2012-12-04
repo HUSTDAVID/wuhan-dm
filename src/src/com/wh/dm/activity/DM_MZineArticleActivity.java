@@ -5,8 +5,12 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.ArticleMagzine;
+import com.wh.dm.type.Magazine;
 import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.util.TimeUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
@@ -18,6 +22,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +34,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
-public class DM_MZine1Activity extends Activity {
+public class DM_MZineArticleActivity extends Activity {
 
     private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
     private ArrayList<View> views;
@@ -44,6 +50,12 @@ public class DM_MZine1Activity extends Activity {
     private Random random = null;
     private WH_DMApi wh_dmApi;
     private WH_DMApp wh_dmApp;
+    private DatabaseImpl databaseImpl;
+    private Magazine curMagazine;
+    private int totalPage = 1;
+    private int curPage = 1;
+    private TextView txtPage;
+    private int sid;
     private ProgressDialog progressDialog = null;
     private final Handler handler = new Handler() {
         @Override
@@ -55,7 +67,7 @@ public class DM_MZine1Activity extends Activity {
                     getMagzineTask = null;
                 }
                 getMagzineTask = new GetMagzineTask();
-                getMagzineTask.execute(6, 6);
+                getMagzineTask.execute(sid);
             }
         };
     };
@@ -68,6 +80,10 @@ public class DM_MZine1Activity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_dm_mzine1);
         inflater = getLayoutInflater();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        sid = bundle.getInt("sid");
+
         init();
         handler.sendEmptyMessage(MSG_GET_MAGZINE);
         // addData(magzines);
@@ -90,23 +106,27 @@ public class DM_MZine1Activity extends Activity {
 
     public void init() {
 
+        txtPage = (TextView) findViewById(R.id.txt_magazine_page);
         LayoutInflater inflater = getLayoutInflater();
         views = new ArrayList<View>();
         viewPager = (ViewPager) findViewById(R.id.v_Pager);
         adapter = new MyPagerAdapter();
         viewPager.setAdapter(adapter);
+        viewPager.setOnPageChangeListener(new GuidePageChangeListener());
 
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
+        curMagazine = databaseImpl.getMagazine(sid);
 
     }
 
     public void addData(ArrayList<ArticleMagzine> magzines) {
 
-        random = new Random(2);
+        random = new Random(3);
         int pageSize = magzines.size() / 6;
         View view = null;
         for (int i = 0, lower = 0, upper = 5; i < pageSize; i++) {
@@ -132,11 +152,16 @@ public class DM_MZine1Activity extends Activity {
 
         }
         viewPager.setCurrentItem(0);
+        totalPage = views.size();
         adapter.setList(views);
     }
 
     private void initViewOne(View v, final int low, int up, final ArrayList<ArticleMagzine> articles) {
 
+        final ImageView img_header = (ImageView) v.findViewById(R.id.img_header);
+        UrlImageViewHelper.setUrlDrawable(img_header,
+                WH_DMHttpApiV1.URL_DOMAIN + curMagazine.getTitlepic(), R.drawable.magazine_title,
+                null);
         final LinearLayout view1_linear1 = (LinearLayout) v.findViewById(R.id.layout1_magazine_1);
         final LinearLayout view1_linear2 = (LinearLayout) v.findViewById(R.id.layout2_magazine_1);
         final LinearLayout view1_linear3 = (LinearLayout) v.findViewById(R.id.layout3_magazine_1);
@@ -145,16 +170,31 @@ public class DM_MZine1Activity extends Activity {
         final RelativeLayout style1 = (RelativeLayout) v.findViewById(R.id.style1);
 
         final TextView view1_txtTile1 = (TextView) v.findViewById(R.id.txt_magazine_1_title1);
+        final TextView view1_txtTile1_1 = (TextView) v.findViewById(R.id.txt_magazine_1_source1);
+        final TextView view1_txtTile1_2 = (TextView) v.findViewById(R.id.txt_magazine_1_time1);
+
         final TextView view1_txtTile2 = (TextView) v.findViewById(R.id.txt_magazine_1_title2);
+        final TextView view1_txtTile2_1 = (TextView) v.findViewById(R.id.txt_magazine_1_source2);
+        final TextView view1_txtTile2_2 = (TextView) v.findViewById(R.id.txt_magazine_1_time2);
+
         final TextView view1_txtTile3 = (TextView) v.findViewById(R.id.txt_magazine_1_title3);
+        final TextView view1_txtTile3_1 = (TextView) v.findViewById(R.id.txt_magazine_1_source3);
+        final TextView view1_txtTile3_2 = (TextView) v.findViewById(R.id.txt_magazine_1_time3);
+
         final TextView view1_txtTile4 = (TextView) v.findViewById(R.id.txt_magazine_1_title4);
+        final TextView view1_txtTile4_1 = (TextView) v.findViewById(R.id.txt_magazine_1_source4);
+        final TextView view1_txtTile4_2 = (TextView) v.findViewById(R.id.txt_magazine_1_time4);
+
         final TextView view1_txtTile5 = (TextView) v.findViewById(R.id.txt_magazine_1_title5);
+        final TextView view1_txtTile5_1 = (TextView) v.findViewById(R.id.txt_magazine_1_source5);
+        final TextView view1_txtTile5_2 = (TextView) v.findViewById(R.id.txt_magazine_1_time5);
+
         final TextView view1_txtTile6 = (TextView) v.findViewById(R.id.txt_magazine_1_title6);
 
         final ImageView img_magazine_1 = (ImageView) v.findViewById(R.id.img_magazine_1);
         final TextView txtLarge = (TextView) v.findViewById(R.id.txtLarge1);
-        final Intent intent = new Intent(DM_MZine1Activity.this, MagazineDetailsActivity.class);
-
+        final Intent intent = new Intent(DM_MZineArticleActivity.this,
+                MagazineDetailsActivity.class);
         OnClickListener listener1 = new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +250,43 @@ public class DM_MZine1Activity extends Activity {
         view1_linear4.setOnClickListener(listener1);
         view1_linear5.setOnClickListener(listener1);
         style1.setOnClickListener(listener1);
+
+        ArrayList<HashMap<String, TextView>> maps = new ArrayList();
+        HashMap<String, TextView> map1 = new HashMap();
+        map1.put("title", view1_txtTile1);
+        map1.put("source", view1_txtTile1_1);
+        map1.put("time", view1_txtTile1_2);
+
+        HashMap<String, TextView> map2 = new HashMap();
+        map2.put("title", view1_txtTile2);
+        map2.put("source", view1_txtTile2_1);
+        map2.put("time", view1_txtTile2_2);
+
+        HashMap<String, TextView> map3 = new HashMap();
+        map3.put("title", view1_txtTile3);
+        map3.put("source", view1_txtTile3_1);
+        map3.put("time", view1_txtTile3_2);
+
+        HashMap<String, TextView> map4 = new HashMap();
+        map4.put("title", view1_txtTile4);
+        map4.put("source", view1_txtTile4_1);
+        map4.put("time", view1_txtTile4_2);
+
+        HashMap<String, TextView> map5 = new HashMap();
+        map5.put("title", view1_txtTile5);
+        map5.put("source", view1_txtTile5_1);
+        map5.put("time", view1_txtTile5_2);
+
+        HashMap<String, TextView> map6 = new HashMap();
+        map6.put("title", view1_txtTile6);
+
+        maps.add(map1);
+        maps.add(map2);
+        maps.add(map3);
+        maps.add(map4);
+        maps.add(map5);
+        maps.add(map6);
+
         ArrayList<TextView> txtViews = new ArrayList<TextView>();
         txtViews.add(view1_txtTile1);
         txtViews.add(view1_txtTile2);
@@ -222,7 +299,18 @@ public class DM_MZine1Activity extends Activity {
             for (int i = low, j = 0; i <= up; i++, j++) {
                 ArticleMagzine article = articles.get(i);
                 if (article.getTitle() != null && article.getTitle().length() > 0) {
-                    txtViews.get(j).setText(article.getTitle());
+                    // txtViews.get(j).setText(article.getTitle());
+                    maps.get(j).get("title").setText(article.getTitle());
+                    if (j < 5) {
+                        if (article.getSource() != null) {
+                            maps.get(j).get("source").setText(article.getSource());
+                        }
+                        maps.get(j)
+                                .get("time")
+                                .setText(
+                                        TimeUtil.getTimeInterval(article.getPubdate(),
+                                                DM_MZineArticleActivity.this));
+                    }
                 }
             }
             for (int i = low, j = 0; i <= up; i++, j++) {
@@ -238,7 +326,7 @@ public class DM_MZine1Activity extends Activity {
                         @Override
                         public void onClick(View v) {
 
-                            Intent intent = new Intent(DM_MZine1Activity.this,
+                            Intent intent = new Intent(DM_MZineArticleActivity.this,
                                     MagazineDetailsActivity.class);
                             intent.putExtra("sid", aid);
                             startActivity(intent);
@@ -259,6 +347,10 @@ public class DM_MZine1Activity extends Activity {
 
     private void initViewTwo(View v, final int low, int up, final ArrayList<ArticleMagzine> articles) {
 
+        final ImageView img_header = (ImageView) v.findViewById(R.id.img_header);
+        UrlImageViewHelper.setUrlDrawable(img_header,
+                WH_DMHttpApiV1.URL_DOMAIN + curMagazine.getTitlepic(), R.drawable.magazine_title,
+                null);
         final LinearLayout view2_linear1 = (LinearLayout) v.findViewById(R.id.layout1_magazine_2);
         final LinearLayout view2_linear2 = (LinearLayout) v.findViewById(R.id.layout2_magazine_2);
         final LinearLayout view2_linear3 = (LinearLayout) v.findViewById(R.id.layout3_magazine_2);
@@ -267,15 +359,32 @@ public class DM_MZine1Activity extends Activity {
         final RelativeLayout style2 = (RelativeLayout) v.findViewById(R.id.style2);
 
         final TextView view2_txtTile1 = (TextView) v.findViewById(R.id.txt_magazine_2_title1);
+        final TextView view2_txtTile1_1 = (TextView) v.findViewById(R.id.txt_magazine_2_source1);
+        final TextView view2_txtTile1_2 = (TextView) v.findViewById(R.id.txt_magazine_2_time1);
+
         final TextView view2_txtTile2 = (TextView) v.findViewById(R.id.txt_magazine_2_title2);
+        final TextView view2_txtTile2_1 = (TextView) v.findViewById(R.id.txt_magazine_2_source2);
+        final TextView view2_txtTile2_2 = (TextView) v.findViewById(R.id.txt_magazine_2_time2);
+
         final TextView view2_txtTile3 = (TextView) v.findViewById(R.id.txt_magazine_2_title3);
+        final TextView view2_txtTile3_1 = (TextView) v.findViewById(R.id.txt_magazine_2_source3);
+        final TextView view2_txtTile3_2 = (TextView) v.findViewById(R.id.txt_magazine_2_time3);
+
         final TextView view2_txtTile4 = (TextView) v.findViewById(R.id.txt_magazine_2_title4);
+        final TextView view2_txtTile4_1 = (TextView) v.findViewById(R.id.txt_magazine_2_source4);
+        final TextView view2_txtTile4_2 = (TextView) v.findViewById(R.id.txt_magazine_2_time4);
+
         final TextView view2_txtTile5 = (TextView) v.findViewById(R.id.txt_magazine_2_title5);
+        final TextView view2_txtTile5_1 = (TextView) v.findViewById(R.id.txt_magazine_2_source5);
+        final TextView view2_txtTile5_2 = (TextView) v.findViewById(R.id.txt_magazine_2_time5);
+
         final TextView view2_txtTile6 = (TextView) v.findViewById(R.id.txt_magazine_2_title6);
+
         final ImageView img_magazine_2 = (ImageView) v.findViewById(R.id.img_magazine_2);
         final TextView txtLarge = (TextView) v.findViewById(R.id.txtLarge2);
 
-        final Intent intent = new Intent(DM_MZine1Activity.this, MagazineDetailsActivity.class);
+        final Intent intent = new Intent(DM_MZineArticleActivity.this,
+                MagazineDetailsActivity.class);
         OnClickListener listener2 = new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -332,6 +441,42 @@ public class DM_MZine1Activity extends Activity {
         view2_linear5.setOnClickListener(listener2);
         style2.setOnClickListener(listener2);
 
+        ArrayList<HashMap<String, TextView>> maps = new ArrayList();
+        HashMap<String, TextView> map1 = new HashMap();
+        map1.put("title", view2_txtTile1);
+        map1.put("source", view2_txtTile1_1);
+        map1.put("time", view2_txtTile1_2);
+
+        HashMap<String, TextView> map2 = new HashMap();
+        map2.put("title", view2_txtTile2);
+        map2.put("source", view2_txtTile2_1);
+        map2.put("time", view2_txtTile2_2);
+
+        HashMap<String, TextView> map3 = new HashMap();
+        map3.put("title", view2_txtTile3);
+        map3.put("source", view2_txtTile3_1);
+        map3.put("time", view2_txtTile3_2);
+
+        HashMap<String, TextView> map4 = new HashMap();
+        map4.put("title", view2_txtTile4);
+        map4.put("source", view2_txtTile4_1);
+        map4.put("time", view2_txtTile4_2);
+
+        HashMap<String, TextView> map5 = new HashMap();
+        map5.put("title", view2_txtTile5);
+        map5.put("source", view2_txtTile5_1);
+        map5.put("time", view2_txtTile5_2);
+
+        HashMap<String, TextView> map6 = new HashMap();
+        map6.put("title", view2_txtTile6);
+
+        maps.add(map1);
+        maps.add(map2);
+        maps.add(map3);
+        maps.add(map4);
+        maps.add(map5);
+        maps.add(map6);
+
         ArrayList<TextView> txtViews = new ArrayList<TextView>();
         txtViews.add(view2_txtTile1);
         txtViews.add(view2_txtTile2);
@@ -345,7 +490,20 @@ public class DM_MZine1Activity extends Activity {
                 ArticleMagzine article = articles.get(i);
                 final int aid = article.getId();
                 if (article.getTitle() != null && article.getTitle().length() > 0) {
-                    txtViews.get(j).setText(article.getTitle());
+                    // txtViews.get(j).setText(article.getTitle());
+                    maps.get(j).get("title").setText(article.getTitle());
+                    if (j < 5) {
+                        if (article.getSource() != null) {
+                            TextView txt = maps.get(j).get("source");
+                            txt.setText(article.getSource());
+                            // maps.get(j).get("source").setText(article.getSource());
+                        }
+                        maps.get(j)
+                                .get("time")
+                                .setText(
+                                        TimeUtil.getTimeInterval(article.getPubdate(),
+                                                DM_MZineArticleActivity.this));
+                    }
                 }
             }
             for (int i = low, j = 0; i <= up; i++, j++) {
@@ -361,7 +519,7 @@ public class DM_MZine1Activity extends Activity {
                         @Override
                         public void onClick(View v) {
 
-                            Intent intent = new Intent(DM_MZine1Activity.this,
+                            Intent intent = new Intent(DM_MZineArticleActivity.this,
                                     MagazineDetailsActivity.class);
                             intent.putExtra("sid", aid);
                             startActivity(intent);
@@ -383,6 +541,10 @@ public class DM_MZine1Activity extends Activity {
     private void initViewThree(View v, final int low, int up,
             final ArrayList<ArticleMagzine> articles) {
 
+        final ImageView img_header = (ImageView) v.findViewById(R.id.img_header);
+        UrlImageViewHelper.setUrlDrawable(img_header,
+                WH_DMHttpApiV1.URL_DOMAIN + curMagazine.getTitlepic(), R.drawable.magazine_title,
+                null);
         final LinearLayout view3_linear1 = (LinearLayout) v.findViewById(R.id.layout1_magazine_3);
         final LinearLayout view3_linear2 = (LinearLayout) v.findViewById(R.id.layout2_magazine_3);
         final LinearLayout view3_linear3 = (LinearLayout) v.findViewById(R.id.layout3_magazine_3);
@@ -391,15 +553,31 @@ public class DM_MZine1Activity extends Activity {
         final RelativeLayout style3 = (RelativeLayout) v.findViewById(R.id.style3);
 
         final TextView view3_txtTile1 = (TextView) v.findViewById(R.id.txt_magazine_3_title1);
+        final TextView view3_txtTile1_1 = (TextView) v.findViewById(R.id.txt_magazine_3_source1);
+        final TextView view3_txtTile1_2 = (TextView) v.findViewById(R.id.txt_magazine_3_time1);
+
         final TextView view3_txtTile2 = (TextView) v.findViewById(R.id.txt_magazine_3_title2);
+        final TextView view3_txtTile2_1 = (TextView) v.findViewById(R.id.txt_magazine_3_source2);
+        final TextView view3_txtTile2_2 = (TextView) v.findViewById(R.id.txt_magazine_3_time2);
+
         final TextView view3_txtTile3 = (TextView) v.findViewById(R.id.txt_magazine_3_title3);
+        final TextView view3_txtTile3_1 = (TextView) v.findViewById(R.id.txt_magazine_3_source3);
+        final TextView view3_txtTile3_2 = (TextView) v.findViewById(R.id.txt_magazine_3_time3);
+
         final TextView view3_txtTile4 = (TextView) v.findViewById(R.id.txt_magazine_3_title4);
+        final TextView view3_txtTile4_1 = (TextView) v.findViewById(R.id.txt_magazine_3_source4);
+        final TextView view3_txtTile4_2 = (TextView) v.findViewById(R.id.txt_magazine_3_time4);
+
         final TextView view3_txtTile5 = (TextView) v.findViewById(R.id.txt_magazine_3_title5);
+        final TextView view3_txtTile5_1 = (TextView) v.findViewById(R.id.txt_magazine_3_source5);
+        final TextView view3_txtTile5_2 = (TextView) v.findViewById(R.id.txt_magazine_3_time5);
+
         final TextView view3_txtTile6 = (TextView) v.findViewById(R.id.txt_magazine_3_title6);
         final ImageView img_magazine_3 = (ImageView) v.findViewById(R.id.img_magazine_3);
         final TextView txtLarge = (TextView) v.findViewById(R.id.txtLarge3);
 
-        final Intent intent = new Intent(DM_MZine1Activity.this, MagazineDetailsActivity.class);
+        final Intent intent = new Intent(DM_MZineArticleActivity.this,
+                MagazineDetailsActivity.class);
         OnClickListener listener3 = new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -452,6 +630,42 @@ public class DM_MZine1Activity extends Activity {
         view3_linear4.setOnClickListener(listener3);
         view3_linear5.setOnClickListener(listener3);
 
+        ArrayList<HashMap<String, TextView>> maps = new ArrayList();
+        HashMap<String, TextView> map1 = new HashMap();
+        map1.put("title", view3_txtTile1);
+        map1.put("source", view3_txtTile1_1);
+        map1.put("time", view3_txtTile1_2);
+
+        HashMap<String, TextView> map2 = new HashMap();
+        map2.put("title", view3_txtTile2);
+        map2.put("source", view3_txtTile2_1);
+        map2.put("time", view3_txtTile2_2);
+
+        HashMap<String, TextView> map3 = new HashMap();
+        map3.put("title", view3_txtTile3);
+        map3.put("source", view3_txtTile3_1);
+        map3.put("time", view3_txtTile3_2);
+
+        HashMap<String, TextView> map4 = new HashMap();
+        map4.put("title", view3_txtTile4);
+        map4.put("source", view3_txtTile4_1);
+        map4.put("time", view3_txtTile4_2);
+
+        HashMap<String, TextView> map5 = new HashMap();
+        map5.put("title", view3_txtTile5);
+        map5.put("source", view3_txtTile5_1);
+        map5.put("time", view3_txtTile5_2);
+
+        HashMap<String, TextView> map6 = new HashMap();
+        map6.put("title", view3_txtTile6);
+
+        maps.add(map1);
+        maps.add(map2);
+        maps.add(map3);
+        maps.add(map4);
+        maps.add(map5);
+        maps.add(map6);
+
         ArrayList<TextView> txtViews = new ArrayList<TextView>();
         txtViews.add(view3_txtTile1);
         txtViews.add(view3_txtTile2);
@@ -465,7 +679,18 @@ public class DM_MZine1Activity extends Activity {
                 ArticleMagzine article = articles.get(i);
                 final int aid = article.getId();
                 if (article.getTitle() != null && article.getTitle().length() > 0) {
-                    txtViews.get(j).setText(article.getTitle());
+                    // txtViews.get(j).setText(article.getTitle());
+                    maps.get(j).get("title").setText(article.getTitle());
+                    if (j < 5) {
+                        if (article.getSource() != null) {
+                            maps.get(j).get("source").setText(article.getSource());
+                        }
+                        maps.get(j)
+                                .get("time")
+                                .setText(
+                                        TimeUtil.getTimeInterval(article.getPubdate(),
+                                                DM_MZineArticleActivity.this));
+                    }
                 }
             }
             for (int i = low, j = 0; i <= up; i++, j++) {
@@ -481,7 +706,7 @@ public class DM_MZine1Activity extends Activity {
                         @Override
                         public void onClick(View v) {
 
-                            Intent intent = new Intent(DM_MZine1Activity.this,
+                            Intent intent = new Intent(DM_MZineArticleActivity.this,
                                     MagazineDetailsActivity.class);
                             intent.putExtra("sid", aid);
                             startActivity(intent);
@@ -600,7 +825,8 @@ public class DM_MZine1Activity extends Activity {
 
             ArrayList<ArticleMagzine> articles = null;
             try {
-                articles = wh_dmApi.getArticleMagzine(params[0], params[1]);
+
+                articles = wh_dmApi.getArticleMagzine(params[0]);
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -613,12 +839,36 @@ public class DM_MZine1Activity extends Activity {
 
             if (result != null) {
                 addData(result);
+                txtPage.setText(curPage + "/" + totalPage);
 
             } else {
-                NotificationUtil.showShortToast("请检查网络连接", DM_MZine1Activity.this);
+                NotificationUtil.showShortToast("没有新刊", DM_MZineArticleActivity.this);
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
+        }
+    }
+
+    private class GuidePageChangeListener implements OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onPageSelected(int arg0) {
+
+            curPage = 1 + arg0;
+            txtPage.setText(curPage + "/" + totalPage);
+
         }
     }
 

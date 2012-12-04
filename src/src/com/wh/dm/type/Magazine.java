@@ -11,12 +11,17 @@ public class Magazine {
     private String memo;
     private int isfeedback;
     private int limit;
+    private String pass;
     private String addtime;
     private String sname;
     private String shortname;
     private String pic;
     private String spic;
     private String titlepic;
+
+    private String name;
+    private int drawableId;
+    private int id;
 
     public int getNo() {
 
@@ -98,6 +103,16 @@ public class Magazine {
         this.limit = limit;
     }
 
+    public String getPass() {
+
+        return pass;
+    }
+
+    public void setPass(String _pass) {
+
+        pass = _pass;
+    }
+
     public String getAddtime() {
 
         return addtime;
@@ -156,6 +171,36 @@ public class Magazine {
     public void setTitlepic(String titlepic) {
 
         this.titlepic = titlepic;
+    }
+
+    public void setId(int _id) {
+
+        id = _id;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
+    public void setName(String _name) {
+
+        name = _name;
+    }
+
+    public void setDrawableId(int _drawableId) {
+
+        drawableId = _drawableId;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public int getDrawableId() {
+
+        return drawableId;
     }
 
 }

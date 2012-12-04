@@ -34,7 +34,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="13.33dip"
             android:paddingRight="13.33dip"
-            android:text="镜头中的火车车窗，映着车窗内外的两重人影，被车厢分割开来的一家人..."
+            android:text=""
             android:textColor="@color/white"
             android:textSize="15sp" />
     </RelativeLayout>

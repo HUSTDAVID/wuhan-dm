@@ -5,10 +5,10 @@
     android:background="#efefef"
     android:orientation="vertical"
     android:weightSum="3" xmlns:android="http://schemas.android.com/apk/res/android">
-
+
     <include
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dip"
         layout="@layout/dm_mzine_header" />
 
     <RelativeLayout
@@ -74,24 +74,27 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="贺福初调研光谷生物城" />
-
+
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
                 <TextView
                     android:id="@+id/txt_magazine_2_source1"
                     style="@style/magazine_body"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dip"
-                    android:text="湖北大楚网" />
-
-                <TextView
+                    android:layout_weight="1"
+                    android:text="湖北大楚网" /><TextView
                     android:id="@+id/txt_magazine_2_time1"
                     style="@style/magazine_body"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="1个小时前" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -116,24 +119,28 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="国家中心城市的光谷元素" />
-
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
                 <TextView
                     android:id="@+id/txt_magazine_2_source2"
                     style="@style/magazine_body"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dip"
+                    android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
                 <TextView
                     android:id="@+id/txt_magazine_2_time2"
                     style="@style/magazine_body"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="3个小时前" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -166,24 +173,28 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="依光而兴 一条街一座城" />
-
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
                 <TextView
-                    android:id="@+id/txt_magazine_1_source3"
+                    android:id="@+id/txt_magazine_2_source3"
                     style="@style/magazine_body"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dip"
+                    android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
                 <TextView
-                    android:id="@+id/txt_magazine_1_time3"
+                    android:id="@+id/txt_magazine_2_time3"
                     style="@style/magazine_body"
                     android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="4个小时前" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -207,24 +218,28 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="长飞光纤获国际质量管理金奖" />
-
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
                 <TextView
                     android:id="@+id/txt_magazine_2_source4"
                     style="@style/magazine_body"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dip"
+                    android:layout_weight="1"
                     android:text="湖北大楚网" />
-
+
                 <TextView
                     android:id="@+id/txt_magazine_2_time4"
                     style="@style/magazine_body"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="10个小时前" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

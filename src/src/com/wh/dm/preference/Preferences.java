@@ -42,6 +42,9 @@ public class Preferences {
     public static final String MAGAZINE_THREE_ID = "id_magazien_three";
     public static final String MAGAZINE_FOUR_ID = "id_magazien_four";
 
+    public static final String LOAD_PIC_PATH = "pic_path";
+    public static final String POST_MESSAGE = "post_message";
+
     public static void saveUser(Context context, String email, String password) {
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
@@ -101,6 +104,34 @@ public class Preferences {
         editor.putInt(MAGAZINE_THREE_ID, idThree);
         editor.putInt(MAGAZINE_FOUR_ID, idFour);
         editor.commit();
+    }
+
+    public static void saveLoadPic(Context context, String pic) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor = preference.edit();
+        editor.putString(LOAD_PIC_PATH, pic);
+        editor.commit();
+    }
+
+    public static String getLoadPic(Context context) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        return preference.getString(LOAD_PIC_PATH, "");
+    }
+
+    public static void setPostMessage(Context context, int num) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor = preference.edit();
+        editor.putInt(POST_MESSAGE, num);
+        editor.commit();
+    }
+
+    public static int getMsgNum(Context context) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        return preference.getInt(POST_MESSAGE, 0);
     }
 
 }

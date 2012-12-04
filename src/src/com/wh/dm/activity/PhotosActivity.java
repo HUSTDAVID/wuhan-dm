@@ -318,6 +318,8 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         txtNum = (TextView) findViewById(R.id.txt_message_num);
         btnMessage.setOnClickListener(this);
         txtNum.setOnClickListener(this);
+        int num = Preferences.getMsgNum(PhotosActivity.this);
+        txtNum.setText("" + num);
 
     }
 
