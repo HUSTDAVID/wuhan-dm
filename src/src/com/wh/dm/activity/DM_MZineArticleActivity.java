@@ -10,6 +10,7 @@ import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.util.TimeUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
@@ -288,12 +289,24 @@ public class DM_MZineArticleActivity extends Activity {
         maps.add(map6);
 
         if (up <= articles.size()) {
-            UrlImageViewHelper.setUrlDrawable(img_magazine_1, URL_DOMAIN
-                    + articles.get(up).getLitpic());
+            if (!wh_dmApp.isLoadImg || articles.get(up).getLitpic().equals("")
+                    || articles.get(up).getLitpic() == null) {
+                txtLarge.setVisibility(View.VISIBLE);
+                txtLarge.setText(view1_txtTile6.getText().toString());
+                view1_txtTile6.setVisibility(View.GONE);
+
+            } else {
+                UrlImageViewHelper.setUrlDrawable(img_magazine_1, URL_DOMAIN
+                        + articles.get(up).getLitpic());
+            }
             for (int i = low, j = 0; i <= up; i++, j++) {
                 maps.get(j).get("title").setText(articles.get(i).getTitle());
                 if (j != 5) {
-                    maps.get(j).get("time").setText(articles.get(i).getPubdate());
+                    maps.get(j)
+                            .get("time")
+                            .setText(
+                                    TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
+                                            DM_MZineArticleActivity.this));
                     maps.get(j).get("source").setText(articles.get(i).getSource());
                 }
             }
@@ -435,12 +448,24 @@ public class DM_MZineArticleActivity extends Activity {
         maps.add(map6);
 
         if (up <= articles.size()) {
-            UrlImageViewHelper.setUrlDrawable(img_magazine_2, URL_DOMAIN
-                    + articles.get(up).getLitpic());
+            if (!wh_dmApp.isLoadImg || articles.get(up).getLitpic().equals("")
+                    || articles.get(up).getLitpic() == null) {
+                txtLarge.setVisibility(View.VISIBLE);
+                txtLarge.setText(view2_txtTile6.getText().toString());
+                view2_txtTile6.setVisibility(View.GONE);
+
+            } else {
+                UrlImageViewHelper.setUrlDrawable(img_magazine_2, URL_DOMAIN
+                        + articles.get(up).getLitpic());
+            }
             for (int i = low, j = 0; i <= up; i++, j++) {
                 maps.get(j).get("title").setText(articles.get(i).getTitle());
                 if (j != 5) {
-                    maps.get(j).get("time").setText(articles.get(i).getPubdate());
+                    maps.get(j)
+                            .get("time")
+                            .setText(
+                                    TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
+                                            DM_MZineArticleActivity.this));
                     maps.get(j).get("source").setText(articles.get(i).getSource());
                 }
             }
@@ -585,12 +610,24 @@ public class DM_MZineArticleActivity extends Activity {
         txtViews.add(view3_txtTile6);
 
         if (up <= articles.size()) {
-            UrlImageViewHelper.setUrlDrawable(img_magazine_3, URL_DOMAIN
-                    + articles.get(up).getLitpic());
+            if (!wh_dmApp.isLoadImg || articles.get(up).getLitpic().equals("")
+                    || articles.get(up).getLitpic() == null) {
+                txtLarge.setVisibility(View.VISIBLE);
+                txtLarge.setText(view3_txtTile6.getText().toString());
+                view3_txtTile6.setVisibility(View.GONE);
+
+            } else {
+                UrlImageViewHelper.setUrlDrawable(img_magazine_3, URL_DOMAIN
+                        + articles.get(up).getLitpic());
+            }
             for (int i = low, j = 0; i <= up; i++, j++) {
                 maps.get(j).get("title").setText(articles.get(i).getTitle());
                 if (j != 5) {
-                    maps.get(j).get("time").setText(articles.get(i).getPubdate());
+                    maps.get(j)
+                            .get("time")
+                            .setText(
+                                    TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
+                                            DM_MZineArticleActivity.this));
                     maps.get(j).get("source").setText(articles.get(i).getSource());
                 }
             }
