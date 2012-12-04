@@ -64,12 +64,14 @@ public class DownloadActivity extends Activity {
         lvDownload = (ListView) findViewById(R.id.lv_download);
         Bitmap bmp = (Bitmap) BitmapFactory.decodeResource(getResources(),
                 R.drawable.subscription_manage_logo);
-        LoadInfo load1 = new LoadInfo(bmp, "中百仓储", "22496人下载", true, false, 100);
-        LoadInfo load2 = new LoadInfo(bmp, "Dior", "2224人下载", false, false, 20);
-        LoadInfo load3 = new LoadInfo(bmp, "柏氏专卖", "22334人下载", false, true, 50);
+        LoadInfo load1 = new LoadInfo(bmp, "中百仓储", "22496人下载", false, true, false, 100);
+        LoadInfo load2 = new LoadInfo(bmp, "Dior", "2224人下载", true, false, false, 20);
+        LoadInfo load3 = new LoadInfo(bmp, "柏氏专卖", "22334人下载", true, false, true, 50);
+        LoadInfo load4 = new LoadInfo(bmp, "柏氏专卖", "22334人下载", true, true, false, 50);
         list.add(load1);
-        list.add(load2);
         list.add(load3);
+        list.add(load4);
+        list.add(load2);
         DownloadAdapter adapter = new DownloadAdapter(this);
         adapter.setList(list);
         lvDownload.setAdapter(adapter);

@@ -85,6 +85,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             try {
                 ArrayList<PostMessage> messages = wh_dmApi.getMessage();
+                WH_DMApp app = (WH_DMApp) _context.getApplicationContext();
+                app.setPostMessage(messages);
                 return messages;
             } catch (Exception e) {
                 reason = e;

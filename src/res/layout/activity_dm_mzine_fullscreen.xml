@@ -17,6 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:paddingBottom="20dip"
+        android:paddingBottom="5dip"
         android:text="1/1"/>
 </RelativeLayout>

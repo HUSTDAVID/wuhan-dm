@@ -9,6 +9,7 @@ public class LoadInfo {
     private String title;
     private String num;
     private boolean isFinish;
+    private boolean isStart;
     private boolean isPause;
     private int pro;
 
@@ -16,15 +17,26 @@ public class LoadInfo {
 
     }
 
-    public LoadInfo(Bitmap _bmpLogo, String _title, String _num, boolean _isFinish,
-            boolean _isPause, int _pro) {
+    public LoadInfo(Bitmap _bmpLogo, String _title, String _num, boolean isStart,
+            boolean _isFinish, boolean _isPause, int _pro) {
 
         this.bmpLogo = _bmpLogo;
         this.title = _title;
         this.num = _num;
+        this.isStart = isStart;
         this.isFinish = _isFinish;
         this.isPause = _isPause;
         this.pro = _pro;
+    }
+
+    public boolean isStart() {
+
+        return isStart;
+    }
+
+    public void setStart(boolean isStart) {
+
+        this.isStart = isStart;
     }
 
     public int getPro() {

@@ -100,7 +100,12 @@ public class DownloadAdapter extends BaseAdapter {
         viewHolder.imgDM.setImageBitmap(dms.get(position).getBmpLogo());
         viewHolder.txtDM.setText(dms.get(position).getTitle());
         viewHolder.txtNum.setText(dms.get(position).getNum());
-        if (dms.get(position).isFinish()) {
+        if (!dms.get(position).isStart()) {
+            viewHolder.pbStatus.setVisibility(View.GONE);
+            viewHolder.txtAddition.setVisibility(View.VISIBLE);
+            viewHolder.txtAddition.setText("未下载杂志");
+            viewHolder.btnStatus.setText("开始下载");
+        } else if (dms.get(position).isFinish()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
             viewHolder.txtAddition.setText("下载已完成");

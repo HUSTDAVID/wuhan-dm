@@ -133,9 +133,6 @@ public class SubscribeActivity extends ActivityGroup {
                     getLocalActivityManager().destroyActivity("search", true);
                     intent.setClass(SubscribeActivity.this, SearchMagazineActivity.class);
                     intent.putExtra("key", key);
-                    // vMain = getLocalActivityManager().startActivity("search",
-                    // intent)
-                    // .getDecorView();
                     Window window = getLocalActivityManager().startActivity("search", intent);
                     vMain = window.getDecorView();
                     relMain.removeAllViews();
