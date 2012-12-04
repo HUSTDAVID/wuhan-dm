@@ -103,6 +103,10 @@
     <string name="thx_voting">感谢投票!</string>
     <string name="watch_result">查看结果</string>
     <string name="get_not_result">抱歉！未能从服务器获取投票结果。</string>
+    
+    <!-- 社交化分享  -->
+    <string name="touchdown">已绑定</string>
+    <string name="touchup">解除绑定</string>
 
     <string name="mail_toast">邮箱不能为空</string>
 	<string name="password_toast">密码不能为空</string>
