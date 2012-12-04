@@ -19,10 +19,12 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,9 @@ public class DM_MZinePicsActivity extends Activity {
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private ArrayList<View> views;
+    private int totalPage = 1;
+    private int curPage = 1;
+    private TextView txtPage;
     private MyPagerAdapter adapter;
     private LayoutInflater inflater;
     private GetPicsTask getPicsTask = null;
@@ -71,9 +76,11 @@ public class DM_MZinePicsActivity extends Activity {
 
     public void init() {
 
+        txtPage = (TextView) findViewById(R.id.txt_magazine_page);
         v_Pager = (ViewPager) findViewById(R.id.v_Pager);
         adapter = new MyPagerAdapter();
         v_Pager.setAdapter(adapter);
+        v_Pager.setOnPageChangeListener(new GuidePageChangeListener());
         inflater = getLayoutInflater();
         views = new ArrayList<View>();
         progressDialog = new ProgressDialog(getParent());
@@ -106,6 +113,8 @@ public class DM_MZinePicsActivity extends Activity {
             views.add(view);
         }
         v_Pager.setCurrentItem(0);
+        totalPage = views.size();
+        txtPage.setText(curPage + "/" + totalPage);
         adapter.setList(views);
     }
 
@@ -229,4 +238,28 @@ public class DM_MZinePicsActivity extends Activity {
             super.onPostExecute(result);
         }
     }
+
+    private class GuidePageChangeListener implements OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onPageSelected(int arg0) {
+
+            curPage = 1 + arg0;
+            txtPage.setText(curPage + "/" + totalPage);
+
+        }
+    }
+
 }

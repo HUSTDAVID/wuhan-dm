@@ -40,9 +40,8 @@ public class PushService extends Service {
         sender1 = PendingIntent.getBroadcast(this, 0, intent_fetch, 0);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                 TimeUtil.getCurtime(FETCH_START_TIME), Frequence_Min, sender1);
-        // alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-        // System.currentTimeMillis(),
-        // Frequence_Min, sender1);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+                Frequence_Min, sender1);
         intent_clear = new Intent(this, ClearReceiver.class);
         sender2 = PendingIntent.getBroadcast(this, 1, intent_clear, 0);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
