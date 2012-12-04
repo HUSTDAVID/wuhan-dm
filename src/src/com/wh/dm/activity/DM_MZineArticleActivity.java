@@ -10,7 +10,6 @@ import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.util.NotificationUtil;
-import com.wh.dm.util.TimeUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
@@ -126,10 +125,11 @@ public class DM_MZineArticleActivity extends Activity {
 
     public void addData(ArrayList<ArticleMagzine> magzines) {
 
-        random = new Random(3);
+        random = new Random(2);
         int pageSize = magzines.size() / 6;
         View view = null;
         for (int i = 0, lower = 0, upper = 5; i < pageSize; i++) {
+            magzines = modifiData(magzines, lower, upper);
             int r = random.nextInt(2);
             switch (r) {
                 case 0:
@@ -287,60 +287,17 @@ public class DM_MZineArticleActivity extends Activity {
         maps.add(map5);
         maps.add(map6);
 
-        ArrayList<TextView> txtViews = new ArrayList<TextView>();
-        txtViews.add(view1_txtTile1);
-        txtViews.add(view1_txtTile2);
-        txtViews.add(view1_txtTile3);
-        txtViews.add(view1_txtTile4);
-        txtViews.add(view1_txtTile5);
-        txtViews.add(view1_txtTile6);
-
         if (up <= articles.size()) {
+            UrlImageViewHelper.setUrlDrawable(img_magazine_1, URL_DOMAIN
+                    + articles.get(up).getLitpic());
             for (int i = low, j = 0; i <= up; i++, j++) {
-                ArticleMagzine article = articles.get(i);
-                if (article.getTitle() != null && article.getTitle().length() > 0) {
-                    // txtViews.get(j).setText(article.getTitle());
-                    maps.get(j).get("title").setText(article.getTitle());
-                    if (j < 5) {
-                        if (article.getSource() != null) {
-                            maps.get(j).get("source").setText(article.getSource());
-                        }
-                        maps.get(j)
-                                .get("time")
-                                .setText(
-                                        TimeUtil.getTimeInterval(article.getPubdate(),
-                                                DM_MZineArticleActivity.this));
-                    }
+                maps.get(j).get("title").setText(articles.get(i).getTitle());
+                if (j != 5) {
+                    maps.get(j).get("time").setText(articles.get(i).getPubdate());
+                    maps.get(j).get("source").setText(articles.get(i).getSource());
                 }
             }
-            for (int i = low, j = 0; i <= up; i++, j++) {
-                ArticleMagzine article = articles.get(i);
-                final int aid = article.getId();
-                if (article.getLitpic() != null && article.getLitpic().length() > 0) {
-                    String title = new String(view1_txtTile6.getText().toString());
-                    view1_txtTile6.setText(article.getTitle());
-                    UrlImageViewHelper.setUrlDrawable(img_magazine_1,
-                            URL_DOMAIN + article.getLitpic());
 
-                    img_magazine_1.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent intent = new Intent(DM_MZineArticleActivity.this,
-                                    MagazineDetailsActivity.class);
-                            intent.putExtra("sid", aid);
-                            startActivity(intent);
-                        }
-                    });
-
-                    txtViews.get(j).setText(title);
-                    return;
-                }
-
-            }
-            txtLarge.setVisibility(View.VISIBLE);
-            txtLarge.setText(view1_txtTile6.getText().toString());
-            view1_txtTile6.setVisibility(View.GONE);
         }
 
     }
@@ -477,64 +434,17 @@ public class DM_MZineArticleActivity extends Activity {
         maps.add(map5);
         maps.add(map6);
 
-        ArrayList<TextView> txtViews = new ArrayList<TextView>();
-        txtViews.add(view2_txtTile1);
-        txtViews.add(view2_txtTile2);
-        txtViews.add(view2_txtTile3);
-        txtViews.add(view2_txtTile4);
-        txtViews.add(view2_txtTile5);
-        txtViews.add(view2_txtTile6);
-
         if (up <= articles.size()) {
+            UrlImageViewHelper.setUrlDrawable(img_magazine_2, URL_DOMAIN
+                    + articles.get(up).getLitpic());
             for (int i = low, j = 0; i <= up; i++, j++) {
-                ArticleMagzine article = articles.get(i);
-                final int aid = article.getId();
-                if (article.getTitle() != null && article.getTitle().length() > 0) {
-                    // txtViews.get(j).setText(article.getTitle());
-                    maps.get(j).get("title").setText(article.getTitle());
-                    if (j < 5) {
-                        if (article.getSource() != null) {
-                            TextView txt = maps.get(j).get("source");
-                            txt.setText(article.getSource());
-                            // maps.get(j).get("source").setText(article.getSource());
-                        }
-                        maps.get(j)
-                                .get("time")
-                                .setText(
-                                        TimeUtil.getTimeInterval(article.getPubdate(),
-                                                DM_MZineArticleActivity.this));
-                    }
+                maps.get(j).get("title").setText(articles.get(i).getTitle());
+                if (j != 5) {
+                    maps.get(j).get("time").setText(articles.get(i).getPubdate());
+                    maps.get(j).get("source").setText(articles.get(i).getSource());
                 }
             }
-            for (int i = low, j = 0; i <= up; i++, j++) {
-                ArticleMagzine article = articles.get(i);
-                final int aid = article.getId();
-                if (article.getLitpic() != null && article.getLitpic().length() > 0) {
-                    String title = new String(view2_txtTile6.getText().toString());
-                    view2_txtTile6.setText(article.getTitle());
-                    UrlImageViewHelper.setUrlDrawable(img_magazine_2,
-                            URL_DOMAIN + article.getLitpic());
-                    img_magazine_2.setOnClickListener(new OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent intent = new Intent(DM_MZineArticleActivity.this,
-                                    MagazineDetailsActivity.class);
-                            intent.putExtra("sid", aid);
-                            startActivity(intent);
-
-                        }
-
-                    });
-                    txtViews.get(j).setText(title);
-                    return;
-                }
-
-            }
-            txtLarge.setVisibility(View.VISIBLE);
-            txtLarge.setText(view2_txtTile6.getText().toString());
-            view2_txtTile6.setVisibility(View.GONE);
         }
     }
 
@@ -675,53 +585,18 @@ public class DM_MZineArticleActivity extends Activity {
         txtViews.add(view3_txtTile6);
 
         if (up <= articles.size()) {
+            UrlImageViewHelper.setUrlDrawable(img_magazine_3, URL_DOMAIN
+                    + articles.get(up).getLitpic());
             for (int i = low, j = 0; i <= up; i++, j++) {
-                ArticleMagzine article = articles.get(i);
-                final int aid = article.getId();
-                if (article.getTitle() != null && article.getTitle().length() > 0) {
-                    // txtViews.get(j).setText(article.getTitle());
-                    maps.get(j).get("title").setText(article.getTitle());
-                    if (j < 5) {
-                        if (article.getSource() != null) {
-                            maps.get(j).get("source").setText(article.getSource());
-                        }
-                        maps.get(j)
-                                .get("time")
-                                .setText(
-                                        TimeUtil.getTimeInterval(article.getPubdate(),
-                                                DM_MZineArticleActivity.this));
-                    }
+                maps.get(j).get("title").setText(articles.get(i).getTitle());
+                if (j != 5) {
+                    maps.get(j).get("time").setText(articles.get(i).getPubdate());
+                    maps.get(j).get("source").setText(articles.get(i).getSource());
                 }
             }
-            for (int i = low, j = 0; i <= up; i++, j++) {
-                ArticleMagzine article = articles.get(i);
-                final int aid = article.getId();
-                if (article.getLitpic() != null && article.getLitpic().length() > 0) {
-                    String title = new String(view3_txtTile6.getText().toString());
-                    view3_txtTile6.setText(article.getTitle());
-                    UrlImageViewHelper.setUrlDrawable(img_magazine_3,
-                            URL_DOMAIN + article.getLitpic());
-                    img_magazine_3.setOnClickListener(new OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent intent = new Intent(DM_MZineArticleActivity.this,
-                                    MagazineDetailsActivity.class);
-                            intent.putExtra("sid", aid);
-                            startActivity(intent);
-                        }
-
-                    });
-                    txtViews.get(j).setText(title);
-                    return;
-                }
-
-            }
-            txtLarge.setVisibility(View.VISIBLE);
-            txtLarge.setText(view3_txtTile6.getText().toString());
-            view3_txtTile6.setVisibility(View.GONE);
         }
+
     }
 
     public class MyPagerAdapter extends PagerAdapter {
@@ -870,6 +745,22 @@ public class DM_MZineArticleActivity extends Activity {
             txtPage.setText(curPage + "/" + totalPage);
 
         }
+    }
+
+    private ArrayList<ArticleMagzine> modifiData(ArrayList<ArticleMagzine> articles, int low, int up) {
+
+        ArticleMagzine article = new ArticleMagzine();
+        for (int i = low; i <= up; i++) {
+            if (articles.get(i).getLitpic() != null && articles.get(i).getLitpic().length() > 0
+                    && i != up) {
+                article = articles.get(i);
+                articles.set(i, articles.get(up));
+                articles.set(up, article);
+                break;
+            }
+        }
+        article = articles.get(up);
+        return articles;
     }
 
 }
