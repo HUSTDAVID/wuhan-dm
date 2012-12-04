@@ -14,9 +14,9 @@ import android.os.IBinder;
 public class PushService extends Service {
 
     private AlarmManager alarmManager = null;
-    private static final int Frequence_Min = 5 * 60 * 1000 * 1000;
+    private static final int Frequence_Min = 5 * 60 * 1000;
     // private static final int Frequence_Min = 5 * 1000;
-    private static final int Frequence_Day = 24 * 60 * 60 * 1000 * 1000;
+    private static final int Frequence_Day = 24 * 60 * 60 * 1000;
     // private static final int Frequence_Day = 5 * 1000;
     private static final String FETCH_START_TIME = "07:00:00";
     private static final String CLEAR_START_TIME = "06:00:00";

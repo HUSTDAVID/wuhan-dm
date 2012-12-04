@@ -48,6 +48,7 @@ public class VotedListActivity extends Activity {
     private final int MSG_GET_VOTES = 1;
     private GetVotesTask getVotesTask = null;
     private int currentSelelct = 0;
+    private int sid;
 
     private final Handler handler = new Handler() {
 
@@ -74,6 +75,7 @@ public class VotedListActivity extends Activity {
         MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        sid = getIntent().getIntExtra("sid", 6);
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_VOTES);
@@ -220,7 +222,7 @@ public class VotedListActivity extends Activity {
         protected ArrayList<Vote> doInBackground(Void... params) {
 
             try {
-                votes = wh_dmApi.getVote(6);
+                votes = wh_dmApi.getVote(sid);
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();

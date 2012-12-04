@@ -343,20 +343,6 @@ public class MainActivity extends Activity {
                         Intent intent_collect = new Intent(MainActivity.this, CollectActivity.class);
                         startActivity(intent_collect);
                         break;
-                    case 3:
-                        Intent intent_pic_txt = new Intent(MainActivity.this,
-                                DM_Tab_2Activity.class);
-                        bundle.putInt("dm", DM_PICS_TXT);
-                        intent_pic_txt.putExtras(bundle);
-                        startActivity(intent_pic_txt);
-                        break;
-                    case 4:
-                        Intent intent_tab_full = new Intent(MainActivity.this,
-                                DM_Tab_2Activity.class);
-                        bundle.putInt("dm", DM_FULL);
-                        intent_tab_full.putExtras(bundle);
-                        startActivity(intent_tab_full);
-                        break;
                     default:
                         Intent intent_magazine = new Intent(MainActivity.this,
                                 DM_Tab_2Activity.class);

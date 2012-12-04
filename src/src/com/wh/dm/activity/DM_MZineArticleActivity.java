@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,6 +52,9 @@ public class DM_MZineArticleActivity extends Activity {
     private WH_DMApp wh_dmApp;
     private DatabaseImpl databaseImpl;
     private Magazine curMagazine;
+    private int totalPage = 1;
+    private int curPage = 1;
+    private TextView txtPage;
     private int sid;
     private ProgressDialog progressDialog = null;
     private final Handler handler = new Handler() {
@@ -102,11 +106,13 @@ public class DM_MZineArticleActivity extends Activity {
 
     public void init() {
 
+        txtPage = (TextView) findViewById(R.id.txt_magazine_page);
         LayoutInflater inflater = getLayoutInflater();
         views = new ArrayList<View>();
         viewPager = (ViewPager) findViewById(R.id.v_Pager);
         adapter = new MyPagerAdapter();
         viewPager.setAdapter(adapter);
+        viewPager.setOnPageChangeListener(new GuidePageChangeListener());
 
         progressDialog = new ProgressDialog(getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -120,7 +126,7 @@ public class DM_MZineArticleActivity extends Activity {
 
     public void addData(ArrayList<ArticleMagzine> magzines) {
 
-        random = new Random(2);
+        random = new Random(3);
         int pageSize = magzines.size() / 6;
         View view = null;
         for (int i = 0, lower = 0, upper = 5; i < pageSize; i++) {
@@ -146,6 +152,7 @@ public class DM_MZineArticleActivity extends Activity {
 
         }
         viewPager.setCurrentItem(0);
+        totalPage = views.size();
         adapter.setList(views);
     }
 
@@ -832,12 +839,36 @@ public class DM_MZineArticleActivity extends Activity {
 
             if (result != null) {
                 addData(result);
+                txtPage.setText(curPage + "/" + totalPage);
 
             } else {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZineArticleActivity.this);
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
+        }
+    }
+
+    private class GuidePageChangeListener implements OnPageChangeListener {
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onPageSelected(int arg0) {
+
+            curPage = 1 + arg0;
+            txtPage.setText(curPage + "/" + totalPage);
+
         }
     }
 

@@ -25,6 +25,7 @@ public class DM_Tab_2Activity extends TabActivity implements OnTabChangeListener
 
     TabHost tabHost;
     private Button btn_close;
+    public static int sid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class DM_Tab_2Activity extends TabActivity implements OnTabChangeListener
         tabHost = getTabHost();
         Intent intent = getIntent();
         Bundle flag = intent.getExtras();
+        sid = flag.getInt("sid");
         if (flag.getInt("dm") == MainActivity.DM_FULL) {
             intent.setClass(DM_Tab_2Activity.this, DM_MZinePicsActivity.class);
             tabHost.addTab(tabHost.newTabSpec("magazine").setIndicator(createTabView(MAGAZINE))

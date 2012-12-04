@@ -47,7 +47,7 @@ public class NewsDetailsActivity extends Activity {
     private final int MSG_GET_NEWSDETAIL = 0;
     private final int MSG_GET_COMMENT = 1;
     private final int ADD_REVIEW = 2;
-    private final int ADD_FAV=3;
+    private final int ADD_FAV = 3;
     private final int curStatus = 0;
     private int id;
     private int fid;
@@ -119,13 +119,13 @@ public class NewsDetailsActivity extends Activity {
                     }
                     break;
                 case ADD_FAV:
-                	if(addFavTask!=null){
-                		addFavTask.cancel(true);
-                		addFavTask=null;
-                	}
-                	addFavTask=new AddFavTask();
-                	addFavTask.execute(id);
-                	break;
+                    if (addFavTask != null) {
+                        addFavTask.cancel(true);
+                        addFavTask = null;
+                    }
+                    addFavTask = new AddFavTask();
+                    addFavTask.execute(id);
+                    break;
             }
         };
     };
@@ -170,23 +170,25 @@ public class NewsDetailsActivity extends Activity {
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
         btnMyFavorite = (Button) findViewById(R.id.btn_news_my_favorite);
-        btnMyFavorite.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(WH_DMApp.isConnected){
-				    if (WH_DMApp.isLogin) {
-	                    handler.sendEmptyMessage(ADD_FAV);
-	                } else {
-	                    NotificationUtil.showShortToast(getString(R.string.please_login),NewsDetailsActivity.this);
-	                    Intent intent = new Intent(NewsDetailsActivity.this, LoginActivity.class);
-	                    startActivity(intent);
-	                }
-				}
-				else{
-					 NotificationUtil.showShortToast(getString(R.string.check_network),NewsDetailsActivity.this);
-				}
-			}
+        btnMyFavorite.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // TODO Auto-generated method stub
+                if (WH_DMApp.isConnected) {
+                    if (WH_DMApp.isLogin) {
+                        handler.sendEmptyMessage(ADD_FAV);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.please_login),
+                                NewsDetailsActivity.this);
+                        Intent intent = new Intent(NewsDetailsActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            NewsDetailsActivity.this);
+                }
+            }
         });
         edtxMyReplyforBtn.setFocusable(false);
         lvNews.addHeaderView(newsMessage, null, false);
@@ -365,6 +367,7 @@ public class NewsDetailsActivity extends Activity {
                         null);
                 newsTitle.setText(result.getTitle());
                 newsTime.setText(result.getPubdate());
+                newsSource.setText(result.getSource());
                 if (comments != null && comments.size() > 0) {
                     Comment comment = comments.get(0);
                     adapter.addItem(getString(R.string.news_user),
@@ -472,49 +475,53 @@ public class NewsDetailsActivity extends Activity {
         }
 
     }
-    
-    private class AddFavTask extends AsyncTask<Integer, Void, Boolean>{
-    	boolean result = false;
+
+    private class AddFavTask extends AsyncTask<Integer, Void, Boolean> {
+        boolean result = false;
         Exception reason = null;
-        PostResult postresult=null;
-    	@Override
+        PostResult postresult = null;
+
+        @Override
         protected void onPreExecute() {
+
             progressDialog.show();
             super.onPreExecute();
         }
-		@Override
-		protected Boolean doInBackground(Integer... params) {
-			// TODO Auto-generated method stub
-			try{
-				postresult=wh_dmApi.addFav(params[0]);
-				if(postresult.getResult())  
-					return true; 
-				else
-					return false;
-			}catch(Exception e){
-				reason=e;
-				e.printStackTrace();
-				return false;
-			}
-		}
-		@Override
-		protected void onPostExecute(Boolean result)
-		{
-			if (result) {
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+
+            // TODO Auto-generated method stub
+            try {
+                postresult = wh_dmApi.addFav(params[0]);
+                if (postresult.getResult())
+                    return true;
+                else
+                    return false;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         NewsDetailsActivity.this);
             } else {
-            	if(postresult==null)
-                    NotificationUtil.showShortToast(getString(R.string.favorite_fail)+":未知原因",
+                if (postresult == null)
+                    NotificationUtil.showShortToast(getString(R.string.favorite_fail) + ":未知原因",
                             NewsDetailsActivity.this);
-            	else
-            		NotificationUtil.showShortToast(postresult.getMsg(),
-                            NewsDetailsActivity.this);
+                else
+                    NotificationUtil.showShortToast(postresult.getMsg(), NewsDetailsActivity.this);
             }
             progressDialog.dismiss();
             super.onPostExecute(result);
-		}
-    	
+        }
+
     }
 
 }
