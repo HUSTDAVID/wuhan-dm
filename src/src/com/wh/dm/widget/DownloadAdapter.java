@@ -2,7 +2,9 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.type.LoadInfo;
+import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -97,7 +99,10 @@ public class DownloadAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.imgDM.setImageBitmap(dms.get(position).getBmpLogo());
+
+        UrlImageViewHelper.setUrlDrawable(viewHolder.imgDM,
+                WH_DMHttpApiV1.URL_DOMAIN + dms.get(position).getPicPath(),
+                R.drawable.subscription_manage_background, null);
         viewHolder.txtDM.setText(dms.get(position).getTitle());
         viewHolder.txtNum.setText(dms.get(position).getNum());
         if (!dms.get(position).isStart()) {

@@ -1,101 +1,326 @@
 
 package com.wh.dm.activity;
 
+import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Article;
+import com.wh.dm.type.Comment;
+import com.wh.dm.type.PostResult;
+import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.util.TextUtil;
+import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
+import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MagazineDetailsActivity extends Activity {
 
-    private static final int MSG_GET_ARTICLE = 0;
-    private TextView txtReply;
-    private TextView txtTitle;
-    private ImageButton btnBack;
-    private View newsMessage;
-    private TextView newsTitle;
-    private TextView newsTime;
-    private TextView newsSource;
-    private TextView txtReplynum;
-    private WebView webViewNewsBody;
-    private WebSettings webSettings;
-    private GetArticleTask getArticleTask = null;
+    View headerView;
+    private final int MSG_GET_NEWSDETAIL = 0;
+    private final int MSG_GET_COMMENT = 1;
+    private final int ADD_REVIEW = 2;
+    private final int ADD_FAV = 3;
+    private final int curStatus = 0;
     private int sid;
+    private int time;
+    private final int curPage = 1;
+    private GetCommentTask getCommentTask = null;
+    private AddReviewTask addReviewTask = null;
+    private GetArticleTask getArticleTask = null;
+    private AddFavTask addFavTask = null;
+    private TextView newsTitle;
+    TextView newsTime;
+    TextView newsSource;
+    TextView txtReplynum;
+    WebView webViewNewsBody;
+    WebSettings webSettings;
+
+    LayoutInflater mInflater;
+    private ListView lvNews;
+    private View newsMessage;
+    private View footer;
+    private EditText edtxMyReplyforBtn;
+    private EditText edtReply;
+    private TextView edtMoreReply;
+    private Button btnReply;
+    private Button btnMyShare;
+    private Button btnMyFavorite;
+    private Button btnMore;
+    private ImageButton btnBack;
+    private NewsReplyAdapter adapter;
     private ProgressDialog progressDialog;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
+    LinearLayout bottomLayout1;
+    RelativeLayout bottomLayout2;
+
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
 
-            if (msg.what == MSG_GET_ARTICLE) {
-                if (getArticleTask != null) {
-                    getArticleTask.cancel(true);
-                    getArticleTask = null;
-                }
-                getArticleTask = new GetArticleTask();
-                getArticleTask.execute(sid);
+            switch (msg.what) {
+                case MSG_GET_NEWSDETAIL:
+                    if (getArticleTask != null) {
+                        getArticleTask.cancel(true);
+                        getArticleTask = null;
+                    }
+                    getArticleTask = new GetArticleTask();
+                    getArticleTask.execute(sid);
+                    break;
+                case MSG_GET_COMMENT:
+                    if (getCommentTask != null) {
+                        getCommentTask.cancel(true);
+                        getCommentTask = null;
+                    }
+                    getCommentTask = new GetCommentTask();
+                    getCommentTask.execute(sid);
+                    break;
+                case ADD_REVIEW:
+                    if (addReviewTask != null) {
+                        addReviewTask.cancel(true);
+                        addReviewTask = null;
+                    }
+                    if (!TextUtil.isEmpty(getFcontent())) {
+                        addReviewTask = new AddReviewTask();
+                        addReviewTask.execute(getFcontent());
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.review_null),
+                                MagazineDetailsActivity.this);
+                    }
+                    break;
+                case ADD_FAV:
+                    if (addFavTask != null) {
+                        addFavTask.cancel(true);
+                        addFavTask = null;
+                    }
+                    addFavTask = new AddFavTask();
+                    addFavTask.execute(sid);
+                    break;
             }
         };
     };
 
     @Override
-    public void onCreate(Bundle bundle) {
+    protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(bundle);
-        setContentView(R.layout.activity_magazine_details);
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_news_details);
         Intent intent = getIntent();
         sid = intent.getIntExtra("sid", 458);
-        init();
+        initViews();
         wh_dmApp = (WH_DMApp) this.getApplication();
+        databaseImpl = wh_dmApp.getDatabase();
         wh_dmApi = wh_dmApp.getWH_DMApi();
-        handler.sendEmptyMessage(MSG_GET_ARTICLE);
+        handler.sendEmptyMessage(MSG_GET_NEWSDETAIL);
 
     }
 
-    public void init() {
+    private void initViews() {
 
-        txtReply = (TextView) findViewById(R.id.txt_total_reply);
-        txtReply.setVisibility(View.GONE);
-        txtTitle = (TextView) findViewById(R.id.txt_header3_title);
-        txtTitle.setText("杂志");
-        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                finish();
-            }
-        });
         progressDialog = new ProgressDialog(MagazineDetailsActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        newsTitle = (TextView) findViewById(R.id.txt_news_title);
-        newsTime = (TextView) findViewById(R.id.txt_news_time);
-        newsSource = (TextView) findViewById(R.id.txt_news_source);
-        webViewNewsBody = (WebView) findViewById(R.id.webview_news_body);
+        mInflater = getLayoutInflater();
+
+        lvNews = (ListView) findViewById(R.id.lv_news_details);
+        // news body message
+        newsMessage = mInflater.inflate(R.layout.news_details, null);
+        newsTitle = (TextView) newsMessage.findViewById(R.id.txt_news_title);
+        newsTime = (TextView) newsMessage.findViewById(R.id.txt_news_time);
+        newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
+        webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
-        webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
         newsTime.setText(getResources().getString(R.string.news_time));
         newsSource.setText(getResources().getString(R.string.news_source));
 
+        edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
+        btnMyShare = (Button) findViewById(R.id.btn_news_share);
+        btnMyFavorite = (Button) findViewById(R.id.btn_news_my_favorite);
+        btnMyFavorite.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // TODO Auto-generated method stub
+                if (WH_DMApp.isConnected) {
+                    if (WH_DMApp.isLogin) {
+                        handler.sendEmptyMessage(ADD_FAV);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.please_login),
+                                MagazineDetailsActivity.this);
+                        Intent intent = new Intent(MagazineDetailsActivity.this,
+                                LoginActivity.class);
+                        startActivity(intent);
+                    }
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            MagazineDetailsActivity.this);
+                }
+            }
+        });
+        edtxMyReplyforBtn.setFocusable(false);
+        lvNews.addHeaderView(newsMessage, null, false);
+
+        // watch more comments
+        footer = mInflater.inflate(R.layout.news_more_comment, null);
+        lvNews.addFooterView(footer, null, false);
+
+        adapter = new NewsReplyAdapter(this);
+        lvNews.setAdapter(adapter);
+
+        btnMore = (Button) findViewById(R.id.btn_news_more);
+        btnMore.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MagazineDetailsActivity.this,
+                        NewsMoreReplyActivity.class);
+                intent.putExtra("id", sid);
+                startActivity(intent);
+
+            }
+        });
+
+        // inti reply views
+        bottomLayout1 = (LinearLayout) findViewById(R.id.linear1_news_details_bottom);
+        bottomLayout2 = (RelativeLayout) findViewById(R.id.linear2_news_details_bottom);
+
+        edtxMyReplyforBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                bottomLayout1.setVisibility(View.GONE);
+                bottomLayout2.setVisibility(View.VISIBLE);
+                edtReply.requestFocus();
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(
+                        edtReply, 0);
+
+            }
+        });
+
+        edtReply = (EditText) findViewById(R.id.edt_news_details_input);
+        btnReply = (Button) findViewById(R.id.btn_news_details_reply);
+
+        btnReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                bottomLayout1.setVisibility(View.VISIBLE);
+                bottomLayout2.setVisibility(View.GONE);
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
+                if (WH_DMApp.isLogin) {
+                    handler.sendEmptyMessage(ADD_REVIEW);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.please_login),
+                            MagazineDetailsActivity.this);
+                    Intent intent = new Intent(MagazineDetailsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
+        btnBack.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+
+        });
+        edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
+        edtMoreReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MagazineDetailsActivity.this,
+                        NewsMoreReplyActivity.class);
+                intent.putExtra("id", sid);
+                startActivity(intent);
+            }
+        });
+
+        UMSnsService.UseLocation = true;
+        UMSnsService.LocationAuto = true;
+        UMSnsService.LOCATION_VALID_TIME = 180000; // 30MINS
+        btnMyShare.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                UMSnsService.share(MagazineDetailsActivity.this, "说些什么...", null);
+            }
+        });
+        txtReplynum = (TextView) findViewById(R.id.txt_total_reply);
+
+    }
+
+    @Override
+    protected void onResume() {
+
+        webSettings = webViewNewsBody.getSettings();
+        setTextSize();
+        super.onResume();
+    }
+
+    private String getFcontent() {
+
+        return edtReply.getText().toString();
+    }
+
+    private void setTextSize() {
+
+        SharedPreferences sPreference = getSharedPreferences("com.wh.dm_preferences", 0);
+        String size = sPreference.getString("text_size", "key2");
+        if (size.equals("key0")) {
+            webSettings.setTextSize(TextSize.LARGER);
+        } else if (size.equals("key1")) {
+            webSettings.setTextSize(TextSize.LARGEST);
+        } else if (size.equals("key2")) {
+            webSettings.setTextSize(TextSize.NORMAL);
+        } else if (size.equals("key3")) {
+            webSettings.setTextSize(TextSize.SMALLER);
+        } else if (size.equals("key4")) {
+            webSettings.setTextSize(TextSize.SMALLEST);
+        } else {
+            webSettings.setTextSize(TextSize.NORMAL); // 出现其他情况设置正在字号
+        }
     }
 
     private class GetArticleTask extends AsyncTask<Integer, Void, Article> {
@@ -138,6 +363,132 @@ public class MagazineDetailsActivity extends Activity {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             MagazineDetailsActivity.this);
                 }
+            }
+            progressDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+    }
+
+    private class GetCommentTask extends AsyncTask<Integer, Void, ArrayList<Comment>> {
+        Exception reason = null;
+        ArrayList<Comment> comments = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<Comment> doInBackground(Integer... params) {
+
+            if (NetworkConnection.checkInternetConnection()) {
+                try {
+                    comments = (new WH_DMApi()).getComment(params[0], curPage);
+                    return comments;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    reason = e;
+                }
+                return comments;
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Comment> result) {
+
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+        }
+
+    }
+
+    private class AddReviewTask extends AsyncTask<String, Void, Boolean> {
+        boolean result = false;
+        Exception reason = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            try {
+                result = wh_dmApi.addReview(params[0], sid);
+                return true;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.review_succeed),
+                        MagazineDetailsActivity.this);
+            } else {
+                NotificationUtil.showShortToast(getString(R.string.review_fail),
+                        MagazineDetailsActivity.this);
+            }
+            progressDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+    }
+
+    private class AddFavTask extends AsyncTask<Integer, Void, Boolean> {
+        boolean result = false;
+        Exception reason = null;
+        PostResult postresult = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+
+            // TODO Auto-generated method stub
+            try {
+                postresult = wh_dmApi.addFav(params[0],0);
+                if (postresult.getResult())
+                    return true;
+                else
+                    return false;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
+                        MagazineDetailsActivity.this);
+            } else {
+                if (postresult == null)
+                    NotificationUtil.showShortToast(getString(R.string.favorite_fail) + ":未知原因",
+                            MagazineDetailsActivity.this);
+                else
+                    NotificationUtil.showShortToast(postresult.getMsg(),
+                            MagazineDetailsActivity.this);
             }
             progressDialog.dismiss();
             super.onPostExecute(result);

@@ -4,8 +4,7 @@ package com.wh.dm.receiver;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
-import com.wh.dm.activity.DM_MZineArticleActivity;
-import com.wh.dm.activity.DM_MZinePicsActivity;
+import com.wh.dm.activity.MessageActivity;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PostMessage;
 
@@ -16,7 +15,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 
@@ -48,14 +46,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         notification.when = System.currentTimeMillis();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         Intent intent_push;
-        if (message.getTemp() == 0) {
-            intent_push = new Intent(context, DM_MZinePicsActivity.class);
-        } else {
-            intent_push = new Intent(context, DM_MZineArticleActivity.class);
-        }
-        Bundle bundle = new Bundle();
-        bundle.putInt("sid", message.getMid());
-        intent_push.putExtras(bundle);
+        // if (message.getTemp() == 0) {
+        intent_push = new Intent(context, MessageActivity.class);
+        // } else {
+        // intent_push = new Intent(context, DM_MZineArticleActivity.class);
+        // }
+        // Bundle bundle = new Bundle();
+        // bundle.putInt("sid", message.getMid());
+        // intent_push.putExtras(bundle);
         PendingIntent sender = PendingIntent.getActivity(context, 0, intent_push, 0);
 
         notification.contentIntent = sender;
@@ -101,8 +99,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             if (result != null) {
                 if (msgNum < result.size()) {
                     int size = result.size();
-                    // showNotification(_context, result.get(size - 1));
-                    Preferences.setPostMessage(_context, (++msgNum));
+                    for (int i = msgNum; i < size; i++) {
+                        // showNotification(_context, result.get(i));
+                    }
+
+                    Preferences.setPostMessage(_context, size);
                 }
             }
             super.onPostExecute(result);

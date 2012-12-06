@@ -1,11 +1,10 @@
 
 package com.wh.dm.type;
 
-import android.graphics.Bitmap;
 
 public class LoadInfo {
 
-    Bitmap bmpLogo;
+    private String picPath;
     private String title;
     private String num;
     private boolean isFinish;
@@ -17,10 +16,10 @@ public class LoadInfo {
 
     }
 
-    public LoadInfo(Bitmap _bmpLogo, String _title, String _num, boolean isStart,
+    public LoadInfo(String _picPatho, String _title, String _num, boolean isStart,
             boolean _isFinish, boolean _isPause, int _pro) {
 
-        this.bmpLogo = _bmpLogo;
+        this.picPath = _picPatho;
         this.title = _title;
         this.num = _num;
         this.isStart = isStart;
@@ -49,14 +48,14 @@ public class LoadInfo {
         this.pro = pro;
     }
 
-    public Bitmap getBmpLogo() {
+    public String getPicPath() {
 
-        return bmpLogo;
+        return picPath;
     }
 
-    public void setBmpLogo(Bitmap bmpLogo) {
+    public void setPicPath(String picPath) {
 
-        this.bmpLogo = bmpLogo;
+        this.picPath = picPath;
     }
 
     public String getTitle() {

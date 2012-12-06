@@ -4,27 +4,15 @@ package com.wh.dm.type;
 public class MagazineBody {
 
     private int sid;
-    private int cid;
-    private int template;
-    private int limit;
-    private String pic;
-    private String spic;
-    private String sname;
-
     private int no;
     private int id;
     private String title;
-    // private String author;
-    // private String writer;
+    private String author;
+    private String writer;
     private String source;
     private String litpic;
     private String pubdate;
     private String body;
-
-    public int getNo() {
-
-        return no;
-    }
 
     public int getSid() {
 
@@ -36,64 +24,29 @@ public class MagazineBody {
         this.sid = sid;
     }
 
-    public int getCid() {
+    public String getAuthor() {
 
-        return cid;
+        return author;
     }
 
-    public void setCid(int cid) {
+    public void setAuthor(String author) {
 
-        this.cid = cid;
+        this.author = author;
     }
 
-    public int getTemplate() {
+    public String getWriter() {
 
-        return template;
+        return writer;
     }
 
-    public void setTemplate(int template) {
+    public void setWriter(String writer) {
 
-        this.template = template;
+        this.writer = writer;
     }
 
-    public int getLimit() {
+    public int getNo() {
 
-        return limit;
-    }
-
-    public void setLimit(int limit) {
-
-        this.limit = limit;
-    }
-
-    public String getPic() {
-
-        return pic;
-    }
-
-    public void setPic(String pic) {
-
-        this.pic = pic;
-    }
-
-    public String getSpic() {
-
-        return spic;
-    }
-
-    public void setSpic(String spic) {
-
-        this.spic = spic;
-    }
-
-    public String getSname() {
-
-        return sname;
-    }
-
-    public void setSname(String sname) {
-
-        this.sname = sname;
+        return no;
     }
 
     public void setNo(int no) {
