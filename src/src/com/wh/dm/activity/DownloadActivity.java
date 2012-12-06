@@ -88,7 +88,6 @@ public class DownloadActivity extends Activity {
             LoadInfo loadInfo = new LoadInfo();
             Magazine magazine = magazines.get(i);
             loadInfo.setPicPath(magazine.getSpic());
-            loadInfo.setNum("已有2636人下载");
             loadInfo.setTitle(magazine.getSname());
             loadInfo.setPro(0);
             loadInfo.setFinish(false);

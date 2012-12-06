@@ -78,6 +78,8 @@ public class WeiboActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                isBindSina = UMSnsService.isAuthorized(WeiboActivity.this,
+                        UMSnsService.SHARE_TO.SINA);
                 if (isBindSina) {
                     UMSnsService.writeOffAccount(WeiboActivity.this, UMSnsService.SHARE_TO.SINA);
                     btnSina.setText(getResources().getString(R.string.unbind));
@@ -92,6 +94,8 @@ public class WeiboActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                isBingTenc = UMSnsService.isAuthorized(WeiboActivity.this,
+                        UMSnsService.SHARE_TO.TENC);
                 if (isBingTenc) {
                     UMSnsService.writeOffAccount(WeiboActivity.this, UMSnsService.SHARE_TO.TENC);
                     btnTenc.setText(getResources().getString(R.string.unbind));

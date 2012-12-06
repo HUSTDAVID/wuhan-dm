@@ -75,7 +75,6 @@ public class DownloadAdapter extends BaseAdapter {
             viewHolder.imgDM = (ImageView) convertView.findViewById(R.id.img_sub_manage);
             viewHolder.txtDM = (TextView) convertView.findViewById(R.id.txt_sub_manage_title);
             viewHolder.txtAddition = (TextView) convertView.findViewById(R.id.txt_download_ad);
-            viewHolder.txtNum = (TextView) convertView.findViewById(R.id.txt_download_total);
             viewHolder.btnStatus = (Button) convertView.findViewById(R.id.btn_download_status);
             viewHolder.pbStatus = (ProgressBar) convertView.findViewById(R.id.pbar_download);
             viewHolder.btnStatus.setOnClickListener(new OnClickListener() {
@@ -104,7 +103,7 @@ public class DownloadAdapter extends BaseAdapter {
                 WH_DMHttpApiV1.URL_DOMAIN + dms.get(position).getPicPath(),
                 R.drawable.subscription_manage_background, null);
         viewHolder.txtDM.setText(dms.get(position).getTitle());
-        viewHolder.txtNum.setText(dms.get(position).getNum());
+
         if (!dms.get(position).isStart()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
@@ -133,7 +132,6 @@ public class DownloadAdapter extends BaseAdapter {
         private ImageView imgDM;
         private TextView txtDM;
         private TextView txtAddition;
-        private TextView txtNum;
         private Button btnStatus;
         private ProgressBar pbStatus;
 

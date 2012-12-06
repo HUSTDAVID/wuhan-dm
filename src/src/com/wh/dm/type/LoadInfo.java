@@ -1,12 +1,10 @@
 
 package com.wh.dm.type;
 
-
 public class LoadInfo {
 
     private String picPath;
     private String title;
-    private String num;
     private boolean isFinish;
     private boolean isStart;
     private boolean isPause;
@@ -16,12 +14,11 @@ public class LoadInfo {
 
     }
 
-    public LoadInfo(String _picPatho, String _title, String _num, boolean isStart,
-            boolean _isFinish, boolean _isPause, int _pro) {
+    public LoadInfo(String _picPatho, String _title, boolean isStart, boolean _isFinish,
+            boolean _isPause, int _pro) {
 
         this.picPath = _picPatho;
         this.title = _title;
-        this.num = _num;
         this.isStart = isStart;
         this.isFinish = _isFinish;
         this.isPause = _isPause;
@@ -66,16 +63,6 @@ public class LoadInfo {
     public void setTitle(String title) {
 
         this.title = title;
-    }
-
-    public String getNum() {
-
-        return num;
-    }
-
-    public void setNum(String num) {
-
-        this.num = num;
     }
 
     public boolean isFinish() {
