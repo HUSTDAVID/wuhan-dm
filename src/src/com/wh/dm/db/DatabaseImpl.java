@@ -1,7 +1,8 @@
 
 package com.wh.dm.db;
 
-import com.wh.dm.type.Favorite;
+import com.wh.dm.type.FavoriteNews;
+import com.wh.dm.type.FavoritePhoto;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
@@ -49,7 +50,8 @@ public class DatabaseImpl implements Database {
     private static final String TABLE_MAGAZINE_PHOTOGRAPH = "magazinephotograph";
     private static final String TABLE_MAGAZINE_FUN = "magazinefun";
     //favorite
-    private static final String TABLE_FAVORITE = "favorite";
+    private static final String TABLE_NEWS_FAVORITE = "newsfavorite";
+    private static final String TABLE_PHOTO_FAVORITE = "photofavorite";
     // subcribe
     private static final String TABLE_SUBCRIBE = "subcribe";
     private static final String TABLE_MAGEZINE_BODY = "magazinebody";
@@ -164,8 +166,11 @@ public class DatabaseImpl implements Database {
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
         // favorite
         db.execSQL("CREATE TABLE IF NOT EXISTS "
-        		+ TABLE_FAVORITE
-        		+"( uid INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, title VARCHAR, litpic VARCHAR, pubdate VARCHAR)");
+        		+ TABLE_NEWS_FAVORITE
+        		+"( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, title VARCHAR, litpic VARCHAR, pubdate VARCHAR, sid VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+        		+ TABLE_PHOTO_FAVORITE
+        		+"( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, aid INTEGER, aname VARCHAR, litpic VARCHAR, addtime VARCHAR, sid VARCHAR)");
         
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGAZINE_PHOTOGRAPH
@@ -207,10 +212,13 @@ public class DatabaseImpl implements Database {
         db.delete(TABLE_GIRL_PHOTO_DET, null, null);
         db.delete(TABLE_PHOTOGRAPH_PHOTO_DET, null, null);
         db.delete(TABLE_FUN_PHOTO_DET, null, null);
-        // magazine
-        db.delete(TABLE_MAGAZINE_HOT, null, null);
+        
         // favorite
-        db.delete(TABLE_FAVORITE, null, null);
+        db.delete(TABLE_NEWS_FAVORITE, null, null);
+        db.delete(TABLE_PHOTO_FAVORITE, null, null);
+        
+        // magazine
+        db.delete(TABLE_MAGAZINE_HOT, null, null);       
         db.delete(TABLE_MAGEZINE_BODY, null, null);
         // subcribe
         db.delete(TABLE_SUBCRIBE, null, null);
@@ -1312,14 +1320,14 @@ public class DatabaseImpl implements Database {
     }
 
 	@Override
-	public void addFavorite(ArrayList<Favorite> favorite) {
+	public void addNewsFavorite(ArrayList<FavoriteNews> favorite) {
 		// TODO Auto-generated method stub
 		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
 	        for (int i = 0; i < favorite.size(); i++) {
 	            try {
 	                ContentValues values = new ContentValues();
-	                values.putAll(new FavoriteBuilder().deconstruct(favorite.get(i)));
-	                db.insert(TABLE_FAVORITE, null, values);
+	                values.putAll(new NewsFavoriteBuilder().deconstruct(favorite.get(i)));
+	                db.insert(TABLE_NEWS_FAVORITE, null, values);
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
@@ -1327,12 +1335,12 @@ public class DatabaseImpl implements Database {
 	}
 
 	@Override
-	public ArrayList<Favorite> getFavorite() {
+	public ArrayList<FavoriteNews> getNewsFavorite() {
 		// TODO Auto-generated method stub
-		 ArrayList<Favorite> favorite = new ArrayList<Favorite>();
-	        FavoriteBuilder builder = new FavoriteBuilder();
+		 ArrayList<FavoriteNews> favorite = new ArrayList<FavoriteNews>();
+	        NewsFavoriteBuilder builder = new NewsFavoriteBuilder();
 	        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
-	        Cursor query = db.query(TABLE_FAVORITE, null, null, null, null, null, null);
+	        Cursor query = db.query(TABLE_NEWS_FAVORITE, null, null, null, null, null, null);
 	        if (query != null) {
 	            query.moveToFirst();
 	            while (!query.isAfterLast()) {
@@ -1346,12 +1354,77 @@ public class DatabaseImpl implements Database {
 	}
 
 	@Override
-	public void deleteFavorite() {
+	public void deleteNewsFavorite() {
 		// TODO Auto-generated method stub
 		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
-	     db.delete(TABLE_FAVORITE, null, null);
+	     db.delete(TABLE_NEWS_FAVORITE, null, null);
 	     db.close();
 	}
+	@Override
+	public boolean deleteOneNewsFavorite(int id){
+		SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+		String sql="delete from "+TABLE_NEWS_FAVORITE+" where id="+id;
+		try{
+		   db.execSQL(sql);
+		   return true;
+		}catch(Exception ex){
+			return false;
+		}
+	}
+	@Override
+	public void addPhotoFavorite(ArrayList<FavoritePhoto> favorite) {
+		// TODO Auto-generated method stub
+		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+	        for (int i = 0; i < favorite.size(); i++) {
+	            try {
+	                ContentValues values = new ContentValues();
+	                values.putAll(new PhotoFavoriteBuilder().deconstruct(favorite.get(i)));
+	                db.insert(TABLE_PHOTO_FAVORITE, null, values);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	}
+
+	@Override
+	public ArrayList<FavoritePhoto> getPhotoFavorite() {
+		// TODO Auto-generated method stub
+		 ArrayList<FavoritePhoto> favorite = new ArrayList<FavoritePhoto>();
+		 PhotoFavoriteBuilder builder = new PhotoFavoriteBuilder();
+	        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+	        Cursor query = db.query(TABLE_PHOTO_FAVORITE, null, null, null, null, null, null);
+	        if (query != null) {
+	            query.moveToFirst();
+	            while (!query.isAfterLast()) {
+	                favorite.add(builder.build(query));
+	                query.moveToNext();
+	            }
+	        }
+	        query.close();
+	        db.close();
+	        return favorite;
+	}
+
+	@Override
+	public void deletePhotoFavorite() {
+		// TODO Auto-generated method stub
+		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+	     db.delete(TABLE_PHOTO_FAVORITE, null, null);
+	     db.close();
+	}
+	
+	@Override
+	public boolean deleteOnePhotoFavorite(int aid){
+		SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+		String sql="delete from "+TABLE_PHOTO_FAVORITE+" where aid="+aid;
+		try{
+		   db.execSQL(sql);
+		   return true;
+		}catch(Exception ex){
+			return false;
+		}
+	}
+	
     @Override
     public ArrayList<MagazineBody> getMagazineBody(int sid) {
 
@@ -1496,5 +1569,6 @@ public class DatabaseImpl implements Database {
             return null;
         }
     }
+
 
 }

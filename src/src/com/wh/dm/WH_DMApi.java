@@ -6,8 +6,9 @@ import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
-import com.wh.dm.type.Favorite;
+import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.Cover;
+import com.wh.dm.type.FavoritePhoto;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
@@ -281,19 +282,24 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.unsubcribe(id);
     }
     
-    public PostResult addFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    public PostResult addFav(int nid, int type) throws WH_DMException, UnKnownException, IOException{
     	
-    	return mWH_DMHttpApiV1.addFav(nid);
+    	return mWH_DMHttpApiV1.addFav(nid, type);
     }
     
-    public ArrayList<Favorite> getFav(int pz,int pi) throws WH_DMException, UnKnownException, IOException{
+    public ArrayList<FavoriteNews> getNewsFav(int pz, int pi) throws WH_DMException, UnKnownException, IOException{
     	
-    	return mWH_DMHttpApiV1.getFav(pz, pi);
+    	return mWH_DMHttpApiV1.getNewsFav(pz, pi);
     }
     
-    public boolean delFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    public ArrayList<FavoritePhoto> getPhotoFav(int pz, int pi) throws WH_DMException, UnKnownException, IOException{
     	
-    	return mWH_DMHttpApiV1.delFav(nid);
+    	return mWH_DMHttpApiV1.getPhotoFav(pz, pi);
+    }
+    
+    public boolean delFav(int nid, int type) throws WH_DMException, UnKnownException, IOException{
+    	
+    	return mWH_DMHttpApiV1.delFav(nid, type);
     }
 
     public ArrayList<Magazine> getSubcribedMagazines() throws WH_DMException, UnKnownException,

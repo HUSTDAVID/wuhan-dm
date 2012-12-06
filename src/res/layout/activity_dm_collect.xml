@@ -2,21 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    android:background="@color/bg_normal">
+    android:background="@color/bg_normal"
+    android:orientation="vertical" >
 
-   <include android:id="@+id/collect_header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/dm_collect_header"/>
-    
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
+        android:layout_height="match_parent"
         android:divider="@drawable/double_line_hor"
-        android:dividerHeight="1.5dip"
-        android:layout_height="match_parent">
-
+        android:dividerHeight="1.5dip" >
     </ListView>
 
 </LinearLayout>

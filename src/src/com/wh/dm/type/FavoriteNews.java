@@ -1,12 +1,21 @@
 package com.wh.dm.type;
 
-public class Favorite {
-	
+public class FavoriteNews {
+	private int no;
 	private int id;
 	private String title;
 	private String litpic;
 	private String pubdate;
-		
+    private String sid;
+    
+    public int getNo(){
+		return no;
+	}
+	
+	public void setNo(int _no){
+		no=_no;
+	}
+	
 	public int getId(){
 		return id;
 	}
@@ -39,4 +48,11 @@ public class Favorite {
 		pubdate=_pubdate;
 	}
 	
+	public String getSid(){
+		return sid;
+	}
+	
+	public void setSid(String _sid){
+		sid=_sid;
+	}
 }

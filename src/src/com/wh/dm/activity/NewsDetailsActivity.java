@@ -493,7 +493,7 @@ public class NewsDetailsActivity extends Activity {
 
             // TODO Auto-generated method stub
             try {
-                postresult = wh_dmApi.addFav(params[0]);
+                postresult = wh_dmApi.addFav(params[0],0);
                 if (postresult.getResult())
                     return true;
                 else

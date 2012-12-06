@@ -3,14 +3,16 @@ package com.wh.dm;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.wh.dm.activity.CollectNewsActivity;
 import com.wh.dm.error.UnKnownException;
 import com.wh.dm.error.WH_DMException;
 import com.wh.dm.http.HttpApiBasic;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
-import com.wh.dm.type.Favorite;
+import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.Cover;
+import com.wh.dm.type.FavoritePhoto;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
@@ -627,31 +629,60 @@ public class WH_DMHttpApiV1 {
         return result.getResult();
     }
     
-    public PostResult addFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    public PostResult addFav(int nid, int type) throws WH_DMException, UnKnownException, IOException{
     	HttpPost httpPost=mHttpApi.createHttpPost(URL_DOMAIN+URL_API_FAV, 
     			new BasicNameValuePair("act","add"),
-    			new BasicNameValuePair("nid",String.valueOf(nid)));
+    			new BasicNameValuePair("nid",String.valueOf(nid)),
+    			new BasicNameValuePair("type",String.valueOf(type)));
     	String content=mHttpApi.doHttpRequest(httpPost);
     	Log.i("wy","Ìí¼Ó»Ø¸´"+content);
     	PostResult result=gson.fromJson(content, PostResult.class);
     	return result;
     }
     
-    public ArrayList<Favorite> getFav(int pz,int pi) throws WH_DMException, UnKnownException, IOException{
+    public ArrayList<FavoriteNews> getNewsFav(int pz, int pi) throws WH_DMException, UnKnownException, IOException{
     	HttpGet httpGet=mHttpApi.createHttpGet(URL_DOMAIN+URL_API_FAV, 
     			new BasicNameValuePair("act","list"),
     			new BasicNameValuePair("pz",String.valueOf(pz)),
-    			new BasicNameValuePair("pi",String.valueOf(pi)));
+    			new BasicNameValuePair("pi",String.valueOf(pi)),
+    			new BasicNameValuePair("type",String.valueOf(0)));
     	String content=mHttpApi.doHttpRequest(httpGet);
     	Log.i("wy",content);
-    	Type type=new TypeToken<ArrayList<Favorite>>(){}.getType();
-    	return gson.fromJson(content, type);
+    	//return content;
+    	Type typetoken=new TypeToken<ArrayList<FavoriteNews>>(){}.getType();
+    	try{
+    	   return gson.fromJson(content, typetoken);
+    	}catch(Exception ex){
+    		gson.fromJson(content, PostResult.class);
+    		return null;
+    	}
+    	
     }
     
-    public boolean delFav(int nid) throws WH_DMException, UnKnownException, IOException{
+    public ArrayList<FavoritePhoto> getPhotoFav(int pz, int pi) throws WH_DMException, UnKnownException, IOException{
+    	HttpGet httpGet=mHttpApi.createHttpGet(URL_DOMAIN+URL_API_FAV, 
+    			new BasicNameValuePair("act","list"),
+    			new BasicNameValuePair("pz",String.valueOf(pz)),
+    			new BasicNameValuePair("pi",String.valueOf(pi)),
+    			new BasicNameValuePair("type",String.valueOf(1)));
+    	String content=mHttpApi.doHttpRequest(httpGet);
+    	Log.i("wy",content);
+    	//return content;
+    	Type typetoken=new TypeToken<ArrayList<FavoritePhoto>>(){}.getType();
+    	try{
+    	   return gson.fromJson(content, typetoken);
+    	}catch(Exception ex){
+    		gson.fromJson(content, PostResult.class);
+    		return null;
+    	}
+    	
+    }
+    
+    public boolean delFav(int nid, int type) throws WH_DMException, UnKnownException, IOException{
     	HttpPost httpPost=mHttpApi.createHttpPost(URL_DOMAIN+URL_API_FAV, 
     			new BasicNameValuePair("act","del"),
-    			new BasicNameValuePair("nid",String.valueOf(nid)));
+    			new BasicNameValuePair("nid",String.valueOf(nid)),
+    			new BasicNameValuePair("type",String.valueOf(type)));
     	String content=mHttpApi.doHttpRequest(httpPost);
     	PostResult result=gson.fromJson(content, PostResult.class);
     	return result.getResult();

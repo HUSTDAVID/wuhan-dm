@@ -4,7 +4,7 @@ package com.wh.dm.widget;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
-import com.wh.dm.type.Favorite;
+import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
@@ -25,8 +25,8 @@ public class CollectAdapter extends BaseAdapter {
 
     private final Context context;
     private final LayoutInflater inflater;
-    private ArrayList<Favorite> list = null;
-    private static List<Integer> list_checked = new ArrayList<Integer>();// checked
+    private ArrayList<FavoriteNews> list = null;
+    private List<Integer> list_checked = new ArrayList<Integer>();// checked
                                                                          // item
                                                                          // position
 
@@ -54,19 +54,19 @@ public class CollectAdapter extends BaseAdapter {
         return position;
     }
 
-    public void setList(ArrayList<Favorite> _fav) {
+    public void setList(ArrayList<FavoriteNews> _fav) {
 
         list = _fav;
         notifyDataSetChanged();
     }
 
-    public void addList(ArrayList<Favorite> _fav) {
+    public void addList(ArrayList<FavoriteNews> _fav) {
 
         list.addAll(_fav);
         notifyDataSetChanged();
     }
 
-    public ArrayList<Favorite> getList() {
+    public ArrayList<FavoriteNews> getList() {
 
         return list;
     }
