@@ -8,6 +8,7 @@ import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.Photo;
 import com.wh.dm.type.PhotoDetails;
 import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.type.PostMessage;
 
 import java.util.ArrayList;
 
@@ -165,12 +166,13 @@ public interface Database {
 
     public ArrayList<Magazine> getFunMagazine();
 
-    //favorite
+    // favorite
     public void addFavorite(ArrayList<Favorite> favorite);
-    
+
     public ArrayList<Favorite> getFavorite();
-    
+
     public void deleteFavorite();
+
     // subcribe
     public ArrayList<Magazine> getSubcribedMagazine();
 
@@ -190,5 +192,12 @@ public interface Database {
     public void addMagazineBody(ArrayList<MagazineBody> magazineList);
 
     public Magazine getMagazine(int sid);
+
+    // post message
+    public ArrayList<PostMessage> getPostMessage();
+
+    public void deletePostMessage();
+
+    public void addPostMessage(ArrayList<PostMessage> postMessages);
 
 }

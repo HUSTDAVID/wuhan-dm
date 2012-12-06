@@ -8,6 +8,7 @@ import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.Photo;
 import com.wh.dm.type.PhotoDetails;
 import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.type.PostMessage;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -48,11 +49,12 @@ public class DatabaseImpl implements Database {
     private static final String TABLE_MAGAZINE_GIRL = "magazinegirl";
     private static final String TABLE_MAGAZINE_PHOTOGRAPH = "magazinephotograph";
     private static final String TABLE_MAGAZINE_FUN = "magazinefun";
-    //favorite
+    // favorite
     private static final String TABLE_FAVORITE = "favorite";
     // subcribe
     private static final String TABLE_SUBCRIBE = "subcribe";
     private static final String TABLE_MAGEZINE_BODY = "magazinebody";
+    // postmessage
     private static final String TABLE_MESSAGE = "postmessage";
     private final Context context;
 
@@ -162,11 +164,6 @@ public class DatabaseImpl implements Database {
                 + TABLE_MAGAZINE_GIRL
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
-        // favorite
-        db.execSQL("CREATE TABLE IF NOT EXISTS "
-        		+ TABLE_FAVORITE
-        		+"( uid INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, title VARCHAR, litpic VARCHAR, pubdate VARCHAR)");
-        
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGAZINE_PHOTOGRAPH
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
@@ -175,10 +172,19 @@ public class DatabaseImpl implements Database {
                 + TABLE_MAGAZINE_FUN
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        // favorite
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_FAVORITE
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, title VARCHAR, litpic VARCHAR, pubdate VARCHAR)");
+        // load magazine
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGEZINE_BODY
-                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, cid INTEGER,template INTEGER, _limit INTEGER, pic VARCHAR, spic VARCHAR, sname VARCHAR,"
+                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, author VARCHAR, writer VARCHAR,"
                 + "no INTEGER, id INTEGER, title VARCHAR, source VARCHAR, litpic VARCHAR, pubdate VARCHAR, body VARCHAR)");
+        // post message
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MESSAGE
+                + "(id_key INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, title VARCHAR, mid INTEGER, mname VARCHAR, pid INTEGER, temp INTEGER, uid INTEGER)");
         db.close();
     }
 
@@ -1311,47 +1317,52 @@ public class DatabaseImpl implements Database {
         return magazine;
     }
 
-	@Override
-	public void addFavorite(ArrayList<Favorite> favorite) {
-		// TODO Auto-generated method stub
-		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
-	        for (int i = 0; i < favorite.size(); i++) {
-	            try {
-	                ContentValues values = new ContentValues();
-	                values.putAll(new FavoriteBuilder().deconstruct(favorite.get(i)));
-	                db.insert(TABLE_FAVORITE, null, values);
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
-	}
+    @Override
+    public void addFavorite(ArrayList<Favorite> favorite) {
 
-	@Override
-	public ArrayList<Favorite> getFavorite() {
-		// TODO Auto-generated method stub
-		 ArrayList<Favorite> favorite = new ArrayList<Favorite>();
-	        FavoriteBuilder builder = new FavoriteBuilder();
-	        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
-	        Cursor query = db.query(TABLE_FAVORITE, null, null, null, null, null, null);
-	        if (query != null) {
-	            query.moveToFirst();
-	            while (!query.isAfterLast()) {
-	                favorite.add(builder.build(query));
-	                query.moveToNext();
-	            }
-	        }
-	        query.close();
-	        db.close();
-	        return favorite;
-	}
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        for (int i = 0; i < favorite.size(); i++) {
+            try {
+                ContentValues values = new ContentValues();
+                values.putAll(new FavoriteBuilder().deconstruct(favorite.get(i)));
+                db.insert(TABLE_FAVORITE, null, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        db.close();
+    }
 
-	@Override
-	public void deleteFavorite() {
-		// TODO Auto-generated method stub
-		 SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
-	     db.delete(TABLE_FAVORITE, null, null);
-	     db.close();
-	}
+    @Override
+    public ArrayList<Favorite> getFavorite() {
+
+        // TODO Auto-generated method stub
+        ArrayList<Favorite> favorite = new ArrayList<Favorite>();
+        FavoriteBuilder builder = new FavoriteBuilder();
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_FAVORITE, null, null, null, null, null, null);
+        if (query != null) {
+            query.moveToFirst();
+            while (!query.isAfterLast()) {
+                favorite.add(builder.build(query));
+                query.moveToNext();
+            }
+        }
+        query.close();
+        db.close();
+        return favorite;
+    }
+
+    @Override
+    public void deleteFavorite() {
+
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        db.delete(TABLE_FAVORITE, null, null);
+        db.close();
+    }
+
     @Override
     public ArrayList<MagazineBody> getMagazineBody(int sid) {
 
@@ -1495,6 +1506,52 @@ public class DatabaseImpl implements Database {
         } else {
             return null;
         }
+
+    }
+
+    @Override
+    public ArrayList<PostMessage> getPostMessage() {
+
+        ArrayList<PostMessage> messages = new ArrayList<PostMessage>();
+        PostMessageBuilder builder = new PostMessageBuilder();
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_MESSAGE, null, null, null, null, null, null);
+        if (query != null) {
+            query.moveToFirst();
+            while (!query.isAfterLast()) {
+                messages.add(builder.build(query));
+                query.moveToNext();
+            }
+        }
+        query.close();
+        db.close();
+        return messages;
+    }
+
+    @Override
+    public void deletePostMessage() {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        db.delete(TABLE_MESSAGE, null, null);
+        db.close();
+
+    }
+
+    @Override
+    public void addPostMessage(ArrayList<PostMessage> postMessages) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        for (int i = 0; i < postMessages.size(); i++) {
+            try {
+                ContentValues values = new ContentValues();
+                values.putAll((new PostMessageBuilder()).deconstruct(postMessages.get(i)));
+                db.insert(TABLE_MESSAGE, null, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            db.close();
+        }
+
     }
 
 }

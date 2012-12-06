@@ -3,7 +3,9 @@ package com.wh.dm.widget;
 
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -100,6 +102,9 @@ public class SubManagerAdapter extends BaseAdapter {
             holder = (ViewHolder) converView.getTag();
         }
 
+        UrlImageViewHelper.setUrlDrawable(holder.img,
+                WH_DMHttpApiV1.URL_DOMAIN + magazines.get(position).getSpic(),
+                R.drawable.subscription_manage_background, null);
         holder.txtTitie.setText(magazines.get(position).getSname());
         final int pos = position;
         holder.btnNoSub.setOnClickListener(new OnClickListener() {
