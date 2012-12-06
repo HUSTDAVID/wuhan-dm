@@ -5,6 +5,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.activity.MessageActivity;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PostMessage;
 
@@ -23,6 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private FetchDataTask fetchDataTask;
     private NotificationManager notificationManager;
     private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private int msgNum;
     private Context _context;
 
@@ -31,12 +33,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         WH_DMApp app = (WH_DMApp) context.getApplicationContext();
         _context = context;
+        databaseImpl = app.getDatabase();
         wh_dmApi = app.getWH_DMApi();
         msgNum = Preferences.getMsgNum(context);
         getData();
     }
 
-    public void showNotification(Context context, PostMessage message) {
+    public void showNotification(Context context, PostMessage message, int flag) {
 
         NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -54,13 +57,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         // Bundle bundle = new Bundle();
         // bundle.putInt("sid", message.getMid());
         // intent_push.putExtras(bundle);
-        PendingIntent sender = PendingIntent.getActivity(context, 0, intent_push, 0);
+        PendingIntent sender = PendingIntent.getActivity(context, flag, intent_push, flag);
 
         notification.contentIntent = sender;
         String magazine_name = message.getMname();
         String content = message.getTitle();
         notification.setLatestEventInfo(context, magazine_name, content, sender);
-        nm.notify(0, notification);
+        nm.notify(flag, notification);
 
     }
 
@@ -83,8 +86,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             try {
                 ArrayList<PostMessage> messages = wh_dmApi.getMessage();
-                WH_DMApp app = (WH_DMApp) _context.getApplicationContext();
-                app.setPostMessage(messages);
                 return messages;
             } catch (Exception e) {
                 reason = e;
@@ -96,13 +97,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         @Override
         protected void onPostExecute(ArrayList<PostMessage> result) {
 
+            ArrayList<PostMessage> newMessages = new ArrayList<PostMessage>();
             if (result != null) {
                 if (msgNum < result.size()) {
                     int size = result.size();
                     for (int i = msgNum; i < size; i++) {
-                        // showNotification(_context, result.get(i));
+                        showNotification(_context, result.get(i), i);
+                        PostMessage message = result.get(i);
+                        message.setIsRead(0);
+                        newMessages.add(message);
                     }
-
+                    databaseImpl.addPostMessage(newMessages);
                     Preferences.setPostMessage(_context, size);
                 }
             }

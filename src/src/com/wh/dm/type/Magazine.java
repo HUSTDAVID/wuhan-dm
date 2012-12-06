@@ -15,6 +15,7 @@ public class Magazine {
     private String addtime;
     private String sname;
     private String shortname;
+    private int ocount;
     private String pic;
     private String spic;
     private String titlepic;
@@ -31,6 +32,16 @@ public class Magazine {
     public void setNo(int no) {
 
         this.no = no;
+    }
+
+    public int getOcount() {
+
+        return ocount;
+    }
+
+    public void setOcount(int ocount) {
+
+        this.ocount = ocount;
     }
 
     public int getSid() {

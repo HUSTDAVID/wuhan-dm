@@ -10,6 +10,27 @@ public class PostMessage {
     private int pid;
     private int temp;
     private int uid;
+    private int isRead; // 0:not read 1:read
+
+    public int getNo() {
+
+        return no;
+    }
+
+    public void setNo(int no) {
+
+        this.no = no;
+    }
+
+    public int getIsRead() {
+
+        return isRead;
+    }
+
+    public void setIsRead(int isRead) {
+
+        this.isRead = isRead;
+    }
 
     public void setId(int _id) {
 

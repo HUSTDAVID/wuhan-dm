@@ -27,6 +27,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -145,6 +146,11 @@ public class MagazineDetailsActivity extends Activity {
 
     private void initViews() {
 
+        TextView txtReply = (TextView) findViewById(R.id.txt_total_reply);
+        txtReply.setVisibility(View.GONE);
+        TextView txtTitle = (TextView) findViewById(R.id.txt_header3_title);
+        txtTitle.setText("‘”÷æ");
+
         progressDialog = new ProgressDialog(MagazineDetailsActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
@@ -158,6 +164,7 @@ public class MagazineDetailsActivity extends Activity {
         newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
+        webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
@@ -464,7 +471,7 @@ public class MagazineDetailsActivity extends Activity {
 
             // TODO Auto-generated method stub
             try {
-                postresult = wh_dmApi.addFav(params[0],0);
+                postresult = wh_dmApi.addFav(params[0], 0);
                 if (postresult.getResult())
                     return true;
                 else

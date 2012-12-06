@@ -29,6 +29,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -161,6 +162,7 @@ public class NewsDetailsActivity extends Activity {
         newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
+        webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 
         // add news body data
         newsTitle.setText(getResources().getString(R.string.news_title));
@@ -264,17 +266,13 @@ public class NewsDetailsActivity extends Activity {
             }
 
         });
-        edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
-        edtMoreReply.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-            }
-        });
+        /*
+         * edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
+         * edtMoreReply.setOnClickListener(new OnClickListener() {
+         * @Override public void onClick(View v) { Intent intent = new
+         * Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
+         * intent.putExtra("id", id); startActivity(intent); } });
+         */
 
         UMSnsService.UseLocation = true;
         UMSnsService.LocationAuto = true;
@@ -493,7 +491,7 @@ public class NewsDetailsActivity extends Activity {
 
             // TODO Auto-generated method stub
             try {
-                postresult = wh_dmApi.addFav(params[0],0);
+                postresult = wh_dmApi.addFav(params[0], 0);
                 if (postresult.getResult())
                     return true;
                 else

@@ -45,9 +45,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txt_sub_manage_title"
+        android:layout_toLeftOf="@+id/btn_sub_manage"
         android:layout_below="@+id/txt_sub_manage_title"
         android:layout_marginTop="8dip"
         android:text="新菜天天送，瓶装可乐1元/瓶"
+        android:layout_marginRight="3dip"
         android:textColor="#747474"
         android:textSize="12sp" />
 

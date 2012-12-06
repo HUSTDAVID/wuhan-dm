@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PostMessage;
 
 import android.app.Activity;
@@ -19,6 +20,8 @@ public class MessageActivity extends Activity {
     private TextView txtHead;
     private ImageButton btnBack;
     private ArrayList<PostMessage> messages;
+    private WH_DMApp wh_dmApp;
+    private DatabaseImpl databaseImpl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,10 @@ public class MessageActivity extends Activity {
         super.onCreate(savedInstanceState);
         MobclickAgent.onError(this);
         setContentView(R.layout.activity_message);
+        wh_dmApp = (WH_DMApp) getApplication();
+        databaseImpl = wh_dmApp.getDatabase();
+        messages = databaseImpl.getPostMessage();
+
         txtHead = (TextView) findViewById(R.id.textView3);
         txtHead.setText(getString(R.string.push_message));
         btnBack = (ImageButton) findViewById(R.id.BackButton);
@@ -42,11 +49,4 @@ public class MessageActivity extends Activity {
 
     }
 
-    @Override
-    protected void onResume() {
-
-        WH_DMApp wh_dmApp = (WH_DMApp) this.getApplication();
-        messages = wh_dmApp.getPostMessage();
-        super.onResume();
-    }
 }

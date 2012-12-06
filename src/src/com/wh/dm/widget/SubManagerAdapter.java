@@ -106,6 +106,8 @@ public class SubManagerAdapter extends BaseAdapter {
                 WH_DMHttpApiV1.URL_DOMAIN + magazines.get(position).getSpic(),
                 R.drawable.subscription_manage_background, null);
         holder.txtTitie.setText(magazines.get(position).getSname());
+        holder.txtTotal.setText("ÒÑÓÐ" + magazines.get(position).getOcount() + "ÈË¶©ÔÄ");
+        holder.txtAd.setText(magazines.get(position).getShortname());
         final int pos = position;
         holder.btnNoSub.setOnClickListener(new OnClickListener() {
 

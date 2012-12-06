@@ -2,7 +2,6 @@
 package com.wh.dm;
 
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.type.PostMessage;
 import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
@@ -22,7 +21,7 @@ public class WH_DMApp extends Application {
 
     private WH_DMApi wh_dm;
     private DatabaseImpl databaseImpl;
-    private ArrayList<PostMessage> messages;
+    // private ArrayList<PostMessage> messages;
     private SharedPreferences mPrefs;
     public static boolean isLogin = false;
     public static boolean isConnected = true;
@@ -91,16 +90,6 @@ public class WH_DMApp extends Application {
     public void setConnected(boolean _isConnected) {
 
         isConnected = _isConnected;
-    }
-
-    public void setPostMessage(ArrayList<PostMessage> _messages) {
-
-        this.messages = _messages;
-    }
-
-    public ArrayList<PostMessage> getPostMessage() {
-
-        return this.messages;
     }
 
     // two method for wake lock

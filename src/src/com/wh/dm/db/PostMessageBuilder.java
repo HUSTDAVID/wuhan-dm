@@ -15,6 +15,7 @@ public class PostMessageBuilder extends DatabaseBuilder<PostMessage> {
     private static final String MESSAGE_PID = "pid";
     private static final String MESSAGE_TEMP = "temp";
     private static final String MESSAGE_UID = "uid";
+    private static final String MESSAGE_IS_READ = "is_read";
 
     @Override
     public PostMessage build(Cursor c) {
@@ -27,6 +28,7 @@ public class PostMessageBuilder extends DatabaseBuilder<PostMessage> {
         int columnPid = c.getColumnIndex(MESSAGE_PID);
         int columnTemp = c.getColumnIndex(MESSAGE_TEMP);
         int columnUid = c.getColumnIndex(MESSAGE_UID);
+        int columnIsRead = c.getColumnIndex(MESSAGE_IS_READ);
 
         message.setId(c.getInt(columnId));
         message.setTitle(c.getString(columnTitle));
@@ -35,6 +37,7 @@ public class PostMessageBuilder extends DatabaseBuilder<PostMessage> {
         message.setPid(c.getInt(columnPid));
         message.setTemp(c.getInt(columnTemp));
         message.setUid(c.getInt(columnUid));
+        message.setIsRead(c.getInt(columnIsRead));
 
         return message;
     }
@@ -50,6 +53,7 @@ public class PostMessageBuilder extends DatabaseBuilder<PostMessage> {
         values.put(MESSAGE_TEMP, message.getTemp());
         values.put(MESSAGE_TITLE, message.getTitle());
         values.put(MESSAGE_UID, message.getUid());
+        values.put(MESSAGE_IS_READ, message.getIsRead());
         return values;
     }
 
