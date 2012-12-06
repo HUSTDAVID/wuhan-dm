@@ -301,7 +301,20 @@ public class PhotosDetailsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				handler.sendEmptyMessage(MSG_STORE_IMAGE);
+				 if (WH_DMApp.isConnected) {
+	                    if (WH_DMApp.isLogin) {
+	                    	handler.sendEmptyMessage(MSG_STORE_IMAGE);
+	                    } else {
+	                        NotificationUtil.showShortToast(getString(R.string.please_login),
+	                                PhotosDetailsActivity.this);
+	                        Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
+	                        startActivity(intent);
+	                    }
+	                } else {
+	                    NotificationUtil.showShortToast(getString(R.string.check_network),
+	                    		PhotosDetailsActivity.this);
+	                }
+				
 			}
         	
         });
@@ -556,7 +569,7 @@ public class PhotosDetailsActivity extends Activity {
 		protected Boolean doInBackground(Integer... params) {
 			// TODO Auto-generated method stub
 			try{
-				postresult=wh_dmApi.addFav(params[0]);
+				postresult=wh_dmApi.addFav(params[0],1);
 				if(postresult.getResult())  
 					return true; 
 				else

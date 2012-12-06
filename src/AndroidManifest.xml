@@ -79,11 +79,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.CollectActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
-        <activity
             android:name=".activity.Photos_AllActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -329,6 +324,21 @@
                   android:windowSoftInputMode="stateVisible|adjustResize"
                   android:screenOrientation="unspecified"
                   android:configChanges="orientation|keyboardHidden">
+		</activity>
+		<activity
+		    android:name=".activity.CollectMainActivity"
+		    android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+		</activity>
+		<activity
+            android:name=".activity.CollectNewsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+		<activity
+		    android:name=".activity.CollectPhotoActivity"
+		    android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
 		<receiver
 		    android:name=".receiver.ConnectityReceiver">

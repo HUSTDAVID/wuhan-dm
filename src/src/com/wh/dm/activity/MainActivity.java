@@ -340,7 +340,7 @@ public class MainActivity extends Activity {
                         startActivity(intent_tab1);
                         break;
                     case 2:
-                        Intent intent_collect = new Intent(MainActivity.this, CollectActivity.class);
+                        Intent intent_collect = new Intent(MainActivity.this, CollectMainActivity.class);
                         startActivity(intent_collect);
                         break;
                     default:

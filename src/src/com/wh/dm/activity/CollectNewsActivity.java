@@ -6,7 +6,8 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.type.Favorite;
+import com.wh.dm.type.FavoriteNews;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.CollectAdapter;
 
@@ -23,32 +24,32 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CollectActivity extends Activity {
+public class CollectNewsActivity extends Activity {
 
     private ProgressDialog progressDialog;
     private ListView collect_list;
-    private ImageButton btnBack;
-    private ImageButton btnDel;
+   
     private View footer;
     private Button btnFoolter;
+
     private LayoutInflater mInfalater;
     private DatabaseImpl databaseImpl;
     private int curPage = 1;
     private final int countsPerPage = 12;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;// load local data
-    // private boolean isFirstLoad=true;//replace local data or add local data
-    List<Map<String, Object>> list;
+    
     private static int MSG_GET_FAV = 0;
     private static int MSG_DEL_FAV = 1;
     private WH_DMApi wh_dmApi;
     private WH_DMApp wh_dmApp;
-    private ArrayList<Favorite> favList = null;
+    private ArrayList<FavoriteNews> favList = null;
     CollectAdapter adapter = null;
     private GetFavTask getFavTask = null;
     private DelFavTask delFavTask = null;
@@ -91,6 +92,7 @@ public class CollectActivity extends Activity {
         mInfalater = getLayoutInflater();
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFoolter.setText("查看下"+countsPerPage+"条");
         btnFoolter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,8 +104,8 @@ public class CollectActivity extends Activity {
         });
         collect_list.addFooterView(footer);
 
-        btnDel = (ImageButton) findViewById(R.id.DeleteButton);
-        btnDel.setOnClickListener(new View.OnClickListener() {
+        //btnDel = (ImageButton) findViewById(R.id.DeleteButton);
+        CollectMainActivity.btnDel.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -114,57 +116,58 @@ public class CollectActivity extends Activity {
                 }
                 if (!WH_DMApp.isConnected) {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
-                            CollectActivity.this);
+                            CollectNewsActivity.this);
                     return;
                 }
                 if (!WH_DMApp.isLogin) {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
-                            CollectActivity.this);
+                            CollectNewsActivity.this);
                     return;
                 }
                 handler.sendEmptyMessage(MSG_DEL_FAV);
             }
         });
-        btnBack = (ImageButton) findViewById(R.id.BackButton);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+     
 
-            @Override
-            public void onClick(View v) {
-
-                finish();
-
-            }
-
-        });
-
-        progressDialog = new ProgressDialog(CollectActivity.this);
+        progressDialog = new ProgressDialog(CollectNewsActivity.this.getParent());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
 
-        // if(WH_DMApp.isLogin){
-        // handler.sendEmptyMessage(MSG_GET_FAV);
-        // }
-        /*
-         * else{
-         * NotificationUtil.showShortToast(getString(R.string.please_login)
-         * ,CollectActivity.this); Intent intent = new
-         * Intent(CollectActivity.this, LoginActivity.class);
-         * startActivity(intent); }
-         */
+        
+         handler.sendEmptyMessage(MSG_GET_FAV);
+      
 
     }
 
     @Override
     public void onResume() {
+    	
+    	  CollectMainActivity.btnDel.setOnClickListener(new View.OnClickListener() {
 
-        /*
-         * if(WH_DMApp.isLogin){
-         * if(adapter.getList()==null||adapter.getList().size()==0)
-         * handler.sendEmptyMessage(MSG_GET_FAV); }
-         */
+              @Override
+              public void onClick(View v) {
+
+                  // TODO Auto-generated method stub
+                  if (adapter.getCheckedID() == null || adapter.getCheckedID().size() == 0) {
+                      return;
+                  }
+                  if (!WH_DMApp.isConnected) {
+                      NotificationUtil.showShortToast(getString(R.string.check_network),
+                              CollectNewsActivity.this);
+                      return;
+                  }
+                  if (!WH_DMApp.isLogin) {
+                      NotificationUtil.showShortToast(getString(R.string.please_login),
+                              CollectNewsActivity.this);
+                      return;
+                  }
+                  handler.sendEmptyMessage(MSG_DEL_FAV);
+              }
+          });
+    	  
         super.onResume();
         MobclickAgent.onResume(this);
     }
@@ -185,8 +188,8 @@ public class CollectActivity extends Activity {
         MobclickAgent.onPause(this);
     }
 
-    private class GetFavTask extends AsyncTask<Integer, Void, ArrayList<Favorite>> {
-        ArrayList<Favorite> result = null;
+    private class GetFavTask extends AsyncTask<Integer, Void, ArrayList<FavoriteNews>> {
+        ArrayList<FavoriteNews> result = null;
         Exception reason = null;
 
         @Override
@@ -194,7 +197,7 @@ public class CollectActivity extends Activity {
 
             // get local database data
             if (isFirstLauncher) {
-                favList = databaseImpl.getFavorite();
+                favList = databaseImpl.getNewsFavorite();
                 if (favList != null & favList.size() > 0) {
                     adapter.setList(favList);
                     collect_list.setAdapter(adapter);
@@ -205,7 +208,7 @@ public class CollectActivity extends Activity {
                                 long arg3) {
 
                             // TODO Auto-generated method stub
-                            Intent intent = new Intent(CollectActivity.this,
+                            Intent intent = new Intent(CollectNewsActivity.this,
                                     NewsDetailsActivity.class);
                             intent.putExtra("id", adapter.getList().get(position).getId());
                             startActivity(intent);
@@ -220,12 +223,12 @@ public class CollectActivity extends Activity {
         }
 
         @Override
-        protected ArrayList<Favorite> doInBackground(Integer... params) {
+        protected ArrayList<FavoriteNews> doInBackground(Integer... params) {
 
             // TODO Auto-generated method stub
             try {
-                if (WH_DMApp.isLogin)
-                    result = wh_dmApi.getFav(params[0], params[1]);
+                if (WH_DMApp.isLogin&&WH_DMApp.isConnected)
+                    result = wh_dmApi.getNewsFav(params[0], params[1]);
                 return result;
             } catch (Exception e) {
                 reason = e;
@@ -235,25 +238,26 @@ public class CollectActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Favorite> result) {
+        protected void onPostExecute(ArrayList<FavoriteNews> result) {
 
             // no result
             if (result == null || result.size() == 0) {
+            	
                 if (FLAG_PAGE_UP) {
                     NotificationUtil.showShortToast(getString(R.string.no_more_message),
-                            CollectActivity.this);
+                            CollectNewsActivity.this);
                     FLAG_PAGE_UP = false;
                 } else {
                     if (WH_DMApp.isConnected) {
                         if (!WH_DMApp.isLogin)
                             NotificationUtil.showShortToast(getString(R.string.please_login),
-                                    CollectActivity.this);
-                        else
-                            NotificationUtil
-                                    .showShortToast(reason.toString(), CollectActivity.this);
+                                    CollectNewsActivity.this);
+                        else{
+                            NotificationUtil.showShortToast("没有数据", CollectNewsActivity.this);
+                            }
                     } else
                         NotificationUtil.showShortToast(getString(R.string.check_network),
-                                CollectActivity.this);
+                                CollectNewsActivity.this);
                 }
 
             }
@@ -263,17 +267,17 @@ public class CollectActivity extends Activity {
                     adapter.addList(result);
                     FLAG_PAGE_UP = false;
                 } else {
-                    databaseImpl.deleteFavorite();
+                    databaseImpl.deleteNewsFavorite();
                     adapter.setList(result);
                 }
-                databaseImpl.addFavorite(result);
+                databaseImpl.addNewsFavorite(result);
                 collect_list.setAdapter(adapter);
                 collect_list.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
                         // TODO Auto-generated method stub
-                        Intent intent = new Intent(CollectActivity.this, NewsDetailsActivity.class);
+                        Intent intent = new Intent(CollectNewsActivity.this, NewsDetailsActivity.class);
                         intent.putExtra("id", adapter.getList().get(position).getId());
                         startActivity(intent);
                     }
@@ -287,14 +291,14 @@ public class CollectActivity extends Activity {
     }
 
     private class DelFavTask extends AsyncTask<Void, Void, Boolean> {
-        ArrayList<Favorite> delSuccessList;
+        ArrayList<FavoriteNews> delSuccessList;
         int delFailCount;
         Exception ex;
 
         @Override
         protected void onPreExecute() {
 
-            delSuccessList = new ArrayList<Favorite>();
+            delSuccessList = new ArrayList<FavoriteNews>();
             delFailCount = 0;
             favList = adapter.getList();
             progressDialog.show();
@@ -308,8 +312,9 @@ public class CollectActivity extends Activity {
             try {
                 List<Integer> list_nid = adapter.getCheckedID();
                 for (int i = 0; i < list_nid.size(); i++) {
-                    if (wh_dmApi.delFav(favList.get(list_nid.get(i)).getId())) {
+                    if (wh_dmApi.delFav(favList.get(list_nid.get(i)).getId(),0)) {
                         delSuccessList.add(favList.get(list_nid.get(i)));
+                        databaseImpl.deleteOneNewsFavorite(favList.get(list_nid.get(i)).getId());
                     } else {
                         delFailCount++;
                     }
@@ -328,12 +333,12 @@ public class CollectActivity extends Activity {
 
             if (result) {
                 if (delFailCount == 0)
-                    NotificationUtil.showShortToast("删除成功", CollectActivity.this);
+                    NotificationUtil.showShortToast("删除成功", CollectNewsActivity.this);
                 else {
-                    NotificationUtil.showLongToast(delFailCount + "条删除失败", CollectActivity.this);
+                    NotificationUtil.showLongToast(delFailCount + "条删除失败", CollectNewsActivity.this);
                 }
             } else {
-                NotificationUtil.showLongToast("删除失败" + ex.toString(), CollectActivity.this);
+                NotificationUtil.showLongToast("删除失败" + ex.toString(), CollectNewsActivity.this);
             }
             adapter.RemoveAllInCheckedList();
             adapter.setList(favList);
@@ -344,7 +349,7 @@ public class CollectActivity extends Activity {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
                     // TODO Auto-generated method stub
-                    Intent intent = new Intent(CollectActivity.this, NewsDetailsActivity.class);
+                    Intent intent = new Intent(CollectNewsActivity.this, NewsDetailsActivity.class);
                     intent.putExtra("id", adapter.getList().get(position).getId());
                     startActivity(intent);
                 }

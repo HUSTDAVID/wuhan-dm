@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/photos_bg"
+    android:orientation="horizontal"
+    android:paddingBottom="3dip"
+    android:paddingTop="3dip" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout2"
+        android:layout_width="202dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:background="@drawable/photos_img_background"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt_photo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="17dip"
+            android:layout_marginLeft="3dip"
+            android:paddingLeft="1dip"
+            android:singleLine="true"
+            android:text="@string/photos_title"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/img_photo_item"
+            android:layout_width="match_parent"
+            android:layout_height="86dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/txt_photo_title"
+            android:clickable="true"
+            android:paddingLeft="1dip"
+            android:paddingRight="1dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/photos_img_background_nr" />
+
+        <TextView
+            android:id="@+id/txt_photo_addtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_photo_item"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="1dip"
+            android:text="2012-12-5 17:09:00"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/cb_photo_collect"
+        style="@style/CheckBox"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:button="@drawable/check_box"
+        android:focusable="false"
+        android:gravity="center_vertical|right" />
+
+</RelativeLayout>
