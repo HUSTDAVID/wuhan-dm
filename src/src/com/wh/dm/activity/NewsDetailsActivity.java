@@ -84,6 +84,7 @@ public class NewsDetailsActivity extends Activity {
     private DatabaseImpl databaseImpl;
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
+    NewsContent newsContent;
 
     private final Handler handler = new Handler() {
         @Override
@@ -292,7 +293,12 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UMSnsService.share(NewsDetailsActivity.this, "说些什么...", null);
+                String share = "分享每刻新闻：";
+                if (newsContent != null) {
+                    share = share + newsContent.getTitle() + newsContent.getIsurl();
+                }
+                UMSnsService.share(NewsDetailsActivity.this, share, null);
+
             }
         });
         txtReplynum = (TextView) findViewById(R.id.txt_total_reply);
@@ -355,6 +361,7 @@ public class NewsDetailsActivity extends Activity {
             try {
                 content = wh_dmApi.getNewsContent(params[0]);
                 comments = wh_dmApi.getComment(id, curPage);
+                newsContent = content[0];
                 return content[0];
             } catch (Exception e) {
                 e.printStackTrace();
@@ -524,6 +531,7 @@ public class NewsDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
+                CollectNewsActivity.isNewCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         NewsDetailsActivity.this);
             } else {

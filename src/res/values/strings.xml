@@ -160,6 +160,7 @@
     <string name="text_size">文章字体大小</string>
     <string name="text_summary">当前字体大小为18号</string>
     <string name="push">开启推送功能</string>
+    <string name="message_collect">消息与收藏</string>
     <string name="push_smmary">开启推送功能后，我们会第一时间内推送要闻给您</string>
     <string name="screen">屏幕亮度</string>
     <string name="screen_summary">保持屏幕正常亮度</string>

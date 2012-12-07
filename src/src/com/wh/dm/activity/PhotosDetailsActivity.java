@@ -303,7 +303,6 @@ public class PhotosDetailsActivity extends Activity {
                 }
             }
         });
-
         btnStore = (Button) main.findViewById(R.id.btn_photos_favorite);
         btnStore.setOnClickListener(new OnClickListener() {
 
@@ -598,6 +597,7 @@ public class PhotosDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
+                CollectPhotoActivity.isNewCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         PhotosDetailsActivity.this);
             } else {

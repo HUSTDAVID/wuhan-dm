@@ -102,7 +102,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 if (msgNum < result.size()) {
                     int size = result.size();
                     for (int i = msgNum; i < size; i++) {
-                        showNotification(_context, result.get(i), i);
+                        // showNotification(_context, result.get(i), i);
                         PostMessage message = result.get(i);
                         message.setIsRead(0);
                         newMessages.add(message);

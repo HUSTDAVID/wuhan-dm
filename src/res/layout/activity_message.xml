@@ -10,13 +10,6 @@
         android:layout_height="wrap_content"
         layout="@layout/dm_collect_header"/>
 
-    <ListView
-        android:id="@+id/message_list"
-        android:layout_width="fill_parent"
-        android:divider="@drawable/double_line_hor"
-        android:dividerHeight="1.5dip"
-        android:layout_height="match_parent">
-
-    </ListView>
+   
 
 </LinearLayout>

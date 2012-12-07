@@ -6,28 +6,36 @@
     android:orientation="vertical"
     android:background="@color/bg_normal" >
 
+
+
+
+
     <TextView
         android:id="@+id/txt_news_title"
-        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="19sp"
-        android:text="" />
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:text="" 
+        android:textColor="@color/black"
+        android:textSize="21sp" />
     
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dip"
-        android:gravity="center"
+        
         android:orientation="horizontal"
         android:paddingBottom="10dip" >
 
+
         <TextView
             android:id="@+id/txt_news_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
             android:layout_marginRight="10dip"
+
             android:textColor="@color/txt_gray"
             android:textSize="13sp"
             android:text="" />
