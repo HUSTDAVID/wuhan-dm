@@ -231,7 +231,9 @@ public class FunPhotoActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(reason.toString(), FunPhotoActivity.this);
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                FunPhotoActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 FunPhotoActivity.this);

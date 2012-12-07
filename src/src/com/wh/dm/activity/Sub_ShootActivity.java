@@ -195,7 +195,8 @@ public class Sub_ShootActivity extends Activity {
                 if (!FLAG_PAGE_UP) {
                     if (!FLAG_PAGE_UP) {
                         if (wh_dmApp.isConnected()) {
-                            NotificationUtil.showShortToast(reason.toString(),
+                            NotificationUtil.showShortToast(
+                                    getResources().getString(R.string.badconnect),
                                     Sub_ShootActivity.this);
                         }
                     } else {

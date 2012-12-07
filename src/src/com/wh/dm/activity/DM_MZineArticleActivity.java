@@ -204,41 +204,53 @@ public class DM_MZineArticleActivity extends Activity {
                 switch (v.getId()) {
                     case R.id.style1:
                         intent.putExtra("sid", articles.get(low + 5).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 5).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_1:
-                        view1_linear1.setBackgroundColor(backColor);
+                        // view1_linear1.setBackgroundColor(backColor);
                         view1_txtTile1.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_1:
-                        view1_linear2.setBackgroundColor(backColor);
+                        // view1_linear2.setBackgroundColor(backColor);
                         view1_txtTile2.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 1).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 1).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_1:
-                        view1_linear3.setBackgroundColor(backColor);
+                        // view1_linear3.setBackgroundColor(backColor);
                         view1_txtTile3.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 2).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 2).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_1:
-                        view1_linear4.setBackgroundColor(backColor);
+                        // view1_linear4.setBackgroundColor(backColor);
                         view1_txtTile4.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 3).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 3).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_1:
-                        view1_linear5.setBackgroundColor(backColor);
+                        // view1_linear5.setBackgroundColor(backColor);
                         view1_txtTile5.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 4).getId());
+                        intent.putExtra("source", articles.get(low + 4).getSource());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
                         startActivity(intent);
                         break;
 
@@ -363,41 +375,53 @@ public class DM_MZineArticleActivity extends Activity {
                 switch (v.getId()) {
                     case R.id.style2:
                         intent.putExtra("sid", articles.get(low + 5).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 5).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_2:
-                        view2_linear1.setBackgroundColor(backColor);
+                        // view2_linear1.setBackgroundColor(backColor);
                         view2_txtTile1.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_2:
-                        view2_linear2.setBackgroundColor(backColor);
+                        // view2_linear2.setBackgroundColor(backColor);
                         view2_txtTile2.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 1).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 1).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_2:
-                        view2_linear3.setBackgroundColor(backColor);
+                        // view2_linear3.setBackgroundColor(backColor);
                         view2_txtTile3.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 2).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 2).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_2:
-                        view2_linear4.setBackgroundColor(backColor);
+                        // view2_linear4.setBackgroundColor(backColor);
                         view2_txtTile4.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 3).getId());
+                        intent.putExtra("source", articles.get(low + 3).getSource());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_2:
-                        view2_linear5.setBackgroundColor(backColor);
+                        // view2_linear5.setBackgroundColor(backColor);
                         view2_txtTile5.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 4).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 4).getSource());
                         startActivity(intent);
                         break;
                 }
@@ -521,38 +545,48 @@ public class DM_MZineArticleActivity extends Activity {
 
                 switch (v.getId()) {
                     case R.id.layout1_magazine_3:
-                        view3_linear1.setBackgroundColor(backColor);
+                        // view3_linear1.setBackgroundColor(backColor);
                         view3_txtTile1.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_3:
-                        view3_linear2.setBackgroundColor(backColor);
+                        // view3_linear2.setBackgroundColor(backColor);
                         view3_txtTile2.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 1).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 1).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_3:
-                        view3_linear3.setBackgroundColor(backColor);
+                        // view3_linear3.setBackgroundColor(backColor);
                         view3_txtTile3.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 2).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 2).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_3:
-                        view3_linear4.setBackgroundColor(backColor);
+                        // view3_linear4.setBackgroundColor(backColor);
                         view3_txtTile4.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 3).getId());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("source", articles.get(low + 3).getSource());
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_3:
-                        view3_linear5.setBackgroundColor(backColor);
+                        // view3_linear5.setBackgroundColor(backColor);
                         view3_txtTile5.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 4).getId());
+                        intent.putExtra("source", articles.get(low + 4).getSource());
+                        intent.putExtra("titleImg", curMagazine.getTitlepic());
                         startActivity(intent);
                         break;
                 }

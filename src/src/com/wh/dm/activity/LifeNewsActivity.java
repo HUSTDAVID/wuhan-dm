@@ -193,7 +193,9 @@ public class LifeNewsActivity extends Activity {
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(reason.toString(), LifeNewsActivity.this);
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                LifeNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 LifeNewsActivity.this);

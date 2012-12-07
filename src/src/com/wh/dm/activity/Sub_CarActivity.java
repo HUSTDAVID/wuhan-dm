@@ -195,8 +195,9 @@ public class Sub_CarActivity extends Activity {
                 if (!FLAG_PAGE_UP) {
                     if (!FLAG_PAGE_UP) {
                         if (wh_dmApp.isConnected()) {
-                            NotificationUtil
-                                    .showShortToast(reason.toString(), Sub_CarActivity.this);
+                            NotificationUtil.showShortToast(
+                                    getResources().getString(R.string.badconnect),
+                                    Sub_CarActivity.this);
                         }
                     } else {
                         NotificationUtil.showLongToast(getString(R.string.no_more_message),

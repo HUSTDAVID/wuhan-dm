@@ -196,8 +196,9 @@ public class FashionNewsActivity extends Activity {
                 if (!FLAG_PAGE_UP) {
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil
-                                .showShortToast(reason.toString(), FashionNewsActivity.this);
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                FashionNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 FashionNewsActivity.this);

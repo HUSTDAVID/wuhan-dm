@@ -8,7 +8,7 @@
 
     <include
         android:layout_width="fill_parent"
-        android:layout_height="45dip"
+        android:layout_height="60dip"
         layout="@layout/dm_mzine_header" />
 
     <View
@@ -123,14 +123,14 @@
     <RelativeLayout
         android:id="@+id/style1"
         android:layout_width="fill_parent"
-        android:layout_height="138dip" >
+        android:layout_height="175dip" >
 
 
 
         <ImageView
             android:id="@+id/img_magazine_1"
             android:layout_width="fill_parent"
-            android:layout_height="138dip"
+            android:layout_height="175dip"
             android:background="@color/mzine_orange"
             android:scaleType="fitXY"
             android:src="@color/mzine_orange" />
@@ -138,16 +138,17 @@
 
 <TextView
     android:id="@+id/txt_magazine_1_title6"
-    style="@style/magazine_title"
+    android:maxLines="2"
+            android:textSize="22sp"
+            android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="false"
     android:layout_alignParentRight="false"
     android:layout_alignParentTop="false"
     android:background="@color/translucence_black"
-    android:gravity="bottom|right"
+    android:gravity="bottom"
     android:paddingRight="5dip"
-    android:singleLine="true"
     android:text="华大集团入驻光谷高新区"
     android:textColor="@color/white" />
 

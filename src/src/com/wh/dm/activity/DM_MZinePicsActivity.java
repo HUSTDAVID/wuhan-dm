@@ -22,6 +22,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +44,10 @@ public class DM_MZinePicsActivity extends Activity {
     private GetPicsTask getPicsTask = null;
     private static final int MSG_GET_PICS = 0;
     private int sid;
+    private TextView txtDes;
+    private ImageView imgArrow;
+    private ImageView imgComment;
+    private ArrayList<PictureMagzine> magazines;
 
     private final Handler handler = new Handler() {
         @Override
@@ -77,6 +82,10 @@ public class DM_MZinePicsActivity extends Activity {
     public void init() {
 
         txtPage = (TextView) findViewById(R.id.txt_magazine_page);
+        txtDes = (TextView) findViewById(R.id.txt_mzine_des);
+        imgArrow = (ImageView) findViewById(R.id.img_mzine_arrow);
+        imgComment = (ImageView) findViewById(R.id.img_mzine_comment);
+
         v_Pager = (ViewPager) findViewById(R.id.v_Pager);
         adapter = new MyPagerAdapter();
         v_Pager.setAdapter(adapter);
@@ -87,6 +96,33 @@ public class DM_MZinePicsActivity extends Activity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
+
+        imgArrow.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (txtDes.getVisibility() == View.VISIBLE) {
+                    txtDes.setVisibility(View.GONE);
+                    imgArrow.setImageResource(R.drawable.mzine_arrow_up);
+                } else {
+                    txtDes.setVisibility(View.VISIBLE);
+                    imgArrow.setImageResource(R.drawable.mzine_arrow_down);
+                }
+
+            }
+        });
+
+        imgComment.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DM_MZinePicsActivity.this, NewsMoreReplyActivity.class);
+                intent.putExtra("id", magazines.get(curPage - 1).getId());
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -115,6 +151,7 @@ public class DM_MZinePicsActivity extends Activity {
         v_Pager.setCurrentItem(0);
         totalPage = views.size();
         txtPage.setText(curPage + "/" + totalPage);
+        txtDes.setText(magazines.get(curPage - 1).getDescription());
         adapter.setList(views);
     }
 
@@ -218,7 +255,7 @@ public class DM_MZinePicsActivity extends Activity {
         protected ArrayList<PictureMagzine> doInBackground(Integer... params) {
 
             try {
-                ArrayList<PictureMagzine> magazines = wh_dmApi.getPictureMagzine(params[0]);
+                magazines = wh_dmApi.getPictureMagzine(params[0]);
                 return magazines;
             } catch (Exception e) {
                 reason = e;
@@ -258,6 +295,7 @@ public class DM_MZinePicsActivity extends Activity {
 
             curPage = 1 + arg0;
             txtPage.setText(curPage + "/" + totalPage);
+            txtDes.setText(magazines.get(arg0).getDescription());
 
         }
     }

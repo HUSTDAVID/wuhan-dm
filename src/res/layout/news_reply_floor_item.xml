@@ -64,7 +64,7 @@
 			    <TextView
 			        android:id="@+id/txt_floor_text"
 			        android:textColor="#404040"
-			        android:textSize="@dimen/news_normal"
+			        android:textSize="@dimen/reply"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_alignLeft="@+id/txt_floor_name"
