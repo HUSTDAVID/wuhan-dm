@@ -224,7 +224,9 @@ public class HotPhotosActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(reason.toString(), HotPhotosActivity.this);
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                HotPhotosActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 HotPhotosActivity.this);

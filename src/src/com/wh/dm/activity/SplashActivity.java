@@ -73,7 +73,8 @@ public class SplashActivity extends Activity {
                     Preferences.saveLoadPic(SplashActivity.this, result.getMsg());
                 }
             } else {
-                NotificationUtil.showShortToast(reason.toString(), SplashActivity.this);
+                NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
+                        SplashActivity.this);
             }
             super.onPostExecute(result);
         }

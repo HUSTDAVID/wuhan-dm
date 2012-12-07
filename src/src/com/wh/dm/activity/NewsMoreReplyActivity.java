@@ -155,6 +155,17 @@ public class NewsMoreReplyActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        if (bottomLayout2.getVisibility() == View.VISIBLE) {
+            bottomLayout2.setVisibility(View.GONE);
+            bottomLayout1.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void onResume() {
 
         super.onResume();
@@ -307,6 +318,7 @@ public class NewsMoreReplyActivity extends Activity {
 
             try {
                 comments = wh_dmApi.getComment(params[0], curPage);
+                // comments = RankUtil.RankOrdering(comments);
                 int length = comments.size();
                 for (int i = 0; i < length; i++) {
                     int id = comments.get(i).getId();

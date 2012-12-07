@@ -154,6 +154,17 @@ public class PhotoReplyActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        if (bottomLayout2.getVisibility() == View.VISIBLE) {
+            bottomLayout2.setVisibility(View.GONE);
+            bottomLayout1.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void onResume() {
 
         super.onResume();

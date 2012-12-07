@@ -14,7 +14,6 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,7 +77,7 @@ public class PhotosDetailsActivity extends Activity {
     private GetPhotoDetailsTask getPhotoDetailsTask = null;
     private LoadImageTask loadImageTask = null;
     private AddReviewTask addReviewTask = null;
-    private AddFavTask addFavTask=null;
+    private AddFavTask addFavTask = null;
     private ArrayList<PhotoDetails> photosDetails;
     private int aid;
     private int id;
@@ -115,12 +114,12 @@ public class PhotosDetailsActivity extends Activity {
                     addReviewTask.execute();
                     break;
                 case MSG_STORE_IMAGE:
-                	if(addFavTask!=null){
-                		addFavTask.cancel(true);
-                		addFavTask = null;
-                	}
-                	addFavTask = new AddFavTask();
-                	addFavTask.execute(aid);
+                    if (addFavTask != null) {
+                        addFavTask.cancel(true);
+                        addFavTask = null;
+                    }
+                    addFavTask = new AddFavTask();
+                    addFavTask.execute(aid);
                     break;
 
             }
@@ -139,6 +138,17 @@ public class PhotosDetailsActivity extends Activity {
 
         initViews();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (RelBottom2.getVisibility() == View.VISIBLE) {
+            RelBottom2.setVisibility(View.GONE);
+            RelBottom1.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -283,40 +293,39 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(WH_DMApp.isLogin){
+                if (WH_DMApp.isLogin) {
                     handler.sendEmptyMessage(MSG_LOAD_IMAGE);
-                }
-                else {
+                } else {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             PhotosDetailsActivity.this);
                     Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
-			}
+            }
         });
-        
-        btnStore=(Button)main.findViewById(R.id.btn_photos_favorite);
-        btnStore.setOnClickListener(new OnClickListener(){
+        btnStore = (Button) main.findViewById(R.id.btn_photos_favorite);
+        btnStore.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				 if (WH_DMApp.isConnected) {
-	                    if (WH_DMApp.isLogin) {
-	                    	handler.sendEmptyMessage(MSG_STORE_IMAGE);
-	                    } else {
-	                        NotificationUtil.showShortToast(getString(R.string.please_login),
-	                                PhotosDetailsActivity.this);
-	                        Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
-	                        startActivity(intent);
-	                    }
-	                } else {
-	                    NotificationUtil.showShortToast(getString(R.string.check_network),
-	                    		PhotosDetailsActivity.this);
-	                }
-				
-			}
-        	
+            @Override
+            public void onClick(View v) {
+
+                // TODO Auto-generated method stub
+                if (WH_DMApp.isConnected) {
+                    if (WH_DMApp.isLogin) {
+                        handler.sendEmptyMessage(MSG_STORE_IMAGE);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.please_login),
+                                PhotosDetailsActivity.this);
+                        Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            PhotosDetailsActivity.this);
+                }
+
+            }
+
         });
 
         handler.sendEmptyMessage(MSG_GET_ALL);
@@ -554,51 +563,55 @@ public class PhotosDetailsActivity extends Activity {
         }
 
     }
-    
-    
-    private class AddFavTask extends AsyncTask<Integer, Void, Boolean>{
-    	boolean result = false;
+
+    private class AddFavTask extends AsyncTask<Integer, Void, Boolean> {
+        boolean result = false;
         Exception reason = null;
-        PostResult postresult=null;
-    	@Override
+        PostResult postresult = null;
+
+        @Override
         protected void onPreExecute() {
-            //progressDialog.show();
+
+            // progressDialog.show();
             super.onPreExecute();
         }
-		@Override
-		protected Boolean doInBackground(Integer... params) {
-			// TODO Auto-generated method stub
-			try{
-				postresult=wh_dmApi.addFav(params[0],1);
-				if(postresult.getResult())  
-					return true; 
-				else
-					return false;
-			}catch(Exception e){
-				reason=e;
-				e.printStackTrace();
-				return false;
-			}
-		}
-		@Override
-		protected void onPostExecute(Boolean result)
-		{
-			if (result) {
-				CollectPhotoActivity.isNewCollect=true;
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+
+            // TODO Auto-generated method stub
+            try {
+                postresult = wh_dmApi.addFav(params[0], 1);
+                if (postresult.getResult())
+                    return true;
+                else
+                    return false;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                CollectPhotoActivity.isNewCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         PhotosDetailsActivity.this);
             } else {
-            	if(postresult==null)
-                    NotificationUtil.showShortToast(getString(R.string.favorite_fail)+":未知原因",
-                    		PhotosDetailsActivity.this);
-            	else
-            		NotificationUtil.showShortToast(postresult.getMsg(),
-            				PhotosDetailsActivity.this);
+                if (postresult == null)
+                    NotificationUtil.showShortToast(getString(R.string.favorite_fail) + ":未知原因",
+                            PhotosDetailsActivity.this);
+                else
+                    NotificationUtil
+                            .showShortToast(postresult.getMsg(), PhotosDetailsActivity.this);
             }
-            //progressDialog.dismiss();
+            // progressDialog.dismiss();
             super.onPostExecute(result);
-		}
-    	
+        }
+
     }
 
 }

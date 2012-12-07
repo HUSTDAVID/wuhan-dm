@@ -5,6 +5,7 @@ import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.Comment;
@@ -12,6 +13,8 @@ import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.TextUtil;
+import com.wh.dm.util.TimeUtil;
+import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
@@ -33,6 +36,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -49,6 +53,8 @@ public class MagazineDetailsActivity extends Activity {
     private final int ADD_FAV = 3;
     private final int curStatus = 0;
     private int sid;
+    private String titleUrl;
+    private String source;
     private int time;
     private final int curPage = 1;
     private GetCommentTask getCommentTask = null;
@@ -133,9 +139,11 @@ public class MagazineDetailsActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_news_details);
+        setContentView(R.layout.activity_magazine_details);
         Intent intent = getIntent();
         sid = intent.getIntExtra("sid", 458);
+        titleUrl = intent.getStringExtra("titleImg");
+        source = intent.getStringExtra("source");
         initViews();
         wh_dmApp = (WH_DMApp) this.getApplication();
         databaseImpl = wh_dmApp.getDatabase();
@@ -144,12 +152,22 @@ public class MagazineDetailsActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (bottomLayout2.getVisibility() == View.VISIBLE) {
+            bottomLayout2.setVisibility(View.GONE);
+            bottomLayout1.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void initViews() {
 
-        TextView txtReply = (TextView) findViewById(R.id.txt_total_reply);
-        txtReply.setVisibility(View.GONE);
-        TextView txtTitle = (TextView) findViewById(R.id.txt_header3_title);
-        txtTitle.setText("‘”÷æ");
+        final ImageView img_header = (ImageView) findViewById(R.id.img_header);
+        UrlImageViewHelper.setUrlDrawable(img_header, WH_DMHttpApiV1.URL_DOMAIN + titleUrl,
+                R.drawable.magazine_title, null);
 
         progressDialog = new ProgressDialog(MagazineDetailsActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -165,11 +183,6 @@ public class MagazineDetailsActivity extends Activity {
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
         webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-
-        // add news body data
-        newsTitle.setText(getResources().getString(R.string.news_title));
-        newsTime.setText(getResources().getString(R.string.news_time));
-        newsSource.setText(getResources().getString(R.string.news_source));
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
@@ -259,29 +272,6 @@ public class MagazineDetailsActivity extends Activity {
                 }
             }
         });
-        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                finish();
-
-            }
-
-        });
-        edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
-        edtMoreReply.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MagazineDetailsActivity.this,
-                        NewsMoreReplyActivity.class);
-                intent.putExtra("id", sid);
-                startActivity(intent);
-            }
-        });
 
         UMSnsService.UseLocation = true;
         UMSnsService.LocationAuto = true;
@@ -332,10 +322,16 @@ public class MagazineDetailsActivity extends Activity {
 
     private class GetArticleTask extends AsyncTask<Integer, Void, Article> {
         Exception reason = null;
+        ArrayList<Comment> comments = null;
 
         @Override
         protected void onPreExecute() {
 
+            if (wh_dmApp.isLoadImg) {
+                webSettings.setBlockNetworkImage(true);
+            } else {
+                webSettings.setBlockNetworkImage(false);
+            }
             progressDialog.show();
             super.onPreExecute();
         }
@@ -346,6 +342,7 @@ public class MagazineDetailsActivity extends Activity {
             Article article = null;
             try {
                 article = wh_dmApi.getArticle(sid);
+                comments = wh_dmApi.getComment(sid, curPage);
             } catch (Exception e) {
                 reason = e;
                 return null;
@@ -362,10 +359,24 @@ public class MagazineDetailsActivity extends Activity {
                         "text/html", "utf-8", null);
                 newsTitle.setText(result.getTitle());
                 newsTime.setText(result.getPubdate());
+                if (comments != null && comments.size() > 0) {
+                    int commentNum = 5;
+                    if (comments.size() < 5) {
+                        commentNum = comments.size();
+                    }
+                    for (int i = 0; i < commentNum; i++) {
+                        Comment comment = comments.get(i);
+                        adapter.addItem(getString(R.string.news_user), TimeUtil.getTimeInterval(
+                                comment.getDtime(), MagazineDetailsActivity.this),
+                                comment.getMsg(), "" + comment.getGood());
+                    }
+                } else {
+                    lvNews.removeFooterView(footer);
+                }
             } else {
                 if (wh_dmApp.isConnected()) {
-                    NotificationUtil
-                            .showShortToast(reason.toString(), MagazineDetailsActivity.this);
+                    NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
+                            MagazineDetailsActivity.this);
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             MagazineDetailsActivity.this);
@@ -408,7 +419,6 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPostExecute(ArrayList<Comment> result) {
 
-            // TODO Auto-generated method stub
             super.onPostExecute(result);
         }
 

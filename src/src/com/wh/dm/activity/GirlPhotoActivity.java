@@ -231,7 +231,9 @@ public class GirlPhotoActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(reason.toString(), GirlPhotoActivity.this);
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                GirlPhotoActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 GirlPhotoActivity.this);

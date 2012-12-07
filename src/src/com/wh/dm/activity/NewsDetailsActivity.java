@@ -84,6 +84,7 @@ public class NewsDetailsActivity extends Activity {
     private DatabaseImpl databaseImpl;
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
+    NewsContent newsContent;
 
     private final Handler handler = new Handler() {
         @Override
@@ -147,6 +148,17 @@ public class NewsDetailsActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (bottomLayout2.getVisibility() == View.VISIBLE) {
+            bottomLayout2.setVisibility(View.GONE);
+            bottomLayout1.setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void initViews() {
 
         progressDialog = new ProgressDialog(NewsDetailsActivity.this);
@@ -163,11 +175,6 @@ public class NewsDetailsActivity extends Activity {
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
         webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-
-        // add news body data
-        newsTitle.setText(getResources().getString(R.string.news_title));
-        newsTime.setText(getResources().getString(R.string.news_time));
-        newsSource.setText(getResources().getString(R.string.news_source));
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
@@ -215,7 +222,7 @@ public class NewsDetailsActivity extends Activity {
             }
         });
 
-        // inti reply views
+        // init reply views
         bottomLayout1 = (LinearLayout) findViewById(R.id.linear1_news_details_bottom);
         bottomLayout2 = (RelativeLayout) findViewById(R.id.linear2_news_details_bottom);
 
@@ -266,13 +273,17 @@ public class NewsDetailsActivity extends Activity {
             }
 
         });
-        /*
-         * edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
-         * edtMoreReply.setOnClickListener(new OnClickListener() {
-         * @Override public void onClick(View v) { Intent intent = new
-         * Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
-         * intent.putExtra("id", id); startActivity(intent); } });
-         */
+
+        edtMoreReply = (TextView) findViewById(R.id.txt_total_reply);
+        edtMoreReply.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
 
         UMSnsService.UseLocation = true;
         UMSnsService.LocationAuto = true;
@@ -282,7 +293,11 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UMSnsService.share(NewsDetailsActivity.this, "test", null);
+                String share = "分享每刻新闻：";
+                if (newsContent != null) {
+                    share = share + newsContent.getTitle() + newsContent.getIsurl();
+                }
+                UMSnsService.share(NewsDetailsActivity.this, share, null);
 
             }
         });
@@ -318,7 +333,7 @@ public class NewsDetailsActivity extends Activity {
         } else if (size.equals("key4")) {
             webSettings.setTextSize(TextSize.SMALLEST);
         } else {
-            webSettings.setTextSize(TextSize.NORMAL); // 出现其他情况设置正在字号
+            webSettings.setTextSize(TextSize.NORMAL); // 出现其他情况设置正常字号
         }
     }
 
@@ -346,6 +361,7 @@ public class NewsDetailsActivity extends Activity {
             try {
                 content = wh_dmApi.getNewsContent(params[0]);
                 comments = wh_dmApi.getComment(id, curPage);
+                newsContent = content[0];
                 return content[0];
             } catch (Exception e) {
                 e.printStackTrace();
@@ -368,10 +384,16 @@ public class NewsDetailsActivity extends Activity {
                 newsTime.setText(result.getPubdate());
                 newsSource.setText(result.getSource());
                 if (comments != null && comments.size() > 0) {
-                    Comment comment = comments.get(0);
-                    adapter.addItem(getString(R.string.news_user),
-                            TimeUtil.getTimeInterval(comment.getDtime(), NewsDetailsActivity.this),
-                            comment.getMsg(), getString(R.string.top) + comment.getGood());
+                    int commentNum = 5;
+                    if (comments.size() < 5) {
+                        commentNum = comments.size();
+                    }
+                    for (int i = 0; i < commentNum; i++) {
+                        Comment comment = comments.get(i);
+                        adapter.addItem(getString(R.string.news_user), TimeUtil.getTimeInterval(
+                                comment.getDtime(), NewsDetailsActivity.this), comment.getMsg(), ""
+                                + comment.getGood());
+                    }
                 } else {
                     lvNews.removeFooterView(footer);
                 }
@@ -387,7 +409,8 @@ public class NewsDetailsActivity extends Activity {
                     newsTime.setText(result.getPubdate());
                 }
                 if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(reason.toString(), NewsDetailsActivity.this);
+                    NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
+                            NewsDetailsActivity.this);
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             NewsDetailsActivity.this);
@@ -508,7 +531,7 @@ public class NewsDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-            	CollectNewsActivity.isNewCollect=true;
+                CollectNewsActivity.isNewCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         NewsDetailsActivity.this);
             } else {

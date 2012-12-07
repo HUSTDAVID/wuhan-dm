@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:textColor="#da3635"
             android:layout_alignParentLeft="true"
+            android:textSize="@dimen/reply"
             android:text="@string/news_user" />
 
         <TextView
@@ -56,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textColor="#b1b1b1"
+            android:textSize="@dimen/reply_floor"
             android:text="@string/news_reply_time" />
 
     </RelativeLayout>
@@ -69,7 +71,7 @@
         <TextView
             android:id="@+id/txt_replay_body"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/news_normal"
+            android:textSize="@dimen/reply"
             android:layout_height="wrap_content"
             android:textColor="#404040"
             android:text="什么逻辑，真他妈坑爹" />
@@ -90,12 +92,14 @@
             android:layout_height="30dip"
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_news_reply"
+            android:textSize="@dimen/reply_floor"
             android:text="@string/news_reply" />
 
         <Button
             android:id="@+id/btn_reply_top"
             android:layout_width="80dip"
             android:layout_height="30dip"
+            android:textSize="@dimen/reply_floor"
             android:layout_alignParentTop="true"
             android:layout_marginRight="10dip"
             android:layout_toLeftOf="@+id/btn_reply"

@@ -232,7 +232,9 @@ public class CarPhotoActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(reason.toString(), CarPhotoActivity.this);
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                CarPhotoActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 CarPhotoActivity.this);

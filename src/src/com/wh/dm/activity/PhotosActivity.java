@@ -351,6 +351,7 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
+
             }
             return null;
         }

@@ -34,7 +34,7 @@ public class MessageActivity extends Activity {
         messages = databaseImpl.getPostMessage();
 
         txtHead = (TextView) findViewById(R.id.textView3);
-        txtHead.setText(getString(R.string.push_message));
+        txtHead.setText(getString(R.string.message_collect));
         btnBack = (ImageButton) findViewById(R.id.BackButton);
         btnBack.setOnClickListener(new View.OnClickListener() {
 

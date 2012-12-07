@@ -229,7 +229,8 @@ public class PhotographPhotoActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(reason.toString(),
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
                                 PhotographPhotoActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),

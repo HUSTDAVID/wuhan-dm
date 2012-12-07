@@ -3,20 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mzine_fullacreen" >
-    <android.support.v4.view.ViewPager
+
+    
+        <android.support.v4.view.ViewPager
         android:id="@+id/v_Pager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
     </android.support.v4.view.ViewPager>
 
-    <TextView 
-        android:id="@+id/txt_magazine_page"
-        android:layout_width="50dp"
-        android:textColor="@color/black"
-        android:textSize="15sp"
+    <ImageView
+        android:id="@+id/img_mzine_comment" 
+        android:src="@drawable/mzine_img_comment"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:paddingBottom="5dip"
-        android:text="1/1"/>
+        android:layout_alignParentTop="true"/>
+    
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="8dp"
+        >
+        
+        <TextView 
+            android:id="@+id/txt_mzine_des"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:padding="5dp"
+            android:text=""
+            android:background="@color/translucence_black"
+            android:layout_alignBottom="@+id/img_mzine_arrow"
+            android:layout_toLeftOf="@+id/img_mzine_arrow"
+            android:layout_marginRight="5dip"
+            android:visibility="gone"/>
+        
+         <TextView 
+	        android:id="@+id/txt_magazine_page"
+	        android:layout_width="wrap_content"
+	        android:textColor="#a1a1a1"
+	        android:textSize="15sp"
+	        android:layout_height="wrap_content"	        
+	        android:layout_alignParentRight="true"
+	        android:paddingBottom="5dip"	
+	        android:gravity="center"        
+	        android:text="1/1"/>
+        
+        <ImageView 
+            android:id="@+id/img_mzine_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/txt_magazine_page"
+            android:layout_alignLeft="@+id/txt_magazine_page"
+            android:layout_alignRight="@+id/txt_magazine_page"            
+            android:src="@drawable/mzine_arrow_up"/>
+    
+	   
+    
+    </RelativeLayout>
 </RelativeLayout>

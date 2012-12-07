@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="badconnect">您的网络不给力</string>
     <string name="bind">已绑定</string>
     <string name="unbind">未绑定</string>
     <string name="app_name">每刻资讯</string>
@@ -70,9 +71,7 @@
     <string name="load_image_fail">图片下载失败</string>
 
     <!-- 新闻详情 -->
-    <string name="news_title">日媒称日本11日派官员赴华 欲讨论钓鱼岛问题</string>
-    <string name="news_time">2010-12-30</string>
-    <string name="news_source">来源：荆楚网</string>
+    
     <string name="news_user">手机版网友</string>
     <string name="news_reply_time">13小时前</string>
     <string name="news_reply_body">没什么谈的，人不敬我，我何必敬人。</string>
@@ -161,6 +160,7 @@
     <string name="text_size">文章字体大小</string>
     <string name="text_summary">当前字体大小为18号</string>
     <string name="push">开启推送功能</string>
+    <string name="message_collect">消息与收藏</string>
     <string name="push_smmary">开启推送功能后，我们会第一时间内推送要闻给您</string>
     <string name="screen">屏幕亮度</string>
     <string name="screen_summary">保持屏幕正常亮度</string>
