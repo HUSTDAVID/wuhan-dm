@@ -27,8 +27,8 @@ public class CollectAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private ArrayList<FavoriteNews> list = null;
     private List<Integer> list_checked = new ArrayList<Integer>();// checked
-                                                                         // item
-                                                                         // position
+                                                                  // item
+                                                                  // position
 
     public CollectAdapter(Context context) {
 
@@ -116,10 +116,11 @@ public class CollectAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        public TextView txt_collect_title;
-        public TextView txt_collect_body;
-        public CheckBox check;
+
         public ImageView img1;
+        public CheckBox check;
+        public TextView txt_collect_body;
+        public TextView txt_collect_title;
     }
 
     public void addItemType(String string) {

@@ -58,4 +58,7 @@
     <color name="progressbar">#d9d9d9</color>
     <color name="account_binded">#d6d6d6</color>
     <color name="account_unbind">#ffffff</color>
+    
+    <color name="push_body_color">#363636</color>
+    <color name="orange">#F59500</color>
 </resources>
