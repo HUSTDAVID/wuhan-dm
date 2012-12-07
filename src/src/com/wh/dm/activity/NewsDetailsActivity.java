@@ -282,7 +282,8 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UMSnsService.share(NewsDetailsActivity.this, "说些什么...", null);
+                UMSnsService.share(NewsDetailsActivity.this, "test", null);
+
             }
         });
         txtReplynum = (TextView) findViewById(R.id.txt_total_reply);
