@@ -53,6 +53,7 @@ public class CollectNewsActivity extends Activity {
     CollectAdapter adapter = null;
     private GetFavTask getFavTask = null;
     private DelFavTask delFavTask = null;
+    public static boolean isNewCollect=false;
 
     private final Handler handler = new Handler() {
         @Override
@@ -168,6 +169,10 @@ public class CollectNewsActivity extends Activity {
               }
           });
     	  
+    	if(isNewCollect){
+    		handler.sendEmptyMessage(MSG_GET_FAV);
+    		isNewCollect=false;
+    	}
         super.onResume();
         MobclickAgent.onResume(this);
     }
@@ -254,7 +259,10 @@ public class CollectNewsActivity extends Activity {
                                     CollectNewsActivity.this);
                         else{
                             NotificationUtil.showShortToast("没有数据", CollectNewsActivity.this);
-                            }
+                            databaseImpl.deleteNewsFavorite();
+                            adapter.setList(new ArrayList<FavoriteNews>());
+                            collect_list.setAdapter(adapter);
+                        }
                     } else
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 CollectNewsActivity.this);

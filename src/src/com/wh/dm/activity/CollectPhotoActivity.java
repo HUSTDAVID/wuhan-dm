@@ -45,7 +45,8 @@ public class CollectPhotoActivity extends Activity {
 	 private int countsPerPage=12;
 	 private int curPage=1;
 	 private ArrayList<FavoritePhoto> favList = null;
-	 public final Handler handler = new Handler() {
+	 public static boolean isNewCollect=false;
+	 private final Handler handler = new Handler() {
 	        @Override
 	        public void handleMessage(android.os.Message msg) {
 
@@ -133,6 +134,10 @@ public class CollectPhotoActivity extends Activity {
                 handler.sendEmptyMessage(MSG_DEL_FAV);
             }
         });
+		if(isNewCollect){
+			 handler.sendEmptyMessage(MSG_GET_FAV);
+			 isNewCollect=true;
+		}
 		
 		super.onResume();
 		MobclickAgent.onPause(this);
@@ -206,7 +211,9 @@ public class CollectPhotoActivity extends Activity {
 	                        else{
 	                            NotificationUtil.showShortToast("没有数据", CollectPhotoActivity.this);
 	                            databaseImp1.deletePhotoFavorite();//if has no data,clear local database
-	                            }
+	                            adapter.setList(new ArrayList<FavoritePhoto>());
+	                            lv_photo.setAdapter(adapter);
+	                        }
 	                    } else
 	                        NotificationUtil.showShortToast(getString(R.string.check_network),
 	                        		CollectPhotoActivity.this);

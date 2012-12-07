@@ -507,6 +507,7 @@ public class NewsDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
+            	CollectNewsActivity.isNewCollect=true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         NewsDetailsActivity.this);
             } else {
