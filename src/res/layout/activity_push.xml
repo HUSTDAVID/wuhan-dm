@@ -4,15 +4,15 @@
     android:layout_height="fill_parent"
     android:background="@color/bg_normal"
     android:orientation="vertical" >
-
+    
     <include
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         layout="@layout/header_push_collect" >
     </include>
-    
+
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/list_push"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:divider="@drawable/double_line_hor"

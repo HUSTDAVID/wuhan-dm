@@ -340,6 +340,8 @@
 		    android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
+		
+        
 		<receiver
 		    android:name=".receiver.ConnectityReceiver">
             <intent-filter>
