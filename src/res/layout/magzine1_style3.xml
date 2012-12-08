@@ -5,29 +5,47 @@
     android:background="#efefef"
     android:orientation="vertical"
     android:weightSum="3" xmlns:android="http://schemas.android.com/apk/res/android">
-
+
+
+
     <include
         android:layout_width="fill_parent"
         android:layout_height="60dip"
         layout="@layout/dm_mzine_header" />
-
+
+
+
+
+
+
+
     <RelativeLayout
         android:id="@+id/style3"
         android:layout_width="fill_parent"
-        android:layout_height="175dip" >
-
+        android:layout_height="165dp" >
+
+
+
+
         <ImageView
             android:id="@+id/img_magazine_3"
             android:layout_width="fill_parent"
-            android:layout_height="175dip"
+            android:layout_height="165dp"
             android:scaleType="fitXY"
             android:src="@color/mzine_blue" />
-
+
+
+
+
+
+
+
+
+
+
         <TextView
             android:id="@+id/txt_magazine_3_title6"
-            android:maxLines="2"
-            android:textSize="22sp"
-            android:layout_width="fill_parent"
+            style="@style/magazine_title"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
@@ -35,9 +53,15 @@
             android:background="@color/translucence_black"
             android:gravity="bottom|left"
             android:paddingLeft="5dip"
+            android:singleLine="true"
+            android:textSize="@dimen/mzine_long_title"
             android:text="武汉久有股权投资基金成立"
             android:textColor="@color/white" />
-
+
+
+
+
+
         <TextView
             android:id="@+id/txtLarge3"
             android:layout_width="wrap_content"
@@ -57,7 +81,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal" >
-
+
+
+
+
         <LinearLayout
             android:id="@+id/layout1_magazine_3"
             style="@style/magazine_news_layout"
@@ -67,18 +94,28 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
+
+
             <TextView
                 android:id="@+id/txt_magazine_3_title1"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="新华社中国光谷新闻采访部成立" />
-
+
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_3_source1"
                     style="@style/magazine_body"
@@ -101,7 +138,10 @@
             android:layout_height="fill_parent"
             android:background="@drawable/double_line_ver" >
         </View>
-
+
+
+
+
         <LinearLayout
             android:id="@+id/layout2_magazine_3"
             style="@style/magazine_news_layout"
@@ -111,18 +151,26 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
+
+
             <TextView
                 android:id="@+id/txt_magazine_3_title2"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="李智勇调研未来科技城" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_3_source2"
                     style="@style/magazine_body"
@@ -130,7 +178,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_3_time2"
                     style="@style/magazine_body"
@@ -149,7 +200,8 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:background="@drawable/double_line_hor" />
-
+
+
     <LinearLayout
         android:id="@+id/layout5_magazine_3"
         android:layout_width="fill_parent"
@@ -159,7 +211,13 @@
         android:orientation="vertical"
         android:paddingLeft="15dip"
         android:paddingRight="15dip" >
-
+
+
+
+
+
+
+
         <TextView
             android:id="@+id/txt_magazine_3_title5"
             android:layout_width="fill_parent"
@@ -167,14 +225,17 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dip"
             android:text="市政府与中国医药集团签订合作协议"
+            android:lines="2"
             android:textColor="@color/mzine_txt_normal"
             android:textSize="@dimen/mzine_long_title" />
-
+
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:weightSum="2" >
-
+
+
             <TextView
                 android:id="@+id/txt_magazine_3_source5"
                 style="@style/magazine_body"
@@ -182,7 +243,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dip"
                 android:text="人民网" />
-
+
+
             <TextView
                 android:id="@+id/txt_magazine_3_time5"
                 style="@style/magazine_body"
@@ -204,7 +266,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" >
-
+
+
+
+
         <LinearLayout
             android:id="@+id/layout3_magazine_3"
             style="@style/magazine_news_layout"
@@ -214,18 +279,28 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
+
+
+
             <TextView
                 android:id="@+id/txt_magazine_3_title3"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="武汉久有股权投资基金成立" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_3_source3"
                     style="@style/magazine_body"
@@ -234,7 +309,9 @@
                     android:layout_marginRight="10dip"
                     android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_3_time3"
                     style="@style/magazine_body"
@@ -249,7 +326,10 @@
             android:layout_width="1.5dip"
             android:layout_height="fill_parent"
             android:background="@drawable/double_line_ver" />
-
+
+
+
+
         <LinearLayout
             android:id="@+id/layout4_magazine_3"
             style="@style/magazine_news_layout"
@@ -259,18 +339,25 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
+
+
             <TextView
                 android:id="@+id/txt_magazine_3_title4"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="东湖综合保税区通过预验收" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_3_source4"
                     style="@style/magazine_body"
@@ -279,7 +366,9 @@
                     android:layout_marginRight="10dip"
                     android:layout_weight="1"
                     android:text="湖北大楚网" />
-
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_3_time4"
                     style="@style/magazine_body"

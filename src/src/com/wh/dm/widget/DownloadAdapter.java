@@ -82,14 +82,14 @@ public class DownloadAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
 
-                    if (dms.get(pos).isFinish()) {
+                    if (!dms.get(pos).isStart()) {
+
+                    } else if (dms.get(pos).isFinish()) {
 
                     } else if (dms.get(pos).isPause()) {
-                        dms.get(pos).setPause(false);
-                        notifyDataSetChanged();
+
                     } else {
-                        dms.get(pos).setPause(true);
-                        notifyDataSetChanged();
+
                     }
 
                 }

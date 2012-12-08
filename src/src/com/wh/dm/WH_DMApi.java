@@ -6,10 +6,11 @@ import com.wh.dm.error.WH_DMException;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
-import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.Cover;
+import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.FavoritePhoto;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
@@ -281,25 +282,28 @@ public class WH_DMApi {
 
         return mWH_DMHttpApiV1.unsubcribe(id);
     }
-    
-    public PostResult addFav(int nid, int type) throws WH_DMException, UnKnownException, IOException{
-    	
-    	return mWH_DMHttpApiV1.addFav(nid, type);
+
+    public PostResult addFav(int nid, int type) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.addFav(nid, type);
     }
-    
-    public ArrayList<FavoriteNews> getNewsFav(int pz, int pi) throws WH_DMException, UnKnownException, IOException{
-    	
-    	return mWH_DMHttpApiV1.getNewsFav(pz, pi);
+
+    public ArrayList<FavoriteNews> getNewsFav(int pz, int pi) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getNewsFav(pz, pi);
     }
-    
-    public ArrayList<FavoritePhoto> getPhotoFav(int pz, int pi) throws WH_DMException, UnKnownException, IOException{
-    	
-    	return mWH_DMHttpApiV1.getPhotoFav(pz, pi);
+
+    public ArrayList<FavoritePhoto> getPhotoFav(int pz, int pi) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getPhotoFav(pz, pi);
     }
-    
-    public boolean delFav(int nid, int type) throws WH_DMException, UnKnownException, IOException{
-    	
-    	return mWH_DMHttpApiV1.delFav(nid, type);
+
+    public boolean delFav(int nid, int type) throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.delFav(nid, type);
     }
 
     public ArrayList<Magazine> getSubcribedMagazines() throws WH_DMException, UnKnownException,
@@ -316,5 +320,12 @@ public class WH_DMApi {
     public ArrayList<PostMessage> getMessage() throws WH_DMException, UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.getMessages();
+    }
+
+    // down load
+    public ArrayList<MagazineBody> getMagazineBody(int sid) throws WH_DMException,
+            UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.getMagazineBody(sid);
     }
 }

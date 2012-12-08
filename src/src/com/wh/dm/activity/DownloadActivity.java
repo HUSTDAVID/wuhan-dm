@@ -8,9 +8,11 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.LoadInfo;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.MagazineBody;
 import com.wh.dm.widget.DownloadAdapter;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,12 +27,14 @@ public class DownloadActivity extends Activity {
     private ListView lvDownload;
     private TextView txtTitle;
     private ImageButton btnBack;
-    private ArrayList<LoadInfo> list;
+    private ArrayList<LoadInfo> loadList;
     private ArrayList<Magazine> subMagazines;
+    private ArrayList<MagazineBody> magazineBodys;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
+    private LoadMagazineTask loadTask;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -61,8 +65,9 @@ public class DownloadActivity extends Activity {
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
         subMagazines = databaseImpl.getSubcribedMagazine();
-        list = new ArrayList<LoadInfo>();
-        list = initLoadInfo(subMagazines);
+        magazineBodys = new ArrayList<MagazineBody>();
+        loadList = new ArrayList<LoadInfo>();
+        loadList = initLoadInfo(subMagazines);
 
         txtTitle = (TextView) findViewById(R.id.txt_header_title2);
         txtTitle.setText(getString(R.string.download));
@@ -77,8 +82,11 @@ public class DownloadActivity extends Activity {
         lvDownload = (ListView) findViewById(R.id.lv_download);
 
         DownloadAdapter adapter = new DownloadAdapter(this);
-        adapter.setList(list);
+        adapter.setList(loadList);
         lvDownload.setAdapter(adapter);
+
+        loadTask = new LoadMagazineTask();
+        loadTask.execute();
     }
 
     private ArrayList<LoadInfo> initLoadInfo(ArrayList<Magazine> magazines) {
@@ -97,4 +105,20 @@ public class DownloadActivity extends Activity {
         }
         return loadInfoList;
     }
+
+    private class LoadMagazineTask extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                magazineBodys = wh_dmApi.getMagazineBody(6);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+    }
+
 }

@@ -5,24 +5,71 @@
     android:background="#efefef"
     android:orientation="vertical"
     android:weightSum="3" xmlns:android="http://schemas.android.com/apk/res/android">
-
+
+
+
     <include
         android:layout_width="fill_parent"
         android:layout_height="60dip"
-        layout="@layout/dm_mzine_header" />
+        layout="@layout/dm_mzine_header" />
+
+
+
+
+
+
+
+
+
+
     <RelativeLayout
         android:id="@+id/style2"
         android:layout_width="fill_parent"
-        android:layout_height="175dip" >
-
+        android:layout_height="165dp" >
+
+
+
+
+
         <ImageView
             android:id="@+id/img_magazine_2"
             android:layout_width="fill_parent"
-            android:layout_height="175dip"
+            android:layout_height="165dp"
             android:background="@color/mzine_yellow"
             android:scaleType="fitXY"
             android:src="@color/mzine_yellow" />
-
+
+
+
+
+
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/txt_magazine_2_title6"
+            style="@style/magazine_title"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
+            android:background="@color/translucence_black"
+            android:gravity="bottom|left"
+            android:paddingLeft="5dip"
+            android:singleLine="true"
+            android:text="长飞光纤获国际质量管理金奖"
+            android:textSize="@dimen/mzine_long_title"
+            android:textColor="@color/white" />
+
+
+
+
+
+
+
         <TextView
             android:id="@+id/txtLarge2"
             android:layout_width="wrap_content"
@@ -35,20 +82,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/txt_magazine_2_title6"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:background="@color/translucence_black"
-            android:gravity="bottom|left"
-            android:maxLines="2"
-            android:paddingLeft="5dip"
-            android:text="长飞光纤获国际质量管理金奖"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-
     </RelativeLayout>
 
     <LinearLayout
@@ -57,7 +90,14 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal" >
-
+
+
+
+
+
+
+
+
         <LinearLayout
             android:id="@+id/layout1_magazine_2"
             style="@style/magazine_news_layout"
@@ -67,18 +107,22 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
             <TextView
                 android:id="@+id/txt_magazine_2_title1"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="贺福初调研光谷生物城" />
-
+
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_2_source1"
                     style="@style/magazine_body"
@@ -102,7 +146,11 @@
             android:layout_height="fill_parent"
             android:background="@drawable/double_line_ver" >
         </View>
-
+
+
+
+
+
         <LinearLayout
             android:id="@+id/layout2_magazine_2"
             style="@style/magazine_news_layout"
@@ -112,18 +160,23 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
             <TextView
                 android:id="@+id/txt_magazine_2_title2"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="国家中心城市的光谷元素" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_2_source2"
                     style="@style/magazine_body"
@@ -131,7 +184,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_2_time2"
                     style="@style/magazine_body"
@@ -156,7 +211,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" >
-
+
+
+
+
+
         <LinearLayout
             android:id="@+id/layout3_magazine_2"
             style="@style/magazine_news_layout"
@@ -166,18 +225,24 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
             <TextView
                 android:id="@+id/txt_magazine_2_title3"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="依光而兴 一条街一座城" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_2_source3"
                     style="@style/magazine_body"
@@ -185,7 +250,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_2_time3"
                     style="@style/magazine_body"
@@ -201,7 +269,10 @@
             android:layout_width="1.5dip"
             android:layout_height="fill_parent"
             android:background="@drawable/double_line_ver" />
-
+
+
+
+
         <LinearLayout
             android:id="@+id/layout4_magazine_2"
             style="@style/magazine_news_layout"
@@ -211,18 +282,23 @@
             android:orientation="vertical"
             android:paddingBottom="0dip"
             android:paddingTop="12dip" >
-
+
+
             <TextView
                 android:id="@+id/txt_magazine_2_title4"
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="长飞光纤获国际质量管理金奖" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_2_source4"
                     style="@style/magazine_body"
@@ -230,7 +306,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北大楚网" />
-
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_2_time4"
                     style="@style/magazine_body"
@@ -249,7 +327,9 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:background="@drawable/double_line_hor" />
-
+
+
+
     <LinearLayout
         android:id="@+id/layout5_magazine_2"
         android:layout_width="fill_parent"
@@ -259,7 +339,8 @@
         android:orientation="vertical"
         android:paddingLeft="15dip"
         android:paddingRight="15dip" >
-
+
+
         <TextView
             android:id="@+id/txt_magazine_2_title5"
             android:layout_width="fill_parent"
@@ -267,6 +348,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:text="市政府与中国医药集团签订合作协议"
+            android:lines="2"
             android:textColor="@color/mzine_txt_normal"
             android:textSize="@dimen/mzine_long_title" />
 

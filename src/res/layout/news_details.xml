@@ -54,16 +54,17 @@
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
         android:background="@drawable/doubleline"/>
-
+
     <WebView
         android:id="@+id/webview_news_body"
         android:layout_width="fill_parent"
-        android:padding="10dip"
-        android:textColor="#404040"
-        android:textSize="15sp"
-        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:fitsSystemWindows="true"
+        android:padding="10dip"
+        android:scrollbars="none|vertical"
+        android:text=""
+        android:textColor="#404040"
+        android:textSize="15sp" />
     
     <View 
         android:layout_width="fill_parent"

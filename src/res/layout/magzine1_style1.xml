@@ -5,7 +5,8 @@
     android:background="#efefef"
     android:orientation="vertical"
     android:weightSum="3" xmlns:android="http://schemas.android.com/apk/res/android">
-
+
+
     <include
         android:layout_width="fill_parent"
         android:layout_height="60dip"
@@ -43,12 +44,16 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="刘延东考察东湖高新区" />
-
+
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_source1"
                     style="@style/magazine_body"
@@ -56,7 +61,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北大楚网" />
-
+
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_time1"
                     style="@style/magazine_body"
@@ -92,12 +102,16 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="东湖高新区试点“新三班”" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_source2"
                     style="@style/magazine_body"
@@ -105,7 +119,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_time2"
                     style="@style/magazine_body"
@@ -123,14 +141,14 @@
     <RelativeLayout
         android:id="@+id/style1"
         android:layout_width="fill_parent"
-        android:layout_height="175dip" >
+        android:layout_height="165dp" >
 
 
 
         <ImageView
             android:id="@+id/img_magazine_1"
             android:layout_width="fill_parent"
-            android:layout_height="175dip"
+            android:layout_height="165dp"
             android:background="@color/mzine_orange"
             android:scaleType="fitXY"
             android:src="@color/mzine_orange" />
@@ -138,18 +156,18 @@
 
 <TextView
     android:id="@+id/txt_magazine_1_title6"
-    android:maxLines="2"
-            android:textSize="22sp"
-            android:layout_width="fill_parent"
+    style="@style/magazine_title"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="false"
     android:layout_alignParentRight="false"
     android:layout_alignParentTop="false"
     android:background="@color/translucence_black"
-    android:gravity="bottom"
-    android:paddingRight="5dip"
+    android:gravity="bottom|left"
+    android:paddingLeft="5dip"
+    android:singleLine="true"    
     android:text="华大集团入驻光谷高新区"
+    android:textSize="@dimen/mzine_long_title"
     android:textColor="@color/white" />
 
 
@@ -200,12 +218,18 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="华大集团入驻光谷高新区" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_source3"
                     style="@style/magazine_body"
@@ -213,7 +237,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北荆楚网" />
-
+
+
+
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_time3"
                     style="@style/magazine_body"
@@ -249,12 +280,16 @@
                 style="@style/magazine_title"
                 android:layout_height="wrap_content"
                 android:text="解码光谷生物城科技中心" />
-
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2" >
-
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_source4"
                     style="@style/magazine_body"
@@ -262,7 +297,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="湖北大楚网" />
-
+
+
+
+
+
                 <TextView
                     android:id="@+id/txt_magazine_1_time4"
                     style="@style/magazine_body"
@@ -301,6 +340,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:text="豹澥 百年古镇走向科学新城"
+            android:lines="2"
             android:textColor="@color/mzine_txt_normal"
             android:textSize="@dimen/mzine_long_title" />
 
@@ -316,7 +356,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dip"
                 android:text="人民网" />
-
+
+
+
+
+
             <TextView
                 android:id="@+id/txt_magazine_1_time5"
                 style="@style/magazine_body"

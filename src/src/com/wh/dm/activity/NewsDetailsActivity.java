@@ -29,7 +29,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -174,7 +173,7 @@ public class NewsDetailsActivity extends Activity {
         newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
-        webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        // webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
@@ -344,11 +343,6 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            if (wh_dmApp.isLoadImg) {
-                webSettings.setBlockNetworkImage(true);
-            } else {
-                webSettings.setBlockNetworkImage(false);
-            }
             progressDialog.show();
             super.onPreExecute();
         }
@@ -378,8 +372,8 @@ public class NewsDetailsActivity extends Activity {
                 databaseImpl.addNewsContent(result);
                 time++;
                 Log.d("time", "" + time);
-                webViewNewsBody.loadDataWithBaseURL(null, result.getBody(), "text/html", "utf-8",
-                        null);
+                webViewNewsBody.loadDataWithBaseURL("www.jbr.net.cn.html", result.getBody(),
+                        "text/html", "utf-8", null);
                 newsTitle.setText(result.getTitle());
                 newsTime.setText(result.getPubdate());
                 newsSource.setText(result.getSource());

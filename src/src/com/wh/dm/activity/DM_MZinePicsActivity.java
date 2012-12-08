@@ -118,9 +118,14 @@ public class DM_MZinePicsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(DM_MZinePicsActivity.this, NewsMoreReplyActivity.class);
-                intent.putExtra("id", magazines.get(curPage - 1).getId());
-                startActivity(intent);
+                if (magazines != null) {
+                    Intent intent = new Intent(DM_MZinePicsActivity.this,
+                            NewsMoreReplyActivity.class);
+                    intent.putExtra("id", magazines.get(curPage - 1).getId());
+                    startActivity(intent);
+                } else {
+                    NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);
+                }
             }
         });
 

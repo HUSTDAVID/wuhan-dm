@@ -327,11 +327,6 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            if (wh_dmApp.isLoadImg) {
-                webSettings.setBlockNetworkImage(true);
-            } else {
-                webSettings.setBlockNetworkImage(false);
-            }
             progressDialog.show();
             super.onPreExecute();
         }
@@ -342,7 +337,7 @@ public class MagazineDetailsActivity extends Activity {
             Article article = null;
             try {
                 article = wh_dmApi.getArticle(sid);
-                comments = wh_dmApi.getComment(sid, curPage);
+                // comments = wh_dmApi.getComment(sid, curPage);
             } catch (Exception e) {
                 reason = e;
                 return null;
@@ -355,8 +350,10 @@ public class MagazineDetailsActivity extends Activity {
 
             if (result != null) {
 
-                webViewNewsBody.loadDataWithBaseURL("www.jbr.net.cn.html", result.getBody(),
-                        "text/html", "utf-8", null);
+                String data = result.getBody();
+
+                webViewNewsBody.loadDataWithBaseURL("www.baidu.com", result.getBody(), "text/html",
+                        "utf-8", null);
                 newsTitle.setText(result.getTitle());
                 newsTime.setText(result.getPubdate());
                 if (comments != null && comments.size() > 0) {

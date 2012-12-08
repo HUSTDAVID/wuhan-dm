@@ -9,6 +9,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         layout="@layout/dm_collect_header"/>
+   
+   <ListView 
+       android:id="@+id/lv_message_colect"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content">
+       
+   </ListView>
 
    
 
