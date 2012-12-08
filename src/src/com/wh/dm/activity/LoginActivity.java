@@ -7,6 +7,7 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
+import com.wh.dm.service.PushService;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.util.NotificationUtil;
 
@@ -71,6 +72,7 @@ public class LoginActivity extends Activity {
         MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+        init();
         initViews();
     }
 
@@ -206,6 +208,9 @@ public class LoginActivity extends Activity {
                 WH_DMApp.isLogin = true;
                 Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
                 handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
+                databaseImpl.deletePostMessage();
+                Preferences.setPostMessage(LoginActivity.this, 0);
+                startService(new Intent(LoginActivity.this, PushService.class));
                 finish();
             } else {
                 NotificationUtil

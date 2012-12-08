@@ -19,7 +19,7 @@ public class PushService extends Service {
     private static final int Frequence_Day = 24 * 60 * 60 * 1000;
     // private static final int Frequence_Day = 5 * 1000;
     private static final String FETCH_START_TIME = "07:00:00";
-    private static final String CLEAR_START_TIME = "06:00:00";
+    private static final String CLEAR_START_TIME = "23:50:00";
     private static final String FETCH = "fetch";
     private Intent intent_fetch;
     private PendingIntent sender1;
@@ -42,10 +42,12 @@ public class PushService extends Service {
                 TimeUtil.getCurtime(FETCH_START_TIME), Frequence_Min, sender1);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                 Frequence_Min, sender1);
+
         intent_clear = new Intent(this, ClearReceiver.class);
         sender2 = PendingIntent.getBroadcast(this, 1, intent_clear, 0);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                 TimeUtil.getCurtime(CLEAR_START_TIME), Frequence_Day, sender2);
+
     }
 
     @Override
