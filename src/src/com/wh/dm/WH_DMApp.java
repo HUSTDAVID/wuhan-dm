@@ -2,6 +2,7 @@
 package com.wh.dm;
 
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.service.PushService;
 import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
@@ -135,6 +136,7 @@ public class WH_DMApp extends Application {
             if (result) {
                 Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
                 sendBroadcast(intent);
+                startService(new Intent(WH_DMApp.this, PushService.class));
                 isLogin = true;
             } else {
                 Intent intent = new Intent(INTENT_ACTION_LOG_FAIL);
