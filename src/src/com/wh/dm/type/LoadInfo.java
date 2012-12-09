@@ -3,6 +3,7 @@ package com.wh.dm.type;
 
 public class LoadInfo {
 
+    private int sid;
     private String picPath;
     private String title;
     private boolean isFinish;
@@ -14,15 +15,14 @@ public class LoadInfo {
 
     }
 
-    public LoadInfo(String _picPatho, String _title, boolean isStart, boolean _isFinish,
-            boolean _isPause, int _pro) {
+    public int getSid() {
 
-        this.picPath = _picPatho;
-        this.title = _title;
-        this.isStart = isStart;
-        this.isFinish = _isFinish;
-        this.isPause = _isPause;
-        this.pro = _pro;
+        return sid;
+    }
+
+    public void setSid(int sid) {
+
+        this.sid = sid;
     }
 
     public boolean isStart() {

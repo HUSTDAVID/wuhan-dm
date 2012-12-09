@@ -9,6 +9,7 @@ import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.MagazineBody;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.TimeUtil;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -55,6 +56,7 @@ public class DM_MZineArticleActivity extends Activity {
     private int totalPage = 1;
     private int curPage = 1;
     private TextView txtPage;
+    private boolean isLoad;
     private int sid;
     private ProgressDialog progressDialog = null;
     private final Handler handler = new Handler() {
@@ -85,8 +87,6 @@ public class DM_MZineArticleActivity extends Activity {
         sid = bundle.getInt("sid");
 
         init();
-        handler.sendEmptyMessage(MSG_GET_MAGZINE);
-        // addData(magzines);
 
     }
 
@@ -114,13 +114,17 @@ public class DM_MZineArticleActivity extends Activity {
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(new GuidePageChangeListener());
 
-        progressDialog = new ProgressDialog(getParent());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
         curMagazine = databaseImpl.getMagazine(sid);
+
+        isLoad = databaseImpl.isLoad(sid);
+        if (!isLoad) {
+            progressDialog = new ProgressDialog(getParent());
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        }
+        handler.sendEmptyMessage(MSG_GET_MAGZINE);
 
     }
 
@@ -206,6 +210,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 5).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 5).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_1:
@@ -215,6 +220,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_1:
@@ -224,6 +230,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 1).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 1).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_1:
@@ -233,6 +240,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 2).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 2).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_1:
@@ -242,6 +250,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 3).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 3).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_1:
@@ -251,6 +260,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 4).getId());
                         intent.putExtra("source", articles.get(low + 4).getSource());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
 
@@ -377,6 +387,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 5).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 5).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_2:
@@ -386,6 +397,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_2:
@@ -395,6 +407,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 1).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 1).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_2:
@@ -404,6 +417,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 2).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 2).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_2:
@@ -413,6 +427,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 3).getId());
                         intent.putExtra("source", articles.get(low + 3).getSource());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_2:
@@ -422,6 +437,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 4).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 4).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                 }
@@ -551,6 +567,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_3:
@@ -560,6 +577,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 1).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 1).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_3:
@@ -569,6 +587,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 2).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 2).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_3:
@@ -578,6 +597,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 3).getId());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 3).getSource());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_3:
@@ -587,6 +607,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("sid", articles.get(low + 4).getId());
                         intent.putExtra("source", articles.get(low + 4).getSource());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
+                        intent.putExtra("is_load", isLoad);
                         startActivity(intent);
                         break;
                 }
@@ -762,7 +783,9 @@ public class DM_MZineArticleActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            if (!isLoad) {
+                progressDialog.show();
+            }
             super.onPreExecute();
         }
 
@@ -772,7 +795,26 @@ public class DM_MZineArticleActivity extends Activity {
             ArrayList<ArticleMagzine> articles = null;
             try {
 
-                articles = wh_dmApi.getArticleMagzine(params[0]);
+                if (isLoad) {
+                    ArrayList<MagazineBody> magazines = new ArrayList<MagazineBody>();
+                    articles = new ArrayList<ArticleMagzine>();
+                    magazines = databaseImpl.getMagazineBody(sid);
+                    int size = magazines.size();
+                    for (MagazineBody body : magazines) {
+                        ArticleMagzine temp = new ArticleMagzine();
+                        temp.setAuthor(body.getAuthor());
+                        temp.setId(body.getId());
+                        temp.setLitpic(body.getLitpic());
+                        temp.setPubdate(body.getPubdate());
+                        temp.setSource(body.getSource());
+                        temp.setTitle(body.getTitle());
+                        temp.setWriter(body.getWriter());
+
+                        articles.add(temp);
+                    }
+                } else {
+                    articles = wh_dmApi.getArticleMagzine(params[0]);
+                }
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -790,7 +832,9 @@ public class DM_MZineArticleActivity extends Activity {
             } else {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZineArticleActivity.this);
             }
-            progressDialog.dismiss();
+            if (!isLoad) {
+                progressDialog.dismiss();
+            }
             super.onPostExecute(result);
         }
     }

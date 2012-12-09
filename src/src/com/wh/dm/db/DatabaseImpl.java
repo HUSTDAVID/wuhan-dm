@@ -3,6 +3,7 @@ package com.wh.dm.db;
 
 import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.FavoritePhoto;
+import com.wh.dm.type.LoadInfo;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
@@ -57,7 +58,10 @@ public class DatabaseImpl implements Database {
 
     // subcribe
     private static final String TABLE_SUBCRIBE = "subcribe";
+    // load magazine body
     private static final String TABLE_MAGEZINE_BODY = "magazinebody";
+    // load info
+    private static final String TABLE_LOAD_INFO = "loadinfo";
     // postmessage
     private static final String TABLE_MESSAGE = "postmessage";
     private final Context context;
@@ -191,6 +195,10 @@ public class DatabaseImpl implements Database {
                 + TABLE_MAGEZINE_BODY
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, author VARCHAR, writer VARCHAR,"
                 + "no INTEGER, id INTEGER, title VARCHAR, source VARCHAR, litpic VARCHAR, pubdate VARCHAR, body VARCHAR)");
+        // load info
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_LOAD_INFO
+                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, pic_path VARCHAR, title VARCHAR, is_finish INTEGER, is_start VARCHAR, is_pause VARCHAR, pro VARCHAR)");
         // post message
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MESSAGE
@@ -231,6 +239,7 @@ public class DatabaseImpl implements Database {
         // magazine
         db.delete(TABLE_MAGAZINE_HOT, null, null);
         db.delete(TABLE_MAGEZINE_BODY, null, null);
+        db.delete(TABLE_LOAD_INFO, null, null);
         // subcribe
         db.delete(TABLE_SUBCRIBE, null, null);
         // message
@@ -1333,7 +1342,6 @@ public class DatabaseImpl implements Database {
     @Override
     public void addNewsFavorite(ArrayList<FavoriteNews> favorite) {
 
-        // TODO Auto-generated method stub
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         for (int i = 0; i < favorite.size(); i++) {
             try {
@@ -1369,7 +1377,6 @@ public class DatabaseImpl implements Database {
     @Override
     public void deleteNewsFavorite() {
 
-        // TODO Auto-generated method stub
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         db.delete(TABLE_NEWS_FAVORITE, null, null);
         db.close();
@@ -1382,8 +1389,10 @@ public class DatabaseImpl implements Database {
         String sql = "delete from " + TABLE_NEWS_FAVORITE + " where id=" + id;
         try {
             db.execSQL(sql);
+            db.close();
             return true;
         } catch (Exception ex) {
+            db.close();
             return false;
         }
     }
@@ -1391,7 +1400,6 @@ public class DatabaseImpl implements Database {
     @Override
     public void addPhotoFavorite(ArrayList<FavoritePhoto> favorite) {
 
-        // TODO Auto-generated method stub
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         for (int i = 0; i < favorite.size(); i++) {
             try {
@@ -1402,12 +1410,12 @@ public class DatabaseImpl implements Database {
                 e.printStackTrace();
             }
         }
+        db.close();
     }
 
     @Override
     public ArrayList<FavoritePhoto> getPhotoFavorite() {
 
-        // TODO Auto-generated method stub
         ArrayList<FavoritePhoto> favorite = new ArrayList<FavoritePhoto>();
         PhotoFavoriteBuilder builder = new PhotoFavoriteBuilder();
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, context.MODE_PRIVATE, null);
@@ -1440,56 +1448,12 @@ public class DatabaseImpl implements Database {
         String sql = "delete from " + TABLE_PHOTO_FAVORITE + " where aid=" + aid;
         try {
             db.execSQL(sql);
+            db.close();
             return true;
         } catch (Exception ex) {
+            db.close();
             return false;
         }
-    }
-
-    @Override
-    public ArrayList<MagazineBody> getMagazineBody(int sid) {
-
-        ArrayList<MagazineBody> magazineList = new ArrayList<MagazineBody>();
-        MagazineBodyBuilder builder = new MagazineBodyBuilder();
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
-        Cursor query = db.query(TABLE_MAGEZINE_BODY, null, "sid=?", new String[] {
-            String.valueOf(sid)
-        }, null, null, null);
-        if (query != null) {
-            query.moveToFirst();
-            while (!query.isAfterLast()) {
-                magazineList.add(builder.build(query));
-                query.moveToNext();
-            }
-        }
-        query.close();
-        db.close();
-        return magazineList;
-    }
-
-    @Override
-    public void deleteMagazineBody() {
-
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
-        db.delete(TABLE_MAGEZINE_BODY, null, null);
-        db.close();
-
-    }
-
-    @Override
-    public void addMagazineBody(ArrayList<MagazineBody> magazineList) {
-
-        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
-        for (int i = 0; i < magazineList.size(); i++) {
-            try {
-                ContentValues values = new ContentValues();
-                values.putAll((new MagazineBodyBuilder()).deconstruct(magazineList.get(i)));
-                db.insert(TABLE_MAGEZINE_BODY, null, values);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        db.close();
     }
 
     @Override
@@ -1634,6 +1598,140 @@ public class DatabaseImpl implements Database {
             }
         }
         db.close();
+    }
+
+    // magazine body
+    @Override
+    public ArrayList<MagazineBody> getMagazineBody(int sid) {
+
+        ArrayList<MagazineBody> magazineList = new ArrayList<MagazineBody>();
+        MagazineBodyBuilder builder = new MagazineBodyBuilder();
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_MAGEZINE_BODY, null, "sid=?", new String[] {
+            String.valueOf(sid)
+        }, null, null, null);
+        if (query != null) {
+            query.moveToFirst();
+            while (!query.isAfterLast()) {
+                magazineList.add(builder.build(query));
+                query.moveToNext();
+            }
+        }
+        query.close();
+        db.close();
+        return magazineList;
+    }
+
+    @Override
+    public void deleteMagazineBody() {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        db.delete(TABLE_MAGEZINE_BODY, null, null);
+        db.close();
+
+    }
+
+    @Override
+    public void addMagazineBody(ArrayList<MagazineBody> magazineList) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        for (int i = 0; i < magazineList.size(); i++) {
+            try {
+                ContentValues values = new ContentValues();
+                values.putAll((new MagazineBodyBuilder()).deconstruct(magazineList.get(i)));
+                db.insert(TABLE_MAGEZINE_BODY, null, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        db.close();
+    }
+
+    @Override
+    public MagazineBody getOneMagazineBody(int id) {
+
+        MagazineBody oneMagazine = new MagazineBody();
+        MagazineBodyBuilder builder = new MagazineBodyBuilder();
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_MAGEZINE_BODY, null, "id=?", new String[] {
+            String.valueOf(id)
+        }, null, null, null);
+        if (query != null) {
+            query.moveToFirst();
+            oneMagazine = builder.build(query);
+            db.close();
+            query.close();
+            return oneMagazine;
+        }
+        db.close();
+        return null;
+    }
+
+    // load info
+
+    @Override
+    public ArrayList<LoadInfo> getLoadInfo() {
+
+        ArrayList<LoadInfo> loadInfos = new ArrayList<LoadInfo>();
+        LoadInfoBuilder builder = new LoadInfoBuilder();
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_LOAD_INFO, null, null, null, null, null, null);
+        if (query != null) {
+            query.moveToFirst();
+            while (!query.isAfterLast()) {
+                loadInfos.add(builder.build(query));
+                query.moveToNext();
+            }
+        }
+        query.close();
+        db.close();
+        return loadInfos;
+    }
+
+    @Override
+    public void deleteLoadInfo() {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        db.delete(TABLE_LOAD_INFO, null, null);
+        db.close();
+
+    }
+
+    @Override
+    public void addLoadInfo(ArrayList<LoadInfo> loadInfos) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        for (int i = 0; i < loadInfos.size(); i++) {
+            try {
+                ContentValues values = new ContentValues();
+                values.putAll((new LoadInfoBuilder()).deconstruct(loadInfos.get(i)));
+                db.insert(TABLE_LOAD_INFO, null, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        db.close();
+    }
+
+    @Override
+    public boolean isLoad(int sid) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_LOAD_INFO, new String[] {
+            "is_finish"
+        }, "sid=?", new String[] {
+            String.valueOf(sid)
+        }, null, null, null);
+        if (query != null) {
+            query.moveToFirst();
+            int load = query.getInt(query.getColumnIndex("is_finish"));
+            db.close();
+            query.close();
+            if (load == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

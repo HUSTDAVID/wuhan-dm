@@ -22,16 +22,16 @@ public class LoadUtil {
             JSONObject jsonObject = new JSONObject();
             jsonObject = (JSONObject) jsonParser.nextValue();
 
-            String mzine = jsonObject.getString("magazine");
-            JSONObject objMagazine = jsonObject.getJSONObject(mzine);
+            JSONObject objMagazine = jsonObject.getJSONObject("magazine");
             sid = objMagazine.getInt("sid");
             magazine.setNo(objMagazine.getInt("no"));
             magazine.setSid(objMagazine.getInt("sid"));
             magazine.setCid(objMagazine.getString("cid"));
             magazine.setEditor(objMagazine.getString("editor"));
             magazine.setTemplate(objMagazine.getInt("template"));
-            String body = jsonObject.getString("magazinebody");
-            JSONArray arr = new JSONArray(body);
+
+            // String body = jsonObject.getString("magazinebody");
+            JSONArray arr = jsonObject.getJSONArray("magazinebody");
             for (int i = 0; i < arr.length(); i++) {
                 MagazineBody mbody = new MagazineBody();
                 JSONObject objBody = (JSONObject) arr.get(i);

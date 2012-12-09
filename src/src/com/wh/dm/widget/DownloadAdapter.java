@@ -3,10 +3,13 @@ package com.wh.dm.widget;
 
 import com.wh.dm.R;
 import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.activity.DownloadActivity;
 import com.wh.dm.type.LoadInfo;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,11 +26,15 @@ public class DownloadAdapter extends BaseAdapter {
     private Activity context;
     private LayoutInflater inflater;
     private ArrayList<LoadInfo> dms;
+    private Handler handler;
 
-    public DownloadAdapter(Activity _context) {
+    private int positionValue;
+
+    public DownloadAdapter(Activity _context, Handler _handler) {
 
         context = _context;
         inflater = context.getLayoutInflater();
+        this.handler = _handler;
         dms = new ArrayList<LoadInfo>();
     }
 
@@ -67,7 +74,7 @@ public class DownloadAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final int pos = position;
+        positionValue = position;
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.download_item, null);
@@ -77,43 +84,66 @@ public class DownloadAdapter extends BaseAdapter {
             viewHolder.txtAddition = (TextView) convertView.findViewById(R.id.txt_download_ad);
             viewHolder.btnStatus = (Button) convertView.findViewById(R.id.btn_download_status);
             viewHolder.pbStatus = (ProgressBar) convertView.findViewById(R.id.pbar_download);
-            viewHolder.btnStatus.setOnClickListener(new OnClickListener() {
+            viewHolder.pbStatus.setProgress(dms.get(positionValue).getPro());
 
-                @Override
-                public void onClick(View v) {
-
-                    if (!dms.get(pos).isStart()) {
-
-                    } else if (dms.get(pos).isFinish()) {
-
-                    } else if (dms.get(pos).isPause()) {
-
-                    } else {
-
-                    }
-
-                }
-            });
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.btnStatus.setId(position);
+        viewHolder.btnStatus.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                int pos = v.getId();
+
+                if (dms.get(pos).isFinish()) {
+                    // send message to open magazine
+                    Message msg = new Message();
+                    msg.what = DownloadActivity.MSG_OPEN_MAGAZINE;
+                    msg.arg1 = dms.get(pos).getSid();
+                    handler.sendMessage(msg);
+
+                } else if (!dms.get(pos).isStart()) {
+                    // send message to start
+                    Message msg = new Message();
+                    msg.what = DownloadActivity.MSG_START_LOAD;
+                    msg.arg1 = dms.get(pos).getSid();
+                    handler.sendMessage(msg);
+                } else if (dms.get(pos).isPause()) {
+                    // send message to go to
+                    Message msg = new Message();
+                    msg.what = DownloadActivity.MSG_START_LOAD;
+                    msg.arg1 = dms.get(pos).getSid();
+                    handler.sendMessage(msg);
+                } else {
+                    // send message to pause
+                    Message msg = new Message();
+                    msg.what = DownloadActivity.MSG_PAUSE_LOAD;
+                    msg.arg1 = dms.get(pos).getSid();
+                    handler.sendMessage(msg);
+                }
+
+            }
+        });
 
         UrlImageViewHelper.setUrlDrawable(viewHolder.imgDM,
                 WH_DMHttpApiV1.URL_DOMAIN + dms.get(position).getPicPath(),
                 R.drawable.subscription_manage_background, null);
         viewHolder.txtDM.setText(dms.get(position).getTitle());
 
-        if (!dms.get(position).isStart()) {
-            viewHolder.pbStatus.setVisibility(View.GONE);
-            viewHolder.txtAddition.setVisibility(View.VISIBLE);
-            viewHolder.txtAddition.setText("未下载杂志");
-            viewHolder.btnStatus.setText("开始下载");
-        } else if (dms.get(position).isFinish()) {
+        if (dms.get(position).isFinish()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
             viewHolder.txtAddition.setText("下载已完成");
             viewHolder.btnStatus.setText("查看DM");
+        } else if (!dms.get(position).isStart()) {
+            viewHolder.pbStatus.setVisibility(View.GONE);
+            viewHolder.txtAddition.setVisibility(View.VISIBLE);
+            viewHolder.txtAddition.setText("未下载杂志");
+            viewHolder.btnStatus.setText("开始下载");
         } else if (dms.get(position).isPause()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
@@ -136,4 +166,5 @@ public class DownloadAdapter extends BaseAdapter {
         private ProgressBar pbStatus;
 
     }
+
 }

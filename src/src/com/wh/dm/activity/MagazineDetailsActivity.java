@@ -9,6 +9,7 @@ import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.util.NotificationUtil;
@@ -85,6 +86,7 @@ public class MagazineDetailsActivity extends Activity {
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
+    private boolean isLoad;
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
 
@@ -142,6 +144,7 @@ public class MagazineDetailsActivity extends Activity {
         setContentView(R.layout.activity_magazine_details);
         Intent intent = getIntent();
         sid = intent.getIntExtra("sid", 458);
+        isLoad = intent.getBooleanExtra("is_load", false);
         titleUrl = intent.getStringExtra("titleImg");
         source = intent.getStringExtra("source");
         initViews();
@@ -336,7 +339,19 @@ public class MagazineDetailsActivity extends Activity {
 
             Article article = null;
             try {
-                article = wh_dmApi.getArticle(sid);
+                if (isLoad) {
+                    MagazineBody one = new MagazineBody();
+                    article = new Article();
+                    one = databaseImpl.getOneMagazineBody(sid);
+                    article.setBody(one.getBody());
+                    article.setId(one.getId());
+                    article.setLitpic(one.getLitpic());
+                    article.setPubdate(one.getPubdate());
+                    article.setSid(one.getSid());
+                    article.setTitle(one.getTitle());
+                } else {
+                    article = wh_dmApi.getArticle(sid);
+                }
                 // comments = wh_dmApi.getComment(sid, curPage);
             } catch (Exception e) {
                 reason = e;
