@@ -214,6 +214,9 @@ public class DownloadActivity extends Activity {
             // use a message send infomation to ui thread
 
             try {
+
+                // this is test
+                //
                 messageBodys = wh_dmApi.getMagazineBody(sid);
                 if (messageBodys != null && messageBodys.size() > 0) {
                     databaseImpl.addMagazineBody(messageBodys);
