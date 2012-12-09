@@ -16,10 +16,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/cb_collect"
-        android:layout_toRightOf="@+id/iv_collect"
-        android:orientation="vertical" 
-        android:layout_centerVertical="true">
+        android:orientation="vertical" >
 
 	    <TextView
 	        android:id="@+id/txt_collect_title1"
@@ -43,19 +43,6 @@
         android:layout_centerVertical="true"
         android:focusable="false"
         style="@style/CheckBox"/>
-
-    <ImageView
-        android:id="@+id/iv_collect"
-        android:layout_width="57dip"
-        android:layout_height="57dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/cb_collect"
-        android:layout_alignBottom="@+id/cb_collect"
-        android:layout_centerVertical="true"
-        android:contentDescription="@string/news_image"
-        android:scaleType="fitXY"
-        android:src="@drawable/item_default" />
 
      </RelativeLayout>
         

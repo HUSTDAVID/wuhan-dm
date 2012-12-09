@@ -4,12 +4,16 @@ package com.wh.dm.widget;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.activity.CollectNewsActivity;
+import com.wh.dm.activity.NewsDetailsActivity;
 import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -81,7 +85,7 @@ public class CollectAdapter extends BaseAdapter {
             holder.txt_collect_title = (TextView) view.findViewById(R.id.txt_collect_title1);
             holder.txt_collect_body = (TextView) view.findViewById(R.id.txt_collect_body1);
             holder.check = (CheckBox) view.findViewById(R.id.cb_collect);
-            holder.img1 = (ImageView) view.findViewById(R.id.iv_collect);
+            //holder.img1 = (ImageView) view.findViewById(R.id.iv_collect);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -105,19 +109,31 @@ public class CollectAdapter extends BaseAdapter {
         });
         holder.check.setChecked(list_checked.contains(Integer.valueOf(position)) ? true : false);
         // load image
-        if (WH_DMApp.isLoadImg) {
+        /*if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.img1,
                     WH_DMHttpApiV1.URL_DOMAIN + list.get(position).getLitpic().toString(),
                     R.drawable.item_default, null);
         } else {
             holder.img1.setBackgroundResource(R.drawable.item_default);
-        }
+        }*/
+        
+        view.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				 Intent intent = new Intent(context,NewsDetailsActivity.class);
+                 intent.putExtra("id", list.get(position).getId());
+                 context.startActivity(intent);
+			}
+        	
+        });
         return view;
     }
 
     static class ViewHolder {
 
-        public ImageView img1;
+        //public ImageView img1;
         public CheckBox check;
         public TextView txt_collect_body;
         public TextView txt_collect_title;
