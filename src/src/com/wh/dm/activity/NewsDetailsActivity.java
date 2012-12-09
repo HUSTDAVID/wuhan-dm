@@ -7,6 +7,7 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NetworkConnection;
@@ -510,8 +511,19 @@ public class NewsDetailsActivity extends Activity {
             // TODO Auto-generated method stub
             try {
                 postresult = wh_dmApi.addFav(params[0], 0);
-                if (postresult.getResult())
+                if (postresult.getResult()){
+                	FavoriteNews news=new FavoriteNews();
+                	news.setNo(1);
+                	news.setId(params[0]);
+                	news.setTitle(newsTitle.getText().toString());
+                	news.setPubdate(newsTime.getText().toString());
+                	news.setLitpic("");
+                	news.setSid("");
+                	ArrayList<FavoriteNews> addNews=new ArrayList<FavoriteNews>();
+                	addNews.add(news);
+                	databaseImpl.addNewsFavorite(addNews);
                     return true;
+                }
                 else
                     return false;
             } catch (Exception e) {

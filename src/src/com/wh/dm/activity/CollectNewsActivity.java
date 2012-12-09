@@ -206,7 +206,7 @@ public class CollectNewsActivity extends Activity {
                 if (favList != null & favList.size() > 0) {
                     adapter.setList(favList);
                     collect_list.setAdapter(adapter);
-                    collect_list.setOnItemClickListener(new OnItemClickListener() {
+                    /*collect_list.setOnItemClickListener(new OnItemClickListener() {
 
                         @Override
                         public void onItemClick(AdapterView<?> arg0, View arg1, int position,
@@ -219,7 +219,7 @@ public class CollectNewsActivity extends Activity {
                             startActivity(intent);
                         }
 
-                    });
+                    });*/
                 }
                 isFirstLauncher = false;
             }
@@ -280,7 +280,7 @@ public class CollectNewsActivity extends Activity {
                 }
                 databaseImpl.addNewsFavorite(result);
                 collect_list.setAdapter(adapter);
-                collect_list.setOnItemClickListener(new OnItemClickListener() {
+                /*collect_list.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
@@ -289,7 +289,7 @@ public class CollectNewsActivity extends Activity {
                         intent.putExtra("id", adapter.getList().get(position).getId());
                         startActivity(intent);
                     }
-                });
+                });*/
 
             }
 
@@ -351,7 +351,7 @@ public class CollectNewsActivity extends Activity {
             adapter.RemoveAllInCheckedList();
             adapter.setList(favList);
             collect_list.setAdapter(adapter);
-            collect_list.setOnItemClickListener(new OnItemClickListener() {
+           /* collect_list.setOnItemClickListener(new OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -362,7 +362,7 @@ public class CollectNewsActivity extends Activity {
                     startActivity(intent);
                 }
 
-            });
+            });*/
             progressDialog.dismiss();
             super.onPostExecute(result);
         }
