@@ -13,7 +13,6 @@ import com.wh.dm.type.Cover;
 import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.FavoritePhoto;
 import com.wh.dm.type.Magazine;
-import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
@@ -31,7 +30,6 @@ import com.wh.dm.type.Vote;
 import com.wh.dm.type.VoteItem;
 import com.wh.dm.type.VoteResult;
 import com.wh.dm.type.VoteResultPercent;
-import com.wh.dm.util.LoadUtil;
 import com.wh.dm.util.PhotoUtil;
 import com.wh.dm.util.VoteUitl;
 
@@ -725,14 +723,4 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    // down load
-    public ArrayList<MagazineBody> getMagazineBody(int sid) throws WH_DMException,
-            UnKnownException, IOException {
-
-        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
-                new BasicNameValuePair("act", "down"),
-                new BasicNameValuePair("sid", String.valueOf(sid)));
-        String content = mHttpApi.doHttpRequest(httpGet);
-        return LoadUtil.loadMagazine(content);
-    }
 }

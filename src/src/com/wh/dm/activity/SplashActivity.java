@@ -6,7 +6,6 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.preference.Preferences;
-import com.wh.dm.service.PushService;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -44,7 +43,8 @@ public class SplashActivity extends Activity {
                 SplashActivity.this.finish();
             }
         }, 1200);
-        startService(new Intent(SplashActivity.this, PushService.class));
+        // push need to login first
+        // startService(new Intent(SplashActivity.this, PushService.class));
     }
 
     private class GetLoadPicTask extends AsyncTask<Void, Void, PostResult> {

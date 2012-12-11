@@ -1,8 +1,9 @@
 
 package com.wh.dm.util;
 
+import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Magazine;
-import com.wh.dm.type.MagazineBody;
+import com.wh.dm.type.PictureMagzine;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,11 +13,11 @@ import java.util.ArrayList;
 
 public class LoadUtil {
 
-    public static ArrayList<MagazineBody> loadMagazine(String json) {
+    public static ArrayList<ArticleMagzine> loadMagazine(String json) {
 
         Magazine magazine = new Magazine();
         int sid;
-        ArrayList<MagazineBody> magazineBodys = new ArrayList<MagazineBody>();
+        ArrayList<ArticleMagzine> articleMagzines = new ArrayList<ArticleMagzine>();
         try {
             JSONTokener jsonParser = new JSONTokener(json);
             JSONObject jsonObject = new JSONObject();
@@ -30,27 +31,73 @@ public class LoadUtil {
             magazine.setEditor(objMagazine.getString("editor"));
             magazine.setTemplate(objMagazine.getInt("template"));
 
-            // String body = jsonObject.getString("magazinebody");
             JSONArray arr = jsonObject.getJSONArray("magazinebody");
             for (int i = 0; i < arr.length(); i++) {
-                MagazineBody mbody = new MagazineBody();
+                ArticleMagzine article = new ArticleMagzine();
                 JSONObject objBody = (JSONObject) arr.get(i);
-                mbody.setNo(objBody.getInt("no"));
-                mbody.setId(objBody.getInt("id"));
-                mbody.setTitle(objBody.getString("title"));
-                mbody.setAuthor(objBody.getString("author"));
-                mbody.setWriter(objBody.getString("writer"));
-                mbody.setSource(objBody.getString("source"));
-                mbody.setLitpic(objBody.getString("litpic"));
-                mbody.setPubdate(objBody.getString("pubdate"));
-                mbody.setBody(objBody.getString("body"));
-                mbody.setSid(sid);
 
-                magazineBodys.add(mbody);
+                article.setId(objBody.getInt("id"));
+                article.setTitle(objBody.getString("title"));
+                article.setAuthor(objBody.getString("author"));
+                article.setWriter(objBody.getString("writer"));
+                article.setSource(objBody.getString("source"));
+                article.setLitpic(objBody.getString("litpic"));
+                article.setPubdate(objBody.getString("pubdate"));
+                article.setBody(objBody.getString("body"));
+                article.setSid(sid);
+
+                articleMagzines.add(article);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return magazineBodys;
+        return articleMagzines;
     }
+
+    public static int checkTemplate(String json) {
+
+        int template = 0;
+        try {
+            JSONTokener jsonParser = new JSONTokener(json);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject = (JSONObject) jsonParser.nextValue();
+
+            JSONObject objMagazine = jsonObject.getJSONObject("magazine");
+            template = objMagazine.getInt("template");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return template;
+    }
+
+    public static ArrayList<PictureMagzine> loadMagazinePic(String json) {
+
+        int sid;
+        ArrayList<PictureMagzine> magazinePics = new ArrayList<PictureMagzine>();
+        try {
+            JSONTokener jsonParser = new JSONTokener(json);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject = (JSONObject) jsonParser.nextValue();
+            JSONObject objMagazine = jsonObject.getJSONObject("magazine");
+            sid = objMagazine.getInt("sid");
+
+            JSONArray arr = jsonObject.getJSONArray("magazinebody");
+            for (int i = 0; i < arr.length(); i++) {
+                PictureMagzine mPic = new PictureMagzine();
+                JSONObject objBody = (JSONObject) arr.get(i);
+                mPic.setAddtime(objBody.getString("addtime"));
+                mPic.setDescription(objBody.getString("description"));
+                mPic.setId(objBody.getInt("id"));
+                mPic.setPic(objBody.getString("pic"));
+                mPic.setSid(sid);
+
+                magazinePics.add(mPic);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return magazinePics;
+    }
+
 }

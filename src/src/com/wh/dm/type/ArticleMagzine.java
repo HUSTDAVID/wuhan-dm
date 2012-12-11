@@ -9,6 +9,28 @@ public class ArticleMagzine {
     private String author;
     private String writer;
     private String source;
+    private int sid;
+    private String body;
+
+    public int getSid() {
+
+        return sid;
+    }
+
+    public void setSid(int sid) {
+
+        this.sid = sid;
+    }
+
+    public String getBody() {
+
+        return body;
+    }
+
+    public void setBody(String body) {
+
+        this.body = body;
+    }
 
     public void setId(int _id) {
 

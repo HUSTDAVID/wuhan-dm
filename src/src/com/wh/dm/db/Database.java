@@ -1,15 +1,16 @@
 
 package com.wh.dm.db;
 
+import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.FavoritePhoto;
 import com.wh.dm.type.LoadInfo;
 import com.wh.dm.type.Magazine;
-import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.Photo;
 import com.wh.dm.type.PhotoDetails;
 import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.type.PictureMagzine;
 import com.wh.dm.type.PostMessage;
 
 import java.util.ArrayList;
@@ -197,23 +198,34 @@ public interface Database {
     public void delMagazines();
 
     // magazine download
-    public ArrayList<MagazineBody> getMagazineBody(int sid);
+    public ArrayList<ArticleMagzine> getMagazineBody(int sid);
 
     public void deleteMagazineBody();
 
-    public void addMagazineBody(ArrayList<MagazineBody> magazineList);
+    public void addMagazineBody(ArrayList<ArticleMagzine> magazineList);
 
     public Magazine getMagazine(int sid);
 
     public ArrayList<LoadInfo> getLoadInfo();
 
-    public MagazineBody getOneMagazineBody(int id);
+    public ArticleMagzine getOneMagazineBody(int id);
 
     public boolean isLoad(int sid);
 
     public void deleteLoadInfo();
 
     public void addLoadInfo(ArrayList<LoadInfo> loadInfos);
+
+    // load image magazine
+
+    public void addMagazinePic(ArrayList<PictureMagzine> magazineList);
+
+    public ArrayList<PictureMagzine> getMagazinePic(int id);
+
+    public void deleteMagazinePic();
+
+    // delete magazie when pause
+    public void deleteLoad(int sid, int template);
 
     // post message
     public ArrayList<PostMessage> getPostMessage();

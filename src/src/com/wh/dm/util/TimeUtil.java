@@ -59,4 +59,11 @@ public class TimeUtil {
         }
     }
 
+    public static String showCurTime() {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyÄêMMÔÂddÈÕ   HH:mm:ss     ");
+        Date curDate = new Date(System.currentTimeMillis());
+        return formatter.format(curDate);
+    }
+
 }

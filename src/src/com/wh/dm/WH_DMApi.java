@@ -10,7 +10,6 @@ import com.wh.dm.type.Cover;
 import com.wh.dm.type.FavoriteNews;
 import com.wh.dm.type.FavoritePhoto;
 import com.wh.dm.type.Magazine;
-import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.NewsType;
@@ -322,10 +321,4 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getMessages();
     }
 
-    // down load
-    public ArrayList<MagazineBody> getMagazineBody(int sid) throws WH_DMException,
-            UnKnownException, IOException {
-
-        return mWH_DMHttpApiV1.getMagazineBody(sid);
-    }
 }

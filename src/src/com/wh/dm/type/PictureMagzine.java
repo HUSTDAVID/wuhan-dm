@@ -3,10 +3,21 @@ package com.wh.dm.type;
 
 public class PictureMagzine {
 
+    private int sid;
     private int id;
     private String description;
     private String pic;
     private String addtime;
+
+    public int getSid() {
+
+        return sid;
+    }
+
+    public void setSid(int sid) {
+
+        this.sid = sid;
+    }
 
     public void setId(int _id) {
 

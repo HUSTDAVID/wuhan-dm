@@ -208,9 +208,6 @@ public class LoginActivity extends Activity {
                 WH_DMApp.isLogin = true;
                 Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
                 handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
-                databaseImpl.deletePostMessage();
-                Preferences.setPostMessage(LoginActivity.this, 0);
-                startService(new Intent(LoginActivity.this, PushService.class));
                 finish();
             } else {
                 NotificationUtil
@@ -241,6 +238,9 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(ArrayList<Magazine> result) {
 
             if (result != null) {
+                databaseImpl.deletePostMessage();
+                Preferences.setPostMessage(LoginActivity.this, 0);
+                startService(new Intent(LoginActivity.this, PushService.class));
                 databaseImpl.addMagazines(result);
                 sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
             }

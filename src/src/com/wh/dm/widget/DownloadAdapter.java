@@ -104,6 +104,7 @@ public class DownloadAdapter extends BaseAdapter {
                     Message msg = new Message();
                     msg.what = DownloadActivity.MSG_OPEN_MAGAZINE;
                     msg.arg1 = dms.get(pos).getSid();
+                    msg.arg2 = pos;
                     handler.sendMessage(msg);
 
                 } else if (!dms.get(pos).isStart()) {
@@ -111,18 +112,21 @@ public class DownloadAdapter extends BaseAdapter {
                     Message msg = new Message();
                     msg.what = DownloadActivity.MSG_START_LOAD;
                     msg.arg1 = dms.get(pos).getSid();
+                    msg.arg2 = pos;
                     handler.sendMessage(msg);
                 } else if (dms.get(pos).isPause()) {
                     // send message to go to
                     Message msg = new Message();
                     msg.what = DownloadActivity.MSG_START_LOAD;
                     msg.arg1 = dms.get(pos).getSid();
+                    msg.arg2 = pos;
                     handler.sendMessage(msg);
                 } else {
                     // send message to pause
                     Message msg = new Message();
                     msg.what = DownloadActivity.MSG_PAUSE_LOAD;
                     msg.arg1 = dms.get(pos).getSid();
+                    msg.arg2 = pos;
                     handler.sendMessage(msg);
                 }
 

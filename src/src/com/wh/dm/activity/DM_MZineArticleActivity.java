@@ -9,7 +9,6 @@ import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Magazine;
-import com.wh.dm.type.MagazineBody;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.TimeUtil;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -24,6 +23,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -796,22 +796,9 @@ public class DM_MZineArticleActivity extends Activity {
             try {
 
                 if (isLoad) {
-                    ArrayList<MagazineBody> magazines = new ArrayList<MagazineBody>();
-                    articles = new ArrayList<ArticleMagzine>();
-                    magazines = databaseImpl.getMagazineBody(sid);
-                    int size = magazines.size();
-                    for (MagazineBody body : magazines) {
-                        ArticleMagzine temp = new ArticleMagzine();
-                        temp.setAuthor(body.getAuthor());
-                        temp.setId(body.getId());
-                        temp.setLitpic(body.getLitpic());
-                        temp.setPubdate(body.getPubdate());
-                        temp.setSource(body.getSource());
-                        temp.setTitle(body.getTitle());
-                        temp.setWriter(body.getWriter());
-
-                        articles.add(temp);
-                    }
+                    Log.d("database", "start" + TimeUtil.showCurTime());
+                    articles = databaseImpl.getMagazineBody(sid);
+                    Log.d("database", "finish" + TimeUtil.showCurTime());
                 } else {
                     articles = wh_dmApi.getArticleMagzine(params[0]);
                 }
@@ -826,7 +813,9 @@ public class DM_MZineArticleActivity extends Activity {
         protected void onPostExecute(ArrayList<ArticleMagzine> result) {
 
             if (result != null) {
+                Log.d("add", "start" + TimeUtil.showCurTime());
                 addData(result);
+                Log.d("add", "finish" + TimeUtil.showCurTime());
                 txtPage.setText(curPage + "/" + totalPage);
 
             } else {

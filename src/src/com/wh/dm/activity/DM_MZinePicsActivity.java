@@ -6,6 +6,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.PictureMagzine;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -35,6 +36,7 @@ public class DM_MZinePicsActivity extends Activity {
     private ProgressDialog progressDialog;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private ArrayList<View> views;
     private int totalPage = 1;
     private int curPage = 1;
@@ -44,6 +46,7 @@ public class DM_MZinePicsActivity extends Activity {
     private GetPicsTask getPicsTask = null;
     private static final int MSG_GET_PICS = 0;
     private int sid;
+    private boolean isLoad = false;
     private TextView txtDes;
     private ImageView imgArrow;
     private ImageView imgComment;
@@ -75,6 +78,7 @@ public class DM_MZinePicsActivity extends Activity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         sid = bundle.getInt("sid");
+        isLoad = databaseImpl.isLoad(sid);
         handler.sendEmptyMessage(MSG_GET_PICS);
 
     }
@@ -96,6 +100,7 @@ public class DM_MZinePicsActivity extends Activity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
 
         imgArrow.setOnClickListener(new OnClickListener() {
 
@@ -252,7 +257,9 @@ public class DM_MZinePicsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            if (!isLoad) {
+                progressDialog.show();
+            }
             super.onPreExecute();
         }
 
@@ -260,7 +267,11 @@ public class DM_MZinePicsActivity extends Activity {
         protected ArrayList<PictureMagzine> doInBackground(Integer... params) {
 
             try {
-                magazines = wh_dmApi.getPictureMagzine(params[0]);
+                if (!isLoad) {
+                    magazines = wh_dmApi.getPictureMagzine(params[0]);
+                } else {
+                    magazines = databaseImpl.getMagazinePic(sid);
+                }
                 return magazines;
             } catch (Exception e) {
                 reason = e;
@@ -276,7 +287,9 @@ public class DM_MZinePicsActivity extends Activity {
             } else {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);
             }
-            progressDialog.dismiss();
+            if (!isLoad) {
+                progressDialog.dismiss();
+            }
             super.onPostExecute(result);
         }
     }

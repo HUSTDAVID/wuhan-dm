@@ -8,8 +8,8 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Article;
+import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
-import com.wh.dm.type.MagazineBody;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.util.NotificationUtil;
@@ -330,7 +330,9 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            if (!isLoad) {
+                progressDialog.show();
+            }
             super.onPreExecute();
         }
 
@@ -340,7 +342,7 @@ public class MagazineDetailsActivity extends Activity {
             Article article = null;
             try {
                 if (isLoad) {
-                    MagazineBody one = new MagazineBody();
+                    ArticleMagzine one = new ArticleMagzine();
                     article = new Article();
                     one = databaseImpl.getOneMagazineBody(sid);
                     article.setBody(one.getBody());
@@ -394,7 +396,9 @@ public class MagazineDetailsActivity extends Activity {
                             MagazineDetailsActivity.this);
                 }
             }
-            progressDialog.dismiss();
+            if (isLoad) {
+                progressDialog.dismiss();
+            }
             super.onPostExecute(result);
         }
 

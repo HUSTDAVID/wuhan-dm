@@ -74,8 +74,11 @@ public class DM_Tab_2Activity extends TabActivity implements OnTabChangeListener
         tabHost.addTab(tabHost.newTabSpec("subscribe").setIndicator(createTabView(SUBSCRIBE))
                 .setContent(new Intent(this, SubscribeActivity.class)));
 
+        // tabHost.addTab(tabHost.newTabSpec("store").setIndicator(createTabView(STORE))
+        // .setContent(new Intent(this, CollectMainActivity.class)));
+        // collect and message
         tabHost.addTab(tabHost.newTabSpec("store").setIndicator(createTabView(STORE))
-                .setContent(new Intent(this, CollectMainActivity.class)));
+                .setContent(new Intent(this, MessageActivity.class)));
 
         tabHost.setOnTabChangedListener(this);
         changeTabTxtColor();
