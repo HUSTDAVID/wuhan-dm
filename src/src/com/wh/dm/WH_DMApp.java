@@ -2,6 +2,7 @@
 package com.wh.dm;
 
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.service.PushService;
 import com.wh.dm.util.SettingUtil;
 
@@ -42,6 +43,15 @@ public class WH_DMApp extends Application {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
         login();
+        // update database
+        boolean update_db = mPrefs.getBoolean(Preferences.UPDATE_DATABASE, true);
+        if (update_db) {
+            DatabaseImpl databaseImpl = new DatabaseImpl(this);
+            databaseImpl.deleteLoadInfo();
+            databaseImpl.deleteMagazineBody();
+            databaseImpl.deleteMagazinePic();
+            Preferences.setUpdateDB(this);
+        }
 
     }
 

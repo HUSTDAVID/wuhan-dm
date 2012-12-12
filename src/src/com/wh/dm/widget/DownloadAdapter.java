@@ -141,22 +141,22 @@ public class DownloadAdapter extends BaseAdapter {
         if (dms.get(position).isFinish()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
-            viewHolder.txtAddition.setText("下载已完成");
-            viewHolder.btnStatus.setText("查看DM");
+            viewHolder.txtAddition.setText(context.getResources().getString(R.string.load_finish));
+            viewHolder.btnStatus.setText(context.getResources().getString(R.string.watch_dm));
         } else if (!dms.get(position).isStart()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
-            viewHolder.txtAddition.setText("未下载杂志");
-            viewHolder.btnStatus.setText("开始下载");
+            viewHolder.txtAddition.setText(context.getResources().getString(R.string.not_load));
+            viewHolder.btnStatus.setText(context.getResources().getString(R.string.begin_load));
         } else if (dms.get(position).isPause()) {
             viewHolder.pbStatus.setVisibility(View.GONE);
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
-            viewHolder.txtAddition.setText("暂停下载");
-            viewHolder.btnStatus.setText("继续下载");
+            viewHolder.txtAddition.setText(context.getResources().getString(R.string.pause_load));
+            viewHolder.btnStatus.setText(context.getResources().getString(R.string.continue_load));
         } else {
             viewHolder.pbStatus.setVisibility(View.VISIBLE);
             viewHolder.txtAddition.setVisibility(View.GONE);
-            viewHolder.btnStatus.setText("暂停下载");
+            viewHolder.btnStatus.setText(context.getResources().getString(R.string.pause_load));
             viewHolder.pbStatus.setProgress(dms.get(position).getPro());
         }
         return convertView;

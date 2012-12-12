@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="no_magazine">暂无新刊</string>
+    <string name="load_finish">下载已完成</string>
+    <string name="watch_dm">查看DM</string>
+    <string name="not_load">未下载杂志</string>
+    <string name="begin_load">开始下载</string>
+    <string name="pause_load">暂停下载</string>
+    <string name="continue_load">继续下载</string>  
     <string name="badconnect">您的网络不给力</string>
     <string name="bind">已绑定</string>
     <string name="unbind">未绑定</string>

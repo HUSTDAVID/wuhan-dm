@@ -723,4 +723,13 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
+    // load magazine
+    public String loadMagzine(int sid) throws WH_DMException, UnKnownException, IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "down"),
+                new BasicNameValuePair("sid", String.valueOf(sid)));
+        return mHttpApi.doHttpRequest(httpGet);
+    }
+
 }

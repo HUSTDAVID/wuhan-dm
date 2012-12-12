@@ -196,16 +196,16 @@ public class DatabaseImpl implements Database {
         // load arcticle magazine
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGEZINE_BODY
-                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, author VARCHAR, writer VARCHAR,"
-                + "no INTEGER, id INTEGER, title VARCHAR, source VARCHAR, litpic VARCHAR, pubdate VARCHAR, body VARCHAR)");
+                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER , author VARCHAR, writer VARCHAR,"
+                + "no INTEGER, id INTEGER UNIQUE, title VARCHAR, source VARCHAR, litpic VARCHAR, pubdate VARCHAR, body VARCHAR)");
         // load info
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_LOAD_INFO
-                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, pic_path VARCHAR, title VARCHAR, is_finish INTEGER, is_start VARCHAR, is_pause VARCHAR, pro VARCHAR)");
+                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER UNIQUE, pic_path VARCHAR, title VARCHAR, is_finish INTEGER, is_start VARCHAR, is_pause VARCHAR, pro VARCHAR)");
         // load imaga magazine
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGAZINE_PIC
-                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER, no INTEGER, id INTEGER, aid INTEGER, cover INTEGER, description VARCHAR, pic VARCHAR, addtime VARCHAR)");
+                + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER , no INTEGER, id INTEGER UNIQUE, aid INTEGER, cover INTEGER, description VARCHAR, pic VARCHAR, addtime VARCHAR)");
         // post message
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MESSAGE
@@ -1833,6 +1833,32 @@ public class DatabaseImpl implements Database {
                 String.valueOf(sid)
             });
         }
+        db.close();
+    }
+
+    @Override
+    public void addAllLoad(ArrayList<PictureMagzine> picList, ArrayList<ArticleMagzine> articleList) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        db.beginTransaction();
+        try {
+            for (PictureMagzine pic : picList) {
+
+                ContentValues values = new ContentValues();
+                values.putAll((new PictureMagzineBuilder()).deconstruct(pic));
+                db.insert(TABLE_MAGAZINE_PIC, null, values);
+            }
+            for (ArticleMagzine article : articleList) {
+
+                ContentValues values = new ContentValues();
+                values.putAll((new ArticleMagzineBuilder()).deconstruct(article));
+                db.insert(TABLE_MAGEZINE_BODY, null, values);
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        db.endTransaction();
         db.close();
     }
 

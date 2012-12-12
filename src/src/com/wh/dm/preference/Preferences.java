@@ -45,6 +45,8 @@ public class Preferences {
     public static final String LOAD_PIC_PATH = "pic_path";
     public static final String POST_MESSAGE = "post_message";
 
+    public static final String UPDATE_DATABASE = "update_database";
+
     public static void saveUser(Context context, String email, String password) {
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
@@ -132,6 +134,14 @@ public class Preferences {
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
         return preference.getInt(POST_MESSAGE, 0);
+    }
+
+    public static void setUpdateDB(Context context) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor = preference.edit();
+        editor.putBoolean(UPDATE_DATABASE, false);
+        editor.commit();
     }
 
 }

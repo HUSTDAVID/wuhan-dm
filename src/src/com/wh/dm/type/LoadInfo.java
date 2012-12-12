@@ -10,6 +10,17 @@ public class LoadInfo {
     private boolean isStart;
     private boolean isPause;
     private int pro;
+    private boolean ok = false;
+
+    public boolean isOk() {
+
+        return ok;
+    }
+
+    public void setOk(boolean ok) {
+
+        this.ok = ok;
+    }
 
     public LoadInfo() {
 

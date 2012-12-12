@@ -31,11 +31,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class DownloadActivity extends Activity {
@@ -45,7 +40,8 @@ public class DownloadActivity extends Activity {
     private ImageButton btnBack;
     private ArrayList<LoadInfo> loadList;
     private ArrayList<Magazine> subMagazines;
-    private ArrayList<ArticleMagzine> articleMagzines;
+    private ArrayList<ArticleMagzine> allArticleMagzines;
+    private ArrayList<PictureMagzine> allPictureMagazines;
     public static final int MSG_NO_MAGAZINE = 0;
     public static final int MSG_LOADING = 1;
     public static final int MSG_FINISH_LOAD = 2;
@@ -53,7 +49,8 @@ public class DownloadActivity extends Activity {
     public static final int MSG_PAUSE_LOAD = 4;
     public static final int MSG_OPEN_MAGAZINE = 5;
     private boolean insearting = false;
-
+    private ArrayList<Integer> loadFlag;
+    private ArrayList<Integer> pauseFlag;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -65,37 +62,68 @@ public class DownloadActivity extends Activity {
 
             int sid = msg.arg1;
             int position = msg.arg2;
-            int size = loadList.size();
 
             switch (msg.what) {
                 case MSG_NO_MAGAZINE:
-                    NotificationUtil.showShortToast("ÔÝÎÞÐÂ¿¯", DownloadActivity.this);
+                    NotificationUtil.showShortToast(getResources().getString(R.string.no_magazine),
+                            DownloadActivity.this);
+                    loadList.get(position).setFinish(false);
+                    loadList.get(position).setStart(false);
+                    loadList.get(position).setOk(false);
+                    loadList.get(position).setPause(false);
                     adapter.setList(loadList);
                     break;
                 case MSG_LOADING:
                     adapter.setList(loadList);
                     break;
                 case MSG_FINISH_LOAD:
+                    loadList.get(position).setOk(true);
                     adapter.setList(loadList);
+                    loadFlag.add(position);
+                    if (checkAllLoad()) {
+                        databaseImpl.addAllLoad(allPictureMagazines, allArticleMagzines);
+                        allPictureMagazines.clear();
+                        allArticleMagzines.clear();
+                        int loadsize = loadFlag.size();
+                        for (int i = 0; i < loadsize; i++) {
+                            loadList.get(loadFlag.get(i)).setFinish(true);
+                            loadList.get(loadFlag.get(i)).setStart(true);
+                            loadList.get(loadFlag.get(i)).setPause(false);
+                            loadList.get(loadFlag.get(i)).setPro(100);
+                        }
+                        int pauseSize = pauseFlag.size();
+                        for (int i = 0; i < pauseSize; i++) {
+                            loadList.get(pauseFlag.get(i)).setFinish(false);
+                            loadList.get(pauseFlag.get(i)).setStart(true);
+                            loadList.get(pauseFlag.get(i)).setPause(true);
+                            loadList.get(pauseFlag.get(i)).setPro(20);
+                        }
+                        databaseImpl.deleteLoadInfo();
+                        databaseImpl.addLoadInfo(loadList);
+                        loadFlag.clear();
+                        pauseFlag.clear();
+                    }
                     break;
                 case MSG_START_LOAD:
                     new LoadMagazineThread(DownloadActivity.this, this, sid, position).start();
+                    int psize = pauseFlag.size();
+                    for (int i = 0; i < psize; i++) {
+                        if (position == pauseFlag.get(i)) {
+                            pauseFlag.remove(i);
+                        }
+                    }
                     loadList.get(position).setStart(true);
                     loadList.get(position).setPause(false);
                     loadList.get(position).setFinish(false);
+                    loadList.get(position).setOk(false);
                     loadList.get(position).setPro(5);
                     adapter.setList(loadList);
                     break;
                 case MSG_PAUSE_LOAD:
-                    // i do not know how to pause.may be need to delete it. or
-                    // save all thread and stop it.
-                    // loadList.get(position).setPause(true);
-                    // loadList.get(position).setStart(false);
-                    // loadList.get(position).setFinish(false);
-                    // loadList.get(position).setPro(5);
-                    // adapter.setList(loadList);
-                    // int template = subMagazines.get(position).getTemplate();
-                    // (new DeleteThread(sid, template)).start();
+                    loadList.get(position).setPause(true);
+                    loadList.get(position).setStart(true);
+                    pauseFlag.add(position);
+                    adapter.setList(loadList);
                     break;
                 case MSG_OPEN_MAGAZINE:
                     Intent intent_magazine = new Intent(DownloadActivity.this,
@@ -142,7 +170,10 @@ public class DownloadActivity extends Activity {
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
         subMagazines = databaseImpl.getSubcribedMagazine();
-        articleMagzines = new ArrayList<ArticleMagzine>();
+        allArticleMagzines = new ArrayList<ArticleMagzine>();
+        allPictureMagazines = new ArrayList<PictureMagzine>();
+        loadFlag = new ArrayList<Integer>();
+        pauseFlag = new ArrayList<Integer>();
         loadList = new ArrayList<LoadInfo>();
         loadList = initLoadInfo(subMagazines);
 
@@ -162,9 +193,6 @@ public class DownloadActivity extends Activity {
         adapter.setList(loadList);
         lvDownload.setAdapter(adapter);
 
-        // this task is use for test down load interface
-        // loadTask = new LoadMagazineTask();
-        // loadTask.execute();
     }
 
     private ArrayList<LoadInfo> initLoadInfo(ArrayList<Magazine> magazines) {
@@ -186,7 +214,13 @@ public class DownloadActivity extends Activity {
 
                 loadInfoList.add(loadInfo);
             }
-            databaseImpl.addLoadInfo(loadInfoList);
+        } else {
+            int size = loadInfoList.size();
+            for (int i = 0; i < size; i++) {
+                if (loadInfoList.get(i).isFinish()) {
+                    loadInfoList.get(i).setOk(true);
+                }
+            }
         }
         return loadInfoList;
     }
@@ -212,234 +246,119 @@ public class DownloadActivity extends Activity {
         @Override
         public void run() {
 
-            // use a message send infomation to ui thread
             Looper.prepare();
             try {
-                int fileSize = 0;
-                URL url = new URL("http://test1.jbr.net.cn:809/api/Magazine.aspx?act=down&sid="
-                        + sid);
-                URLConnection conn = url.openConnection();
-                conn.connect();
-                fileSize = conn.getContentLength();
-                if (fileSize <= 0) {
+                loadList.get(position).setPro(10);
+                // send a message
+                Message msg1 = new Message();
+                msg1.what = MSG_LOADING;
+                msg1.arg1 = sid;
+                msg1.arg2 = position;
+                handler.sendMessage(msg1);
+
+                String content = wh_dmApi.loadMagzine(sid);
+                if (content != null && content.length() > 0) {
+                    loadList.get(position).setPro(20);
+                    // send a message
+                    Message msg2 = new Message();
+                    msg2.what = MSG_LOADING;
+                    msg2.arg1 = sid;
+                    msg2.arg2 = position;
+                    handler.sendMessage(msg2);
+                    int template = LoadUtil.checkTemplate(content);
+                    // 0 arcticle 1 image
+                    if (template == 0) {
+                        articleMagzines = LoadUtil.loadMagazine(content);
+                        allArticleMagzines.addAll(articleMagzines);
+                        loadList.get(position).setPro(30);
+                        // send a message
+                        Message msg3 = new Message();
+                        msg3.what = MSG_LOADING;
+                        msg3.arg1 = sid;
+                        msg3.arg2 = position;
+                        handler.sendMessage(msg3);
+                        int size = articleMagzines.size();
+                        ArticleMagzine body = new ArticleMagzine();
+                        for (int i = 0; i < size; i++) {
+                            body = articleMagzines.get(i);
+                            new WebView(context).loadDataWithBaseURL("http://test1.jbr.net.cn:809",
+                                    body.getBody(), "text/html", "utf-8", null);
+                            if (body.getLitpic() != null && body.getLitpic().length() > 0) {
+                                UrlImageViewHelper.setUrlDrawable(new ImageView(context),
+                                        WH_DMHttpApiV1.URL_DOMAIN + body.getLitpic(),
+                                        R.drawable.item_default, null);
+
+                            }
+                            // TODO:
+                        }
+
+                        // send finish
+                        loadList.get(position).setPro(90);
+                        Message msgFinish = new Message();
+                        msgFinish.what = MSG_FINISH_LOAD;
+                        msgFinish.arg1 = sid;
+                        msgFinish.arg2 = position;
+                        handler.sendMessage(msgFinish);
+
+                    } else if (template == 1) {
+                        magazinePics = LoadUtil.loadMagazinePic(content);
+                        allPictureMagazines.addAll(magazinePics);
+                        loadList.get(position).setPro(50);
+                        // send a message
+                        Message msg4 = new Message();
+                        msg4.what = MSG_LOADING;
+                        msg4.arg1 = sid;
+                        msg4.arg2 = position;
+                        handler.sendMessage(msg4);
+                        int size = magazinePics.size();
+                        PictureMagzine pic = new PictureMagzine();
+                        for (int i = 0; i < size; i++) {
+                            pic = magazinePics.get(i);
+                            UrlImageViewHelper.setUrlDrawable(new ImageView(context),
+                                    WH_DMHttpApiV1.URL_DOMAIN + pic.getPic(),
+                                    R.drawable.item_default, null);
+                            // TODO:
+                        }
+                        // send finish
+                        loadList.get(position).setPro(90);
+                        Message msgFinish = new Message();
+                        msgFinish.what = MSG_FINISH_LOAD;
+                        msgFinish.arg1 = sid;
+                        msgFinish.arg2 = position;
+                        handler.sendMessage(msgFinish);
+                    }
+                } else {
                     Message msgError = new Message();
                     msgError.what = MSG_NO_MAGAZINE;
                     msgError.arg1 = sid;
-                    while (insearting) {
-                        sleep(100);
-                    }
-                    insearting = true;
-                    loadList.get(position).setStart(false);
-                    loadList.get(position).setFinish(false);
-                    loadList.get(position).setPause(false);
-                    databaseImpl.deleteLoadInfo();
-                    databaseImpl.addLoadInfo(loadList);
-                    insearting = false;
+                    msgError.arg2 = position;
                     handler.sendMessage(msgError);
-
                 }
-                InputStream is = conn.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-                is.close();
-                Message msgReaderIs = new Message();
-                msgReaderIs.what = MSG_LOADING;
-                msgReaderIs.arg1 = sid;
-                while (insearting) {
-                    sleep(100);
-                }
-                insearting = true;
-                loadList.get(position).setPro(10);
-                databaseImpl.deleteLoadInfo();
-                databaseImpl.addLoadInfo(loadList);
-                insearting = false;
-                handler.sendMessage(msgReaderIs);
-                int template = LoadUtil.checkTemplate(sb.toString());
-                // 0 arcticle 1 image
-                if (template == 0) {
-                    articleMagzines = LoadUtil.loadMagazine(sb.toString());
-                    Message msgChangeType = new Message();
-                    msgChangeType.what = MSG_LOADING;
-                    msgChangeType.arg1 = sid;
-                    while (insearting) {
-                        sleep(100);
-                    }
-                    insearting = true;
-                    if (loadList.get(position).isPause()) {
-
-                    } else {
-                        loadList.get(position).setPro(20);
-                        databaseImpl.deleteLoadInfo();
-                        databaseImpl.addLoadInfo(loadList);
-                        handler.sendMessage(msgChangeType);
-                    }
-                    insearting = false;
-
-                    if (articleMagzines != null && articleMagzines.size() > 0) {
-                        while (insearting) {
-                            sleep(100);
-                        }
-                        insearting = true;
-                        if (loadList.get(position).isPause()) {
-
-                        } else {
-                            databaseImpl.addMagazineBody(articleMagzines);
-                        }
-                        insearting = false;
-                        int size = articleMagzines.size();
-                        ArticleMagzine body = new ArticleMagzine();
-                        WebView webView = new WebView(context);
-                        ImageView imageView = new ImageView(context);
-                        for (int i = 0; i < size; i++) {
-                            body = articleMagzines.get(i);
-                            webView.loadDataWithBaseURL("http://test1.jbr.net.cn:809",
-                                    body.getBody(), "text/html", "utf-8", null);
-                            if (body.getLitpic() != null && body.getLitpic().length() > 0) {
-                                UrlImageViewHelper.setUrlDrawable(imageView,
-                                        WH_DMHttpApiV1.URL_DOMAIN + body.getLitpic(),
-                                        R.drawable.item_default, null);
-                            }
-                            if (i % 15 == 0) {
-                                Message messagePro = new Message();
-                                messagePro.what = MSG_LOADING;
-                                messagePro.arg1 = sid;
-
-                                while (insearting) {
-                                    sleep(100);
-                                }
-                                insearting = true;
-                                if (loadList.get(position).isPause()) {
-                                    insearting = false;
-                                    break;
-                                }
-                                loadList.get(position).setPro(20 + i * 80 / size);
-                                databaseImpl.deleteLoadInfo();
-                                databaseImpl.addLoadInfo(loadList);
-                                insearting = false;
-                                handler.sendMessage(messagePro);
-                            }
-                        }
-
-                        Message msgFinish = new Message();
-                        msgFinish.what = MSG_FINISH_LOAD;
-                        msgFinish.arg1 = sid;
-                        while (insearting) {
-                            sleep(100);
-                        }
-                        insearting = true;
-                        if (loadList.get(position).isPause()) {
-
-                        } else {
-                            loadList.get(position).setPro(100);
-                            loadList.get(position).setFinish(true);
-                            loadList.get(position).setStart(true);
-                            loadList.get(position).setPause(false);
-                            databaseImpl.deleteLoadInfo();
-                            databaseImpl.addLoadInfo(loadList);
-                            handler.sendMessage(msgFinish);
-                        }
-                        insearting = false;
-
-                    } else {
-                        Message msgError = new Message();
-                        msgError.what = MSG_NO_MAGAZINE;
-                        msgError.arg1 = sid;
-                        handler.sendMessage(msgError);
-
-                    }
-                } else {
-
-                    magazinePics = LoadUtil.loadMagazinePic(sb.toString());
-                    if (magazinePics != null && magazinePics.size() > 0) {
-                        Message message = new Message();
-                        message.what = MSG_LOADING;
-                        message.arg1 = sid;
-                        while (insearting) {
-                            sleep(100);
-                        }
-                        insearting = true;
-                        if (loadList.get(position).isPause()) {
-
-                        } else {
-                            loadList.get(position).setPro(30);
-                            databaseImpl.addMagazinePic(magazinePics);
-                            handler.sendMessage(message);
-
-                        }
-                        insearting = false;
-                        int size = magazinePics.size();
-                        PictureMagzine pic = new PictureMagzine();
-                        ImageView imageView = new ImageView(context);
-                        for (int i = 0; i < size; i++) {
-                            pic = magazinePics.get(i);
-                            UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
-                                    + pic.getPic(), R.drawable.item_default, null);
-                            if (i % 10 == 0) {
-                                Message messagePro = new Message();
-                                messagePro.what = MSG_LOADING;
-                                messagePro.arg1 = sid;
-                                while (insearting) {
-                                    sleep(100);
-                                }
-                                insearting = true;
-                                if (loadList.get(position).isPause()) {
-
-                                } else {
-                                    loadList.get(position).setPro(30 + i * 80 / size);
-                                    databaseImpl.deleteLoadInfo();
-                                    databaseImpl.addLoadInfo(loadList);
-                                    insearting = false;
-                                    handler.sendMessage(messagePro);
-                                }
-                            }
-
-                        }
-
-                        Message msgFinish = new Message();
-                        msgFinish.what = MSG_FINISH_LOAD;
-                        msgFinish.arg1 = sid;
-                        while (insearting) {
-                            sleep(100);
-                        }
-                        insearting = true;
-                        if (loadList.get(position).isPause()) {
-
-                        } else {
-                            loadList.get(position).setPro(100);
-                            loadList.get(position).setFinish(true);
-                            loadList.get(position).setStart(true);
-                            loadList.get(position).setPause(false);
-                            loadList.get(position).setPro(100);
-                            databaseImpl.deleteLoadInfo();
-                            databaseImpl.addLoadInfo(loadList);
-                            handler.sendMessage(msgFinish);
-                        }
-                        insearting = false;
-
-                    } else {
-                        Message msgError = new Message();
-                        msgError.what = MSG_NO_MAGAZINE;
-                        msgError.arg1 = sid;
-                        handler.sendMessage(msgError);
-
-                    }
-
-                }
-
             } catch (Exception e) {
+                e.printStackTrace();
+                // send a error message
                 Message msgError = new Message();
                 msgError.what = MSG_NO_MAGAZINE;
                 msgError.arg1 = sid;
+                msgError.arg2 = position;
                 handler.sendMessage(msgError);
-                e.printStackTrace();
-
             }
+
             super.run();
         }
+    }
+
+    private boolean checkAllLoad() {
+
+        int size = loadList.size();
+        LoadInfo info;
+        for (int i = 0; i < size; i++) {
+            info = loadList.get(i);
+            if (info.isStart() && !info.isOk()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public class DeleteThread extends Thread {

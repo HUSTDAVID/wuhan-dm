@@ -224,6 +224,8 @@ public interface Database {
 
     public void deleteMagazinePic();
 
+    public void addAllLoad(ArrayList<PictureMagzine> picList, ArrayList<ArticleMagzine> articleList);
+
     // delete magazie when pause
     public void deleteLoad(int sid, int template);
 
