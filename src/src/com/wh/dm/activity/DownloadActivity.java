@@ -46,11 +46,14 @@ public class DownloadActivity extends Activity {
     public static final int MSG_LOADING = 1;
     public static final int MSG_FINISH_LOAD = 2;
     public static final int MSG_START_LOAD = 3;
-    public static final int MSG_PAUSE_LOAD = 4;
-    public static final int MSG_OPEN_MAGAZINE = 5;
-    private boolean insearting = false;
-    private ArrayList<Integer> loadFlag;
-    private ArrayList<Integer> pauseFlag;
+    public static final int MSG_OPEN_MAGAZINE = 4;
+    public static final int MSG_LOAD_ONE_IMAGE = 5;
+    private int totalLoadImage = 0;
+    private int curLoadImage = 0;
+    private UpdateDBThread updateDBThread = null;
+    private ArrayList<Integer> loadSidList;
+    private ArrayList<Integer> loadPosList;
+    private boolean isLoading = false;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -67,65 +70,60 @@ public class DownloadActivity extends Activity {
                 case MSG_NO_MAGAZINE:
                     NotificationUtil.showShortToast(getResources().getString(R.string.no_magazine),
                             DownloadActivity.this);
+                    if (loadPosList.size() > 0) {
+                        position = loadPosList.get(0);
+                        loadPosList.remove(0);
+                        loadSidList.remove(0);
+                    }
                     loadList.get(position).setFinish(false);
                     loadList.get(position).setStart(false);
-                    loadList.get(position).setOk(false);
-                    loadList.get(position).setPause(false);
                     adapter.setList(loadList);
+                    isLoading = false;
+                    if (loadPosList.size() > 0) {
+                        Message startMsg = new Message();
+                        startMsg.what = MSG_START_LOAD;
+                        startMsg.arg1 = -1;
+                        this.sendMessage(startMsg);
+                    }
                     break;
                 case MSG_LOADING:
                     adapter.setList(loadList);
                     break;
                 case MSG_FINISH_LOAD:
-                    loadList.get(position).setOk(true);
                     adapter.setList(loadList);
-                    loadFlag.add(position);
-                    if (checkAllLoad()) {
-                        databaseImpl.addAllLoad(allPictureMagazines, allArticleMagzines);
-                        allPictureMagazines.clear();
-                        allArticleMagzines.clear();
-                        int loadsize = loadFlag.size();
-                        for (int i = 0; i < loadsize; i++) {
-                            loadList.get(loadFlag.get(i)).setFinish(true);
-                            loadList.get(loadFlag.get(i)).setStart(true);
-                            loadList.get(loadFlag.get(i)).setPause(false);
-                            loadList.get(loadFlag.get(i)).setPro(100);
-                        }
-                        int pauseSize = pauseFlag.size();
-                        for (int i = 0; i < pauseSize; i++) {
-                            loadList.get(pauseFlag.get(i)).setFinish(false);
-                            loadList.get(pauseFlag.get(i)).setStart(true);
-                            loadList.get(pauseFlag.get(i)).setPause(true);
-                            loadList.get(pauseFlag.get(i)).setPro(20);
-                        }
-                        databaseImpl.deleteLoadInfo();
-                        databaseImpl.addLoadInfo(loadList);
-                        loadFlag.clear();
-                        pauseFlag.clear();
-                    }
                     break;
                 case MSG_START_LOAD:
-                    new LoadMagazineThread(DownloadActivity.this, this, sid, position).start();
-                    int psize = pauseFlag.size();
-                    for (int i = 0; i < psize; i++) {
-                        if (position == pauseFlag.get(i)) {
-                            pauseFlag.remove(i);
+                    if (sid != -1) {
+                        loadSidList.add(sid);
+                        loadPosList.add(position);
+                        loadList.get(position).setStart(true);
+                        loadList.get(position).setFinish(false);
+                        loadList.get(position).setPro(3);
+                        if (!isLoading) {
+                            isLoading = true;
+                            if (loadSidList.size() > 0) {
+                                new LoadMagazineThread(DownloadActivity.this, loadSidList.get(0),
+                                        loadPosList.get(0)).start();
+                            }
+                        }
+                    } else {
+                        if (loadPosList.size() > 0) {
+                            isLoading = true;
+                            new LoadMagazineThread(DownloadActivity.this, loadSidList.get(0),
+                                    loadPosList.get(0)).start();
+                            loadList.get(loadPosList.get(0)).setStart(true);
+                            loadList.get(loadPosList.get(0)).setFinish(false);
+                            loadList.get(loadPosList.get(0)).setPro(3);
                         }
                     }
-                    loadList.get(position).setStart(true);
-                    loadList.get(position).setPause(false);
-                    loadList.get(position).setFinish(false);
-                    loadList.get(position).setOk(false);
-                    loadList.get(position).setPro(5);
-                    adapter.setList(loadList);
-                    break;
-                case MSG_PAUSE_LOAD:
-                    loadList.get(position).setPause(true);
-                    loadList.get(position).setStart(true);
-                    pauseFlag.add(position);
+
                     adapter.setList(loadList);
                     break;
                 case MSG_OPEN_MAGAZINE:
+                    if (updateDBThread != null) {
+                        // updateDBThread.destroy();
+                        updateDBThread = null;
+                    }
                     Intent intent_magazine = new Intent(DownloadActivity.this,
                             DM_Tab_2Activity.class);
                     Bundle bundle = new Bundle();
@@ -134,8 +132,47 @@ public class DownloadActivity extends Activity {
                     intent_magazine.putExtras(bundle);
                     startActivity(intent_magazine);
                     break;
-            }
+                case MSG_LOAD_ONE_IMAGE:
+                    curLoadImage++;
+                    if (curLoadImage == totalLoadImage) {
+                        updateDBThread = new UpdateDBThread();
+                        updateDBThread.start();
+                        if (loadPosList.size() > 0) {
+                            loadList.get(loadPosList.get(0)).setFinish(true);
+                            loadList.get(loadPosList.get(0)).setStart(true);
+                            loadList.get(loadPosList.get(0)).setPro(100);
+                        }
+                        adapter.setList(loadList);
+                        UrlImageViewHelper.isLoad = false;
 
+                        isLoading = false;
+                        curLoadImage = 0;
+                        totalLoadImage = 0;
+                        if (loadPosList.size() > 0) {
+                            loadPosList.remove(0);
+                            loadSidList.remove(0);
+                        }
+                        if (loadPosList.size() > 0) {
+                            Message startMsg = new Message();
+                            startMsg.what = MSG_START_LOAD;
+                            startMsg.arg1 = -1;
+                            this.sendMessage(startMsg);
+                        }
+                    } else {
+                        int pro = 28;
+                        if (totalLoadImage != 0) {
+                            pro = 28 + curLoadImage * 72 / totalLoadImage;
+                        }
+                        if (loadPosList.size() > 0) {
+                            if (loadList.get(loadPosList.get(0)).getPro() < pro) {
+                                loadList.get(loadPosList.get(0)).setPro(pro);
+                            }
+                        }
+                    }
+                    adapter.setList(loadList);
+                    break;
+
+            }
             super.handleMessage(msg);
         }
 
@@ -172,8 +209,8 @@ public class DownloadActivity extends Activity {
         subMagazines = databaseImpl.getSubcribedMagazine();
         allArticleMagzines = new ArrayList<ArticleMagzine>();
         allPictureMagazines = new ArrayList<PictureMagzine>();
-        loadFlag = new ArrayList<Integer>();
-        pauseFlag = new ArrayList<Integer>();
+        loadSidList = new ArrayList<Integer>();
+        loadPosList = new ArrayList<Integer>();
         loadList = new ArrayList<LoadInfo>();
         loadList = initLoadInfo(subMagazines);
 
@@ -209,7 +246,6 @@ public class DownloadActivity extends Activity {
                 loadInfo.setSid(magazine.getSid());
                 loadInfo.setPro(0);
                 loadInfo.setFinish(false);
-                loadInfo.setPause(false);
                 loadInfo.setStart(false);
 
                 loadInfoList.add(loadInfo);
@@ -219,6 +255,8 @@ public class DownloadActivity extends Activity {
             for (int i = 0; i < size; i++) {
                 if (loadInfoList.get(i).isFinish()) {
                     loadInfoList.get(i).setOk(true);
+                } else {
+                    loadInfoList.get(i).setStart(false);
                 }
             }
         }
@@ -229,17 +267,15 @@ public class DownloadActivity extends Activity {
     public class LoadMagazineThread extends Thread {
 
         private Context context;
-        private Handler handler;
         private int sid;
         private int position;
         private ArrayList<ArticleMagzine> articleMagzines = new ArrayList<ArticleMagzine>();
         private ArrayList<PictureMagzine> magazinePics = new ArrayList<PictureMagzine>();
 
-        public LoadMagazineThread(Context _context, Handler _handler, int _sid, int _position) {
+        public LoadMagazineThread(Context _context, int _sid, int _position) {
 
             this.position = _position;
             this.context = _context;
-            this.handler = _handler;
             this.sid = _sid;
         }
 
@@ -247,8 +283,11 @@ public class DownloadActivity extends Activity {
         public void run() {
 
             Looper.prepare();
+            UrlImageViewHelper.isLoad = true;
             try {
-                loadList.get(position).setPro(10);
+                if (loadList.get(position).getPro() < 5) {
+                    loadList.get(position).setPro(5);
+                }
                 // send a message
                 Message msg1 = new Message();
                 msg1.what = MSG_LOADING;
@@ -258,7 +297,9 @@ public class DownloadActivity extends Activity {
 
                 String content = wh_dmApi.loadMagzine(sid);
                 if (content != null && content.length() > 0) {
-                    loadList.get(position).setPro(20);
+                    if (loadList.get(position).getPro() < 10) {
+                        loadList.get(position).setPro(10);
+                    }
                     // send a message
                     Message msg2 = new Message();
                     msg2.what = MSG_LOADING;
@@ -270,7 +311,9 @@ public class DownloadActivity extends Activity {
                     if (template == 0) {
                         articleMagzines = LoadUtil.loadMagazine(content);
                         allArticleMagzines.addAll(articleMagzines);
-                        loadList.get(position).setPro(30);
+                        if (loadList.get(position).getPro() < 15) {
+                            loadList.get(position).setPro(15);
+                        }
                         // send a message
                         Message msg3 = new Message();
                         msg3.what = MSG_LOADING;
@@ -284,16 +327,19 @@ public class DownloadActivity extends Activity {
                             new WebView(context).loadDataWithBaseURL("http://test1.jbr.net.cn:809",
                                     body.getBody(), "text/html", "utf-8", null);
                             if (body.getLitpic() != null && body.getLitpic().length() > 0) {
-                                UrlImageViewHelper.setUrlDrawable(new ImageView(context),
+                                totalLoadImage++;
+                                UrlImageViewHelper.sendFinishMsg(new ImageView(context),
                                         WH_DMHttpApiV1.URL_DOMAIN + body.getLitpic(),
-                                        R.drawable.item_default, null);
+                                        R.drawable.item_default, null, handler);
 
                             }
                             // TODO:
                         }
 
                         // send finish
-                        loadList.get(position).setPro(90);
+                        if (loadList.get(position).getPro() < 20) {
+                            loadList.get(position).setPro(20);
+                        }
                         Message msgFinish = new Message();
                         msgFinish.what = MSG_FINISH_LOAD;
                         msgFinish.arg1 = sid;
@@ -303,7 +349,9 @@ public class DownloadActivity extends Activity {
                     } else if (template == 1) {
                         magazinePics = LoadUtil.loadMagazinePic(content);
                         allPictureMagazines.addAll(magazinePics);
-                        loadList.get(position).setPro(50);
+                        if (loadList.get(position).getPro() < 10) {
+                            loadList.get(position).setPro(10);
+                        }
                         // send a message
                         Message msg4 = new Message();
                         msg4.what = MSG_LOADING;
@@ -314,13 +362,16 @@ public class DownloadActivity extends Activity {
                         PictureMagzine pic = new PictureMagzine();
                         for (int i = 0; i < size; i++) {
                             pic = magazinePics.get(i);
-                            UrlImageViewHelper.setUrlDrawable(new ImageView(context),
+                            totalLoadImage++;
+                            UrlImageViewHelper.sendFinishMsg(new ImageView(context),
                                     WH_DMHttpApiV1.URL_DOMAIN + pic.getPic(),
-                                    R.drawable.item_default, null);
+                                    R.drawable.item_default, null, handler);
                             // TODO:
                         }
                         // send finish
-                        loadList.get(position).setPro(90);
+                        if (loadList.get(position).getPro() < 20) {
+                            loadList.get(position).setPro(20);
+                        }
                         Message msgFinish = new Message();
                         msgFinish.what = MSG_FINISH_LOAD;
                         msgFinish.arg1 = sid;
@@ -328,15 +379,20 @@ public class DownloadActivity extends Activity {
                         handler.sendMessage(msgFinish);
                     }
                 } else {
+
+                    UrlImageViewHelper.isLoad = false;
                     Message msgError = new Message();
                     msgError.what = MSG_NO_MAGAZINE;
                     msgError.arg1 = sid;
                     msgError.arg2 = position;
                     handler.sendMessage(msgError);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 // send a error message
+
+                UrlImageViewHelper.isLoad = false;
                 Message msgError = new Message();
                 msgError.what = MSG_NO_MAGAZINE;
                 msgError.arg1 = sid;
@@ -348,45 +404,16 @@ public class DownloadActivity extends Activity {
         }
     }
 
-    private boolean checkAllLoad() {
-
-        int size = loadList.size();
-        LoadInfo info;
-        for (int i = 0; i < size; i++) {
-            info = loadList.get(i);
-            if (info.isStart() && !info.isOk()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public class DeleteThread extends Thread {
-
-        private int sid;
-        private int template;
-
-        public DeleteThread(int _sid, int _template) {
-
-            this.sid = _sid;
-            this.template = _template;
-        }
+    // update load info
+    public class UpdateDBThread extends Thread {
 
         @Override
         public void run() {
 
-            try {
-                while (insearting) {
-                    sleep(100);
-                }
-                insearting = true;
-                databaseImpl.deleteLoad(sid, template);
-                databaseImpl.deleteLoadInfo();
-                databaseImpl.addLoadInfo(loadList);
-                insearting = false;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            databaseImpl.addAllLoad(allPictureMagazines, allArticleMagzines, loadList);
+            allPictureMagazines.clear();
+            allArticleMagzines.clear();
+
             super.run();
         }
 

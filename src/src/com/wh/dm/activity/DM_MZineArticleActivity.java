@@ -857,9 +857,12 @@ public class DM_MZineArticleActivity extends Activity {
         for (int i = low; i <= up; i++) {
             if (articles.get(i).getLitpic() != null && articles.get(i).getLitpic().length() > 0
                     && i != up) {
-                article = articles.get(i);
-                articles.set(i, articles.get(up));
-                articles.set(up, article);
+                for (int j = i; j < up; j++) {
+                    article = articles.get(j);
+                    articles.set(j, articles.get(j + 1));
+                    articles.set(j + 1, article);
+                }
+
                 break;
             }
         }

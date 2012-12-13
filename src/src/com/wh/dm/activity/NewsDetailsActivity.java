@@ -30,6 +30,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.LayoutAlgorithm;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -174,7 +176,9 @@ public class NewsDetailsActivity extends Activity {
         newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
-        // webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        webViewNewsBody.getSettings().setPluginsEnabled(true);
+        webViewNewsBody.getSettings().setPluginState(PluginState.ON);
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
@@ -511,20 +515,19 @@ public class NewsDetailsActivity extends Activity {
             // TODO Auto-generated method stub
             try {
                 postresult = wh_dmApi.addFav(params[0], 0);
-                if (postresult.getResult()){
-                	FavoriteNews news=new FavoriteNews();
-                	news.setNo(1);
-                	news.setId(params[0]);
-                	news.setTitle(newsTitle.getText().toString());
-                	news.setPubdate(newsTime.getText().toString());
-                	news.setLitpic("");
-                	news.setSid("");
-                	ArrayList<FavoriteNews> addNews=new ArrayList<FavoriteNews>();
-                	addNews.add(news);
-                	databaseImpl.addNewsFavorite(addNews);
+                if (postresult.getResult()) {
+                    FavoriteNews news = new FavoriteNews();
+                    news.setNo(1);
+                    news.setId(params[0]);
+                    news.setTitle(newsTitle.getText().toString());
+                    news.setPubdate(newsTime.getText().toString());
+                    news.setLitpic("");
+                    news.setSid("");
+                    ArrayList<FavoriteNews> addNews = new ArrayList<FavoriteNews>();
+                    addNews.add(news);
+                    databaseImpl.addNewsFavorite(addNews);
                     return true;
-                }
-                else
+                } else
                     return false;
             } catch (Exception e) {
                 reason = e;

@@ -1837,7 +1837,8 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public void addAllLoad(ArrayList<PictureMagzine> picList, ArrayList<ArticleMagzine> articleList) {
+    public void addAllLoad(ArrayList<PictureMagzine> picList,
+            ArrayList<ArticleMagzine> articleList, ArrayList<LoadInfo> loadInfoList) {
 
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         db.beginTransaction();
@@ -1853,6 +1854,13 @@ public class DatabaseImpl implements Database {
                 ContentValues values = new ContentValues();
                 values.putAll((new ArticleMagzineBuilder()).deconstruct(article));
                 db.insert(TABLE_MAGEZINE_BODY, null, values);
+            }
+            db.delete(TABLE_LOAD_INFO, null, null);
+            for (LoadInfo info : loadInfoList) {
+
+                ContentValues values = new ContentValues();
+                values.putAll((new LoadInfoBuilder()).deconstruct(info));
+                db.insert(TABLE_LOAD_INFO, null, values);
             }
             db.setTransactionSuccessful();
         } catch (Exception e) {

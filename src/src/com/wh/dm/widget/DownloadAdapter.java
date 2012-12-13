@@ -114,20 +114,6 @@ public class DownloadAdapter extends BaseAdapter {
                     msg.arg1 = dms.get(pos).getSid();
                     msg.arg2 = pos;
                     handler.sendMessage(msg);
-                } else if (dms.get(pos).isPause()) {
-                    // send message to go to
-                    Message msg = new Message();
-                    msg.what = DownloadActivity.MSG_START_LOAD;
-                    msg.arg1 = dms.get(pos).getSid();
-                    msg.arg2 = pos;
-                    handler.sendMessage(msg);
-                } else {
-                    // send message to pause
-                    Message msg = new Message();
-                    msg.what = DownloadActivity.MSG_PAUSE_LOAD;
-                    msg.arg1 = dms.get(pos).getSid();
-                    msg.arg2 = pos;
-                    handler.sendMessage(msg);
                 }
 
             }
@@ -148,15 +134,10 @@ public class DownloadAdapter extends BaseAdapter {
             viewHolder.txtAddition.setVisibility(View.VISIBLE);
             viewHolder.txtAddition.setText(context.getResources().getString(R.string.not_load));
             viewHolder.btnStatus.setText(context.getResources().getString(R.string.begin_load));
-        } else if (dms.get(position).isPause()) {
-            viewHolder.pbStatus.setVisibility(View.GONE);
-            viewHolder.txtAddition.setVisibility(View.VISIBLE);
-            viewHolder.txtAddition.setText(context.getResources().getString(R.string.pause_load));
-            viewHolder.btnStatus.setText(context.getResources().getString(R.string.continue_load));
         } else {
             viewHolder.pbStatus.setVisibility(View.VISIBLE);
             viewHolder.txtAddition.setVisibility(View.GONE);
-            viewHolder.btnStatus.setText(context.getResources().getString(R.string.pause_load));
+            viewHolder.btnStatus.setText(context.getResources().getString(R.string.loading));
             viewHolder.pbStatus.setProgress(dms.get(position).getPro());
         }
         return convertView;

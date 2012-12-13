@@ -9,10 +9,10 @@
 
     <include
         android:layout_width="fill_parent"
-        android:layout_height="60dip"
+        android:layout_height="wrap_content"
         layout="@layout/dm_mzine_header" />
 
-    <View
+    <View       
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
         android:layout_marginLeft="10dip"

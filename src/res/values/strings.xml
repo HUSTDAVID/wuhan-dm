@@ -6,8 +6,7 @@
     <string name="watch_dm">查看DM</string>
     <string name="not_load">未下载杂志</string>
     <string name="begin_load">开始下载</string>
-    <string name="pause_load">暂停下载</string>
-    <string name="continue_load">继续下载</string>  
+    <string name="loading">下载中</string>
     <string name="badconnect">您的网络不给力</string>
     <string name="bind">已绑定</string>
     <string name="unbind">未绑定</string>

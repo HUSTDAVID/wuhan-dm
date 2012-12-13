@@ -32,6 +32,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -186,6 +187,8 @@ public class MagazineDetailsActivity extends Activity {
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
         webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        webViewNewsBody.getSettings().setPluginsEnabled(true);
+        webViewNewsBody.getSettings().setPluginState(PluginState.ON);
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);
@@ -396,7 +399,7 @@ public class MagazineDetailsActivity extends Activity {
                             MagazineDetailsActivity.this);
                 }
             }
-            if (isLoad) {
+            if (!isLoad) {
                 progressDialog.dismiss();
             }
             super.onPostExecute(result);
