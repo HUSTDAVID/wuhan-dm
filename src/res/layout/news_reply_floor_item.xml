@@ -49,6 +49,21 @@
 			        android:textSize="@dimen/reply_floor"
 			        android:text="手机版网友"
 			        android:textColor="@color/red" />
+		    
+		    
+		    <TextView
+			        android:id="@+id/txt_floor_time"			        
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentRight="true"			        
+			        android:layout_toLeftOf="@+id/txt_floor"
+			        android:layout_alignParentTop="true"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="35dip"
+			        android:clickable="false"
+			        android:textSize="@dimen/reply_floor"
+			        android:text="1分种前"
+			        android:textColor="#404040"	 />
 						
 			    <TextView
 			        android:id="@+id/txt_floor"

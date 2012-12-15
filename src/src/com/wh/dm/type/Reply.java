@@ -11,6 +11,12 @@ public class Reply {
     private String arctitle;
     private String ip;
     private int ischeck;
+
+    public String getDtime() {
+
+        return dtime;
+    }
+
     private String dtime;
     private int mid;
     private int bad;

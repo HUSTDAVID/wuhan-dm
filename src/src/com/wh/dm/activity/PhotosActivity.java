@@ -110,18 +110,17 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         TextView txtTitle = (TextView) findViewById(R.id.txt_title);
         txtTitle.setText(getResources().getString(R.string.photo));
 
+        // delete all
         txtAll = (TextView) findViewById(R.id.txt_listtop_1);
         txtAll.setText(getResources().getString(R.string.all));
+        txtAll.setVisibility(View.GONE);
+        //
         txtHot = (TextView) findViewById(R.id.txt_listtop_2);
         txtHot.setText(getResources().getString(R.string.hot));
         txtCar = (TextView) findViewById(R.id.txt_listtop_3);
-        // txtCar.setText(getResources().getString(R.string.car));
         txtGirl = (TextView) findViewById(R.id.txt_listtop_4);
-        // txtGirl.setText(getResources().getString(R.string.girl));
         txtPhotograph = (TextView) findViewById(R.id.txt_listtop_5);
-        // txtPhotograph.setText(getResources().getString(R.string.photograph));
         txtFun = (TextView) findViewById(R.id.txt_listtop_6);
-        // txtFun.setText(getResources().getString(R.string.fun));
 
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(PhotosActivity.this);
@@ -140,9 +139,8 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
 
         handler.sendEmptyMessage(MSG_GET_PHOTO_SORT);
 
-        itemWidth = getScreenWidth() / 6;
+        itemWidth = getScreenWidth() / 5;
 
-        txtAll.setOnClickListener(new PhotosItemOnClickListener());
         txtHot.setOnClickListener(new PhotosItemOnClickListener());
         txtCar.setOnClickListener(new PhotosItemOnClickListener());
         txtGirl.setOnClickListener(new PhotosItemOnClickListener());
@@ -156,10 +154,10 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         // set the activity of photos all
         intent = new Intent(PhotosActivity.this, Photos_AllActivity.class);
         relMain = (RelativeLayout) findViewById(R.id.rel_photos_main);
-        vMain = getLocalActivityManager().startActivity("all", intent).getDecorView();
+        vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         relMain.addView(vMain, params);
-        setCurTxt(1);
+        setCurTxt(2);
     }
 
     private class PhotosItemOnClickListener implements OnClickListener {
@@ -168,11 +166,12 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         public void onClick(View v) {
 
             switch (v.getId()) {
-                case R.id.txt_listtop_1:
-                    setCurTxt(1);
-                    intent.setClass(PhotosActivity.this, Photos_AllActivity.class);
-                    vMain = getLocalActivityManager().startActivity("all", intent).getDecorView();
-                    break;
+            /*
+             * case R.id.txt_listtop_1: setCurTxt(1);
+             * intent.setClass(PhotosActivity.this, Photos_AllActivity.class);
+             * vMain = getLocalActivityManager().startActivity("all",
+             * intent).getDecorView(); break;
+             */
 
                 case R.id.txt_listtop_2:
                     intent.setClass(PhotosActivity.this, HotPhotosActivity.class);
@@ -224,20 +223,15 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
     private void setCurTxt(int i) {
 
         switch (i) {
-            case 1:
-                txtAll.setSelected(true);
-                txtAll.setTextColor(Color.WHITE);
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
+        /*
+         * case 1: txtAll.setSelected(true); txtAll.setTextColor(Color.WHITE);
+         * txtHot.setSelected(false); txtHot.setTextColor(Color.BLACK);
+         * txtCar.setSelected(false); txtCar.setTextColor(Color.BLACK);
+         * txtGirl.setSelected(false); txtGirl.setTextColor(Color.BLACK);
+         * txtPhotograph.setSelected(false);
+         * txtPhotograph.setTextColor(Color.BLACK); txtFun.setSelected(false);
+         * txtFun.setTextColor(Color.BLACK); break;
+         */
             case 2:
                 txtAll.setSelected(false);
                 txtAll.setTextColor(Color.BLACK);

@@ -11,13 +11,16 @@ public class PhotoUtil {
     public static ArrayList<TwoPhotos> chagePhoto(ArrayList<Photo> photo) {
 
         if (photo != null) {
+            int size = photo.size();
             ArrayList<TwoPhotos> twoPhotos = new ArrayList<TwoPhotos>();
-            for (int i = 0; i < photo.size(); i++) {
+            for (int i = 0; i < size; i++) {
                 TwoPhotos twoP = new TwoPhotos();
                 twoP.setLeftPhoto(photo.get(i));
                 i++;
-                twoP.setRightPhoto(photo.get(i));
-                twoPhotos.add(twoP);
+                if (i < size) {
+                    twoP.setRightPhoto(photo.get(i));
+                    twoPhotos.add(twoP);
+                }
             }
 
             return twoPhotos;

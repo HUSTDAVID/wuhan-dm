@@ -387,7 +387,7 @@ public class MagazineDetailsActivity extends Activity {
                     }
                     for (int i = 0; i < commentNum; i++) {
                         Comment comment = comments.get(i);
-                        adapter.addItem(getString(R.string.news_user), TimeUtil.getTimeInterval(
+                        adapter.addItem(comment.getUsername(), TimeUtil.getTimeInterval(
                                 comment.getDtime(), MagazineDetailsActivity.this),
                                 comment.getMsg(), "" + comment.getGood());
                     }

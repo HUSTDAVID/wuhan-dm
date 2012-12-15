@@ -3,6 +3,7 @@ package com.wh.dm.widget;
 
 import com.wh.dm.R;
 import com.wh.dm.type.Reply;
+import com.wh.dm.util.TimeUtil;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -39,25 +40,20 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
             map.put("name", replys.get(i).getUsername());
             map.put("text", replys.get(i).getMsg());
             map.put("floor", "" + (i + 1));
+            map.put("time", replys.get(i).getDtime());
             mData.add(map);
         }
 
         notifyDataSetChanged();
     }
 
-    public void addItem(String name, String text, int floor) {
-
-        if (mData == null) {
-            mData = new ArrayList<Map<String, Object>>();
-        }
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", name);
-        map.put("text", text);
-        map.put("floor", floor);
-
-        mData.add(map);
-        notifyDataSetChanged();
-    }
+    /*
+     * public void addItem(String name, String text, int floor) { if (mData ==
+     * null) { mData = new ArrayList<Map<String, Object>>(); } Map<String,
+     * Object> map = new HashMap<String, Object>(); map.put("name", name);
+     * map.put("text", text); map.put("floor", floor); mData.add(map);
+     * notifyDataSetChanged(); }
+     */
 
     @Override
     public int getCount() {
@@ -91,6 +87,7 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
             holder.txtFloor = (TextView) convertView.findViewById(R.id.txt_floor);
             holder.txtName = (TextView) convertView.findViewById(R.id.txt_floor_name);
             holder.txtText = (TextView) convertView.findViewById(R.id.txt_floor_text);
+            holder.txtTime = (TextView) convertView.findViewById(R.id.txt_floor_time);
 
             convertView.setTag(holder);
         } else {
@@ -100,6 +97,8 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
         holder.txtFloor.setText(mData.get(position).get("floor").toString());
         holder.txtName.setText(mData.get(position).get("name").toString());
         holder.txtText.setText(mData.get(position).get("text").toString());
+        holder.txtTime.setText(TimeUtil.getTimeInterval(mData.get(position).get("time").toString(),
+                context));
 
         return convertView;
     }
@@ -108,6 +107,7 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
         TextView txtName;
         TextView txtText;
         TextView txtFloor;
+        TextView txtTime;
     }
 
 }

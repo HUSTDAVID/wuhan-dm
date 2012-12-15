@@ -397,7 +397,7 @@ public class NewsMoreReplyActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                NotificationUtil.showShortToast(getString(R.string.top_succeed),
+                NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
                         NewsMoreReplyActivity.this);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.top_fail),
@@ -430,7 +430,7 @@ public class NewsMoreReplyActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                NotificationUtil.showShortToast(getString(R.string.reply_succeed),
+                NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
                         NewsMoreReplyActivity.this);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.reply_fail),

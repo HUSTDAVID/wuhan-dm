@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="thanks_gelivable">谢谢您的给力</string>
     <string name="meike_share">每刻分享</string>
     <string name="no_magazine">暂无新刊</string>
     <string name="load_finish">下载已完成</string>
@@ -40,9 +41,9 @@
     <string name="sub_manager">订阅管理</string>
     <string name="reply">跟帖</string>
     <string name="context">原文</string>
-    <string name="temp1">本地新闻</string>
-    <string name="temp2">我的收藏</string>
-    <string name="temp3">创意光谷</string>
+    <string name="temp1">每刻新闻</string>
+    <string name="temp2">收藏&amp;消息</string>
+    <string name="temp3">美刻美图</string>
     <string name="temp4">光博会</string>
     <string name="temp5">群光广场</string>
     <string name="temp6">柏氏专卖</string>
