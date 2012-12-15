@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +50,7 @@ public class MainActivity extends Activity {
     LinearLayout.LayoutParams param;
     Animation up, down;
 
+    private ImageButton btn_share;
     private ImageButton btn_download;
     private ImageButton btn_add;
     private ImageButton btn_set;
@@ -250,6 +252,19 @@ public class MainActivity extends Activity {
         if (gridView != null) {
             scrollLayout.removeAllViews();
         }
+        btn_share = (ImageButton) findViewById(R.id.btn_apk_share);
+        btn_share.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Uri smsToUri = Uri.parse("smsto:");
+                Intent sent_intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
+                sent_intent.putExtra("sms_body", "test meike apk");
+                startActivity(sent_intent);
+            }
+        });
+
         btn_download = (ImageButton) findViewById(R.id.btn_download);
         btn_add = (ImageButton) findViewById(R.id.btn_add);
         btn_add.setOnClickListener(new OnClickListener() {

@@ -7,7 +7,11 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 public class Preferences {
+
     public static final String FISRT_LAUNCH = "first_launch";
+    public static final String DEVICE_ID = "device_id";
+    public static final String DEFAULT_PASSWORD = "default_password";
+
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
 
@@ -52,8 +56,8 @@ public class Preferences {
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = preference.edit();
-        editor.putString(EMAIL, deviceId);
-        editor.putString(PASSWORD, "1234");
+        editor.putString(DEVICE_ID, deviceId);
+        editor.putString(DEFAULT_PASSWORD, "1234");
         editor.putBoolean(FISRT_LAUNCH, false);
         editor.commit();
     }

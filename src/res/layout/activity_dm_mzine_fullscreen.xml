@@ -4,11 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/mzine_fullacreen" >
 
-  <RelativeLayout android:id="@+id/rel_mzine_pic"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/mzine_fullacreen">
-      
+ 
  
         <android.support.v4.view.ViewPager
         android:id="@+id/v_Pager"
@@ -23,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
     
     
     <RelativeLayout          
@@ -71,7 +67,6 @@
             android:layout_alignRight="@+id/txt_magazine_page"            
             android:src="@drawable/mzine_arrow_up"/>
     
-	   
-     </RelativeLayout>  
+	    
     </RelativeLayout>
 </RelativeLayout>
