@@ -208,15 +208,15 @@ public class MainActivity extends Activity {
         Magazine2.setDrawableId(R.drawable.t2);
         Magazine2.setId(2);
 
-        /*
-         * Magazine Magazine3 = new Magazine(); String name3 =
-         * getResources().getString(R.string.temp3); Magazine2.setName(name3);
-         * Magazine2.setDrawableId(R.drawable.t3); Magazine2.setId(3);
-         */
+        Magazine Magazine3 = new Magazine();
+        String name3 = getResources().getString(R.string.temp3);
+        Magazine3.setName(name3);
+        Magazine3.setDrawableId(R.drawable.t3);
+        Magazine3.setId(3);
 
         data.add(Magazine1);
         data.add(Magazine2);
-        // data.add(Magazine3);
+        data.add(Magazine3);
 
     }
 
@@ -349,6 +349,10 @@ public class MainActivity extends Activity {
                     case 2:
                         Intent intent_collect = new Intent(MainActivity.this, MessageActivity.class);
                         startActivity(intent_collect);
+                        break;
+                    case 3:
+                        Intent intent_photo = new Intent(MainActivity.this, PhotosActivity.class);
+                        startActivity(intent_photo);
                         break;
                     default:
                         Intent intent_magazine = new Intent(MainActivity.this,

@@ -80,7 +80,8 @@ public class DragGridAdapter extends BaseAdapter {
             UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN
                     + list.get(position).getSpic(), R.drawable.t2, null);
         }
-        if (list.get(position).getId() == 1 || list.get(position).getId() == 2) {
+        if (list.get(position).getId() == 1 || list.get(position).getId() == 2
+                || list.get(position).getId() == 3) {
             relate_dm.setBackgroundResource(R.drawable.index_bg_orange);
         } else {
             relate_dm.setBackgroundResource(R.drawable.index_bg_blue);
