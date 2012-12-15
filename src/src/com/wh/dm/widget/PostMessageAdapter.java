@@ -2,11 +2,15 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
+import com.wh.dm.activity.DM_Tab_2Activity;
 import com.wh.dm.type.PostMessage;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -58,7 +62,7 @@ public class PostMessageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
         if (convertView == null) {
@@ -73,6 +77,21 @@ public class PostMessageAdapter extends BaseAdapter {
 
         holder.txtLarge.setText(messages.get(position).getTitle());
         holder.txtSmall.setText(messages.get(position).getMname());
+
+        convertView.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent_magazine = new Intent(context, DM_Tab_2Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("dm", messages.get(position).getTemp());
+                bundle.putInt("sid", messages.get(position).getMid());
+                intent_magazine.putExtras(bundle);
+                context.startActivity(intent_magazine);
+
+            }
+        });
 
         return convertView;
     }

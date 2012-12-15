@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="meike_share">每刻分享</string>
     <string name="no_magazine">暂无新刊</string>
     <string name="load_finish">下载已完成</string>
     <string name="watch_dm">查看DM</string>
@@ -10,6 +11,9 @@
     <string name="badconnect">您的网络不给力</string>
     <string name="bind">已绑定</string>
     <string name="unbind">未绑定</string>
+    <string name="message_share">短信分享</string>
+    <string name="sina_share">新浪微博</string>
+    <string name="tenc_share">腾讯微博</string>
     <string name="app_name">每刻资讯</string>
     <string name="collections">我的收藏</string>
     <string name="favorites">猜你喜欢</string>
@@ -166,6 +170,7 @@
     <string name="text_size">文章字体大小</string>
     <string name="text_summary">当前字体大小为18号</string>
     <string name="push">开启推送功能</string>
+    <string name="push_message">推送消息</string>
     <string name="message_collect">消息与收藏</string>
     <string name="push_smmary">开启推送功能后，我们会第一时间内推送要闻给您</string>
     <string name="screen">屏幕亮度</string>
@@ -179,7 +184,7 @@
     <string name="aboutus_text9">欢迎内容接入合作</string>
     <string name="aboutus">关于我们</string>
 	<string name="download">下载</string>
-	<string name="push_message">我的消息</string>
+	
 	<string name="mymeike">我的每刻</string>
 	<string name="login_toast">用户已登陆</string>
 	<!-- Exception -->

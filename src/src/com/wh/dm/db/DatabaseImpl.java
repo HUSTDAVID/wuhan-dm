@@ -756,7 +756,7 @@ public class DatabaseImpl implements Database {
         PhotoBuilder builder = new PhotoBuilder();
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
         Cursor query = db.query(TABLE_PHOTO, null, null, null, null, null, null);
-        if (query != null) {
+        if (query != null && query.getCount() > 0) {
             query.moveToFirst();
             while (!query.isAfterLast()) {
                 photo.add(builder.build(query));

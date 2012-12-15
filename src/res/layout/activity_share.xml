@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/set_bg"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/weibo_header"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        layout="@layout/header_title2" />
+
+    
+    
+<RelativeLayout
+    android:id="@+id/rel_share_message" 
+    android:layout_width="fill_parent"
+    android:layout_height="53.33dip"
+    android:background="@color/bg_normal" >
+
+
+
+
+
+    <ImageView
+        android:id="@+id/img_share_message"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="9.33dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="11.33dp"
+        android:src="@drawable/message_share" />
+
+
+
+    <TextView
+        android:id="@+id/txt_share_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/img_share_message"
+        android:text="@string/message_share"
+        android:textColor="@color/black"
+        android:textSize="19sp" >
+
+    </TextView>
+
+    
+
+</RelativeLayout>
+    
+<View
+        android:layout_width="fill_parent"
+        android:layout_height="1.5dip"
+        android:background="@drawable/double_line_hor" />
+    
+    <RelativeLayout android:id="@+id/rel_share_sina"
+    android:layout_width="fill_parent"
+    android:layout_height="53.33dip"
+    android:background="@color/bg_normal">
+
+    <ImageView
+        android:id="@+id/img_share_sina"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="9.33dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="11.33dp"
+        android:src="@drawable/site_t_sina" />
+
+    <TextView
+        android:id="@+id/txt_share_sina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/img_share_sina"
+        android:text="@string/sina_share"
+        android:textColor="@color/black"
+        android:textSize="19sp" >
+    </TextView>
+
+
+
+   
+
+</RelativeLayout>
+
+<View
+        android:layout_width="fill_parent"
+        android:layout_height="1.5dip"
+        android:background="@drawable/double_line_hor" />
+    
+<RelativeLayout 
+    android:id="@+id/rel_share_tenc"
+    android:layout_width="fill_parent"
+    android:layout_height="53.33dip"
+    android:background="@color/bg_normal" >
+
+
+
+
+
+    <ImageView
+        android:id="@+id/img_share_tenc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="9.33dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="11.33dp"
+        android:src="@drawable/site_t_tencent" />
+
+
+
+    <TextView
+        android:id="@+id/txt_share_tenc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/img_share_tenc"
+        android:text="@string/tenc_share"
+        android:textColor="@color/black"
+        android:textSize="19sp" >
+
+    </TextView>    
+
+</RelativeLayout>
+
+
+
+
+   
+
+</LinearLayout>

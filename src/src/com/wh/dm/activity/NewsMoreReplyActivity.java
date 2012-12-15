@@ -353,11 +353,11 @@ public class NewsMoreReplyActivity extends Activity {
                     Comment comment = result.get(i).getComment();
                     if (replys != null && replys.size() > 0) {
                         floorAdapter.setList(result.get(i).getReply());
-                        adapter.addItem(getString(R.string.review_name), comment.getDtime(),
+                        adapter.addItem(comment.getUsername(), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), floorAdapter,
                                 comment.getId());
                     } else {
-                        adapter.addItem(getString(R.string.review_name), comment.getDtime(),
+                        adapter.addItem(comment.getUsername(), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), null, comment.getId());
                     }
                 }

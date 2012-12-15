@@ -33,9 +33,10 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
         if (mData == null) {
             mData = new ArrayList<Map<String, Object>>();
         }
+        mData.clear();
         for (int i = 0; i < replys.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", context.getString(R.string.review_name));
+            map.put("name", replys.get(i).getUsername());
             map.put("text", replys.get(i).getMsg());
             map.put("floor", "" + (i + 1));
             mData.add(map);

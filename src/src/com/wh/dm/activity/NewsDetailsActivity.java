@@ -179,6 +179,9 @@ public class NewsDetailsActivity extends Activity {
         webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
         webViewNewsBody.getSettings().setPluginsEnabled(true);
         webViewNewsBody.getSettings().setPluginState(PluginState.ON);
+        webViewNewsBody.getSettings().setAllowFileAccess(true);
+        webViewNewsBody.getSettings().setPluginsPath(
+                "/data/data/" + getPackageName() + "/app_plugins/");
 
         edtxMyReplyforBtn = (EditText) findViewById(R.id.edtx_news_my_reply);
         btnMyShare = (Button) findViewById(R.id.btn_news_share);

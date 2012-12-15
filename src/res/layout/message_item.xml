@@ -15,8 +15,8 @@
         android:paddingLeft="15dip"
         android:paddingRight="15dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/black"
-        android:text="哈哈哈哈" />
+        android:textColor="#353434"
+        android:text="" />
 
     <TextView
         android:id="@+id/tex_message_small"
@@ -25,7 +25,7 @@
         android:textSize="15sp"
         android:paddingLeft="15dip"
         android:paddingRight="15dp"
-        android:textColor="@color/black"
-        android:text="哈哈哈哈" />
+        android:textColor="#858585"
+        android:text="" />
 
 </LinearLayout>

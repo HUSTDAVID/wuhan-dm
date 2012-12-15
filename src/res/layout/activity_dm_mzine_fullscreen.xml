@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/mzine_fullacreen" >
 
-    
+  <RelativeLayout android:id="@+id/rel_mzine_pic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mzine_fullacreen">
+      
+ 
         <android.support.v4.view.ViewPager
         android:id="@+id/v_Pager"
         android:layout_width="fill_parent"
@@ -17,10 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:visibility="visible"/>
     
     
-    <RelativeLayout 
+    <RelativeLayout          
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
@@ -57,15 +63,15 @@
         
         <ImageView 
             android:id="@+id/img_mzine_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="35dp"
+            android:scaleType="fitXY"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/txt_magazine_page"
-            android:layout_alignLeft="@+id/txt_magazine_page"
+            android:layout_below="@+id/txt_magazine_page"           
             android:layout_alignRight="@+id/txt_magazine_page"            
             android:src="@drawable/mzine_arrow_up"/>
     
 	   
-    
+     </RelativeLayout>  
     </RelativeLayout>
 </RelativeLayout>

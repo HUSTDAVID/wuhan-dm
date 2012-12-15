@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 public class Preferences {
+    public static final String FISRT_LAUNCH = "first_launch";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
 
@@ -46,6 +47,16 @@ public class Preferences {
     public static final String POST_MESSAGE = "post_message";
 
     public static final String UPDATE_DATABASE = "update_database";
+
+    public static void firstLaunch(Context context, String deviceId) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor = preference.edit();
+        editor.putString(EMAIL, deviceId);
+        editor.putString(PASSWORD, "1234");
+        editor.putBoolean(FISRT_LAUNCH, false);
+        editor.commit();
+    }
 
     public static void saveUser(Context context, String email, String password) {
 

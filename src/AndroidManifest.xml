@@ -64,6 +64,7 @@
         <activity
             android:name=".activity.NewsDetailsActivity"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
         <activity
@@ -312,6 +313,7 @@
         <activity
             android:name=".activity.MagazineDetailsActivity"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity android:name="com.umeng.api.activity.OauthActivity"
@@ -340,7 +342,11 @@
 		    android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
 		</activity>
-		
+		<activity
+		    android:name=".activity.ShareActivity"
+		    android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+		</activity>
         
 		<receiver
 		    android:name=".receiver.ConnectityReceiver">
@@ -385,7 +391,7 @@
     </application>
 
     <supports-screens
-        android:anyDensity="true"
+        
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true" 

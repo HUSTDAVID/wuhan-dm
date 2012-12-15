@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class DM_MZinePicsActivity extends Activity {
     private TextView txtDes;
     private ImageView imgArrow;
     private ImageView imgComment;
+    private RelativeLayout relScreen;
     private ArrayList<PictureMagzine> magazines;
 
     private final Handler handler = new Handler() {
@@ -90,6 +92,7 @@ public class DM_MZinePicsActivity extends Activity {
         imgArrow = (ImageView) findViewById(R.id.img_mzine_arrow);
         imgComment = (ImageView) findViewById(R.id.img_mzine_comment);
 
+        relScreen = (RelativeLayout) findViewById(R.id.rel_mzine_pic);
         v_Pager = (ViewPager) findViewById(R.id.v_Pager);
         adapter = new MyPagerAdapter();
         v_Pager.setAdapter(adapter);
@@ -102,17 +105,34 @@ public class DM_MZinePicsActivity extends Activity {
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
 
+        v_Pager.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                NotificationUtil.showShortToast("test rel", DM_MZinePicsActivity.this);
+                imgComment.setVisibility(View.VISIBLE);
+
+            }
+        });
+
         imgArrow.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                if (txtDes.getVisibility() == View.VISIBLE) {
+                if (magazines.get(curPage - 1).getDescription() != null
+                        && magazines.get(curPage - 1).getDescription().length() > 0) {
+                    if (txtDes.getVisibility() == View.VISIBLE) {
+                        txtDes.setVisibility(View.GONE);
+                        imgArrow.setImageResource(R.drawable.mzine_arrow_up);
+                    } else {
+                        txtDes.setVisibility(View.VISIBLE);
+                        imgArrow.setImageResource(R.drawable.mzine_arrow_down);
+                    }
+                } else {
                     txtDes.setVisibility(View.GONE);
                     imgArrow.setImageResource(R.drawable.mzine_arrow_up);
-                } else {
-                    txtDes.setVisibility(View.VISIBLE);
-                    imgArrow.setImageResource(R.drawable.mzine_arrow_down);
                 }
 
             }

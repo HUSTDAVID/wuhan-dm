@@ -11,10 +11,14 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 import android.widget.ImageView;
 
 public class SplashActivity extends Activity {
@@ -32,6 +36,16 @@ public class SplashActivity extends Activity {
             UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN + path,
                     R.drawable.splash, null);
         }
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstLaunch = preference.getBoolean(Preferences.FISRT_LAUNCH, true);
+        if (firstLaunch) {
+            final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(
+                    Context.TELEPHONY_SERVICE);
+            String tmDevice = "" + tm.getDeviceId();
+            Preferences.firstLaunch(this, tmDevice);
+        }
+
         GetLoadPicTask getLoadPictask = new GetLoadPicTask();
         getLoadPictask.execute();
         new Handler().postDelayed(new Runnable() {
