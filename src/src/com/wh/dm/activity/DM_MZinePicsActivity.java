@@ -112,7 +112,7 @@ public class DM_MZinePicsActivity extends Activity {
                 if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     return false;
                 }
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (imgComment.getVisibility() == View.GONE) {
                         imgComment.setVisibility(View.VISIBLE);
                     } else {
