@@ -61,6 +61,7 @@ public class SubManagerActivity extends Activity {
                     Bundle bundle = msg.getData();
                     unSubcribeTask.execute(bundle.getInt("id"));
                 } else {
+                    // TODO
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             SubManagerActivity.this);
                     Intent intent = new Intent(SubManagerActivity.this, LoginActivity.class);
@@ -169,6 +170,7 @@ public class SubManagerActivity extends Activity {
                     NotificationUtil.showShortToast(getString(R.string.no_subcribe),
                             SubManagerActivity.this);
                 } else {
+                    // TODO
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             SubManagerActivity.this);
                     Intent intent = new Intent(SubManagerActivity.this, LoginActivity.class);

@@ -133,10 +133,15 @@ public class MainActivity extends Activity {
                         unSubcribeTask = new UnSubcribeTask();
                         unSubcribeTask.execute(data.get(Configure.removeItem).getSid());
                     } else {
-                        NotificationUtil.showShortToast(getString(R.string.please_login),
-                                MainActivity.this);
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                        // TODO
+                        unSubcribeTask = new UnSubcribeTask();
+                        unSubcribeTask.execute(data.get(Configure.removeItem).getSid());
+                        /*
+                         * NotificationUtil.showShortToast(getString(R.string.
+                         * please_login), MainActivity.this); Intent intent =
+                         * new Intent(MainActivity.this, LoginActivity.class);
+                         * startActivity(intent);
+                         */
                     }
                     break;
 
@@ -260,7 +265,7 @@ public class MainActivity extends Activity {
 
                 Uri smsToUri = Uri.parse("smsto:");
                 Intent sent_intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
-                sent_intent.putExtra("sms_body", "test meike apk");
+                sent_intent.putExtra("sms_body", getResources().getString(R.string.share_apk));
                 startActivity(sent_intent);
             }
         });

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="share_apk">我正在使用每刻资讯，非常给力，你也来用吧。下载地址：</string>
     <string name="thanks_gelivable">谢谢您的给力</string>
     <string name="meike_share">每刻分享</string>
     <string name="no_magazine">暂无新刊</string>
@@ -77,7 +78,9 @@
     <string name="ptr_release_to_refresh">松开可以刷新</string>
     <string name="ptr_refreshing">正在载入数据</string>
     <string name="ptr_last_updated">Updated: %1$s</string>
-    <string name="share_info">//分享每刻组图：</string>
+    <string name="share_photo">//分享每刻组图：</string>
+    <string name="share_news">//分享每刻新闻：</string>
+    <string name="share_magazine">//分享每刻杂志：</string>
     <string name="load_image_Success">成功下载到相册</string>
     <string name="load_image_fail">图片下载失败</string>
 

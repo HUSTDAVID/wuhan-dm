@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="10dip"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dip"
     android:orientation="vertical"
     android:background="@color/bg_normal" >
 
@@ -13,9 +15,7 @@
     <TextView
         android:id="@+id/txt_news_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
+        android:layout_height="wrap_content"        
         android:text="" 
         android:textColor="@color/black"
         android:textSize="21sp" />
@@ -23,8 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dip"
-        
+        android:layout_marginTop="3dip"        
         android:orientation="horizontal"
         android:paddingBottom="10dip" >
 
@@ -32,10 +31,7 @@
         <TextView
             android:id="@+id/txt_news_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="10dip"
-
+            android:layout_height="wrap_content"           
             android:textColor="@color/txt_gray"
             android:textSize="13sp"
             android:text="" />
@@ -43,7 +39,7 @@
         <TextView
             android:id="@+id/txt_news_source"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content"           
             android:textColor="@color/txt_gray"
             android:textSize="13sp"
             android:text="" />
@@ -60,7 +56,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:padding="10dip"
+        android:padding="20dip"
         android:scrollbars="none|vertical"
         android:text=""
         android:textColor="#404040"

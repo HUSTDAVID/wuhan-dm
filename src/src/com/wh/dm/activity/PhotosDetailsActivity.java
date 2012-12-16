@@ -2,7 +2,6 @@
 package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
@@ -281,9 +280,15 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                String head = getResources().getString(R.string.share_info);
+                String share = "";
+                String head = getResources().getString(R.string.share_photo);
                 String info = txtTitle.getText().toString();
-                UMSnsService.share(PhotosDetailsActivity.this, head + info, null);
+                share = head + info;
+                Intent intent = new Intent(PhotosDetailsActivity.this, ShareActivity.class);
+                intent.putExtra("share", share);
+                startActivity(intent);
+                // UMSnsService.share(PhotosDetailsActivity.this, head + info,
+                // null);
             }
         });
 

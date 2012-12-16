@@ -291,7 +291,16 @@ public class MagazineDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UMSnsService.share(MagazineDetailsActivity.this, "˵Щʲô...", null);
+                String share = "";
+                String head = getResources().getString(R.string.share_magazine);
+                String info = newsTitle.getText().toString();
+                ;
+                Intent intent = new Intent(MagazineDetailsActivity.this, ShareActivity.class);
+                share = head + info;
+                intent.putExtra("share", share);
+                startActivity(intent);
+                // UMSnsService.share(MagazineDetailsActivity.this, "˵Щʲô...",
+                // null);
             }
         });
         txtReplynum = (TextView) findViewById(R.id.txt_total_reply);

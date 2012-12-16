@@ -5,6 +5,8 @@ import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +33,7 @@ public class ShareActivity extends Activity implements OnClickListener {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
-
+        shareStr = getIntent().getStringExtra("share");
         initView();
     }
 
@@ -81,6 +83,10 @@ public class ShareActivity extends Activity implements OnClickListener {
             case R.id.rel_share_message:
             case R.id.img_share_message:
             case R.id.txt_share_message:
+                Uri smsToUri = Uri.parse("smsto:");
+                Intent intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
+                intent.putExtra("sms_body", shareStr);
+                startActivity(intent);
                 break;
             case R.id.rel_share_sina:
             case R.id.img_share_sina:

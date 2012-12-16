@@ -75,6 +75,7 @@ public class Sub_HotActivity extends Activity {
                     Bundle bundle = msg.getData();
                     subMagazine.execute(bundle.getInt("cid"));
                 } else {
+                    // TODO
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             Sub_HotActivity.this);
                     Intent intent = new Intent(Sub_HotActivity.this, LoginActivity.class);

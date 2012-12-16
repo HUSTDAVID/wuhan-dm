@@ -30,6 +30,7 @@ public class WH_DMApp extends Application {
     public static boolean isSinaLogin = false;
     public static boolean isTencLogin = false;
     public static boolean isLoadImg;
+    public static boolean isDefaultLoad = false;
 
     public static final String INTENT_ACTION_LOG_SUCCESS = "com.wh.dm.intent.action.LOG_SUCCESS";
     public static final String INTENT_ACTION_LOG_FAIL = "com.wh.dm.intent.action.LOG_FAIL";
@@ -119,9 +120,16 @@ public class WH_DMApp extends Application {
         LoginTask loginTask = new LoginTask();
         ArrayList<String> users = getUserInfo();
         if (users.get(0) == null || users.get(1) == null) {
+            // TODO
+            // String defultName = mPrefs.getString(Preferences.DEVICE_ID, "");
+            // String detultPassword =
+            // mPrefs.getString(Preferences.DEFAULT_PASSWORD, "1234");
+            // loginTask.execute(defultName, detultPassword);
+            // isDefaultLoad = true;
             return;
         } else {
             loginTask.execute(users.get(0), users.get(1));
+            isDefaultLoad = false;
         }
     }
 

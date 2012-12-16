@@ -300,11 +300,17 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                String share = "分享每刻新闻：";
+                String share = "";
+                String head = getResources().getString(R.string.share_news);
+                String info = "";
                 if (newsContent != null) {
-                    share = share + newsContent.getTitle() + newsContent.getIsurl();
+                    info = newsContent.getTitle() + newsContent.getIsurl();
                 }
-                UMSnsService.share(NewsDetailsActivity.this, share, null);
+                share = head + info;
+                Intent intent = new Intent(NewsDetailsActivity.this, ShareActivity.class);
+                intent.putExtra("share", share);
+                startActivity(intent);
+                // UMSnsService.share(NewsDetailsActivity.this, share, null);
 
             }
         });

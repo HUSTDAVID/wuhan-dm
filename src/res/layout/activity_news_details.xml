@@ -21,7 +21,7 @@
         android:layout_above="@+id/layout_news_detail_bottom"
         android:layout_marginBottom="4dip"
         android:fadingEdge="none"
-        android:scrollbars="none"
+        android:scrollbars="none"        
         android:cacheColorHint="#00000000"
         android:background="@color/bg_normal"
         android:divider="@drawable/doubleline"
