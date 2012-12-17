@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -210,15 +209,15 @@ public class MainActivity extends Activity {
         Magazine1.setId(1);
 
         Magazine Magazine2 = new Magazine();
-        String name2 = getResources().getString(R.string.temp2);
-        Magazine2.setName(name2);
-        Magazine2.setDrawableId(R.drawable.t2);
+        String name3 = getResources().getString(R.string.temp3);
+        Magazine2.setName(name3);
+        Magazine2.setDrawableId(R.drawable.t3);
         Magazine2.setId(2);
 
         Magazine Magazine3 = new Magazine();
-        String name3 = getResources().getString(R.string.temp3);
-        Magazine3.setName(name3);
-        Magazine3.setDrawableId(R.drawable.t3);
+        String name2 = getResources().getString(R.string.temp2);
+        Magazine3.setName(name2);
+        Magazine3.setDrawableId(R.drawable.t2);
         Magazine3.setId(3);
 
         data.add(Magazine1);
@@ -263,10 +262,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Uri smsToUri = Uri.parse("smsto:");
-                Intent sent_intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
-                sent_intent.putExtra("sms_body", getResources().getString(R.string.share_apk));
-                startActivity(sent_intent);
+                Intent intent = new Intent(MainActivity.this, ShareActivity.class);
+                intent.putExtra("share", getResources().getString(R.string.share_apk));
+                startActivity(intent);
             }
         });
 
@@ -367,12 +365,13 @@ public class MainActivity extends Activity {
                         startActivity(intent_tab1);
                         break;
                     case 2:
-                        Intent intent_collect = new Intent(MainActivity.this, MessageActivity.class);
-                        startActivity(intent_collect);
-                        break;
-                    case 3:
                         Intent intent_photo = new Intent(MainActivity.this, PhotosActivity.class);
                         startActivity(intent_photo);
+
+                        break;
+                    case 3:
+                        Intent intent_collect = new Intent(MainActivity.this, MessageActivity.class);
+                        startActivity(intent_collect);
                         break;
                     default:
                         Intent intent_magazine = new Intent(MainActivity.this,

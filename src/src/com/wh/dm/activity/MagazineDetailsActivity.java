@@ -163,9 +163,19 @@ public class MagazineDetailsActivity extends Activity {
             bottomLayout2.setVisibility(View.GONE);
             bottomLayout1.setVisibility(View.VISIBLE);
         } else {
-            this.finish();
+            final WebView webViewNewsBody = (WebView) newsMessage
+                    .findViewById(R.id.webview_news_body);
+            webViewNewsBody.loadData("", "text/html", "utf-8");
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        final WebView webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
+        webViewNewsBody.loadData("", "text/html", "utf-8");
     }
 
     private void initViews() {

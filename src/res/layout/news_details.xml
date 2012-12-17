@@ -59,6 +59,7 @@
         android:padding="20dip"
         android:scrollbars="none|vertical"
         android:text=""
+        android:background="@color/bg_normal"
         android:textColor="#404040"
         android:textSize="15sp" />
     

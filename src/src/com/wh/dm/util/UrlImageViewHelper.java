@@ -627,6 +627,7 @@ public final class UrlImageViewHelper {
                         protected void onPostExecute(final Void result) {
 
                             completion.run();
+
                         }
                     };
                     executeTask(fileloader);
@@ -724,8 +725,8 @@ public final class UrlImageViewHelper {
                     }
                 }
             };
-
             executeTask(downloader);
+
         }
     };
 

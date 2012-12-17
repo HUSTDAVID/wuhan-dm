@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="share_apk">我正在使用每刻资讯，非常给力，你也来用吧。下载地址：</string>
+    <string name="share_apk">我在使用每刻资讯，自主订阅，永久免费，你也试试吧！HTTP://DOWN.MEIKE15.COM...</string>
     <string name="thanks_gelivable">谢谢您的给力</string>
     <string name="meike_share">每刻分享</string>
     <string name="no_magazine">暂无新刊</string>
@@ -44,7 +44,7 @@
     <string name="context">原文</string>
     <string name="temp1">每刻新闻</string>
     <string name="temp2">收藏&amp;消息</string>
-    <string name="temp3">美刻美图</string>
+    <string name="temp3">每刻美图</string>
     <string name="temp4">光博会</string>
     <string name="temp5">群光广场</string>
     <string name="temp6">柏氏专卖</string>
@@ -79,7 +79,7 @@
     <string name="ptr_refreshing">正在载入数据</string>
     <string name="ptr_last_updated">Updated: %1$s</string>
     <string name="share_photo">//分享每刻组图：</string>
-    <string name="share_news">//分享每刻新闻：</string>
+    <string name="share_news">这篇文章很犀利，推荐一读，来自每刻资讯:</string>
     <string name="share_magazine">//分享每刻杂志：</string>
     <string name="load_image_Success">成功下载到相册</string>
     <string name="load_image_fail">图片下载失败</string>
