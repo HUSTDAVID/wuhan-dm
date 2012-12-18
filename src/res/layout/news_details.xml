@@ -6,7 +6,7 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dip"
     android:orientation="vertical"
-    android:background="@color/bg_normal" >
+    android:background="@color/white" >
 
 
 
@@ -59,13 +59,13 @@
         android:padding="20dip"
         android:scrollbars="none|vertical"
         android:text=""
-        android:background="@color/bg_normal"
+        android:background="@color/white"
         android:textColor="#404040"
         android:textSize="15sp" />
-    
+    <!--  
     <View 
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
-        android:background="@drawable/doubleline"/>
+        android:background="@drawable/doubleline"/>    -->
 
 </LinearLayout>

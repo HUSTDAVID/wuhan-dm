@@ -70,7 +70,7 @@ public class NewsReplyAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.news_reply_item, null);
+            convertView = mInflater.inflate(R.layout.news_reply_item_white, null);
             holder.txtBody = (TextView) convertView.findViewById(R.id.txt_replay_body);
             holder.txtTime = (TextView) convertView.findViewById(R.id.txt_reply_time);
             holder.txtName = (TextView) convertView.findViewById(R.id.txt_reply_name);

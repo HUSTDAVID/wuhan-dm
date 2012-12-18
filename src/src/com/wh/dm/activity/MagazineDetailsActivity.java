@@ -232,7 +232,7 @@ public class MagazineDetailsActivity extends Activity {
         lvNews.addHeaderView(newsMessage, null, false);
 
         // watch more comments
-        footer = mInflater.inflate(R.layout.news_more_comment, null);
+        footer = mInflater.inflate(R.layout.news_more_comment_white, null);
         lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);

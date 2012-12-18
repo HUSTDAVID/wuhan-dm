@@ -21,10 +21,12 @@ public class FileUtil {
 
         String sdcardDir = Environment.getDataDirectory().getPath();
         String database = "/data/com.wh.dm/files";
+        String cache = "/data/com.wh.dm/cache/webviewCacheChromium";
         long size = 0;
         File file = new File(sdcardDir + database);
+        File file2 = new File(sdcardDir + cache);
         try {
-            size = getFilesSize(file);
+            size = getFilesSize(file) + getFilesSize(file2);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,6 +86,7 @@ public class FileUtil {
     // delete cache
     public static void deleteCache() {
 
+        // delete files
         String sdcardDir = Environment.getDataDirectory().getPath();
         String database = "/data/com.wh.dm/files";
         File file = new File(sdcardDir + database);
@@ -92,6 +95,16 @@ public class FileUtil {
         if (fl != null) {
             for (int i = 0; i < fl.length; i++) {
                 fl[i].delete();
+            }
+        }
+        // delete cache
+        String cache = "/data/com.wh.dm/cache/webviewCacheChromium";
+        File cfile = new File(sdcardDir + cache);
+        cfile.delete();
+        File[] f2 = cfile.listFiles();
+        if (f2 != null) {
+            for (int i = 0; i < f2.length; i++) {
+                f2[i].delete();
             }
         }
 

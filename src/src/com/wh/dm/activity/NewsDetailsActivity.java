@@ -210,7 +210,7 @@ public class NewsDetailsActivity extends Activity {
         lvNews.addHeaderView(newsMessage, null, false);
 
         // watch more comments
-        footer = mInflater.inflate(R.layout.news_more_comment, null);
+        footer = mInflater.inflate(R.layout.news_more_comment_white, null);
         lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);
@@ -386,8 +386,8 @@ public class NewsDetailsActivity extends Activity {
                 databaseImpl.addNewsContent(result);
                 time++;
                 Log.d("time", "" + time);
-                webViewNewsBody.loadDataWithBaseURL("www.jbr.net.cn.html", result.getBody(),
-                        "text/html", "utf-8", null);
+                webViewNewsBody.loadDataWithBaseURL("www.baidu.com", result.getBody(), "text/html",
+                        "utf-8", null);
                 newsTitle.setText(result.getTitle());
                 newsTime.setText(result.getPubdate());
                 newsSource.setText(result.getSource());
