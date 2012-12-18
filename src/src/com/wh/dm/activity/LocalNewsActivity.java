@@ -18,11 +18,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -36,6 +38,9 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
 
     private RelativeLayout relMain;
     private LayoutParams params = null;
+
+    private LinearLayout menuLinerLayout;
+    private ArrayList<TextView> menuList;
 
     private TextView txtHeadline;
     private TextView txtHouse;
@@ -108,12 +113,21 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
         txtTitle = (TextView) findViewById(R.id.txt_title);
         txtTitle.setText(getResources().getString(R.string.news));
 
-        txtHeadline = (TextView) findViewById(R.id.txt_listtop_1);
-        txtHouse = (TextView) findViewById(R.id.txt_listtop_2);
-        txtCar = (TextView) findViewById(R.id.txt_listtop_3);
-        txtFashion = (TextView) findViewById(R.id.txt_listtop_4);
-        txtLift = (TextView) findViewById(R.id.txt_listtop_5);
-        txtTravel = (TextView) findViewById(R.id.txt_listtop_6);
+        // add list top
+        menuList = new ArrayList<TextView>();
+        menuLinerLayout = (LinearLayout) findViewById(R.id.linearLayoutMenu);
+        menuLinerLayout.setOrientation(LinearLayout.HORIZONTAL);
+        // ≤Œ ˝…Ë÷√
+        LinearLayout.LayoutParams menuLinerLayoutParames = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        menuLinerLayoutParames.gravity = Gravity.CENTER_HORIZONTAL;
+
+        txtHeadline = new TextView(this);
+        txtHouse = new TextView(this);
+        txtCar = new TextView(this);
+        txtFashion = new TextView(this);
+        txtLift = new TextView(this);
+        txtTravel = new TextView(this);
 
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(LocalNewsActivity.this);
@@ -127,11 +141,34 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 getResources().getString(R.string.lift));
         String five = preference.getString(Preferences.NEWS_FIVE,
                 getResources().getString(R.string.traval));
-        txtHouse.setText(one);
-        txtCar.setText(two);
-        txtFashion.setText(three);
-        txtLift.setText(four);
-        txtTravel.setText(five);
+
+        txtHeadline = initMenu(txtHeadline, getResources().getString(R.string.headline));
+        txtHouse = initMenu(txtHouse, one);
+        txtCar = initMenu(txtCar, two);
+        txtFashion = initMenu(txtFashion, three);
+        txtLift = initMenu(txtLift, four);
+        txtTravel = initMenu(txtTravel, five);
+
+        txtHeadline.setId(1);
+        txtHouse.setId(2);
+        txtCar.setId(3);
+        txtFashion.setId(4);
+        txtLift.setId(5);
+        txtTravel.setId(6);
+
+        menuList.add(txtHeadline);
+        menuList.add(txtHouse);
+        menuList.add(txtCar);
+        menuList.add(txtFashion);
+        menuList.add(txtLift);
+        menuList.add(txtTravel);
+
+        menuLinerLayout.addView(txtHeadline);
+        menuLinerLayout.addView(txtHouse);
+        menuLinerLayout.addView(txtCar);
+        menuLinerLayout.addView(txtFashion);
+        menuLinerLayout.addView(txtLift);
+        menuLinerLayout.addView(txtTravel);
 
         handler.sendEmptyMessage(MSG_GET_NEWS_TYPE);
 
@@ -163,7 +200,7 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
         public void onClick(View v) {
 
             switch (v.getId()) {
-                case R.id.txt_listtop_1:
+                case 1:
                     setCurTxt(1);
                     intent.setClass(LocalNewsActivity.this, HeadNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("Headline", intent)
@@ -171,36 +208,44 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
 
                     break;
 
-                case R.id.txt_listtop_2:
+                case 2:
                     setCurTxt(2);
                     intent.setClass(LocalNewsActivity.this, HouseNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
-                case R.id.txt_listtop_3:
+                case 3:
                     setCurTxt(3);
                     intent.setClass(LocalNewsActivity.this, CarNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("Car", intent).getDecorView();
                     break;
 
-                case R.id.txt_listtop_4:
+                case 4:
                     setCurTxt(4);
                     intent.setClass(LocalNewsActivity.this, FashionNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("Fashion", intent)
                             .getDecorView();
                     break;
 
-                case R.id.txt_listtop_5:
+                case 5:
                     setCurTxt(5);
                     intent.setClass(LocalNewsActivity.this, LifeNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("Life", intent).getDecorView();
                     break;
 
-                case R.id.txt_listtop_6:
+                case 6:
                     setCurTxt(6);
                     intent.setClass(LocalNewsActivity.this, TravelNewsActivity.class);
                     vMain = getLocalActivityManager().startActivity("Travel", intent)
                             .getDecorView();
+                    break;
+                default:
+                    int id = v.getId();
+                    setCurTxt(id);
+                    getLocalActivityManager().destroyActivity("other", true);
+                    intent.setClass(LocalNewsActivity.this, NewsOtherSortActivity.class);
+                    intent.putExtra("id", newsSort.get(id - 2).getId());
+                    vMain = getLocalActivityManager().startActivity("other", intent).getDecorView();
                     break;
             }
 
@@ -221,91 +266,16 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
 
     private void setCurTxt(int i) {
 
-        switch (i) {
-            case 1:
-                txtHeadline.setSelected(true);
-                txtHeadline.setTextColor(Color.WHITE);
-                txtHouse.setSelected(false);
-                txtHouse.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtFashion.setSelected(false);
-                txtFashion.setTextColor(Color.BLACK);
-                txtLift.setSelected(false);
-                txtLift.setTextColor(Color.BLACK);
-                txtTravel.setSelected(false);
-                txtTravel.setTextColor(Color.BLACK);
-                break;
-            case 2:
-                txtHeadline.setSelected(false);
-                txtHeadline.setTextColor(Color.BLACK);
-                txtHouse.setSelected(true);
-                txtHouse.setTextColor(Color.WHITE);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtFashion.setSelected(false);
-                txtFashion.setTextColor(Color.BLACK);
-                txtLift.setSelected(false);
-                txtLift.setTextColor(Color.BLACK);
-                txtTravel.setSelected(false);
-                txtTravel.setTextColor(Color.BLACK);
-                break;
-            case 3:
-                txtHeadline.setSelected(false);
-                txtHeadline.setTextColor(Color.BLACK);
-                txtHouse.setSelected(false);
-                txtHouse.setTextColor(Color.BLACK);
-                txtCar.setSelected(true);
-                txtCar.setTextColor(Color.WHITE);
-                txtFashion.setSelected(false);
-                txtFashion.setTextColor(Color.BLACK);
-                txtLift.setSelected(false);
-                txtLift.setTextColor(Color.BLACK);
-                txtTravel.setSelected(false);
-                txtTravel.setTextColor(Color.BLACK);
-                break;
-            case 4:
-                txtHeadline.setSelected(false);
-                txtHeadline.setTextColor(Color.BLACK);
-                txtHouse.setSelected(false);
-                txtHouse.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtFashion.setSelected(true);
-                txtFashion.setTextColor(Color.WHITE);
-                txtLift.setSelected(false);
-                txtLift.setTextColor(Color.BLACK);
-                txtTravel.setSelected(false);
-                txtTravel.setTextColor(Color.BLACK);
-                break;
-            case 5:
-                txtHeadline.setSelected(false);
-                txtHeadline.setTextColor(Color.BLACK);
-                txtHouse.setSelected(false);
-                txtHouse.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtFashion.setSelected(false);
-                txtFashion.setTextColor(Color.BLACK);
-                txtLift.setSelected(true);
-                txtLift.setTextColor(Color.WHITE);
-                txtTravel.setSelected(false);
-                txtTravel.setTextColor(Color.BLACK);
-                break;
-            case 6:
-                txtHeadline.setSelected(false);
-                txtHeadline.setTextColor(Color.BLACK);
-                txtHouse.setSelected(false);
-                txtHouse.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtFashion.setSelected(false);
-                txtFashion.setTextColor(Color.BLACK);
-                txtLift.setSelected(false);
-                txtLift.setTextColor(Color.BLACK);
-                txtTravel.setSelected(true);
-                txtTravel.setTextColor(Color.WHITE);
-                break;
+        int pos = i - 1;
+        int size = menuList.size();
+        for (int j = 0; j < size; j++) {
+            if (j == pos) {
+                menuList.get(j).setSelected(true);
+                menuList.get(j).setTextColor(Color.WHITE);
+            } else {
+                menuList.get(j).setSelected(false);
+                menuList.get(j).setTextColor(Color.BLACK);
+            }
         }
 
     }
@@ -377,11 +347,36 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 txtLift.setText(four);
                 txtTravel.setText(five);
 
+                if (result.size() > 5) {
+                    for (int i = 5; i < result.size(); i++) {
+                        TextView txtOther = new TextView(LocalNewsActivity.this);
+                        txtOther = initMenu(txtOther, result.get(i).getTypename());
+                        txtOther.setId(i + 2);
+                        txtOther.setOnClickListener(new NewsItemOnClickListener());
+                        menuLinerLayout.addView(txtOther);
+                        menuList.add(txtOther);
+
+                    }
+                }
+
                 Preferences.saveNewsType(LocalNewsActivity.this, one, two, three, four, five,
                         idOne, idTwo, idThree, idFour, idFive);
             }
             super.onPostExecute(result);
         }
+    }
 
+    // init menu text view
+    private TextView initMenu(TextView txtMenu, String txt) {
+
+        txtMenu.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.FILL_PARENT));
+        txtMenu.setPadding(15, 10, 10, 10);
+        txtMenu.setText(txt);
+        txtMenu.setTextColor(Color.BLACK);
+        txtMenu.setTextSize(18);
+        txtMenu.setGravity(Gravity.CENTER_HORIZONTAL);
+        txtMenu.setBackgroundResource(R.drawable.list_top);
+        return txtMenu;
     }
 }

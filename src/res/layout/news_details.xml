@@ -7,7 +7,6 @@
     android:paddingRight="15dip"
     android:orientation="vertical"
     android:background="@color/white" >
-
 
 
 
@@ -43,29 +42,32 @@
             android:textColor="@color/txt_gray"
             android:textSize="13sp"
             android:text="" />
-
-    </LinearLayout>
-    
-     <View 
-        android:layout_width="fill_parent"
-        android:layout_height="1.5dip"
-        android:background="@drawable/doubleline"/>
-
-    <WebView
-        android:id="@+id/webview_news_body"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:padding="20dip"
-        android:scrollbars="none|vertical"
-        android:text=""
-        android:background="@color/white"
-        android:textColor="#404040"
-        android:textSize="15sp" />
-    <!--  
+        
+         </LinearLayout>
+         
     <View 
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
-        android:background="@drawable/doubleline"/>    -->
+        android:background="@drawable/doubleline"/>
+
+        <WebView
+            android:id="@+id/webview_news_body"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fitsSystemWindows="true"
+            android:padding="20dip"
+            android:scrollbars="none|vertical"
+            android:textColor="#404040"
+            android:textSize="15sp" />
+
+   
+    
+     
+     
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="1.5dip"
+        android:background="@drawable/doubleline"/>   
 
 </LinearLayout>

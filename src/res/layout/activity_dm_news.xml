@@ -9,10 +9,31 @@
         android:layout_height="40dip"        
         layout="@layout/header_title" />
     
-    <include
+   <!-- <include
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        layout="@layout/list_top" />
+        layout="@layout/list_top" />    --> 
+   
+		    <HorizontalScrollView 
+		        android:layout_width="match_parent"
+		        android:layout_height="35dp"
+		        android:background="@drawable/list_topbg"
+		        android:scrollbars="none" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLayoutMenu"
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:background="@drawable/list_topbg"
+		            android:gravity="center_vertical" >
+		    
+		        </LinearLayout>
+		    </HorizontalScrollView> 
+		    
+		    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#c0c0c0" />
     
     <RelativeLayout 
         android:id="@+id/rel_news_main"
