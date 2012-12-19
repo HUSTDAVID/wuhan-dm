@@ -57,9 +57,9 @@ public class NewsMoreReplyActivity extends Activity {
     private NewsReplyMoreAdapter adapter;
     private NewsReplyFloorAdapter floorAdapter;
     private GetCommentTask getCommentTask = null;
-    private PushTopTask pushTopTask = null;
-    private ReplyTask replyTask = null;
-    private ReviewTask reviewTask = null;
+    // private PushTopTask pushTopTask = null;
+    // private ReplyTask replyTask = null;
+    // private ReviewTask reviewTask = null;
     private WH_DMApi wh_dmApi;
     private int id;
     private boolean isReply = false;
@@ -81,14 +81,14 @@ public class NewsMoreReplyActivity extends Activity {
                     getCommentTask.execute(id);
                     break;
                 case MSG_PUSH_TOP:
-                    if (pushTopTask != null) {
-                        pushTopTask.cancel(true);
-                        pushTopTask = null;
-                    }
+                    // if (pushTopTask != null) {
+                    // pushTopTask.cancel(true);
+                    // pushTopTask = null;
+                    // }
 
                     if (WH_DMApp.isLogin) {
                         Bundle bundle = msg.getData();
-                        pushTopTask = new PushTopTask();
+                        PushTopTask pushTopTask = new PushTopTask();
                         pushTopTask.execute(bundle.getString("fid"));
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.please_login),
@@ -102,12 +102,12 @@ public class NewsMoreReplyActivity extends Activity {
                     Bundle bundle = msg.getData();
                     isReply = bundle.getBoolean("isReply");
                     if (isReply) {
-                        if (replyTask != null) {
-                            replyTask.cancel(true);
-                            replyTask = null;
-                        }
+                        // if (replyTask != null) {
+                        // replyTask.cancel(true);
+                        // replyTask = null;
+                        // }
 
-                        replyTask = new ReplyTask();
+                        ReplyTask replyTask = new ReplyTask();
                         replyTask.execute(fid);
                         isReview = true;
 
@@ -124,13 +124,13 @@ public class NewsMoreReplyActivity extends Activity {
 
                     break;
                 case MSG_REVIEW:
-                    if (reviewTask != null) {
-                        reviewTask.cancel(true);
-                        reviewTask = null;
-                    }
+                    // if (reviewTask != null) {
+                    // reviewTask.cancel(true);
+                    // reviewTask = null;
+                    // }
                     String str = getFcontent();
                     if (!TextUtil.isEmpty(getFcontent())) {
-                        reviewTask = new ReviewTask();
+                        ReviewTask reviewTask = new ReviewTask();
                         reviewTask.execute(getFcontent());
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.review_null),

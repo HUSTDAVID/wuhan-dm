@@ -389,7 +389,8 @@ public class NewsDetailsActivity extends Activity {
                 webViewNewsBody.loadDataWithBaseURL("www.baidu.com", result.getBody(), "text/html",
                         "utf-8", null);
                 newsTitle.setText(result.getTitle());
-                newsTime.setText(result.getPubdate());
+                newsTime.setText(TimeUtil.getTimeInterval(result.getPubdate(),
+                        NewsDetailsActivity.this));
                 newsSource.setText(result.getSource());
                 if (comments != null && comments.size() > 0) {
                     int commentNum = 5;

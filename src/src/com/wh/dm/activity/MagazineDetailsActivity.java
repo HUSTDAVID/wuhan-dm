@@ -195,6 +195,7 @@ public class MagazineDetailsActivity extends Activity {
         newsTitle = (TextView) newsMessage.findViewById(R.id.txt_news_title);
         newsTime = (TextView) newsMessage.findViewById(R.id.txt_news_time);
         newsSource = (TextView) newsMessage.findViewById(R.id.txt_news_source);
+        newsSource.setText(getIntent().getStringExtra("source"));
         webViewNewsBody = (WebView) newsMessage.findViewById(R.id.webview_news_body);
         webViewNewsBody.getSettings().setDefaultTextEncodingName("utf-8");
         webViewNewsBody.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
@@ -398,7 +399,8 @@ public class MagazineDetailsActivity extends Activity {
                 webViewNewsBody.loadDataWithBaseURL("www.baidu.com", result.getBody(), "text/html",
                         "utf-8", null);
                 newsTitle.setText(result.getTitle());
-                newsTime.setText(result.getPubdate());
+                newsTime.setText(TimeUtil.getTimeInterval(result.getPubdate(),
+                        MagazineDetailsActivity.this));
                 if (comments != null && comments.size() > 0) {
                     int commentNum = 5;
                     if (comments.size() < 5) {

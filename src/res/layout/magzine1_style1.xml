@@ -162,10 +162,9 @@
     android:layout_alignParentLeft="false"
     android:layout_alignParentRight="false"
     android:layout_alignParentTop="false"
-    android:background="@color/translucence_black"
     android:gravity="bottom|left"
-    android:paddingLeft="5dip"
-    android:singleLine="true"    
+    android:paddingLeft="5dip"  
+    android:typeface="serif"
     android:text="华大集团入驻光谷高新区"
     android:textSize="@dimen/mzine_long_title"
     android:textColor="@color/white" />

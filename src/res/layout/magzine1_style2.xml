@@ -56,10 +56,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="false"
-            android:background="@color/translucence_black"
             android:gravity="bottom|left"
             android:paddingLeft="5dip"
-            android:singleLine="true"
             android:text="长飞光纤获国际质量管理金奖"
             android:textSize="@dimen/mzine_long_title"
             android:textColor="@color/white" />

@@ -8,12 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="40dip"        
         layout="@layout/header_title" />
-    
-   <!-- <include
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/list_top" />    --> 
-   
+         
 		    <HorizontalScrollView 
 		        android:layout_width="match_parent"
 		        android:layout_height="35dp"

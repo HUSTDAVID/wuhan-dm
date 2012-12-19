@@ -128,7 +128,7 @@ public class DM_MZinePicsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (magazines.get(curPage - 1).getDescription() != null
+                if (magazines != null && magazines.get(curPage - 1).getDescription() != null
                         && magazines.get(curPage - 1).getDescription().length() > 0) {
                     if (txtDes.getVisibility() == View.VISIBLE) {
                         txtDes.setVisibility(View.GONE);

@@ -30,6 +30,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/news_top"
+        android:scrollbars="none" 
         android:layout_above="@+id/layout_news_detail_bottom"
         android:layout_marginBottom="4dip"
         android:fadingEdge="none"        

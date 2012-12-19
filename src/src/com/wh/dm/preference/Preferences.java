@@ -71,6 +71,15 @@ public class Preferences {
         editor.commit();
     }
 
+    public static void logout(Context context) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor = preference.edit();
+        editor.putString(EMAIL, "");
+        editor.putString(PASSWORD, "");
+        editor.commit();
+    }
+
     public static void saveNewsType(Context context, String one, String two, String three,
             String four, String five, int idOne, int idTwo, int idThree, int idFour, int idFive) {
 

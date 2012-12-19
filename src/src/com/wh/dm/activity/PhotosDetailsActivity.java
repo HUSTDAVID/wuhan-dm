@@ -259,7 +259,15 @@ public class PhotosDetailsActivity extends Activity {
                 RelBottom1.setVisibility(View.VISIBLE);
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
-                handler.sendEmptyMessage(MSG_ADD_REVIEW);
+
+                if (WH_DMApp.isLogin) {
+                    handler.sendEmptyMessage(MSG_ADD_REVIEW);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.please_login),
+                            PhotosDetailsActivity.this);
+                    Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         btnBack = (ImageButton) findViewById(R.id.img_header3_black_back);

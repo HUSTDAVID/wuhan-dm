@@ -11,9 +11,13 @@
 
     <CheckBoxPreference
         android:layout="@layout/set_pref_check"
-        android:summaryOff="开启推送功能后，我们会第一时间推送要闻给你"
+        android:summaryOff="开启推送功能，我们会第一时间推送要闻给你"
         android:summaryOn="消息推送关闭"
-        android:title="@string/push" android:widgetLayout="@layout/set_checkbox" android:key="push" android:persistent="true"/>
+        android:title="@string/push" 
+        android:widgetLayout="@layout/set_checkbox" 
+        android:key="push" 
+        android:persistent="true"/>
+    
     <CheckBoxPreference
         android:layout="@layout/set_pref_check"
         android:summaryOff="保持屏幕正常亮度"

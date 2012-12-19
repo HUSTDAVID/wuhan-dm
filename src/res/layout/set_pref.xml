@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="65dip"
+    android:layout_height="wrap_content"
     android:background="@drawable/set_list_bg"
     android:orientation="vertical" >
 
@@ -12,7 +12,6 @@
         android:paddingLeft="12dip"
         android:paddingTop="5dip"
         android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/pref_txt_color"
         android:textSize="19sp" />
 
@@ -22,9 +21,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="6dip"
         android:paddingLeft="12dip"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"        
         android:textColor="@color/pref_txt_color"
-        android:textSize="11sp" />
+        android:textSize="12sp" />
 
 </LinearLayout>

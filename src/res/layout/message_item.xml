@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="54dip"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="8dp"
+    android:paddingLeft="10dip"
+    android:paddingBottom="5dp"
     android:background="@color/bg_normal" >
 
     <TextView
         android:id="@+id/tex_message_large"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:paddingLeft="15dip"
-        android:paddingRight="15dp"
-        android:paddingBottom="8dp"
-        android:textColor="#353434"
-        android:text="" />
+	        style="@style/collect_title"
+	        android:layout_width="wrap_content"
+	        android:singleLine="true"
+	        android:text=""/>
 
     <TextView
         android:id="@+id/tex_message_small"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:paddingLeft="15dip"
-        android:paddingRight="15dp"
-        android:textColor="#858585"
-        android:text="" />
+            style="@style/collect_body"
+            android:text=""/>
 
 </LinearLayout>

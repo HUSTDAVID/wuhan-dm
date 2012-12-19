@@ -50,10 +50,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="false"
-            android:background="@color/translucence_black"
+            android:lines="2"
             android:gravity="bottom|left"
-            android:paddingLeft="5dip"
-            android:singleLine="true"
+            android:paddingLeft="5dip"           
             android:textSize="@dimen/mzine_long_title"
             android:text="武汉久有股权投资基金成立"
             android:textColor="@color/white" />

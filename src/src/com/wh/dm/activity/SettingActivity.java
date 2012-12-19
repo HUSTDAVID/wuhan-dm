@@ -4,9 +4,13 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.util.FileUtil;
 import com.wh.dm.util.SettingUtil;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -50,6 +54,10 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public void onResume() {
 
         super.onResume();
+        if (WH_DMApp.isLogin) {
+            pref_login.setTitle(getString(R.string.mymeike));
+            pref_login.setSummary(sPreference.getString("email", getString(R.string.login_toast)));
+        }
         setFlowChange(sPreference, pref_flow);
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         MobclickAgent.onResume(this);
@@ -105,8 +113,12 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     public boolean onPreferenceClick(Preference preference) {
 
         if (preference.getKey().equals("login")) {
-            Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-            startActivity(intent);
+            if (WH_DMApp.isLogin) {
+                logoutDialog();
+            } else {
+                Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
         } else if (preference.getKey().equals("account")) {
             Intent intent = new Intent(SettingActivity.this, WeiboActivity.class);
             startActivity(intent);
@@ -148,6 +160,42 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 
         boolean isLoadImag = SettingUtil.isDownloadImg(sharedPreferences, this);
         WH_DMApp.isLoadImg = isLoadImag;
+    }
+
+    // logout
+    protected void logoutDialog() {
+
+        AlertDialog.Builder builder = new Builder(SettingActivity.this);
+        builder.setMessage(getResources().getString(R.string.is_logout));
+        builder.setTitle(getResources().getString(R.string.alert));
+        builder.setPositiveButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        WH_DMApp.isLogin = false;
+                        Preferences.logout(SettingActivity.this);
+                        pref_login.setTitle(getString(R.string.set_login));
+                        pref_login.setSummary(getString(R.string.login_summary));
+
+                    }
+
+                });
+        builder.setNegativeButton(getResources().getString(R.string.cacel),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+
+                });
+
+        builder.create().show();
+
     }
 
 }
