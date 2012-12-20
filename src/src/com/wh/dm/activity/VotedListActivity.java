@@ -49,6 +49,7 @@ public class VotedListActivity extends Activity {
     private GetVotesTask getVotesTask = null;
     private int currentSelelct = 0;
     private int sid;
+    private LayoutInflater inflate;
 
     private final Handler handler = new Handler() {
 
@@ -80,12 +81,12 @@ public class VotedListActivity extends Activity {
         wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_VOTES);
 
-        LayoutInflater inflater = getLayoutInflater();
+        inflate = getLayoutInflater();
         pageViews = new ArrayList<View>();
-        main = (ViewGroup) inflater.inflate(R.layout.activity_votemain, null);
+        main = (ViewGroup) inflate.inflate(R.layout.activity_votemain, null);
         group = (ViewGroup) main.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) main.findViewById(R.id.guidePages);
-        View v1 = inflater.inflate(R.layout.dm_voteitem1, null);
+        View v1 = inflate.inflate(R.layout.dm_voteitem1, null);
         pageViews.add(v1);
         setContentView(main);
         viewPager.setAdapter(new GuidePageAdapter());
@@ -240,22 +241,7 @@ public class VotedListActivity extends Activity {
                 pageViews.clear();
                 for (int i = 0; i < result.size(); i++) {
                     View view = GetVoteView.getView(result.get(i), VotedListActivity.this);
-                    Button btnVote = (Button) view.findViewById(R.id.btn_vote);
-                    btnVote.setOnClickListener(new OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-
-                            Intent intent = new Intent(VotedListActivity.this, Vote2Activity.class);
-                            intent.putExtra("aid", votes.get(currentSelelct).getAid());
-                            intent.putExtra("name", votes.get(currentSelelct).getVotename());
-                            intent.putExtra("des", votes.get(currentSelelct).getDes());
-                            intent.putExtra("pic", votes.get(currentSelelct).getPic());
-                            intent.putExtra("ismore", votes.get(currentSelelct).isIsmore());
-                            intent.putExtra("votenote", votes.get(currentSelelct).getVotenote());
-                            startActivity(intent);
-                        }
-                    });
                     ImageButton btnBack = (ImageButton) view.findViewById(R.id.img_header3_back);
                     btnBack.setOnClickListener(new OnClickListener() {
 
@@ -265,6 +251,29 @@ public class VotedListActivity extends Activity {
                             finish();
                         }
                     });
+
+                    Button btnVote = (Button) view.findViewById(R.id.btn_vote);
+                    if (result.get(i).isIsenable()) {
+                        btnVote.setText("投票");
+                        btnVote.setOnClickListener(new OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent intent = new Intent(VotedListActivity.this,
+                                        Vote2Activity.class);
+                                intent.putExtra("aid", votes.get(currentSelelct).getAid());
+                                intent.putExtra("enable", true);
+                                intent.putExtra("name", votes.get(currentSelelct).getVotename());
+                                intent.putExtra("votenote", votes.get(currentSelelct).getVotenote());
+                                startActivity(intent);
+
+                            }
+                        });
+                    } else {
+                        btnVote.setText("查看结果");
+                    }
+
                     pageViews.add(view);
                     dot = new ImageView(VotedListActivity.this);
                     dot.setLayoutParams(new LayoutParams(12, 12));
@@ -285,6 +294,6 @@ public class VotedListActivity extends Activity {
             }
             super.onPostExecute(result);
         }
-
     }
+
 }

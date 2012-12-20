@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:id="@+id/linearlayout_vote"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:background="@color/vote_background">
     
-
-    <include 
-        android:id="@+id/vote_header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/dm_vote_header"/>
+  
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -57,9 +53,9 @@
   <ListView 
                android:id="@+id/lv_vote_choice"
                android:layout_width="fill_parent"
-               android:layout_marginBottom="15dip"
+               android:layout_marginBottom="10dip"
                android:background="@color/btn_normal"
-               android:layout_above="@+id/vote_button_close"
+               android:listSelector="@android:color/transparent"
                android:layout_height="wrap_content"/>
   
   </LinearLayout>

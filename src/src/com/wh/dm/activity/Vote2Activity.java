@@ -5,11 +5,13 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.type.VoteResult;
+import com.wh.dm.type.VoteResultPercent;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.VoteChoiceAdapter;
+import com.wh.dm.widget.VoteResultAdapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,12 +19,17 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class Vote2Activity extends Activity {
 
@@ -32,37 +39,59 @@ public class Vote2Activity extends Activity {
     private View lvHeader;
     private TextView txtNum;
     private TextView txtName;
+    private TextView txtInfo;
     private View lvFooter;
     private Button btn_close;
-    private VoteChoiceAdapter adapter;
-
-    // private boolean isMore = false;
-    private boolean[] choice;
+    private VoteChoiceAdapter choiceAdapter;
+    private VoteResultAdapter resultAdapter;
     private String[] notes;
-    private Button lastChoice;
+    private String myChioce;
+    private ArrayList<VoteResultPercent> voteResultList = null;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private int aid;
     private String voteName;
-    private String pic;
-    private String des;
+    private boolean enable;
     private String voteNum = "0";
-    private int MSG_GET_VOTE_NUM = 0;
+    private static final int MSG_GET_VOTE_NUM = 0;
+    private static final int MSG_GET_VOTE_RESULT = 1;
+    private static final int MSG_POST_VOTE = 2;
     private GetVoteNumTask getVoteNumTask = null;
+    private GetVoteResultTask getVoteResultTask = null;
+    private PostVoteTask postVoteTask = null;
     private final Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
 
-            if (msg.what == MSG_GET_VOTE_NUM) {
-                if (getVoteNumTask != null) {
-                    getVoteNumTask.cancel(true);
-                    getVoteNumTask = null;
-                }
-                getVoteNumTask = new GetVoteNumTask();
-                getVoteNumTask.execute();
+            switch (msg.what) {
+                case MSG_GET_VOTE_NUM:
+                    if (getVoteNumTask != null) {
+                        getVoteNumTask.cancel(true);
+                        getVoteNumTask = null;
+                    }
+                    getVoteNumTask = new GetVoteNumTask();
+                    getVoteNumTask.execute();
+                    break;
+                case MSG_GET_VOTE_RESULT:
+                    if (getVoteResultTask != null) {
+                        getVoteResultTask.cancel(true);
+                        getVoteResultTask = null;
+                    }
+                    getVoteResultTask = new GetVoteResultTask();
+                    getVoteResultTask.execute();
+                    break;
+                case MSG_POST_VOTE:
+                    if (postVoteTask != null) {
+                        postVoteTask.cancel(true);
+                        postVoteTask = null;
+                    }
+                    postVoteTask = new PostVoteTask();
+                    postVoteTask.execute();
+                    break;
             }
+
             super.handleMessage(msg);
         }
     };
@@ -73,6 +102,9 @@ public class Vote2Activity extends Activity {
         super.onCreate(savedInstanceState);
         MobclickAgent.onError(this);
         setContentView(R.layout.activity_vote2);
+        LayoutParams params = getWindow().getAttributes();
+        params.width = LayoutParams.MATCH_PARENT;
+        getWindow().setAttributes(params);
 
         init();
     }
@@ -93,46 +125,27 @@ public class Vote2Activity extends Activity {
 
     public void init() {
 
+        LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_vote);
+
         LayoutInflater inflater = getLayoutInflater();
         lvHeader = inflater.inflate(R.layout.vote_info_header, null);
         lvFooter = inflater.inflate(R.layout.vote_info_footer, null);
 
+        enable = getIntent().getBooleanExtra("enable", false);
         aid = getIntent().getIntExtra("aid", 0);
         voteName = getIntent().getStringExtra("name");
-        pic = getIntent().getStringExtra("pic");
-        // isMore = getIntent().getBooleanExtra("ismore", false);
-        des = getIntent().getStringExtra("des");
-        notes = getIntent().getStringArrayExtra("votenote");
-        choice = new boolean[notes.length];
         txtName = (TextView) lvHeader.findViewById(R.id.vote_ing_2);
         txtName.setText(voteName);
         txtNum = (TextView) lvHeader.findViewById(R.id.vote_ing_5);
-        // this button is not for close, it is for commit user's choice.
+        txtInfo = (TextView) lvHeader.findViewById(R.id.vote_ing_3);
         btn_close = (Button) lvFooter.findViewById(R.id.vote_button_close);
-        btn_close.setText("Ã·Ωª");
+        btn_close.setText("πÿ±’");
         btn_close.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Vote2Activity.this, VoteWatchResultActivity.class);
-                String vtitle = "";
-                for (int i = 0; i < choice.length; i++) {
-                    if (choice[i]) {
-                        vtitle = notes[i];
-                        break;
-                    }
-                }
-                if (vtitle.equals("")) {
-                    NotificationUtil.showShortToast(getResources()
-                            .getString(R.string.select_choice), Vote2Activity.this);
-                } else {
-                    intent.putExtra("vtitle", vtitle);
-                    intent.putExtra("aid", aid);
-                    intent.putExtra("des", des);
-                    intent.putExtra("name", voteName);
-                    intent.putExtra("pic", pic);
-                    startActivity(intent);
-                }
+                Vote2Activity.this.finish();
+
             }
 
         });
@@ -140,52 +153,47 @@ public class Vote2Activity extends Activity {
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_VOTE_NUM);
-
         listView = (ListView) findViewById(R.id.lv_vote_choice);
-        listView.setDivider(null);
-        listView.addHeaderView(lvHeader);
-        listView.addFooterView(lvFooter);
-        adapter = new VoteChoiceAdapter(this);
-        adapter.setList(notes);
-        listView.setAdapter(adapter);
+        resultAdapter = new VoteResultAdapter(this);
 
-        btnBack = (ImageButton) findViewById(R.id.img_header3_back);
-        btnBack.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if (enable) {
+            notes = getIntent().getStringArrayExtra("votenote");
+            listView.setDivider(null);
+            listView.addHeaderView(lvHeader);
+            listView.addFooterView(lvFooter);
+            choiceAdapter = new VoteChoiceAdapter(this);
+            choiceAdapter.setList(notes);
+            listView.setAdapter(choiceAdapter);
 
-                finish();
-            }
-        });
+            listView.setOnItemClickListener(new OnItemClickListener() {
 
-        listView.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
-
-                if (lastChoice != null) {
-                    lastChoice.setSelected(false);
-                }
-                Button btn = (Button) view.findViewById(R.id.btn_vote_item);
-                lastChoice = btn;
-                for (int i = 0; i < choice.length; i++) {
-                    // add header for listview position 0 is header.vote item is
-                    // begin from 1
-                    if (i == position - 1) {
-                        choice[i] = true;
-                        btn.setSelected(true);
-                    } else {
-                        choice[i] = false;
+                    if (position > 0) {
+                        view.setSelected(true);
+                        myChioce = notes[position - 1];
+                        handler.sendEmptyMessage(MSG_POST_VOTE);
                     }
                 }
-                if (adapter != null) {
-                    adapter.setSelect(choice);
+            });
+
+        } else {
+            // show result
+            txtInfo.setText(getString(R.string.vote_result));
+            handler.sendEmptyMessage(MSG_GET_VOTE_RESULT);
+            listView.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+
                 }
-            }
-        });
+            });
+        }
 
     }
 
+    //
     class GetVoteNumTask extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -204,6 +212,77 @@ public class Vote2Activity extends Activity {
 
             txtNum.setText(voteNum);
             super.onPostExecute(result);
+        }
+
+    }
+
+    //
+    class GetVoteResultTask extends AsyncTask<Void, Void, ArrayList<VoteResultPercent>> {
+
+        @Override
+        protected ArrayList<VoteResultPercent> doInBackground(Void... params) {
+
+            try {
+                voteResultList = wh_dmApi.getVoteResultPercent(aid);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return voteResultList;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<VoteResultPercent> result) {
+
+            if (result != null && result.size() > 0) {
+                resultAdapter.setList(result);
+                listView.setAdapter(resultAdapter);
+                txtInfo.setText(getString(R.string.vote_result));
+                listView.setOnItemClickListener(new OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long arg3) {
+
+                    }
+                });
+                handler.sendEmptyMessage(MSG_GET_VOTE_NUM);
+            } else {
+                NotificationUtil.showShortToast(getResources().getString(R.string.get_not_result),
+                        Vote2Activity.this);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+
+    // post vote
+    class PostVoteTask extends AsyncTask<Void, Void, VoteResult> {
+
+        Exception reason;
+
+        @Override
+        protected VoteResult doInBackground(Void... params) {
+
+            VoteResult result = new VoteResult();
+            ;
+            try {
+                result = wh_dmApi.postVote(aid, myChioce);
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(VoteResult result) {
+
+            if (result.isResult()) {
+                handler.sendEmptyMessage(MSG_GET_VOTE_RESULT);
+            } else {
+                Toast.makeText(Vote2Activity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+            }
+
         }
 
     }

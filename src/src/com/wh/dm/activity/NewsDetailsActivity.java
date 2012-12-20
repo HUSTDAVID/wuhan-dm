@@ -154,6 +154,8 @@ public class NewsDetailsActivity extends Activity {
     public void onBackPressed() {
 
         if (bottomLayout2.getVisibility() == View.VISIBLE) {
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                    edtReply.getWindowToken(), 0);
             bottomLayout2.setVisibility(View.GONE);
             bottomLayout1.setVisibility(View.VISIBLE);
         } else {

@@ -10,7 +10,7 @@
     <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="fill_parent"
-       android:layout_marginBottom="24.67dp"
+       android:layout_marginBottom="15dp"
        android:layout_marginTop="5dip"
        android:background="@color/btn_normal"
        android:orientation="vertical" >
@@ -22,9 +22,9 @@
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"           
            android:layout_marginTop="5dp"
-           android:text="@string/vote_question"
+           android:text=""
            android:textColor="@color/black"
-           android:textSize="20sp" />
+           android:textSize="17sp" />
 
        <TextView
            android:id="@+id/vote_ing_3"
@@ -61,9 +61,10 @@
                android:id="@+id/vote_ing_5"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
+               android:minWidth="30dp"
                android:layout_alignParentRight="true"
                android:layout_marginRight="13.33dp"
-               android:text="@string/vote_number"
+               android:text="0"
                android:textColor="@color/red"
                android:textSize="15sp" />
        </RelativeLayout>
