@@ -136,11 +136,11 @@ public class PhotoAdapter extends BaseAdapter {
 
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.imgLeft,
-                    WH_DMHttpApiV1.URL_DOMAIN + leftPhoto.getLitpic(), R.drawable.item_default,
-                    null);
+                    WH_DMHttpApiV1.URL_DOMAIN + leftPhoto.getLitpic(),
+                    R.drawable.photos_img_background_nr, null);
 
             UrlImageViewHelper.setUrlDrawable(holder.imgRight, WH_DMHttpApiV1.URL_DOMAIN
-                    + rightPhot.getLitpic(), R.drawable.item_default, null);
+                    + rightPhot.getLitpic(), R.drawable.photos_img_background_nr, null);
         }
 
         return convertView;

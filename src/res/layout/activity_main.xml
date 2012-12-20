@@ -65,7 +65,9 @@
                 android:background="@drawable/set" />
 
         </LinearLayout>
-    </RelativeLayout><ImageView
+    </RelativeLayout>
+    
+    <ImageView
         android:id="@+id/dels"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,5 +75,68 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/del_check"
         android:visibility="gone" />
+    
+    <LinearLayout
+        android:id="@+id/linearlayout_quit" 
+        android:layout_width="fill_parent"
+        android:layout_height="170dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:background="@drawable/quit_bg_drawable"
+        android:visibility="gone">
+        
+        <TextView 
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="30dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:text="@string/alert"/>
+        
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.5dp"
+            android:background="@drawable/quit_line_drawable"/>
+        
+        <TextView 
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="30dp"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:text="@string/is_quit"/>
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+            
+            <Button
+                android:id="@+id/btn_quit_cacel" 
+                android:layout_width="110dip"
+                android:layout_height="50dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/quit_btn_drawable"
+                android:text="@string/cacel"/>
+            
+            <Button 
+                android:id="@+id/btn_quit_ok"
+                android:layout_width="110dip"
+                android:layout_height="50dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/quit_btn_drawable"
+                android:text="@string/ok"/>
+            
+            
+        </LinearLayout>>
+        
+    </LinearLayout>
 
 </RelativeLayout>

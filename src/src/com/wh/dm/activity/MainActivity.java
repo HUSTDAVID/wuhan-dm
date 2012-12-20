@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -53,6 +54,11 @@ public class MainActivity extends Activity {
     private ImageButton btn_download;
     private ImageButton btn_add;
     private ImageButton btn_set;
+
+    // quit
+    private LinearLayout linearLayoutQuit;
+    private Button btnQuitCacel;
+    private Button btnQuitOk;
 
     public static final int PAGE_SIZE = 8;
     public static final int SLIDE_GRID = 0;
@@ -200,6 +206,17 @@ public class MainActivity extends Activity {
         MobclickAgent.onPause(this);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (linearLayoutQuit.getVisibility() == View.GONE) {
+            linearLayoutQuit.setVisibility(View.VISIBLE);
+        } else {
+            linearLayoutQuit.setVisibility(View.GONE);
+        }
+
+    }
+
     public void menu_init() {
 
         Magazine Magazine1 = new Magazine();
@@ -241,6 +258,30 @@ public class MainActivity extends Activity {
         } else {
             whApp.acquireWakeLock();
         }
+
+        // quit
+        linearLayoutQuit = (LinearLayout) findViewById(R.id.linearlayout_quit);
+        btnQuitCacel = (Button) findViewById(R.id.btn_quit_cacel);
+        btnQuitOk = (Button) findViewById(R.id.btn_quit_ok);
+        btnQuitOk.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                System.exit(0);
+
+            }
+        });
+
+        btnQuitCacel.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                linearLayoutQuit.setVisibility(View.GONE);
+
+            }
+        });
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         scrollLayout = (ScrollLayout) findViewById(R.id.views);

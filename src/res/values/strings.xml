@@ -2,6 +2,7 @@
 <resources>
 
     <string name="alert">提示</string>
+    <string name="is_quit">是否要退出每刻？</string>
     <string name="vote_result">投票结果：</string>
     <string name="is_logout">确认注销登录？</string>
     <string name="close">关闭</string>

@@ -330,7 +330,7 @@ public class DownloadActivity extends Activity {
                                 totalLoadImage++;
                                 UrlImageViewHelper.sendFinishMsg(new ImageView(context),
                                         WH_DMHttpApiV1.URL_DOMAIN + body.getLitpic(),
-                                        R.drawable.item_default, null, handler);
+                                        R.drawable.subscription_manage_background, null, handler);
 
                             }
                             // TODO:
@@ -365,7 +365,7 @@ public class DownloadActivity extends Activity {
                             totalLoadImage++;
                             UrlImageViewHelper.sendFinishMsg(new ImageView(context),
                                     WH_DMHttpApiV1.URL_DOMAIN + pic.getPic(),
-                                    R.drawable.item_default, null, handler);
+                                    R.drawable.subscription_manage_background, null, handler);
                             // TODO:
                         }
                         // send finish

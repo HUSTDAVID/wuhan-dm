@@ -94,9 +94,9 @@ public class HeadlineAdapter extends BaseAdapter {
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.img,
                     WH_DMHttpApiV1.URL_DOMAIN + headNews.get(position).getLitpic(),
-                    R.drawable.item_default, null);
+                    R.drawable.news_src, null);
         } else {
-            holder.img.setBackgroundResource(R.drawable.item_default);
+            holder.img.setBackgroundResource(R.drawable.news_src);
         }
         return view;
     }
