@@ -4,6 +4,7 @@ package com.wh.dm;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.service.PushService;
+import com.wh.dm.type.Magazine;
 import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
@@ -44,14 +45,9 @@ public class WH_DMApp extends Application {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
         login();
-        // update database
-        boolean update_db = mPrefs.getBoolean(Preferences.UPDATE_DATABASE, true);
-        if (update_db) {
-            DatabaseImpl databaseImpl = new DatabaseImpl(this);
-            databaseImpl.deleteLoadInfo();
-            databaseImpl.deleteMagazineBody();
-            databaseImpl.deleteMagazinePic();
-            Preferences.setUpdateDB(this);
+        if (!mPrefs.getBoolean(Preferences.GET_DETAULT_MAGAZIE, false)) {
+            GetDefaultMagazine getDefaultMagazine = new GetDefaultMagazine();
+            getDefaultMagazine.execute();
         }
 
     }
@@ -160,6 +156,35 @@ public class WH_DMApp extends Application {
                 Intent intent = new Intent(INTENT_ACTION_LOG_FAIL);
                 sendBroadcast(intent);
                 isLogin = false;
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+
+    private class GetDefaultMagazine extends AsyncTask<Void, Void, ArrayList<Magazine>> {
+        ArrayList<Magazine> defalutMagazines = new ArrayList<Magazine>();
+
+        @Override
+        protected ArrayList<Magazine> doInBackground(Void... params) {
+
+            try {
+                defalutMagazines = wh_dm.getDefaultMagazine();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return defalutMagazines;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Magazine> result) {
+
+            if (result != null) {
+                DatabaseImpl databaseImpl = new DatabaseImpl(WH_DMApp.this);
+                databaseImpl.addMagazines(result);
+                Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
+                sendBroadcast(intent);
+                Preferences.getDefalutMagazine(WH_DMApp.this);
             }
             super.onPostExecute(result);
         }

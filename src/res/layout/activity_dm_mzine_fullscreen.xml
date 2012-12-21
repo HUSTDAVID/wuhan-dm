@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mzine_fullacreen" >
+    android:background="#dcdcdc" >
 
  
  
@@ -53,7 +53,7 @@
             android:text=""
             android:layout_toRightOf="@+id/img_mzine_arrow"            
             android:layout_alignBottom="@+id/img_mzine_arrow"
-            android:background="@color/translucence_black"
+            android:background="#1D000000"
             android:layout_toLeftOf="@+id/txt_magazine_page"
             android:layout_marginRight="5dip"
             android:visibility="gone"/>

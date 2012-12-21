@@ -529,6 +529,17 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
+    public ArrayList<Magazine> getDefaultMagazine() throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
+                new BasicNameValuePair("act", "default"));
+        String content = mHttpApi.doHttpRequest(httpGet);
+        Type type = new TypeToken<ArrayList<Magazine>>() {
+        }.getType();
+        return gson.fromJson(content, type);
+    }
+
     public ArrayList<Magazine> getSearchMagazine(String key) throws WH_DMException,
             UnKnownException, IOException {
 

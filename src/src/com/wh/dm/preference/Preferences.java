@@ -12,6 +12,8 @@ public class Preferences {
     public static final String DEVICE_ID = "device_id";
     public static final String DEFAULT_PASSWORD = "default_password";
 
+    public static final String GET_DETAULT_MAGAZIE = "get_detault_magazine";
+
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
 
@@ -59,6 +61,14 @@ public class Preferences {
         editor.putString(DEVICE_ID, deviceId);
         editor.putString(DEFAULT_PASSWORD, "1234");
         editor.putBoolean(FISRT_LAUNCH, false);
+        editor.commit();
+    }
+
+    public static void getDefalutMagazine(Context context) {
+
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor = preference.edit();
+        editor.putBoolean(GET_DETAULT_MAGAZIE, true);
         editor.commit();
     }
 

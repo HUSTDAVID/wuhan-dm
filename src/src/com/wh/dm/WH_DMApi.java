@@ -326,4 +326,10 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.loadMagzine(sid);
     }
 
+    public ArrayList<Magazine> getDefaultMagazine() throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.getDefaultMagazine();
+    }
+
 }

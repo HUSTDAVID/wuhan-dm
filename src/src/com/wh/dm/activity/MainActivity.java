@@ -269,6 +269,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 System.exit(0);
+                // MainActivity.this.finish();
 
             }
         });
