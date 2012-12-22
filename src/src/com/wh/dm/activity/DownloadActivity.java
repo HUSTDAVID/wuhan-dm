@@ -58,7 +58,7 @@ public class DownloadActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     DownloadAdapter adapter;
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -108,9 +108,11 @@ public class DownloadActivity extends Activity {
                         }
                     } else {
                         if (loadPosList.size() > 0) {
-                            isLoading = true;
-                            new LoadMagazineThread(DownloadActivity.this, loadSidList.get(0),
-                                    loadPosList.get(0)).start();
+                            if (!isLoading) {
+                                isLoading = true;
+                                new LoadMagazineThread(DownloadActivity.this, loadSidList.get(0),
+                                        loadPosList.get(0)).start();
+                            }
                             loadList.get(loadPosList.get(0)).setStart(true);
                             loadList.get(loadPosList.get(0)).setFinish(false);
                             loadList.get(loadPosList.get(0)).setPro(3);

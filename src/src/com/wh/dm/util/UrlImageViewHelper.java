@@ -477,9 +477,6 @@ public final class UrlImageViewHelper {
             if (imageView != null) {
                 imageView.setImageDrawable(defaultDrawable);
             }
-            if (isLoad) {
-                handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
-            }
             return;
         }
 
@@ -511,6 +508,11 @@ public final class UrlImageViewHelper {
             }
             if (callback != null) {
                 callback.onLoaded(imageView, drawable, url, true);
+
+            }
+            // TODO
+            if (isLoad && handler != null) {
+                handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
             }
             return;
         }
@@ -602,6 +604,9 @@ public final class UrlImageViewHelper {
                         }
                     }
                 }
+                if (isLoad && handler != null) {
+                    handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
+                }
             }
         };
 
@@ -631,9 +636,6 @@ public final class UrlImageViewHelper {
                         }
                     };
                     executeTask(fileloader);
-                    if (isLoad) {
-                        handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
-                    }
                     return;
                 } else {
                     clog(Constants.LOGTAG, "File cache has expired. Refreshing.");
@@ -720,9 +722,6 @@ public final class UrlImageViewHelper {
                 protected void onPostExecute(final Void result) {
 
                     completion.run();
-                    if (isLoad) {
-                        handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
-                    }
                 }
             };
             executeTask(downloader);

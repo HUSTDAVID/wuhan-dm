@@ -14,7 +14,6 @@ import com.wh.dm.util.TimeUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,7 +57,8 @@ public class DM_MZineArticleActivity extends Activity {
     private TextView txtPage;
     private boolean isLoad;
     private int sid;
-    private ProgressDialog progressDialog = null;
+    // private ProgressDialog progressDialog = null;
+    private LinearLayout loadLayout;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -106,6 +106,8 @@ public class DM_MZineArticleActivity extends Activity {
 
     public void init() {
 
+        loadLayout = (LinearLayout) findViewById(R.id.magazine_load);
+
         txtPage = (TextView) findViewById(R.id.txt_magazine_page);
         LayoutInflater inflater = getLayoutInflater();
         views = new ArrayList<View>();
@@ -121,8 +123,9 @@ public class DM_MZineArticleActivity extends Activity {
 
         isLoad = databaseImpl.isLoad(sid);
         if (!isLoad) {
-            progressDialog = new ProgressDialog(getParent());
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            // progressDialog = new ProgressDialog(getParent());
+            // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
         }
         handler.sendEmptyMessage(MSG_GET_MAGZINE);
 
@@ -784,7 +787,8 @@ public class DM_MZineArticleActivity extends Activity {
         protected void onPreExecute() {
 
             if (!isLoad) {
-                progressDialog.show();
+                // progressDialog.show();
+                loadLayout.setVisibility(View.VISIBLE);
             }
             super.onPreExecute();
         }
@@ -822,7 +826,7 @@ public class DM_MZineArticleActivity extends Activity {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZineArticleActivity.this);
             }
             if (!isLoad) {
-                progressDialog.dismiss();
+                loadLayout.setVisibility(View.GONE);
             }
             super.onPostExecute(result);
         }

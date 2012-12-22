@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="home_load">努力加载中...</string>
+    <string name="picture_load">正在为您加载...</string>
     <string name="alert">提示</string>
     <string name="is_quit">是否要退出每刻？</string>
     <string name="vote_result">投票结果：</string>

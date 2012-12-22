@@ -19,7 +19,6 @@ import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -83,7 +82,8 @@ public class MagazineDetailsActivity extends Activity {
     private Button btnMore;
     private ImageButton btnBack;
     private NewsReplyAdapter adapter;
-    private ProgressDialog progressDialog;
+    // private ProgressDialog progressDialog;
+    private LinearLayout loadLayout;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -180,12 +180,14 @@ public class MagazineDetailsActivity extends Activity {
 
     private void initViews() {
 
+        loadLayout = (LinearLayout) findViewById(R.id.detail_load);
+
         final ImageView img_header = (ImageView) findViewById(R.id.img_header);
         UrlImageViewHelper.setUrlDrawable(img_header, WH_DMHttpApiV1.URL_DOMAIN + titleUrl,
                 R.drawable.magazine_title, null);
 
-        progressDialog = new ProgressDialog(MagazineDetailsActivity.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        // progressDialog = new ProgressDialog(MagazineDetailsActivity.this);
+        // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         mInflater = getLayoutInflater();
 
@@ -358,7 +360,8 @@ public class MagazineDetailsActivity extends Activity {
         protected void onPreExecute() {
 
             if (!isLoad) {
-                progressDialog.show();
+                // progressDialog.show();
+                loadLayout.setVisibility(View.VISIBLE);
             }
             super.onPreExecute();
         }
@@ -425,7 +428,7 @@ public class MagazineDetailsActivity extends Activity {
                 }
             }
             if (!isLoad) {
-                progressDialog.dismiss();
+                loadLayout.setVisibility(View.GONE);
             }
             super.onPostExecute(result);
         }
@@ -475,7 +478,8 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            // progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -502,7 +506,8 @@ public class MagazineDetailsActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         MagazineDetailsActivity.this);
             }
-            progressDialog.dismiss();
+            // progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 
@@ -516,7 +521,8 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            // progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -551,7 +557,8 @@ public class MagazineDetailsActivity extends Activity {
                     NotificationUtil.showShortToast(postresult.getMsg(),
                             MagazineDetailsActivity.this);
             }
-            progressDialog.dismiss();
+            // progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 

@@ -54,6 +54,8 @@ public class MainActivity extends Activity {
     private ImageButton btn_download;
     private ImageButton btn_add;
     private ImageButton btn_set;
+    private LinearLayout layout_load;
+    private ImageView load_close;
 
     // quit
     private LinearLayout linearLayoutQuit;
@@ -190,6 +192,7 @@ public class MainActivity extends Activity {
         });
 
         runAnimation();
+        // layout_load.setVisibility(View.GONE);
     }
 
     @Override
@@ -258,6 +261,19 @@ public class MainActivity extends Activity {
         } else {
             whApp.acquireWakeLock();
         }
+
+        // load layout
+        layout_load = (LinearLayout) findViewById(R.id.home_load);
+        load_close = (ImageView) findViewById(R.id.btn_home_load_close);
+        load_close.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                layout_load.setVisibility(View.GONE);
+
+            }
+        });
 
         // quit
         linearLayoutQuit = (LinearLayout) findViewById(R.id.linearlayout_quit);

@@ -11,6 +11,23 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
     </android.support.v4.view.ViewPager>
+    
+    
+     <LinearLayout 
+        android:id="@+id/picture_load"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"            	
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+	    <include 	            
+	            android:layout_width="match_parent"
+	            android:layout_height="50dp"	                       
+	            layout="@layout/dialog_default_load"/>
+	    
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/img_mzine_comment" 

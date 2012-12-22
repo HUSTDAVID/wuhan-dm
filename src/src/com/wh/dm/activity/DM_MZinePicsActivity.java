@@ -12,7 +12,6 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +27,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,7 +35,8 @@ import java.util.ArrayList;
 public class DM_MZinePicsActivity extends Activity {
 
     private ViewPager v_Pager;
-    private ProgressDialog progressDialog;
+    // private ProgressDialog progressDialog;
+    private LinearLayout layout_load;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -87,6 +88,8 @@ public class DM_MZinePicsActivity extends Activity {
 
     public void init() {
 
+        layout_load = (LinearLayout) findViewById(R.id.picture_load);
+
         txtPage = (TextView) findViewById(R.id.txt_magazine_page);
         txtDes = (TextView) findViewById(R.id.txt_mzine_des);
         imgArrow = (ImageView) findViewById(R.id.img_mzine_arrow);
@@ -98,8 +101,6 @@ public class DM_MZinePicsActivity extends Activity {
         v_Pager.setOnPageChangeListener(new GuidePageChangeListener());
         inflater = getLayoutInflater();
         views = new ArrayList<View>();
-        progressDialog = new ProgressDialog(getParent());
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
@@ -285,7 +286,8 @@ public class DM_MZinePicsActivity extends Activity {
         protected void onPreExecute() {
 
             if (!isLoad) {
-                progressDialog.show();
+                // progressDialog.show();
+                layout_load.setVisibility(View.VISIBLE);
             }
             super.onPreExecute();
         }
@@ -315,7 +317,8 @@ public class DM_MZinePicsActivity extends Activity {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);
             }
             if (!isLoad) {
-                progressDialog.dismiss();
+                // progressDialog.dismiss();
+                layout_load.setVisibility(View.GONE);
             }
             super.onPostExecute(result);
         }

@@ -17,7 +17,6 @@ import com.wh.dm.util.TimeUtil;
 import com.wh.dm.widget.NewsReplyAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -80,7 +79,8 @@ public class NewsDetailsActivity extends Activity {
     private Button btnMore;
     private ImageButton btnBack;
     private NewsReplyAdapter adapter;
-    private ProgressDialog progressDialog;
+    // private ProgressDialog progressDialog;
+    private LinearLayout loadLayout;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -165,8 +165,9 @@ public class NewsDetailsActivity extends Activity {
 
     private void initViews() {
 
-        progressDialog = new ProgressDialog(NewsDetailsActivity.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loadLayout = (LinearLayout) findViewById(R.id.detail_load);
+        // progressDialog = new ProgressDialog(NewsDetailsActivity.this);
+        // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         mInflater = getLayoutInflater();
 
@@ -359,7 +360,8 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            // progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -427,7 +429,8 @@ public class NewsDetailsActivity extends Activity {
                             NewsDetailsActivity.this);
                 }
             }
-            progressDialog.dismiss();
+            // progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
     }
@@ -476,7 +479,8 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            // progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -503,7 +507,8 @@ public class NewsDetailsActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         NewsDetailsActivity.this);
             }
-            progressDialog.dismiss();
+            // progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 
@@ -517,7 +522,8 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            // progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -562,7 +568,8 @@ public class NewsDetailsActivity extends Activity {
                 else
                     NotificationUtil.showShortToast(postresult.getMsg(), NewsDetailsActivity.this);
             }
-            progressDialog.dismiss();
+            // progressDialog.dismiss();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPostExecute(result);
         }
 
