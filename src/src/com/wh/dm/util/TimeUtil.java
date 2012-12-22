@@ -31,8 +31,11 @@ public class TimeUtil {
             if (min != 0) {
                 return new String("" + min + context.getString(R.string.review_min));
             }
-            if (sec != 0) {
+            if (sec > 0) {
                 return new String("" + sec + context.getString(R.string.review_sec));
+            }
+            if (sec<=0) {
+            	return new String("" + context.getString(R.string.review_now));
             }
         } catch (ParseException e) {
             // TODO Auto-generated catch block

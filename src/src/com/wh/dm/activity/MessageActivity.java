@@ -57,6 +57,7 @@ public class MessageActivity extends Activity {
     private int countsPerPage = 12;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
+    public static boolean refreshCollect = false;
 
     private final Handler handler = new Handler() {
         @Override
@@ -92,6 +93,17 @@ public class MessageActivity extends Activity {
 
         init();
 
+    }
+    
+    @Override
+    protected void onResume(){
+    	super.onResume();
+    	MobclickAgent.onError(this);
+    	if(refreshCollect){
+    		if (WH_DMApp.isLogin && WH_DMApp.isConnected)
+    	        handler.sendEmptyMessage(MSG_GET_FAV);
+    		refreshCollect = false;
+    	}
     }
 
     private void init() {

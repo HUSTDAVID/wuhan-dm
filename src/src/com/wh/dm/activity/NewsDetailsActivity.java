@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,15 +52,22 @@ public class NewsDetailsActivity extends Activity {
     private final int MSG_GET_COMMENT = 1;
     private final int ADD_REVIEW = 2;
     private final int ADD_FAV = 3;
+    public static final int MSG_PUSH_TOP=4;
+    public static final int MSG_REPLY=5;
     private final int curStatus = 0;
     private int id;
-    private int fid;
+    private String fid;
     private int time;
     private final int curPage = 1;
+    private int numReply=0;
+    private boolean isReply = false;
+    private boolean isReview = true;
     private GetNewsDetailTask getNewsDetailTask = null;
     private GetCommentTask getCommentTask = null;
     private AddReviewTask addReviewTask = null;
     private AddFavTask addFavTask = null;
+    private PushTopTask pushTopTask = null;
+    private ReplyTask replyTask = null;
     private TextView newsTitle;
     TextView newsTime;
     TextView newsSource;
@@ -87,6 +95,7 @@ public class NewsDetailsActivity extends Activity {
     LinearLayout bottomLayout1;
     RelativeLayout bottomLayout2;
     NewsContent newsContent;
+    public static boolean freshComment=false;
 
     private final Handler handler = new Handler() {
         @Override
@@ -130,6 +139,48 @@ public class NewsDetailsActivity extends Activity {
                     addFavTask = new AddFavTask();
                     addFavTask.execute(id);
                     break;
+                    
+                case MSG_PUSH_TOP:
+                	if (pushTopTask != null) {
+                        pushTopTask.cancel(true);
+                        pushTopTask = null;
+                    }
+
+                    if (WH_DMApp.isLogin) {
+                        Bundle bundle = msg.getData();
+                        pushTopTask = new PushTopTask();
+                        pushTopTask.execute(bundle.getString("fid"));
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.please_login),
+                                NewsDetailsActivity.this);
+                        Intent intent = new Intent(NewsDetailsActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                	break;
+                	
+                case MSG_REPLY:
+                	Bundle bundle = msg.getData();
+                    isReply = bundle.getBoolean("isReply");
+                    if (isReply) {
+                    	if (replyTask != null) {
+                            replyTask.cancel(true);
+                            replyTask = null;
+                        }
+                        replyTask = new ReplyTask();
+                        replyTask.execute(fid);
+                        isReview = true;
+
+                    } else {
+                        fid = bundle.getString("fid");
+                        isReview = false;
+                        bottomLayout1.setVisibility(View.GONE);
+                        bottomLayout2.setVisibility(View.VISIBLE);
+
+                        edtReply.requestFocus();
+                        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                                .showSoftInput(edtReply, 0);
+                    }
+                	break;
             }
         };
     };
@@ -149,7 +200,7 @@ public class NewsDetailsActivity extends Activity {
         handler.sendEmptyMessage(MSG_GET_NEWSDETAIL);
 
     }
-
+    
     @Override
     public void onBackPressed() {
 
@@ -216,6 +267,7 @@ public class NewsDetailsActivity extends Activity {
         lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);
+        adapter.setHandler(handler);
         lvNews.setAdapter(adapter);
 
         btnMore = (Button) findViewById(R.id.btn_news_more);
@@ -261,13 +313,21 @@ public class NewsDetailsActivity extends Activity {
                 bottomLayout2.setVisibility(View.GONE);
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
-                if (WH_DMApp.isLogin) {
-                    handler.sendEmptyMessage(ADD_REVIEW);
-                } else {
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            NewsDetailsActivity.this);
+                if (!WH_DMApp.isLogin) {
+                    NotificationUtil.showShortToast(getString(R.string.please_login),NewsDetailsActivity.this);
                     Intent intent = new Intent(NewsDetailsActivity.this, LoginActivity.class);
                     startActivity(intent);
+                }
+                if (isReview) {
+                    handler.sendEmptyMessage(ADD_REVIEW);
+
+                } else {
+                    Message msg = new Message();
+                    msg.what = MSG_REPLY;
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isReply", true);
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
                 }
             }
         });
@@ -325,6 +385,10 @@ public class NewsDetailsActivity extends Activity {
 
         webSettings = webViewNewsBody.getSettings();
         setTextSize();
+        if(freshComment){
+        	handler.sendEmptyMessage(MSG_GET_COMMENT);
+        	freshComment = false;
+        }
         super.onResume();
     }
 
@@ -399,15 +463,17 @@ public class NewsDetailsActivity extends Activity {
                     if (comments.size() < 5) {
                         commentNum = comments.size();
                     }
+                    adapter.clearItem();
                     for (int i = 0; i < commentNum; i++) {
                         Comment comment = comments.get(i);
                         adapter.addItem(comment.getUsername(), TimeUtil.getTimeInterval(
                                 comment.getDtime(), NewsDetailsActivity.this), comment.getMsg(), ""
-                                + comment.getGood());
+                                + comment.getGood(),comment.getId());
                     }
                 } else {
                     lvNews.removeFooterView(footer);
                 }
+                numReply=result.getFcount();
                 txtReplynum.setText("" + result.getFcount() + getString(R.string.news_reply_count));
 
             } else {
@@ -446,9 +512,10 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected ArrayList<Comment> doInBackground(Integer... params) {
 
-            if (NetworkConnection.checkInternetConnection()) {
+            //if (NetworkConnection.checkInternetConnection()) {
+        	if(WH_DMApp.isConnected){
                 try {
-                    comments = (new WH_DMApi()).getComment(params[0], curPage);
+                    comments = wh_dmApi.getComment(params[0], curPage);
                     return comments;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -464,6 +531,23 @@ public class NewsDetailsActivity extends Activity {
         protected void onPostExecute(ArrayList<Comment> result) {
 
             // TODO Auto-generated method stub
+        	if (comments != null && comments.size() > 0) {
+                int commentNum = 5;
+                if (comments.size() < 5) {
+                    commentNum = comments.size();
+                }
+                adapter.clearItem();
+                for (int i = 0; i < commentNum; i++) {
+                    Comment comment = comments.get(i);
+                    adapter.addItem(comment.getUsername(), TimeUtil.getTimeInterval(
+                            comment.getDtime(), NewsDetailsActivity.this), comment.getMsg(), ""
+                            + comment.getGood(), comment.getId());
+                }
+            } else {
+                lvNews.removeFooterView(footer);
+            }
+            //txtReplynum.setText("" + result.getFcount() + getString(R.string.news_reply_count));
+
             super.onPostExecute(result);
         }
 
@@ -497,8 +581,9 @@ public class NewsDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                NotificationUtil.showShortToast(getString(R.string.review_succeed),
-                        NewsDetailsActivity.this);
+                NotificationUtil.showShortToast(getString(R.string.review_succeed),NewsDetailsActivity.this);
+                txtReplynum.setText("" + (++numReply) + getString(R.string.news_reply_count));
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         NewsDetailsActivity.this);
@@ -552,7 +637,8 @@ public class NewsDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                CollectNewsActivity.isNewCollect = true;
+                //CollectNewsActivity.isNewCollect = true;
+                MessageActivity.refreshCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         NewsDetailsActivity.this);
             } else {
@@ -568,4 +654,67 @@ public class NewsDetailsActivity extends Activity {
 
     }
 
+    private class ReplyTask extends AsyncTask<String, Void, Boolean> {
+        Exception reason = null;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean isReply = false;
+            try {
+                isReply = wh_dmApi.addReply(getFcontent(), params[0]);
+                return isReply;
+            } catch (Exception e) {
+                e.printStackTrace();
+                reason = e;
+                return false;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),NewsDetailsActivity.this);
+            } else {
+                NotificationUtil.showShortToast(getString(R.string.reply_fail),NewsDetailsActivity.this);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+    
+    private class PushTopTask extends AsyncTask<String, Void, Boolean> {
+        Exception reason = null;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean isTop = false;
+            try {
+                isTop = wh_dmApi.addTop(params[0]);
+                return isTop;
+            } catch (Exception e) {
+                e.printStackTrace();
+                reason = e;
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
+                        NewsDetailsActivity.this);
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
+            } else {
+                NotificationUtil.showShortToast(getString(R.string.top_fail),
+                        NewsDetailsActivity.this);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
 }

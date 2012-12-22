@@ -55,7 +55,13 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
         this.context = context;
         mInflater = LayoutInflater.from(context);
     }
-
+    
+    public void clearItem(){
+    	if(mData!=null){
+    		mData.clear();
+    	}
+    }
+    
     public void addItem(String name, String time, String body, String top,
             NewsReplyFloorAdapter floorAdapter, int fid) {
 

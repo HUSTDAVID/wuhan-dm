@@ -348,6 +348,7 @@ public class NewsMoreReplyActivity extends Activity {
                     lv.removeFooterView(footer);
                     isFirstLauncher = false;
                 }
+                adapter.clearItem();
                 for (int i = 0; i < result.size(); i++) {
                     ArrayList<Reply> replys = result.get(i).getReply();
                     Comment comment = result.get(i).getComment();
@@ -399,6 +400,8 @@ public class NewsMoreReplyActivity extends Activity {
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
                         NewsMoreReplyActivity.this);
+                NewsDetailsActivity.freshComment = true;
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.top_fail),
                         NewsMoreReplyActivity.this);
@@ -432,6 +435,7 @@ public class NewsMoreReplyActivity extends Activity {
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
                         NewsMoreReplyActivity.this);
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.reply_fail),
                         NewsMoreReplyActivity.this);
@@ -471,6 +475,8 @@ public class NewsMoreReplyActivity extends Activity {
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.review_succeed),
                         NewsMoreReplyActivity.this);
+                NewsDetailsActivity.freshComment = true;
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         NewsMoreReplyActivity.this);
