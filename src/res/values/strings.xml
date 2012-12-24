@@ -205,6 +205,7 @@
 	<string name="network_exception">网络连接异常</string>
 	<string name="check_network">请检查网络连接</string>
 	<string name="no_more_message">没有更多消息了</string>
+	<string name="no_more_collect">没有更多收藏了</string>
 	<string name="larger">较大</string>
 	<string name="largest">超大</string>
 	<string name="nomal">正常</string>

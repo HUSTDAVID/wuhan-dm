@@ -54,7 +54,7 @@ public class MessageActivity extends Activity {
     private static int MSG_GET_FAV = 0;
     private static int MSG_DEL_FAV = 1;
     private ProgressDialog progressDialog;
-    private int countsPerPage = 12;
+    private int countsPerPage = 10;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
     public static boolean refreshCollect = false;
@@ -270,7 +270,7 @@ public class MessageActivity extends Activity {
             // no result
             if (result == null || result.size() == 0) {
                 if (FLAG_PAGE_UP) {
-                    NotificationUtil.showShortToast(getString(R.string.no_more_message),
+                    NotificationUtil.showShortToast(getString(R.string.no_more_collect),
                             MessageActivity.this);
                     FLAG_PAGE_UP = false;
                 } else {
