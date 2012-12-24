@@ -70,17 +70,10 @@ public class Sub_HotActivity extends Activity {
                     subMagazine.cancel(true);
                     subMagazine = null;
                 }
-                if (WH_DMApp.isLogin) {
-                    subMagazine = new SubcribeTask();
-                    Bundle bundle = msg.getData();
-                    subMagazine.execute(bundle.getInt("cid"));
-                } else {
-                    // TODO
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            Sub_HotActivity.this);
-                    Intent intent = new Intent(Sub_HotActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
+
+                subMagazine = new SubcribeTask();
+                Bundle bundle = msg.getData();
+                subMagazine.execute(bundle.getInt("cid"));
             }
         }
 

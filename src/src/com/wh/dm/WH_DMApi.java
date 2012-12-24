@@ -213,16 +213,21 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getVoteResultPercent(vid);
     }
 
-    public boolean register(String regemail, String regepass) throws WH_DMException,
-            UnKnownException, IOException {
+    public boolean register(String regemail, String regepass, String machineId)
+            throws WH_DMException, UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.register(regemail, regepass);
+        return mWH_DMHttpApiV1.register(regemail, regepass, machineId);
     }
 
-    public boolean login(String logemail, String logpassword) throws WH_DMException,
-            UnKnownException, IOException {
+    public boolean login(String logemail, String logpassword, String machine)
+            throws WH_DMException, UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.login(logemail, logpassword);
+        return mWH_DMHttpApiV1.login(logemail, logpassword, machine);
+    }
+
+    public boolean loginById(String machine) throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.loginById(machine);
     }
 
     public ArrayList<Magazine> getMagazine(int cid) throws WH_DMException, UnKnownException,

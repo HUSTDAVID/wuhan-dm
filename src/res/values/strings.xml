@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="load_fail">抱歉，加载订阅信息失败。</string>
     <string name="home_load">努力加载中...</string>
     <string name="picture_load">正在为您加载...</string>
     <string name="alert">提示</string>

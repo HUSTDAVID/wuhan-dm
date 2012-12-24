@@ -2,7 +2,6 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
-import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -120,10 +119,8 @@ public class SubManagerAdapter extends BaseAdapter {
                 message.setData(bundle);
                 message.what = MSG_UNSUBCRIBE;
                 handler.sendMessage(message);
-                if (WH_DMApp.isLogin) {
-                    magazines.remove(pos);
-                    notifyDataSetChanged();
-                }
+                magazines.remove(pos);
+                notifyDataSetChanged();
 
             }
         });

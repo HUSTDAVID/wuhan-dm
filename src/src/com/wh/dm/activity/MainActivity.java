@@ -9,6 +9,7 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.Configure;
 import com.wh.dm.widget.DragGrid;
 import com.wh.dm.widget.DragGridAdapter;
@@ -61,6 +62,9 @@ public class MainActivity extends Activity {
     private LinearLayout linearLayoutQuit;
     private Button btnQuitCacel;
     private Button btnQuitOk;
+    // load
+    private int totle = 0;
+    private int cur = 0;
 
     public static final int PAGE_SIZE = 8;
     public static final int SLIDE_GRID = 0;
@@ -151,6 +155,13 @@ public class MainActivity extends Activity {
                          */
                     }
                     break;
+                case DownloadActivity.MSG_LOAD_ONE_IMAGE:
+                    cur++;
+                    if (cur == totle) {
+                        UrlImageViewHelper.isLoad = false;
+                        layout_load.setVisibility(View.GONE);
+                    }
+                    break;
 
             }
             super.handleMessage(msg);
@@ -178,6 +189,9 @@ public class MainActivity extends Activity {
         init();
         menu_init();
         data.addAll(databaseImpl.getSubcribedMagazine());
+        totle = data.size();
+        cur = 3;
+        UrlImageViewHelper.isLoad = true;
         initData();
         for (int i = 0; i < Configure.countPages; i++) {
             scrollLayout.addView(addGridView(i));
@@ -192,7 +206,7 @@ public class MainActivity extends Activity {
         });
 
         runAnimation();
-        // layout_load.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -407,7 +421,7 @@ public class MainActivity extends Activity {
 
         linear = new LinearLayout(MainActivity.this);
         gridView = new DragGrid(MainActivity.this);
-        gridView.setAdapter(new DragGridAdapter(MainActivity.this, lists.get(i)));
+        gridView.setAdapter(new DragGridAdapter(MainActivity.this, lists.get(i), handler));
         gridView.setNumColumns(2);
         gridView.setHorizontalSpacing(0);
         gridView.setVerticalSpacing(0);

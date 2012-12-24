@@ -56,18 +56,10 @@ public class SubManagerActivity extends Activity {
                     unSubcribeTask.cancel(true);
                     unSubcribeTask = null;
                 }
-                if (WH_DMApp.isLogin) {
-                    unSubcribeTask = new UnSubcribeTask();
-                    Bundle bundle = msg.getData();
-                    unSubcribeTask.execute(bundle.getInt("id"));
-                } else {
-                    // TODO
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            SubManagerActivity.this);
-                    Intent intent = new Intent(SubManagerActivity.this, LoginActivity.class);
-                    intent.putExtra("activity", "submanager");
-                    startActivityForResult(intent, 0);
-                }
+                unSubcribeTask = new UnSubcribeTask();
+                Bundle bundle = msg.getData();
+                unSubcribeTask.execute(bundle.getInt("id"));
+
             }
         };
     };
@@ -166,16 +158,9 @@ public class SubManagerActivity extends Activity {
 
             } else {
                 adapter.clear();
-                if (WH_DMApp.isLogin) {
-                    NotificationUtil.showShortToast(getString(R.string.no_subcribe),
-                            SubManagerActivity.this);
-                } else {
-                    // TODO
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            SubManagerActivity.this);
-                    Intent intent = new Intent(SubManagerActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
+
+                NotificationUtil.showShortToast(getString(R.string.no_subcribe),
+                        SubManagerActivity.this);
             }
             progressDialog.dismiss();
             super.onPostExecute(result);

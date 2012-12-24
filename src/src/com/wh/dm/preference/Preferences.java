@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 
 public class Preferences {
 
     public static final String FISRT_LAUNCH = "first_launch";
     public static final String DEVICE_ID = "device_id";
-    public static final String DEFAULT_PASSWORD = "default_password";
 
     public static final String GET_DETAULT_MAGAZIE = "get_detault_magazine";
 
@@ -59,7 +59,6 @@ public class Preferences {
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = preference.edit();
         editor.putString(DEVICE_ID, deviceId);
-        editor.putString(DEFAULT_PASSWORD, "1234");
         editor.putBoolean(FISRT_LAUNCH, false);
         editor.commit();
     }
@@ -176,6 +175,18 @@ public class Preferences {
         Editor editor = preference.edit();
         editor.putBoolean(UPDATE_DATABASE, false);
         editor.commit();
+    }
+
+    public static String getMachineId(Context context) {
+
+        SharedPreferences spf = PreferenceManager.getDefaultSharedPreferences(context);
+        String machineId = spf.getString(DEVICE_ID, "");
+        if (machineId == null || machineId.equals("")) {
+            final TelephonyManager tm = (TelephonyManager) context
+                    .getSystemService(Context.TELEPHONY_SERVICE);
+            machineId = "" + tm.getDeviceId();
+        }
+        return machineId;
     }
 
 }

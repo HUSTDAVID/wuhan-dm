@@ -31,7 +31,6 @@ public class WH_DMApp extends Application {
     public static boolean isSinaLogin = false;
     public static boolean isTencLogin = false;
     public static boolean isLoadImg;
-    public static boolean isDefaultLoad = false;
 
     public static final String INTENT_ACTION_LOG_SUCCESS = "com.wh.dm.intent.action.LOG_SUCCESS";
     public static final String INTENT_ACTION_LOG_FAIL = "com.wh.dm.intent.action.LOG_FAIL";
@@ -117,15 +116,10 @@ public class WH_DMApp extends Application {
         ArrayList<String> users = getUserInfo();
         if (users.get(0) == null || users.get(1) == null) {
             // TODO
-            // String defultName = mPrefs.getString(Preferences.DEVICE_ID, "");
-            // String detultPassword =
-            // mPrefs.getString(Preferences.DEFAULT_PASSWORD, "1234");
-            // loginTask.execute(defultName, detultPassword);
-            // isDefaultLoad = true;
-            return;
+            LoginByIdTask loginByIdTask = new LoginByIdTask();
+            loginByIdTask.execute(Preferences.getMachineId(this));
         } else {
-            loginTask.execute(users.get(0), users.get(1));
-            isDefaultLoad = false;
+            loginTask.execute(users.get(0), users.get(1), Preferences.getMachineId(this));
         }
     }
 
@@ -136,7 +130,7 @@ public class WH_DMApp extends Application {
 
             boolean login = false;
             try {
-                login = wh_dm.login(params[0], params[1]);
+                login = wh_dm.login(params[0], params[1], params[2]);
                 return login;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -156,6 +150,37 @@ public class WH_DMApp extends Application {
                 Intent intent = new Intent(INTENT_ACTION_LOG_FAIL);
                 sendBroadcast(intent);
                 isLogin = false;
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+
+    // load by machine id
+    private class LoginByIdTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean login = false;
+            try {
+                login = wh_dm.loginById(params[0]);
+                return login;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
+                sendBroadcast(intent);
+                startService(new Intent(WH_DMApp.this, PushService.class));
+            } else {
+
             }
             super.onPostExecute(result);
         }

@@ -11,9 +11,9 @@ import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.LoadInfo;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.PictureMagzine;
+import com.wh.dm.util.LoadUrlImageViewHelper;
 import com.wh.dm.util.LoadUtil;
 import com.wh.dm.util.NotificationUtil;
-import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.DownloadAdapter;
 
 import android.app.Activity;
@@ -47,13 +47,13 @@ public class DownloadActivity extends Activity {
     public static final int MSG_FINISH_LOAD = 2;
     public static final int MSG_START_LOAD = 3;
     public static final int MSG_OPEN_MAGAZINE = 4;
-    public static final int MSG_LOAD_ONE_IMAGE = 5;
+    public static final int MSG_LOAD_ONE_IMAGE = 1010;
     private int totalLoadImage = 0;
     private int curLoadImage = 0;
     private UpdateDBThread updateDBThread = null;
     private ArrayList<Integer> loadSidList;
     private ArrayList<Integer> loadPosList;
-    private boolean isLoading = false;
+    public boolean isLoading = false;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -108,11 +108,9 @@ public class DownloadActivity extends Activity {
                         }
                     } else {
                         if (loadPosList.size() > 0) {
-                            if (!isLoading) {
-                                isLoading = true;
-                                new LoadMagazineThread(DownloadActivity.this, loadSidList.get(0),
-                                        loadPosList.get(0)).start();
-                            }
+                            isLoading = true;
+                            new LoadMagazineThread(DownloadActivity.this, loadSidList.get(0),
+                                    loadPosList.get(0)).start();
                             loadList.get(loadPosList.get(0)).setStart(true);
                             loadList.get(loadPosList.get(0)).setFinish(false);
                             loadList.get(loadPosList.get(0)).setPro(3);
@@ -145,7 +143,7 @@ public class DownloadActivity extends Activity {
                             loadList.get(loadPosList.get(0)).setPro(100);
                         }
                         adapter.setList(loadList);
-                        UrlImageViewHelper.isLoad = false;
+                        LoadUrlImageViewHelper.isLoad = false;
 
                         isLoading = false;
                         curLoadImage = 0;
@@ -154,12 +152,14 @@ public class DownloadActivity extends Activity {
                             loadPosList.remove(0);
                             loadSidList.remove(0);
                         }
+
                         if (loadPosList.size() > 0) {
                             Message startMsg = new Message();
                             startMsg.what = MSG_START_LOAD;
                             startMsg.arg1 = -1;
                             this.sendMessage(startMsg);
                         }
+
                     } else {
                         int pro = 28;
                         if (totalLoadImage != 0) {
@@ -285,7 +285,7 @@ public class DownloadActivity extends Activity {
         public void run() {
 
             Looper.prepare();
-            UrlImageViewHelper.isLoad = true;
+            LoadUrlImageViewHelper.isLoad = true;
             try {
                 if (loadList.get(position).getPro() < 5) {
                     loadList.get(position).setPro(5);
@@ -330,7 +330,7 @@ public class DownloadActivity extends Activity {
                                     body.getBody(), "text/html", "utf-8", null);
                             if (body.getLitpic() != null && body.getLitpic().length() > 0) {
                                 totalLoadImage++;
-                                UrlImageViewHelper.sendFinishMsg(new ImageView(context),
+                                LoadUrlImageViewHelper.sendFinishMsg(new ImageView(context),
                                         WH_DMHttpApiV1.URL_DOMAIN + body.getLitpic(),
                                         R.drawable.subscription_manage_background, null, handler);
 
@@ -365,7 +365,7 @@ public class DownloadActivity extends Activity {
                         for (int i = 0; i < size; i++) {
                             pic = magazinePics.get(i);
                             totalLoadImage++;
-                            UrlImageViewHelper.sendFinishMsg(new ImageView(context),
+                            LoadUrlImageViewHelper.sendFinishMsg(new ImageView(context),
                                     WH_DMHttpApiV1.URL_DOMAIN + pic.getPic(),
                                     R.drawable.subscription_manage_background, null, handler);
                             // TODO:
@@ -382,7 +382,7 @@ public class DownloadActivity extends Activity {
                     }
                 } else {
 
-                    UrlImageViewHelper.isLoad = false;
+                    LoadUrlImageViewHelper.isLoad = false;
                     Message msgError = new Message();
                     msgError.what = MSG_NO_MAGAZINE;
                     msgError.arg1 = sid;
@@ -394,7 +394,7 @@ public class DownloadActivity extends Activity {
                 e.printStackTrace();
                 // send a error message
 
-                UrlImageViewHelper.isLoad = false;
+                LoadUrlImageViewHelper.isLoad = false;
                 Message msgError = new Message();
                 msgError.what = MSG_NO_MAGAZINE;
                 msgError.arg1 = sid;
@@ -415,7 +415,6 @@ public class DownloadActivity extends Activity {
             databaseImpl.addAllLoad(allPictureMagazines, allArticleMagzines, loadList);
             allPictureMagazines.clear();
             allArticleMagzines.clear();
-
             super.run();
         }
 

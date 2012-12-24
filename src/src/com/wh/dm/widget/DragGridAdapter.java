@@ -7,6 +7,7 @@ import com.wh.dm.type.Magazine;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,14 @@ public class DragGridAdapter extends BaseAdapter {
     private RelativeLayout relate_dm;
     private TextView txt_String;
     private ImageView img_String;
+    private Handler handler;
 
-    public DragGridAdapter(Context mContext, ArrayList<Magazine> list) {
+    // TODO
+    public DragGridAdapter(Context mContext, ArrayList<Magazine> list, Handler handler) {
 
         this.context = mContext;
         this.list = list;
+        this.handler = handler;
 
     }
 
@@ -77,8 +81,11 @@ public class DragGridAdapter extends BaseAdapter {
         if (flag != 0) {
             img.setImageResource(list.get(position).getDrawableId());
         } else {
-            UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN
-                    + list.get(position).getSpic(), R.drawable.t2, null);
+            // TODO
+            UrlImageViewHelper.sendFinishMsg(img, WH_DMHttpApiV1.URL_DOMAIN
+                    + list.get(position).getSpic(), R.drawable.t2, null, handler);
+            // UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN
+            // + list.get(position).getSpic(), R.drawable.t2, null);
         }
         if (list.get(position).getId() == 1 || list.get(position).getId() == 2
                 || list.get(position).getId() == 3) {

@@ -41,7 +41,7 @@ import java.util.Hashtable;
 
 import junit.framework.Assert;
 
-public final class UrlImageViewHelper {
+public class LoadUrlImageViewHelper {
 
     private static Handler handler;
     public static boolean isLoad = false;
@@ -514,10 +514,6 @@ public final class UrlImageViewHelper {
                 callback.onLoaded(imageView, drawable, url, true);
 
             }
-            // TODO
-            if (isLoad && handler != null) {
-                handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
-            }
             return;
         }
 
@@ -829,4 +825,5 @@ public final class UrlImageViewHelper {
         handler = _handler;
         setUrlDrawable(imageView, url, defaultResource, callback);
     }
+
 }

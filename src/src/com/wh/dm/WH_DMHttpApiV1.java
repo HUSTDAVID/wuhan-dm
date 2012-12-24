@@ -491,12 +491,13 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public boolean register(String regemail, String regepass) throws WH_DMException,
-            UnKnownException, IOException {
+    public boolean register(String regemail, String regepass, String machineId)
+            throws WH_DMException, UnKnownException, IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
-                new BasicNameValuePair("act", "reg"), new BasicNameValuePair("regemail", regemail),
-                new BasicNameValuePair("regpass", regepass));
+                new BasicNameValuePair("act", "reg"), new BasicNameValuePair("mail", regemail),
+                new BasicNameValuePair("pass", regepass), new BasicNameValuePair("machine",
+                        machineId));
         String content = mHttpApi.doHttpRequest(httPost);
         Log.d("content", content);
         PostResult result = gson.fromJson(content, PostResult.class);
@@ -504,13 +505,23 @@ public class WH_DMHttpApiV1 {
 
     }
 
-    public boolean login(String logemail, String logpassword) throws WH_DMException,
-            UnKnownException, IOException {
+    public boolean login(String logemail, String logpassword, String machine)
+            throws WH_DMException, UnKnownException, IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
-                new BasicNameValuePair("act", "login"),
-                new BasicNameValuePair("logemail", logemail), new BasicNameValuePair("logpass",
-                        logpassword));
+                new BasicNameValuePair("act", "login"), new BasicNameValuePair("mail", logemail),
+                new BasicNameValuePair("pass", logpassword), new BasicNameValuePair("machine",
+                        machine));
+        String content = mHttpApi.doHttpRequest(httPost);
+        PostResult result = gson.fromJson(content, PostResult.class);
+        return result.getResult();
+    }
+
+    public boolean loginById(String machine) throws WH_DMException, UnKnownException, IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
+                new BasicNameValuePair("act", "load"), new BasicNameValuePair("machine", machine),
+                new BasicNameValuePair("mail", null), new BasicNameValuePair("pass", null));
         String content = mHttpApi.doHttpRequest(httPost);
         PostResult result = gson.fromJson(content, PostResult.class);
         return result.getResult();

@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
                     loginTask = null;
                 }
                 loginTask = new LoginTask();
-                loginTask.execute(getEmail(), getPassword());
+                loginTask.execute(getEmail(), getPassword(), getMachineId());
             } else if (msg.what == MSG_GET_SUBCRIBED) {
                 if (getSubcribedTask != null) {
                     getSubcribedTask.cancel(true);
@@ -166,6 +166,11 @@ public class LoginActivity extends Activity {
         return edtPasswd.getText().toString();
     }
 
+    private String getMachineId() {
+
+        return Preferences.getMachineId(this);
+    }
+
     private boolean IsValidate() {
 
         String email = edtEmail.getText().toString();
@@ -190,7 +195,8 @@ public class LoginActivity extends Activity {
 
             boolean isLogin = false;
             try {
-                isLogin = ((WH_DMApp) getApplication()).getWH_DMApi().login(params[0], params[1]);
+                isLogin = ((WH_DMApp) getApplication()).getWH_DMApi().login(params[0], params[1],
+                        params[2]);
                 return isLogin;
             } catch (Exception e) {
                 e.printStackTrace();

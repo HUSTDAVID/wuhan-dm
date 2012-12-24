@@ -28,6 +28,8 @@
             android:layout_centerVertical="true"
             android:background="@drawable/photo_details_default" />
         
+	         
+        
     </RelativeLayout>
 
 </RelativeLayout>

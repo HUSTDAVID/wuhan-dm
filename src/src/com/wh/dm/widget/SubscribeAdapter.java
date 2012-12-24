@@ -159,16 +159,14 @@ public class SubscribeAdapter extends BaseAdapter {
                     bundle.putInt("cid", left.getSid());
                     message.setData(bundle);
                     handler.sendMessage(message);
-                    if (WH_DMApp.isLogin) {
-                        tmpHolder.leftBtn.setBackgroundResource(R.drawable.btn_sub_have);
-                        tmpHolder.leftBtn.setText(context.getResources().getString(
-                                R.string.sub_have));
-                        tmpHolder.leftBtn.setTextColor(context.getResources().getColor(
-                                R.color.black));
-                        left.setEditor("subcribed");
-                        databaseImpl.addMagazine(left);
-                        context.sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
-                    }
+
+                    tmpHolder.leftBtn.setBackgroundResource(R.drawable.btn_sub_have);
+                    tmpHolder.leftBtn.setText(context.getResources().getString(R.string.sub_have));
+                    tmpHolder.leftBtn.setTextColor(context.getResources().getColor(R.color.black));
+                    left.setEditor("subcribed");
+                    databaseImpl.addMagazine(left);
+                    context.sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
+
                 }
 
             }
@@ -194,16 +192,14 @@ public class SubscribeAdapter extends BaseAdapter {
                     bundle.putInt("cid", right.getSid());
                     message.setData(bundle);
                     handler.sendMessage(message);
-                    if (WH_DMApp.isLogin) {
-                        tmpHolder.rightBtn.setBackgroundResource(R.drawable.btn_sub_have);
-                        tmpHolder.rightBtn.setText(context.getResources().getString(
-                                R.string.sub_have));
-                        tmpHolder.rightBtn.setTextColor(context.getResources().getColor(
-                                R.color.black));
-                        right.setEditor("subcribed");
-                        databaseImpl.addMagazine(right);
-                        context.sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
-                    }
+
+                    tmpHolder.rightBtn.setBackgroundResource(R.drawable.btn_sub_have);
+                    tmpHolder.rightBtn.setText(context.getResources().getString(R.string.sub_have));
+                    tmpHolder.rightBtn.setTextColor(context.getResources().getColor(R.color.black));
+                    right.setEditor("subcribed");
+                    databaseImpl.addMagazine(right);
+                    context.sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
+
                 }
             }
 

@@ -56,6 +56,7 @@ public class PhotosDetailsActivity extends Activity {
     ImageView imgArrow;
     int totalPhotos = 1;
     int currentPhoto = 1;
+    private LinearLayout layoutLoad;
 
     LayoutInflater inflater;
 
@@ -120,6 +121,10 @@ public class PhotosDetailsActivity extends Activity {
                     addFavTask = new AddFavTask();
                     addFavTask.execute(aid);
                     break;
+                case DownloadActivity.MSG_LOAD_ONE_IMAGE:
+                    UrlImageViewHelper.isLoad = false;
+                    layoutLoad.setVisibility(View.GONE);
+                    break;
 
             }
 
@@ -174,6 +179,8 @@ public class PhotosDetailsActivity extends Activity {
         pageViews = new ArrayList<View>();
 
         main = (ViewGroup) inflater.inflate(R.layout.activity_photosmain, null);
+        UrlImageViewHelper.isLoad = true;
+        layoutLoad = (LinearLayout) main.findViewById(R.id.picture_load);
 
         group = (ViewGroup) main.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) main.findViewById(R.id.guidePages);
@@ -441,6 +448,9 @@ public class PhotosDetailsActivity extends Activity {
         @Override
         public void onPageSelected(int arg0) {
 
+            // TODO
+            layoutLoad.setVisibility(View.VISIBLE);
+            UrlImageViewHelper.isLoad = true;
             currentPhoto = 1 + arg0;
             ImageView imageView = (ImageView) pageViews.get(arg0).findViewById(R.id.img_photos);
             UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
@@ -488,8 +498,14 @@ public class PhotosDetailsActivity extends Activity {
                     pageViews.add(view);
                 }
                 ImageView imageView = (ImageView) pageViews.get(0).findViewById(R.id.img_photos);
-                UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
-                        + photosDetails.get(0).getPic(), R.drawable.photo_details_default, null);
+                // UrlImageViewHelper.setUrlDrawable(imageView,
+                // WH_DMHttpApiV1.URL_DOMAIN
+                // + photosDetails.get(0).getPic(),
+                // R.drawable.photo_details_default, null);
+                UrlImageViewHelper.isLoad = true;
+                UrlImageViewHelper.sendFinishMsg(imageView, WH_DMHttpApiV1.URL_DOMAIN
+                        + photosDetails.get(0).getPic(), R.drawable.photo_details_default, null,
+                        handler);
                 txtPage.setText(currentPhoto + "/" + totalPhotos);
                 txtBody.setText(photosDetails.get(0).getDescription());
 
@@ -498,7 +514,6 @@ public class PhotosDetailsActivity extends Activity {
             }
             super.onPostExecute(result);
         }
-
     }
 
     // task for load and save image

@@ -311,7 +311,7 @@ public class DM_MZinePicsActivity extends Activity {
         @Override
         protected void onPostExecute(ArrayList<PictureMagzine> result) {
 
-            if (result != null) {
+            if (result != null && result.size() > 0) {
                 addData(result);
             } else {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);

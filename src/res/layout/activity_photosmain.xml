@@ -12,6 +12,7 @@
         android:layout_below="@id/photos_top"
         android:layout_marginTop="38.67dp" >
     </android.support.v4.view.ViewPager>
+         
 
     <RelativeLayout
         android:id="@+id/linearLayout02"
@@ -36,11 +37,29 @@
                 android:id="@+id/viewGroup"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="26.67dp"
+                android:layout_centerInParent="true"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal" >
+                
+                <LinearLayout 
+	            android:id="@+id/picture_load"
+	            android:layout_marginLeft="30dp"
+	            android:layout_marginRight="30dp"
+	            android:layout_marginTop="150dp"
+	            android:layout_width="match_parent"
+	            android:layout_below="@+id/viewGroup"            	
+	            android:layout_height="wrap_content"
+	            android:visibility="visible">
+	
+			    <include 	            
+			            android:layout_width="match_parent"
+			            android:layout_height="50dp"	                       
+			            layout="@layout/dialog_default_load"/>
+		    
+	       </LinearLayout>
             </RelativeLayout>
+           
+            
         </RelativeLayout>
 
         <RelativeLayout

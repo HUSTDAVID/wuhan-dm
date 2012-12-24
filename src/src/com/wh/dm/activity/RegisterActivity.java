@@ -33,6 +33,7 @@ public class RegisterActivity extends Activity {
     private EditText edtPasswd;
     private CheckBox cbShowPw;
     private Button btnRigester;
+
     private WH_DMApi wh_dmApi;
     private RegisterTask registerTask = null;
     private final Handler handler = new Handler() {
@@ -45,7 +46,7 @@ public class RegisterActivity extends Activity {
                     registerTask = null;
                 }
                 registerTask = new RegisterTask();
-                registerTask.execute(getEmail(), getPassword());
+                registerTask.execute(getEmail(), getPassword(), getMachine());
             }
             super.handleMessage(msg);
         }
@@ -137,6 +138,11 @@ public class RegisterActivity extends Activity {
         return edtPasswd.getText().toString();
     }
 
+    private String getMachine() {
+
+        return Preferences.getMachineId(this);
+    }
+
     private boolean IsValidate() {
 
         String email = edtEmail.getText().toString();
@@ -162,7 +168,7 @@ public class RegisterActivity extends Activity {
 
             boolean isRegister = false;
             try {
-                isRegister = wh_dmApi.register(params[0], params[1]);
+                isRegister = wh_dmApi.register(params[0], params[1], params[2]);
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -180,9 +186,11 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
+                WH_DMApp.isLogin = true;
                 NotificationUtil.showShortToast(getString(R.string.register_sucesses),
                         RegisterActivity.this);
                 Preferences.saveUser(RegisterActivity.this, getEmail(), getPassword());
+
                 RegisterActivity.this.finish();
             } else {
                 NotificationUtil.showShortToast(getString(R.string.register_fails),
