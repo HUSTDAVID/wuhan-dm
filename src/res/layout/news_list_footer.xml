@@ -15,7 +15,7 @@
         android:layout_marginRight="10dip"
         android:layout_marginTop="5dip"
         android:background="@drawable/big_btn"
-        android:text="查看下20条"
+        android:text="查看下10条"
         android:textSize="15sp" />
 
 </LinearLayout>

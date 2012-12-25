@@ -76,52 +76,51 @@ public class PhotoAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder = null;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.photos_item, null);
+        // if (convertView == null) {
+        holder = new ViewHolder();
+        convertView = mInflater.inflate(R.layout.photos_item, null);
 
-            holder.imgLeft = (ImageView) convertView.findViewById(R.id.img_left_potos_item);
-            holder.txtLeftTitle = (TextView) convertView.findViewById(R.id.txt_left_photos_title);
-            holder.txtLeftReview = (TextView) convertView.findViewById(R.id.txt_left_review_total);
-            holder.txtLeftNum = (TextView) convertView.findViewById(R.id.txt_left_num_total);
+        holder.imgLeft = (ImageView) convertView.findViewById(R.id.img_left_potos_item);
+        holder.txtLeftTitle = (TextView) convertView.findViewById(R.id.txt_left_photos_title);
+        holder.txtLeftReview = (TextView) convertView.findViewById(R.id.txt_left_review_total);
+        holder.txtLeftNum = (TextView) convertView.findViewById(R.id.txt_left_num_total);
 
-            holder.imgRight = (ImageView) convertView.findViewById(R.id.img_right_potos_item);
-            holder.txtRightTitle = (TextView) convertView.findViewById(R.id.txt_right_photos_title);
-            holder.txtRightReview = (TextView) convertView
-                    .findViewById(R.id.txt_right_review_total);
-            holder.txtRightNum = (TextView) convertView.findViewById(R.id.txt_right_num_total);
-            final PhotoMsg left = new PhotoMsg();
-            left.setAid(twoPhotos.get(position).getLeftPhoto().getAid());
-            left.setCounts(twoPhotos.get(position).getLeftPhoto().getFcount());
-            left.setTitle(twoPhotos.get(position).getLeftPhoto().getTitle());
-            left.setDescription(twoPhotos.get(position).getLeftPhoto().getDescription());
-            final PhotoMsg right = new PhotoMsg();
-            right.setAid(twoPhotos.get(position).getRightPhoto().getAid());
-            right.setCounts(twoPhotos.get(position).getRightPhoto().getFcount());
-            right.setTitle(twoPhotos.get(position).getRightPhoto().getTitle());
-            right.setDescription(twoPhotos.get(position).getRightPhoto().getDescription());
-            holder.imgLeft.setOnClickListener(new OnClickListener() {
+        holder.imgRight = (ImageView) convertView.findViewById(R.id.img_right_potos_item);
+        holder.txtRightTitle = (TextView) convertView.findViewById(R.id.txt_right_photos_title);
+        holder.txtRightReview = (TextView) convertView.findViewById(R.id.txt_right_review_total);
+        holder.txtRightNum = (TextView) convertView.findViewById(R.id.txt_right_num_total);
+        final PhotoMsg left = new PhotoMsg();
+        left.setAid(twoPhotos.get(position).getLeftPhoto().getAid());
+        left.setCounts(twoPhotos.get(position).getLeftPhoto().getFcount());
+        left.setTitle(twoPhotos.get(position).getLeftPhoto().getTitle());
+        left.setDescription(twoPhotos.get(position).getLeftPhoto().getDescription());
+        final PhotoMsg right = new PhotoMsg();
+        right.setAid(twoPhotos.get(position).getRightPhoto().getAid());
+        right.setCounts(twoPhotos.get(position).getRightPhoto().getFcount());
+        right.setTitle(twoPhotos.get(position).getRightPhoto().getTitle());
+        right.setDescription(twoPhotos.get(position).getRightPhoto().getDescription());
+        holder.imgLeft.setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-                    startActivity(left);
-                }
-            });
+                startActivity(left);
+            }
+        });
 
-            holder.imgRight.setOnClickListener(new OnClickListener() {
+        holder.imgRight.setOnClickListener(new OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-                    startActivity(right);
-                }
-            });
+                startActivity(right);
+            }
+        });
 
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+        convertView.setTag(holder);
+        // } else {
+        // holder = (ViewHolder) convertView.getTag();
+        // }
 
         Photo leftPhoto = twoPhotos.get(position).getLeftPhoto();
         Photo rightPhot = twoPhotos.get(position).getRightPhoto();

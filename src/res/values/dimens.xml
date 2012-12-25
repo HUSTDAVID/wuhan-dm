@@ -17,5 +17,6 @@
     
     <dimen name="mzine_title">18sp</dimen>
     <dimen name="mzine_long_title">22sp</dimen>
+    <dimen name="mzine_large_title">26sp</dimen>
 
 </resources>

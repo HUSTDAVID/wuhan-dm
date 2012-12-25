@@ -517,6 +517,18 @@ public class WH_DMHttpApiV1 {
         return result.getResult();
     }
 
+    public PostResult login2(String logemail, String logpassword, String machine)
+            throws WH_DMException, UnKnownException, IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
+                new BasicNameValuePair("act", "login"), new BasicNameValuePair("mail", logemail),
+                new BasicNameValuePair("pass", logpassword), new BasicNameValuePair("machine",
+                        machine));
+        String content = mHttpApi.doHttpRequest(httPost);
+        return gson.fromJson(content, PostResult.class);
+
+    }
+
     public boolean loginById(String machine) throws WH_DMException, UnKnownException, IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,

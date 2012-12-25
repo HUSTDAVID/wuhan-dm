@@ -6,6 +6,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.type.PicWithTxtNews;
+import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 
 import android.app.Activity;
@@ -33,6 +34,7 @@ public class NewsOtherSortActivity extends Activity {
     private GetTravelNewsTask getTravelNewsTask = null;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
+    private boolean FLAG_PAGE_UP = false;
     private int curPage = 1;
     private int id;
     private final Handler handler = new Handler() {
@@ -68,6 +70,7 @@ public class NewsOtherSortActivity extends Activity {
             public void onClick(View view) {
 
                 curPage++;
+                FLAG_PAGE_UP = true;
                 handler.sendEmptyMessage(MSG_GET_TRAVELNEWS);
             }
         });
@@ -113,25 +116,43 @@ public class NewsOtherSortActivity extends Activity {
         @Override
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
-            if (curPage == 1) {
-                adapter.setList(result);
-            } else {
-                adapter.addList(result);
-            }
-            lv.setAdapter(adapter);
-            lv.setOnItemClickListener(new OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
-
-                    Intent intent = new Intent(NewsOtherSortActivity.this, NewsDetailsActivity.class);
-                    intent.putExtra("id", adapter.getList().get(position).getId());
-                    startActivity(intent);
-
+            if (result != null) {
+                if (curPage == 1) {
+                    adapter.setList(result);
+                } else {
+                    adapter.addList(result);
+                    FLAG_PAGE_UP = false;
                 }
+                lv.setAdapter(adapter);
+                lv.setOnItemClickListener(new OnItemClickListener() {
 
-            });
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long arg3) {
 
+                        Intent intent = new Intent(NewsOtherSortActivity.this,
+                                NewsDetailsActivity.class);
+                        intent.putExtra("id", adapter.getList().get(position).getId());
+                        startActivity(intent);
+
+                    }
+
+                });
+            } else {
+                if (!FLAG_PAGE_UP) {
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                NewsOtherSortActivity.this);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                                NewsOtherSortActivity.this);
+                    }
+                } else {
+                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                            NewsOtherSortActivity.this);
+                }
+            }
             super.onPostExecute(result);
         }
 

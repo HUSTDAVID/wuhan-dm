@@ -9,6 +9,7 @@ import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.service.PushService;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class LoginActivity extends Activity {
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
+    private LinearLayout loadLayout;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -99,6 +102,9 @@ public class LoginActivity extends Activity {
 
     private void initViews() {
 
+        loadLayout = (LinearLayout) findViewById(R.id.login_load);
+        TextView txtInfo = (TextView) findViewById(R.id.txt_pic_load);
+        txtInfo.setText(getString(R.string.logining));
         // init header
         TextView txtHeader = (TextView) findViewById(R.id.txt_header3_title);
         txtHeader.setText(getResources().getString(R.string.login));
@@ -187,37 +193,56 @@ public class LoginActivity extends Activity {
 
     }
 
-    private class LoginTask extends AsyncTask<String, Void, Boolean> {
+    private class LoginTask extends AsyncTask<String, Void, PostResult> {
         Exception reason = null;
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected void onPreExecute() {
 
-            boolean isLogin = false;
+            loadLayout.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected PostResult doInBackground(String... params) {
+
+            PostResult result;
             try {
-                isLogin = ((WH_DMApp) getApplication()).getWH_DMApi().login(params[0], params[1],
+                result = ((WH_DMApp) getApplication()).getWH_DMApi().login2(params[0], params[1],
                         params[2]);
-                return isLogin;
+                return result;
             } catch (Exception e) {
                 e.printStackTrace();
                 reason = e;
-                return false;
+                return null;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(PostResult result) {
 
-            if (result) {
-                NotificationUtil.showShortToast(getString(R.string.login_sucesses),
-                        LoginActivity.this);
-                WH_DMApp.isLogin = true;
-                Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
-                handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
-                finish();
+            loadLayout.setVisibility(View.GONE);
+            if (result != null) {
+                if (result.getResult()) {
+                    NotificationUtil.showShortToast(getString(R.string.login_sucesses),
+                            LoginActivity.this);
+                    WH_DMApp.isLogin = true;
+                    Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
+                    handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
+                    finish();
+                } else {
+                    String test = getString(R.string.login_fails) + "," + result.getMsg();
+                    NotificationUtil.showShortToast(test, LoginActivity.this);
+                }
+
             } else {
-                NotificationUtil
-                        .showShortToast(getString(R.string.login_fails), LoginActivity.this);
+                if (WH_DMApp.isConnected) {
+                    NotificationUtil.showShortToast(getString(R.string.badconnect),
+                            LoginActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            LoginActivity.this);
+                }
             }
             super.onPostExecute(result);
         }

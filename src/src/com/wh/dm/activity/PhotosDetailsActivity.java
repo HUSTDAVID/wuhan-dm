@@ -297,13 +297,12 @@ public class PhotosDetailsActivity extends Activity {
 
                 String share = "";
                 String head = getResources().getString(R.string.share_photo);
-                String info = txtTitle.getText().toString();
+                String info = "\"" + txtTitle.getText().toString() + "\""
+                        + getString(R.string.news_url_main) + aid;
                 share = head + info;
                 Intent intent = new Intent(PhotosDetailsActivity.this, ShareActivity.class);
                 intent.putExtra("share", share);
                 startActivity(intent);
-                // UMSnsService.share(PhotosDetailsActivity.this, head + info,
-                // null);
             }
         });
 
@@ -329,7 +328,6 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                // TODO Auto-generated method stub
                 if (WH_DMApp.isConnected) {
                     if (WH_DMApp.isLogin) {
                         handler.sendEmptyMessage(MSG_STORE_IMAGE);

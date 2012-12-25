@@ -11,7 +11,6 @@ import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.PostResult;
-import com.wh.dm.util.NetworkConnection;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.TextUtil;
 import com.wh.dm.util.TimeUtil;
@@ -53,8 +52,8 @@ public class MagazineDetailsActivity extends Activity {
     private final int MSG_GET_COMMENT = 1;
     private final int ADD_REVIEW = 2;
     private final int ADD_FAV = 3;
-    private final int MSG_PUSH_TOP=NewsDetailsActivity.MSG_PUSH_TOP;  //4
-    private final int MSG_REPLY=NewsDetailsActivity.MSG_REPLY;        //5
+    private final int MSG_PUSH_TOP = NewsDetailsActivity.MSG_PUSH_TOP; // 4
+    private final int MSG_REPLY = NewsDetailsActivity.MSG_REPLY; // 5
     private final int curStatus = 0;
     private int sid;
     private String titleUrl;
@@ -90,7 +89,6 @@ public class MagazineDetailsActivity extends Activity {
     private Button btnMore;
     private ImageButton btnBack;
     private NewsReplyAdapter adapter;
-    // private ProgressDialog progressDialog;
     private LinearLayout loadLayout;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
@@ -141,9 +139,9 @@ public class MagazineDetailsActivity extends Activity {
                     addFavTask = new AddFavTask();
                     addFavTask.execute(sid);
                     break;
-                    
+
                 case MSG_PUSH_TOP:
-                	if (pushTopTask != null) {
+                    if (pushTopTask != null) {
                         pushTopTask.cancel(true);
                         pushTopTask = null;
                     }
@@ -155,16 +153,17 @@ public class MagazineDetailsActivity extends Activity {
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.please_login),
                                 MagazineDetailsActivity.this);
-                        Intent intent = new Intent(MagazineDetailsActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(MagazineDetailsActivity.this,
+                                LoginActivity.class);
                         startActivity(intent);
                     }
-                	break;
-                	
+                    break;
+
                 case MSG_REPLY:
-                	Bundle bundle = msg.getData();
+                    Bundle bundle = msg.getData();
                     isReply = bundle.getBoolean("isReply");
                     if (isReply) {
-                    	if (replyTask != null) {
+                        if (replyTask != null) {
                             replyTask.cancel(true);
                             replyTask = null;
                         }
@@ -182,7 +181,7 @@ public class MagazineDetailsActivity extends Activity {
                         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                                 .showSoftInput(edtReply, 0);
                     }
-                	break;
+                    break;
             }
         };
     };
@@ -422,6 +421,7 @@ public class MagazineDetailsActivity extends Activity {
             if (!isLoad) {
                 // progressDialog.show();
                 loadLayout.setVisibility(View.VISIBLE);
+                lvNews.setVisibility(View.GONE);
             }
             super.onPreExecute();
         }
@@ -490,6 +490,7 @@ public class MagazineDetailsActivity extends Activity {
             }
             if (!isLoad) {
                 loadLayout.setVisibility(View.GONE);
+                lvNews.setVisibility(View.VISIBLE);
             }
             super.onPostExecute(result);
         }
@@ -510,8 +511,8 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected ArrayList<Comment> doInBackground(Integer... params) {
 
-            //if (NetworkConnection.checkInternetConnection()) {
-        	if(WH_DMApp.isConnected){
+            // if (NetworkConnection.checkInternetConnection()) {
+            if (WH_DMApp.isConnected) {
                 try {
                     comments = wh_dmApi.getComment(params[0], curPage);
                     return comments;
@@ -527,7 +528,8 @@ public class MagazineDetailsActivity extends Activity {
 
         @Override
         protected void onPostExecute(ArrayList<Comment> result) {
-        	if (comments != null && comments.size() > 0) {
+
+            if (comments != null && comments.size() > 0) {
                 int commentNum = 5;
                 if (comments.size() < 5) {
                     commentNum = comments.size();
@@ -542,7 +544,7 @@ public class MagazineDetailsActivity extends Activity {
             } else {
                 lvNews.removeFooterView(footer);
             }
-        	
+
             super.onPostExecute(result);
         }
 
@@ -625,7 +627,7 @@ public class MagazineDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-            	MessageActivity.refreshCollect = true;
+                MessageActivity.refreshCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         MagazineDetailsActivity.this);
             } else {
@@ -642,7 +644,7 @@ public class MagazineDetailsActivity extends Activity {
         }
 
     }
-    
+
     private class ReplyTask extends AsyncTask<String, Void, Boolean> {
         Exception reason = null;
 
@@ -665,15 +667,17 @@ public class MagazineDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),MagazineDetailsActivity.this);
+                NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
+                        MagazineDetailsActivity.this);
             } else {
-                NotificationUtil.showShortToast(getString(R.string.reply_fail),MagazineDetailsActivity.this);
+                NotificationUtil.showShortToast(getString(R.string.reply_fail),
+                        MagazineDetailsActivity.this);
             }
             super.onPostExecute(result);
         }
 
     }
-    
+
     private class PushTopTask extends AsyncTask<String, Void, Boolean> {
         Exception reason = null;
 
@@ -696,11 +700,11 @@ public class MagazineDetailsActivity extends Activity {
 
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
-                		MagazineDetailsActivity.this);
+                        MagazineDetailsActivity.this);
                 handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.top_fail),
-                		MagazineDetailsActivity.this);
+                        MagazineDetailsActivity.this);
             }
             super.onPostExecute(result);
         }

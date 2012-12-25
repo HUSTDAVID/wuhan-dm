@@ -50,9 +50,8 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/txt_headline_item_title"
             android:ellipsize="end"
-            android:maxLength="26"
-            
-            android:maxLines="2"
+            android:maxLength="26"            
+            android:lines="2"
             android:lineSpacingExtra="2dip"
             android:text="@string/headline_body"
             android:textColor="@color/txt_gray"

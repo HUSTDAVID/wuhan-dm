@@ -340,7 +340,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(getString(R.string.check_network),
+                        NotificationUtil.showShortToast(getString(R.string.badconnect),
                                 HeadNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),

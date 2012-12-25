@@ -225,6 +225,12 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.login(logemail, logpassword, machine);
     }
 
+    public PostResult login2(String logemail, String logpassword, String machine)
+            throws WH_DMException, UnKnownException, IOException {
+
+        return mWH_DMHttpApiV1.login2(logemail, logpassword, machine);
+    }
+
     public boolean loginById(String machine) throws WH_DMException, UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.loginById(machine);

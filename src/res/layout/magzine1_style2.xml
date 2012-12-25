@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/txt_magazine_2_title6"
-            style="@style/magazine_title"
+            style="@style/magazine_pic_title"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
@@ -77,7 +77,7 @@
             android:paddingLeft="4dip"
             android:singleLine="false"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/mzine_large_title"
             android:visibility="gone" />
 
     </RelativeLayout>
