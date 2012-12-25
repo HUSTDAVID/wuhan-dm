@@ -7,6 +7,7 @@ import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
@@ -678,33 +679,41 @@ public class MagazineDetailsActivity extends Activity {
 
     }
 
-    private class PushTopTask extends AsyncTask<String, Void, Boolean> {
+    private class PushTopTask extends AsyncTask<String, Void, PostResult> {
         Exception reason = null;
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected PostResult doInBackground(String... params) {
 
-            boolean isTop = false;
+            PostResult result = null;
             try {
-                isTop = wh_dmApi.addTop(params[0]);
-                return isTop;
+                result = wh_dmApi.addTop(params[0],
+                        Preferences.getMachineId(MagazineDetailsActivity.this));
+                return result;
             } catch (Exception e) {
                 e.printStackTrace();
                 reason = e;
-                return false;
+                return null;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(PostResult result) {
 
-            if (result) {
+            if (result != null && result.getResult()) {
                 NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
                         MagazineDetailsActivity.this);
                 handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
-                NotificationUtil.showShortToast(getString(R.string.top_fail),
-                        MagazineDetailsActivity.this);
+                if (result != null) {
+                    NotificationUtil.showShortToast(result.getMsg(), MagazineDetailsActivity.this);
+                } else if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast(getString(R.string.badconnect),
+                            MagazineDetailsActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            MagazineDetailsActivity.this);
+                }
             }
             super.onPostExecute(result);
         }

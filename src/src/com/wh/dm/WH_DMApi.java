@@ -113,9 +113,10 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getReply(fid);
     }
 
-    public boolean addTop(String fid) throws WH_DMException, UnKnownException, IOException {
+    public PostResult addTop(String fid, String machine) throws WH_DMException, UnKnownException,
+            IOException {
 
-        return mWH_DMHttpApiV1.addTop(fid);
+        return mWH_DMHttpApiV1.addTop(fid, machine);
     }
 
     public boolean addReply(String rconent, String fid) throws WH_DMException, UnKnownException,

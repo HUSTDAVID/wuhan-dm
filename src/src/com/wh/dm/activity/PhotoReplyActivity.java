@@ -6,7 +6,9 @@ import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.Review;
 import com.wh.dm.util.NotificationUtil;
@@ -60,6 +62,7 @@ public class PhotoReplyActivity extends Activity {
     private ReplyTask replyTask = null;
     private ReviewTask reviewTask = null;
     private WH_DMApi wh_dmApi;
+    private WH_DMApp wh_dmApp;
     private int id;
     private boolean isReply = false;
     private boolean isReview = true;
@@ -148,7 +151,8 @@ public class PhotoReplyActivity extends Activity {
         setContentView(R.layout.activity_news_reply);
         id = getIntent().getIntExtra("id", 323);
         initViews();
-        wh_dmApi = ((WH_DMApp) getApplication()).getWH_DMApi();
+        wh_dmApp = (WH_DMApp) getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_COMMENT);
 
     }
@@ -374,32 +378,41 @@ public class PhotoReplyActivity extends Activity {
 
     }
 
-    private class PushTopTask extends AsyncTask<String, Void, Boolean> {
+    private class PushTopTask extends AsyncTask<String, Void, PostResult> {
         Exception reason = null;
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected PostResult doInBackground(String... params) {
 
-            boolean isTop = false;
+            PostResult result = null;
             try {
-                isTop = wh_dmApi.addTop(params[0]);
-                return isTop;
+                result = wh_dmApi.addTop(params[0],
+                        Preferences.getMachineId(PhotoReplyActivity.this));
+                return result;
             } catch (Exception e) {
                 e.printStackTrace();
                 reason = e;
-                return false;
+                return null;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(PostResult result) {
 
-            if (result) {
-                NotificationUtil.showShortToast(getString(R.string.top_succeed),
+            if (result != null && result.getResult()) {
+                NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
                         PhotoReplyActivity.this);
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
-                NotificationUtil.showShortToast(getString(R.string.top_fail),
-                        PhotoReplyActivity.this);
+                if (result != null) {
+                    NotificationUtil.showShortToast(result.getMsg(), PhotoReplyActivity.this);
+                } else if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast(getString(R.string.badconnect),
+                            PhotoReplyActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            PhotoReplyActivity.this);
+                }
             }
             super.onPostExecute(result);
         }

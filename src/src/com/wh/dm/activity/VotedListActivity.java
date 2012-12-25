@@ -260,7 +260,6 @@ public class VotedListActivity extends Activity {
 
                     TextView txtInfo = (TextView) view.findViewById(R.id.vote_ing_3);
                     Button btnVote = (Button) view.findViewById(R.id.btn_vote);
-                    int temp = result.get(i).getRcount();
                     if (result.get(i).getRcount() == 0
                             && !TimeUtil.isPass(result.get(i).getEndtime())) {
                         btnVote.setText(getString(R.string.vote));

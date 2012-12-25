@@ -103,7 +103,6 @@
     <string name="news_user">手机版网友</string>
     <string name="news_reply_time">13小时前</string>
     <string name="news_reply_body">没什么谈的，人不敬我，我何必敬人。</string>
-    <string name="news_reply_top">顶1152</string>
     <string name="news_reply">回复</string>
     <string name="news_reply_count">跟帖</string>
 
@@ -230,7 +229,6 @@
 	<string name="review_sec">秒前</string>
 	<string name="please_login">请先登陆</string>
 	<string name="top_succeed">顶</string>
-	<string name="top_fail">操作失败</string>
 	<string name="reply_succeed">回复成功</string>
 	<string name="reply_fail">回复失败</string>
 	<string name="favorite_succeed">收藏成功</string>

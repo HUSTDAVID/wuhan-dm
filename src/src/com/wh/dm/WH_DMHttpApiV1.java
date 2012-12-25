@@ -306,13 +306,15 @@ public class WH_DMHttpApiV1 {
         return result.getResult();
     }
 
-    public boolean addTop(String fid) throws WH_DMException, UnKnownException, IOException {
+    public PostResult addTop(String fid, String machine) throws WH_DMException, UnKnownException,
+            IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_NEWS,
-                new BasicNameValuePair("act", "ftop"), new BasicNameValuePair("fid", fid));
+                new BasicNameValuePair("act", "ftop"), new BasicNameValuePair("fid", fid),
+                new BasicNameValuePair("machine", machine));
         String content = mHttpApi.doHttpRequest(httPost);
         PostResult result = gson.fromJson(content, PostResult.class);
-        return result.getResult();
+        return result;
     }
 
     // photos

@@ -6,7 +6,9 @@ import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.Review;
 import com.wh.dm.util.NotificationUtil;
@@ -61,6 +63,7 @@ public class NewsMoreReplyActivity extends Activity {
     // private ReplyTask replyTask = null;
     // private ReviewTask reviewTask = null;
     private WH_DMApi wh_dmApi;
+    private WH_DMApp wh_dmApp;
     private int id;
     private boolean isReply = false;
     private boolean isReview = true;
@@ -149,7 +152,8 @@ public class NewsMoreReplyActivity extends Activity {
         setContentView(R.layout.activity_news_reply);
         id = getIntent().getIntExtra("id", 323);
         initViews();
-        wh_dmApi = ((WH_DMApp) getApplication()).getWH_DMApi();
+        wh_dmApp = (WH_DMApp) getApplication();
+        wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_COMMENT);
 
     }
@@ -182,8 +186,6 @@ public class NewsMoreReplyActivity extends Activity {
     private void initViews() {
 
         loadLayout = (LinearLayout) findViewById(R.id.reply_load);
-        // progressDialog = new ProgressDialog(NewsMoreReplyActivity.this);
-        // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         // add data for listview
         lv = (ListView) findViewById(R.id.lv_news_reply);
@@ -381,34 +383,42 @@ public class NewsMoreReplyActivity extends Activity {
 
     }
 
-    private class PushTopTask extends AsyncTask<String, Void, Boolean> {
+    private class PushTopTask extends AsyncTask<String, Void, PostResult> {
         Exception reason = null;
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected PostResult doInBackground(String... params) {
 
-            boolean isTop = false;
+            PostResult result = null;
             try {
-                isTop = wh_dmApi.addTop(params[0]);
-                return isTop;
+                result = wh_dmApi.addTop(params[0],
+                        Preferences.getMachineId(NewsMoreReplyActivity.this));
+                return result;
             } catch (Exception e) {
                 e.printStackTrace();
                 reason = e;
-                return false;
+                return null;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(PostResult result) {
 
-            if (result) {
+            if (result != null && result.getResult()) {
                 NotificationUtil.showShortToast(getString(R.string.thanks_gelivable),
                         NewsMoreReplyActivity.this);
                 NewsDetailsActivity.freshComment = true;
                 handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
-                NotificationUtil.showShortToast(getString(R.string.top_fail),
-                        NewsMoreReplyActivity.this);
+                if (result != null) {
+                    NotificationUtil.showShortToast(result.getMsg(), NewsMoreReplyActivity.this);
+                } else if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast(getString(R.string.badconnect),
+                            NewsMoreReplyActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            NewsMoreReplyActivity.this);
+                }
             }
             super.onPostExecute(result);
         }
