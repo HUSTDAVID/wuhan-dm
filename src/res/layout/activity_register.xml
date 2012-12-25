@@ -73,7 +73,7 @@
            android:layout_width="wrap_content"
            android:layout_height="36dip"
            android:layout_weight="1"
-           android:background="@drawable/site_btn_3"
+           android:background="@drawable/btn_login"
            android:text="@string/register"
            android:textColor="@color/white"
            android:textSize="18sp" />

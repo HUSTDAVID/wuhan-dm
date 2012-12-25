@@ -149,7 +149,7 @@ public class Vote1Activity extends Activity {
     private void setProgress(ProgressBar progress, int percent) {
 
         LayoutParams params = progress.getLayoutParams();
-        params.width = (int) (percent * 3.5);
+        params.width = (int) (percent * 3);
         progress.setLayoutParams(params);
     }
 

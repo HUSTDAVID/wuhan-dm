@@ -30,6 +30,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 
@@ -49,7 +50,7 @@ public class Sub_GirlActivity extends Activity {
     private SubcribeTask subMagazine = null;
     private ArrayList<TwoMagazine> savedMagazine = null;
     private SubscribeAdapter adapter;
-    private final int curPage = 1;
+    private int curPage = 1;
     private int id;
     private DatabaseImpl databaseImpl;
     private boolean FLAG_PAGE_UP = false;
@@ -156,6 +157,8 @@ public class Sub_GirlActivity extends Activity {
                     @Override
                     public void run() {
 
+                        curPage = 1;
+                        FLAG_PAGE_UP = false;
                         handler.sendEmptyMessage(MSG_GET_MAGAZINE);
                         lvSub.onRefreshComplete();
                     }
@@ -166,6 +169,17 @@ public class Sub_GirlActivity extends Activity {
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         footer.setBackgroundColor(getResources().getColor(R.color.bg_normal));
         btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFooter.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                curPage++;
+                FLAG_PAGE_UP = true;
+                handler.sendEmptyMessage(MSG_GET_MAGAZINE);
+
+            }
+        });
         lvSub.addFooterView(footer);
 
         wh_dmApp = (WH_DMApp) this.getApplication();
@@ -203,7 +217,7 @@ public class Sub_GirlActivity extends Activity {
 
             ArrayList<Magazine> one = null;
             try {
-                one = wh_dmApi.getMagazine(id);
+                one = wh_dmApi.getMagazine(id, curPage);
                 savedMagazine = MagazineUtil.toTwoMagazine(one);
                 return savedMagazine;
             } catch (Exception e) {
@@ -238,17 +252,20 @@ public class Sub_GirlActivity extends Activity {
 
             } else {
                 if (!FLAG_PAGE_UP) {
-                    if (!FLAG_PAGE_UP) {
-                        if (wh_dmApp.isConnected()) {
-                            NotificationUtil.showShortToast(
-                                    getResources().getString(R.string.badconnect),
-                                    Sub_GirlActivity.this);
-                        }
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.badconnect),
+                                Sub_GirlActivity.this);
                     } else {
-                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.check_network),
                                 Sub_GirlActivity.this);
                     }
+                } else {
+                    NotificationUtil.showLongToast(getString(R.string.last_page),
+                            Sub_GirlActivity.this);
                 }
+
             }
 
         }

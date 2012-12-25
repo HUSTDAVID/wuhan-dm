@@ -11,7 +11,6 @@ import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.SubManagerAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,9 +34,9 @@ public class SubManagerActivity extends Activity {
     private UnSubcribeTask unSubcribeTask = null;
 
     private ListView lvSubManager;
+    private LinearLayout loadLayout;
     private SubManagerAdapter adapter;
     private ImageButton btnBack;
-    private ProgressDialog progressDialog;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -96,6 +96,7 @@ public class SubManagerActivity extends Activity {
 
     private void initViews() {
 
+        loadLayout = (LinearLayout) findViewById(R.id.sub_load);
         // init header
         TextView txtTitle = (TextView) findViewById(R.id.txt_header3_title);
         TextView txtQRCode = (TextView) findViewById(R.id.txt_total_reply);
@@ -120,8 +121,6 @@ public class SubManagerActivity extends Activity {
         adapter = new SubManagerAdapter(this);
         adapter.setHandler(handler);
         lvSubManager.setAdapter(adapter);
-        progressDialog = new ProgressDialog(SubManagerActivity.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
     }
 
@@ -131,7 +130,8 @@ public class SubManagerActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
+            lvSubManager.setVisibility(View.GONE);
             super.onPreExecute();
         }
 
@@ -159,10 +159,16 @@ public class SubManagerActivity extends Activity {
             } else {
                 adapter.clear();
 
-                NotificationUtil.showShortToast(getString(R.string.no_subcribe),
-                        SubManagerActivity.this);
+                if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast(getString(R.string.no_subcribe),
+                            SubManagerActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            SubManagerActivity.this);
+                }
             }
-            progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
+            lvSubManager.setVisibility(View.VISIBLE);
             super.onPostExecute(result);
         }
 

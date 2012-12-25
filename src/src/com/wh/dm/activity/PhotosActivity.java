@@ -152,7 +152,7 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         param.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
 
         // set the activity of photos all
-        intent = new Intent(PhotosActivity.this, Photos_AllActivity.class);
+        intent = new Intent(PhotosActivity.this, HotPhotosActivity.class);
         relMain = (RelativeLayout) findViewById(R.id.rel_photos_main);
         vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);

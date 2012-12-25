@@ -10,16 +10,37 @@
         android:layout_height="wrap_content"
         layout="@layout/header_title3"/>
 
-    <ListView
-        android:id="@+id/lv_sub_manager"
+    <RelativeLayout 
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:divider="@drawable/double_line_hor"
-         android:cacheColorHint="#00000000"
-        android:fadingEdge="none"
-        android:dividerHeight="1.5dip">
+        android:layout_height="fill_parent">
+	    <ListView
+	        android:id="@+id/lv_sub_manager"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:divider="@drawable/double_line_hor"
+	         android:cacheColorHint="#00000000"
+	        android:fadingEdge="none"
+	        android:visibility="visible"
+	        android:dividerHeight="1.5dip">
+	
+	
+	    </ListView>
+	    
+	    <LinearLayout 
+            android:id="@+id/sub_load"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_width="match_parent"
+            android:layout_centerInParent="true"            	
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
-
-    </ListView>
+	    <include 	            
+	            android:layout_width="match_parent"
+	            android:layout_height="50dp"	                       
+	            layout="@layout/dialog_default_load"/>
+	    
+       </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

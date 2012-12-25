@@ -23,7 +23,6 @@ import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
-import com.wh.dm.type.VoteItem;
 import com.wh.dm.type.VoteResult;
 import com.wh.dm.type.VoteResultPercent;
 
@@ -185,21 +184,16 @@ public class WH_DMApi {
     }
 
     // vote
-    public ArrayList<Vote> getVote(int sid) throws WH_DMException, UnKnownException, IOException {
+    public ArrayList<Vote> getVote(int sid, String machine) throws WH_DMException,
+            UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getVote(sid);
+        return mWH_DMHttpApiV1.getVote(sid, machine);
     }
 
-    public ArrayList<VoteItem> getVoteItems(int vid) throws WH_DMException, UnKnownException,
-            IOException {
+    public VoteResult postVote(int aid, String vtitle, String machine) throws WH_DMException,
+            UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getVoteItems(vid);
-    }
-
-    public VoteResult postVote(int aid, String vtitle) throws WH_DMException, UnKnownException,
-            IOException {
-
-        return mWH_DMHttpApiV1.postVote(aid, vtitle);
+        return mWH_DMHttpApiV1.postVote(aid, vtitle, machine);
     }
 
     public String getVoteNum(int vid) throws WH_DMException, UnKnownException, IOException {
@@ -236,10 +230,10 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.loginById(machine);
     }
 
-    public ArrayList<Magazine> getMagazine(int cid) throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<Magazine> getMagazine(int cid, int page) throws WH_DMException,
+            UnKnownException, IOException {
 
-        return mWH_DMHttpApiV1.getMagazine(cid);
+        return mWH_DMHttpApiV1.getMagazine(cid, page);
     }
 
     public ArrayList<Magazine> getSearchMagazine(String key) throws WH_DMException,

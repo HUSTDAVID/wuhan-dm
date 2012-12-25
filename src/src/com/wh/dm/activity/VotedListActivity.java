@@ -5,7 +5,10 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Vote;
+import com.wh.dm.util.NotificationUtil;
+import com.wh.dm.util.TimeUtil;
 import com.wh.dm.widget.GetVoteView;
 
 import android.app.Activity;
@@ -41,6 +44,7 @@ public class VotedListActivity extends Activity {
     private ViewGroup main;
     private ViewGroup group;
     private Button btnVote;
+    private LinearLayout loadLayout;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
@@ -84,6 +88,8 @@ public class VotedListActivity extends Activity {
         inflate = getLayoutInflater();
         pageViews = new ArrayList<View>();
         main = (ViewGroup) inflate.inflate(R.layout.activity_votemain, null);
+        loadLayout = (LinearLayout) main.findViewById(R.id.vote_load);
+        loadLayout.setVisibility(View.VISIBLE);
         group = (ViewGroup) main.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) main.findViewById(R.id.guidePages);
         View v1 = inflate.inflate(R.layout.dm_voteitem1, null);
@@ -223,7 +229,7 @@ public class VotedListActivity extends Activity {
         protected ArrayList<Vote> doInBackground(Void... params) {
 
             try {
-                votes = wh_dmApi.getVote(sid);
+                votes = wh_dmApi.getVote(sid, Preferences.getMachineId(VotedListActivity.this));
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -252,9 +258,13 @@ public class VotedListActivity extends Activity {
                         }
                     });
 
+                    TextView txtInfo = (TextView) view.findViewById(R.id.vote_ing_3);
                     Button btnVote = (Button) view.findViewById(R.id.btn_vote);
-                    if (result.get(i).isIsenable()) {
-                        btnVote.setText("投票");
+                    int temp = result.get(i).getRcount();
+                    if (result.get(i).getRcount() == 0
+                            && !TimeUtil.isPass(result.get(i).getEndtime())) {
+                        btnVote.setText(getString(R.string.vote));
+                        txtInfo.setText(getString(R.string.voting));
                         btnVote.setOnClickListener(new OnClickListener() {
 
                             @Override
@@ -271,7 +281,27 @@ public class VotedListActivity extends Activity {
                             }
                         });
                     } else {
-                        btnVote.setText("查看结果");
+                        if (result.get(i).getRcount() == 0) {
+                            txtInfo.setText(getString(R.string.voted));
+                        } else {
+                            txtInfo.setText(getString(R.string.take_part));
+                        }
+                        btnVote.setText(getString(R.string.watch_result));
+                        btnVote.setOnClickListener(new OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent intent = new Intent(VotedListActivity.this,
+                                        Vote2Activity.class);
+                                intent.putExtra("aid", votes.get(currentSelelct).getAid());
+                                intent.putExtra("enable", false);
+                                intent.putExtra("name", votes.get(currentSelelct).getVotename());
+                                intent.putExtra("votenote", votes.get(currentSelelct).getVotenote());
+                                startActivity(intent);
+
+                            }
+                        });
                     }
 
                     pageViews.add(view);
@@ -290,8 +320,16 @@ public class VotedListActivity extends Activity {
                     viewPager.setOnPageChangeListener(new GuidePageChangeListener());
                 }
             } else {
-                Toast.makeText(VotedListActivity.this, "没有获取到最新投票信息", Toast.LENGTH_SHORT).show();
+                if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
+                            VotedListActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            VotedListActivity.this);
+                }
+
             }
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
     }

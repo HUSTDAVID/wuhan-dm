@@ -34,8 +34,8 @@ public class TimeUtil {
             if (sec > 0) {
                 return new String("" + sec + context.getString(R.string.review_sec));
             }
-            if (sec<=0) {
-            	return new String("" + context.getString(R.string.review_now));
+            if (sec <= 0) {
+                return new String("" + context.getString(R.string.review_now));
             }
         } catch (ParseException e) {
             // TODO Auto-generated catch block
@@ -56,7 +56,7 @@ public class TimeUtil {
             curdate.setSeconds(date.getSeconds());
             return curdate.getTime();
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
             return 0;
         }
@@ -67,6 +67,18 @@ public class TimeUtil {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyÄêMMÔÂddÈÕ   HH:mm:ss     ");
         Date curDate = new Date(System.currentTimeMillis());
         return formatter.format(curDate);
+    }
+
+    public static boolean isPass(String dateStr) {
+
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Date today = new Date(System.currentTimeMillis());
+        return today.after(date);
     }
 
 }

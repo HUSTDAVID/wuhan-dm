@@ -1,65 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearlayout_vote"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@color/vote_background">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
     
-  
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="13.33dp"
-            android:src="@drawable/icon_vote_title" />
-
-        <TextView
-            android:id="@+id/vote_ing_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/imageView1"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/imageView1"
-            android:text="投票问题"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
-    </RelativeLayout>
-<LinearLayout 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingBottom="5dip"
-    android:layout_marginBottom="24.67dp"
-    android:background="@drawable/corners_bg"
-    android:orientation="vertical">
+   
         
-    <View
-           android:layout_width="fill_parent"
-           android:layout_height="1.5dip"
-           android:layout_gravity="center_horizontal"
-           android:layout_marginLeft="10dip"
-           android:layout_marginRight="10dip"
-           android:layout_marginTop="5dp"
-           android:background="@drawable/double_line_hor" />
+   
   <ListView 
                android:id="@+id/lv_vote_choice"
                android:layout_width="fill_parent"
                android:layout_marginBottom="10dip"
                android:background="@color/btn_normal"
                android:listSelector="@android:color/transparent"
-               android:layout_height="wrap_content"/>
-  
-  </LinearLayout>
-   
+               android:layout_height="wrap_content"
+              />
+
+   <LinearLayout 
+	            android:id="@+id/vote_load"	            
+	            android:layout_width="match_parent"
+	            android:layout_centerInParent="true"            	
+	            android:layout_height="wrap_content"
+	            android:visibility="gone">
+	
+		    <include 	            
+		            android:layout_width="match_parent"
+		            android:layout_height="50dp"	                       
+		            layout="@layout/dialog_default_load"/>
+		    
+	    </LinearLayout>
    
 
-</LinearLayout>
+</RelativeLayout>

@@ -56,8 +56,8 @@
       android:layout_height="36dip"
       android:layout_marginRight="10dip"
       android:layout_weight="1"
-      android:background="@drawable/site_btn_2"
-      android:text="@string/goto_forget_passwd"
+      android:background="@drawable/btn_forget_pw"
+      android:text="@string/forget_passwd"
       android:textColor="#7b7b7b"
       android:textSize="18sp" />
        
@@ -67,7 +67,7 @@
            android:layout_height="36dip"
            android:layout_marginLeft="10dip"
            android:layout_weight="1"
-           android:background="@drawable/site_btn_3"
+           android:background="@drawable/btn_login"
            android:text="@string/login"
            android:textColor="@color/white"
            android:textSize="18sp" />

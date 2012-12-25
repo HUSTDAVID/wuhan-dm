@@ -7,8 +7,10 @@
     <string name="picture_load">正在为您加载...</string>
     <string name="news_url_main">HTTP://News.MEIKE15.COM/News/List?</string>
     <string name="alert">提示</string>
+    <string name="no_ref_magazine">没有搜索到相关杂志</string>
     <string name="is_quit">是否要退出每刻？</string>
     <string name="vote_result">投票结果：</string>
+    <string name="take_part">您已参与</string>
     <string name="is_logout">确认注销登录？</string>
     <string name="close">关闭</string>
     <string name="ok">确定</string>
@@ -207,6 +209,7 @@
 	<string name="network_exception">网络连接异常</string>
 	<string name="check_network">请检查网络连接</string>
 	<string name="no_more_message">没有更多消息了</string>
+	<string name="last_page">已经是最后一页了</string>
 	<string name="no_more_collect">没有更多收藏了</string>
 	<string name="larger">较大</string>
 	<string name="largest">超大</string>
@@ -235,6 +238,7 @@
 	<string name="sub_suceed">订阅成功</string>
 	<string name="sub_fail">已经订阅了</string>
 	<string name="unsub_fail">取消订阅失败</string>
+	<string name="unsub_suceed">取消订阅成功</string>
 	<string name="no_subcribe">没有订阅</string>
 	<string name="push_title">穿底双11价，那些超值网货你发现了吗？</string>
 	<string name="push_body">仅剩一周！每天一款美丽大赏获奖产品75折特惠</string>

@@ -5,6 +5,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.VoteResult;
 import com.wh.dm.type.VoteResultPercent;
 import com.wh.dm.util.NotificationUtil;
@@ -42,6 +43,7 @@ public class Vote2Activity extends Activity {
     private TextView txtInfo;
     private View lvFooter;
     private Button btn_close;
+    private LinearLayout loadLayout;
     private VoteChoiceAdapter choiceAdapter;
     private VoteResultAdapter resultAdapter;
     private String[] notes;
@@ -125,7 +127,7 @@ public class Vote2Activity extends Activity {
 
     public void init() {
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.linearlayout_vote);
+        loadLayout = (LinearLayout) findViewById(R.id.vote_load);
 
         LayoutInflater inflater = getLayoutInflater();
         lvHeader = inflater.inflate(R.layout.vote_info_header, null);
@@ -155,12 +157,13 @@ public class Vote2Activity extends Activity {
         handler.sendEmptyMessage(MSG_GET_VOTE_NUM);
         listView = (ListView) findViewById(R.id.lv_vote_choice);
         resultAdapter = new VoteResultAdapter(this);
+        notes = getIntent().getStringArrayExtra("votenote");
+        listView.setDivider(null);
+        listView.addHeaderView(lvHeader);
+        listView.addFooterView(lvFooter);
 
         if (enable) {
-            notes = getIntent().getStringArrayExtra("votenote");
-            listView.setDivider(null);
-            listView.addHeaderView(lvHeader);
-            listView.addFooterView(lvFooter);
+
             choiceAdapter = new VoteChoiceAdapter(this);
             choiceAdapter.setList(notes);
             listView.setAdapter(choiceAdapter);
@@ -180,6 +183,8 @@ public class Vote2Activity extends Activity {
 
         } else {
             // show result
+            loadLayout.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
             txtInfo.setText(getString(R.string.vote_result));
             handler.sendEmptyMessage(MSG_GET_VOTE_RESULT);
             listView.setOnItemClickListener(new OnItemClickListener() {
@@ -220,6 +225,14 @@ public class Vote2Activity extends Activity {
     class GetVoteResultTask extends AsyncTask<Void, Void, ArrayList<VoteResultPercent>> {
 
         @Override
+        protected void onPreExecute() {
+
+            loadLayout.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+            super.onPreExecute();
+        }
+
+        @Override
         protected ArrayList<VoteResultPercent> doInBackground(Void... params) {
 
             try {
@@ -250,6 +263,8 @@ public class Vote2Activity extends Activity {
                 NotificationUtil.showShortToast(getResources().getString(R.string.get_not_result),
                         Vote2Activity.this);
             }
+            loadLayout.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
             super.onPostExecute(result);
         }
 
@@ -266,7 +281,8 @@ public class Vote2Activity extends Activity {
             VoteResult result = new VoteResult();
             ;
             try {
-                result = wh_dmApi.postVote(aid, myChioce);
+                result = wh_dmApi.postVote(aid, myChioce,
+                        Preferences.getMachineId(Vote2Activity.this));
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();

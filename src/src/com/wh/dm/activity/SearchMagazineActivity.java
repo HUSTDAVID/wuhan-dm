@@ -5,6 +5,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.type.Cover;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.TwoMagazine;
 import com.wh.dm.util.MagazineUtil;
@@ -34,11 +36,13 @@ public class SearchMagazineActivity extends Activity {
     private String key;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
+    private DatabaseImpl databaseImpl;
     private final int MSG_GET_MAGAZINE = 0;
+    private final int MSG_SUBCRIBE = 1;
     private GetMagazine getMagazine = null;
+    private SubcribeTask subMagazine = null;
     private SubscribeAdapter adapter;
     private ArrayList<TwoMagazine> magazineList = null;
-    private final int curPage = 1;
 
     private final Handler handler = new Handler() {
 
@@ -52,6 +56,15 @@ public class SearchMagazineActivity extends Activity {
                 }
                 getMagazine = new GetMagazine();
                 getMagazine.execute();
+            } else if (MSG_SUBCRIBE == msg.what) {
+                if (subMagazine != null) {
+                    subMagazine.cancel(true);
+                    subMagazine = null;
+                }
+
+                subMagazine = new SubcribeTask();
+                Bundle bundle = msg.getData();
+                subMagazine.execute(bundle.getInt("cid"));
             }
         }
 
@@ -113,20 +126,24 @@ public class SearchMagazineActivity extends Activity {
             }
         });
 
-        footer = mInflater.inflate(R.layout.news_list_footer, null);
-        footer.setBackgroundColor(getResources().getColor(R.color.bg_normal));
-        btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
-        lvSub.addFooterView(footer);
-
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
+        databaseImpl = wh_dmApp.getDatabase();
         adapter = new SubscribeAdapter(this);
+        adapter.setHandler(handler);
         handler.sendEmptyMessage(MSG_GET_MAGAZINE);
     }
 
     class GetMagazine extends AsyncTask<Void, Void, ArrayList<TwoMagazine>> {
 
         Exception reason = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            adapter.setDatabaseImpl(databaseImpl);
+            super.onPreExecute();
+        }
 
         @Override
         protected ArrayList<TwoMagazine> doInBackground(Void... params) {
@@ -148,13 +165,77 @@ public class SearchMagazineActivity extends Activity {
         protected void onPostExecute(ArrayList<TwoMagazine> result) {
 
             if (magazineList != null && magazineList.size() > 0) {
+
                 adapter.setList(result);
                 lvSub.setAdapter(adapter);
+                addStatus(adapter);
             } else {
-                NotificationUtil.showShortToast("没有搜索到相关杂志", SearchMagazineActivity.this);
+                if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast(
+                            getResources().getString(R.string.no_ref_magazine),
+                            SearchMagazineActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getResources()
+                            .getString(R.string.check_network), SearchMagazineActivity.this);
+                }
             }
 
         }
+    }
+
+    private class SubcribeTask extends AsyncTask<Integer, Void, Cover> {
+
+        Exception reason = null;
+
+        @Override
+        protected Cover doInBackground(Integer... params) {
+
+            Cover cover = null;
+            try {
+                cover = wh_dmApi.subcribe(params[0]);
+                return cover;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Cover result) {
+
+            if (result != null) {
+
+            } else {
+                if (WH_DMApp.isConnected) {
+                    NotificationUtil.showShortToast(getString(R.string.sub_fail),
+                            SearchMagazineActivity.this);
+                }
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+
+    public void addStatus(SubscribeAdapter adapter) {
+
+        ArrayList<Magazine> magazines = databaseImpl.getSubcribedMagazine();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            TwoMagazine mg = (TwoMagazine) adapter.getItem(i);
+            Magazine left = mg.getLeftMagazine();
+            Magazine right = mg.getRightMagazine();
+            for (int j = 0; j < magazines.size(); j++) {
+                String leftName = left.getSname();
+                String rightName = right.getSname();
+                if (leftName != null && leftName.equals(magazines.get(j).getSname())) {
+                    left.setEditor("subcribed");
+                }
+                if (rightName != null && rightName.equals(magazines.get(j).getSname())) {
+                    right.setEditor("subcribed");
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
 }

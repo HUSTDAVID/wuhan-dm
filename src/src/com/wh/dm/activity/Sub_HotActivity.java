@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 
@@ -47,7 +48,7 @@ public class Sub_HotActivity extends Activity {
     private SubcribeTask subMagazine = null;
     private ArrayList<TwoMagazine> savedMagazine = null;
     private SubscribeAdapter adapter;
-    private final int curPage = 1;
+    private int curPage = 1;
     private DatabaseImpl databaseImpl;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
@@ -149,6 +150,8 @@ public class Sub_HotActivity extends Activity {
                     @Override
                     public void run() {
 
+                        curPage = 1;
+                        FLAG_PAGE_UP = false;
                         handler.sendEmptyMessage(MSG_GET_MAGAZINE);
                         lvSub.onRefreshComplete();
                     }
@@ -159,6 +162,17 @@ public class Sub_HotActivity extends Activity {
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         footer.setBackgroundColor(getResources().getColor(R.color.bg_normal));
         btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFooter.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                curPage++;
+                FLAG_PAGE_UP = true;
+                handler.sendEmptyMessage(MSG_GET_MAGAZINE);
+
+            }
+        });
         lvSub.addFooterView(footer);
 
         wh_dmApp = (WH_DMApp) this.getApplication();
@@ -196,7 +210,7 @@ public class Sub_HotActivity extends Activity {
 
             ArrayList<Magazine> one = null;
             try {
-                one = wh_dmApi.getMagazine(0);
+                one = wh_dmApi.getMagazine(0, curPage);
                 savedMagazine = MagazineUtil.toTwoMagazine(one);
                 return savedMagazine;
             } catch (Exception e) {
@@ -231,21 +245,23 @@ public class Sub_HotActivity extends Activity {
 
             } else {
                 if (!FLAG_PAGE_UP) {
-                    if (!FLAG_PAGE_UP) {
-                        if (wh_dmApp.isConnected()) {
-                            NotificationUtil.showShortToast(
-                                    getResources().getString(R.string.badconnect),
-                                    Sub_HotActivity.this);
-                        }
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil
+                                .showShortToast(getResources().getString(R.string.badconnect),
+                                        Sub_HotActivity.this);
                     } else {
-                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.check_network),
                                 Sub_HotActivity.this);
                     }
+                } else {
+                    NotificationUtil.showLongToast(getString(R.string.last_page),
+                            Sub_HotActivity.this);
                 }
+
             }
 
         }
-
     }
 
     private class SubcribeTask extends AsyncTask<Integer, Void, Cover> {

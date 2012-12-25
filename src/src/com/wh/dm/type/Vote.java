@@ -16,6 +16,17 @@ public class Vote {
     private String pic;
     private String des;
     private int click;
+    private int rcount;
+
+    public int getRcount() {
+
+        return rcount;
+    }
+
+    public void setRcount(int rcount) {
+
+        this.rcount = rcount;
+    }
 
     public int getInterval() {
 

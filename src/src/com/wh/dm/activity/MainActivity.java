@@ -76,6 +76,7 @@ public class MainActivity extends Activity {
     public static final int REFRESH_GRID = 6;
     public static final int UNSUBCRIBE = 7;
     private UnSubcribeTask unSubcribeTask = null;
+    private boolean unSub_result = false;
 
     // DM VERSION
     public static final int DM_FULL = 1;
@@ -140,20 +141,8 @@ public class MainActivity extends Activity {
                         unSubcribeTask.cancel(true);
                         unSubcribeTask = null;
                     }
-                    if (WH_DMApp.isLogin) {
-                        unSubcribeTask = new UnSubcribeTask();
-                        unSubcribeTask.execute(data.get(Configure.removeItem).getSid());
-                    } else {
-                        // TODO
-                        unSubcribeTask = new UnSubcribeTask();
-                        unSubcribeTask.execute(data.get(Configure.removeItem).getSid());
-                        /*
-                         * NotificationUtil.showShortToast(getString(R.string.
-                         * please_login), MainActivity.this); Intent intent =
-                         * new Intent(MainActivity.this, LoginActivity.class);
-                         * startActivity(intent);
-                         */
-                    }
+                    unSubcribeTask = new UnSubcribeTask();
+                    unSubcribeTask.execute(data.get(Configure.removeItem).getSid());
                     break;
                 case DownloadActivity.MSG_LOAD_ONE_IMAGE:
                     cur++;
@@ -588,9 +577,9 @@ public class MainActivity extends Activity {
         @Override
         protected Integer doInBackground(Integer... params) {
 
-            boolean result = false;
+            unSub_result = false;
             try {
-                result = wh_dmApi.unsubcribe(params[0]);
+                unSub_result = wh_dmApi.unsubcribe(params[0]);
                 return params[0];
             } catch (Exception e) {
                 reason = e;
@@ -604,7 +593,9 @@ public class MainActivity extends Activity {
             if (result != 0) {
                 databaseImpl.delMagazine(result);
                 sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
-
+                unSub_result = false;
+                NotificationUtil
+                        .showShortToast(getString(R.string.unsub_suceed), MainActivity.this);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.unsub_fail), MainActivity.this);
             }

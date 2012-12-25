@@ -30,6 +30,7 @@ public class VoteUitl {
                 vote.setCode(obj.getString("code"));
                 vote.setClick(obj.getInt("click"));
                 vote.setInterval(obj.getInt("interval"));
+                vote.setRcount(obj.getInt("rcount"));
                 String votenote = obj.getString("votenote");
                 votenote = "[" + votenote + "]";
                 JSONArray notesArr = new JSONArray(votenote);

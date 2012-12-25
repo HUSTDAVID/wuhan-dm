@@ -27,7 +27,6 @@ import com.wh.dm.type.PostResult;
 import com.wh.dm.type.Reply;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.type.Vote;
-import com.wh.dm.type.VoteItem;
 import com.wh.dm.type.VoteResult;
 import com.wh.dm.type.VoteResultPercent;
 import com.wh.dm.util.PhotoUtil;
@@ -437,34 +436,24 @@ public class WH_DMHttpApiV1 {
     }
 
     // vote
-    public ArrayList<Vote> getVote(int sid) throws WH_DMException, UnKnownException, IOException {
+    public ArrayList<Vote> getVote(int sid, String machine) throws WH_DMException,
+            UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
-                "listv"), new BasicNameValuePair("sid", String.valueOf(sid)));
+                "listv"), new BasicNameValuePair("sid", String.valueOf(sid)),
+                new BasicNameValuePair("machine", machine));
         String content = mHttpApi.doHttpRequest(httpGet);
-        Type type = new TypeToken<ArrayList<Vote>>() {
-        }.getType();
-        // return gson.fromJson(content, type);
+
         return VoteUitl.parseVote(content);
     }
 
-    public ArrayList<VoteItem> getVoteItems(int vid) throws WH_DMException, UnKnownException,
-            IOException {
-
-        HttpGet httpGet = mHttpApi.createHttpGet(URL_API_DOMAIN, new BasicNameValuePair("act",
-                "listvr"), new BasicNameValuePair("vid", String.valueOf(vid)));
-        String content = mHttpApi.doHttpRequest(httpGet);
-        Type type = new TypeToken<ArrayList<VoteItem>>() {
-        }.getType();
-        return gson.fromJson(content, type);
-    }
-
-    public VoteResult postVote(int aid, String vtitle) throws WH_DMException, UnKnownException,
-            IOException {
+    public VoteResult postVote(int aid, String vtitle, String machine) throws WH_DMException,
+            UnKnownException, IOException {
 
         HttpPost httpPost = mHttpApi.createHttpPost(URL_API_DOMAIN, new BasicNameValuePair("act",
                 "vote"), new BasicNameValuePair("vid", String.valueOf(aid)),
-                new BasicNameValuePair("vtitle", vtitle));
+                new BasicNameValuePair("vtitle", vtitle),
+                new BasicNameValuePair("machine", machine));
         String content = mHttpApi.doHttpRequest(httpPost);
         Type type = new TypeToken<VoteResult>() {
         }.getType();
@@ -539,12 +528,12 @@ public class WH_DMHttpApiV1 {
         return result.getResult();
     }
 
-    public ArrayList<Magazine> getMagazine(int cid) throws WH_DMException, UnKnownException,
-            IOException {
+    public ArrayList<Magazine> getMagazine(int cid, int page) throws WH_DMException,
+            UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
                 new BasicNameValuePair("act", "list"),
-                new BasicNameValuePair("pi", String.valueOf(1)), new BasicNameValuePair("pz",
+                new BasicNameValuePair("pi", String.valueOf(page)), new BasicNameValuePair("pz",
                         String.valueOf(20)), new BasicNameValuePair("cid", String.valueOf(cid)));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<Magazine>>() {
