@@ -38,7 +38,7 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
         for (int i = 0; i < replys.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", replys.get(i).getUsername());
-            map.put("text", replys.get(i).getMsg());
+            map.put("msg", replys.get(i).getMsg());
             map.put("floor", "" + (i + 1));
             map.put("time", replys.get(i).getDtime());
             mData.add(map);
@@ -96,7 +96,7 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
 
         holder.txtFloor.setText(mData.get(position).get("floor").toString());
         holder.txtName.setText(mData.get(position).get("name").toString());
-        holder.txtText.setText(mData.get(position).get("text").toString());
+        holder.txtText.setText(mData.get(position).get("msg").toString());
         holder.txtTime.setText(TimeUtil.getTimeInterval(mData.get(position).get("time").toString(),
                 context));
 

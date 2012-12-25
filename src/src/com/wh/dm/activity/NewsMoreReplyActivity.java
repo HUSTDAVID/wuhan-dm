@@ -190,7 +190,7 @@ public class NewsMoreReplyActivity extends Activity {
         // add data for listview
         lv = (ListView) findViewById(R.id.lv_news_reply);
         adapter = new NewsReplyMoreAdapter(this);
-        floorAdapter = new NewsReplyFloorAdapter(this);
+        //floorAdapter = new NewsReplyFloorAdapter(this);
         mInflater = getLayoutInflater();
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         Button btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
@@ -326,7 +326,7 @@ public class NewsMoreReplyActivity extends Activity {
                 // comments = RankUtil.RankOrdering(comments);
                 int length = comments.size();
                 for (int i = 0; i < length; i++) {
-                    int id = comments.get(i).getId();
+                    //int id = comments.get(i).getId();
                     replys = wh_dmApi.getReply(comments.get(i).getId());
                     Review review = new Review();
                     review.setComment(comments.get(i));
@@ -358,6 +358,7 @@ public class NewsMoreReplyActivity extends Activity {
                     ArrayList<Reply> replys = result.get(i).getReply();
                     Comment comment = result.get(i).getComment();
                     if (replys != null && replys.size() > 0) {
+                    	floorAdapter = new NewsReplyFloorAdapter(NewsMoreReplyActivity.this);
                         floorAdapter.setList(result.get(i).getReply());
                         adapter.addItem(comment.getUsername(), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), floorAdapter,

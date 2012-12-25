@@ -189,7 +189,7 @@ public class PhotoReplyActivity extends Activity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         lv = (ListView) findViewById(R.id.lv_news_reply);
         adapter = new NewsReplyMoreAdapter(this);
-        floorAdapter = new NewsReplyFloorAdapter(this);
+        //floorAdapter = new NewsReplyFloorAdapter(this);
         mInflater = getLayoutInflater();
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         Button btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
@@ -350,10 +350,12 @@ public class PhotoReplyActivity extends Activity {
                     lv.removeFooterView(footer);
                     isFirstLauncher = false;
                 }
+                adapter.clearItem();
                 for (int i = 0; i < result.size(); i++) {
                     ArrayList<Reply> replys = result.get(i).getReply();
                     Comment comment = result.get(i).getComment();
                     if (replys != null && replys.size() > 0) {
+                    	floorAdapter = new NewsReplyFloorAdapter(PhotoReplyActivity.this);
                         floorAdapter.setList(result.get(i).getReply());
                         adapter.addItem(getString(R.string.review_name), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), floorAdapter,
@@ -443,6 +445,7 @@ public class PhotoReplyActivity extends Activity {
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.reply_succeed),
                         PhotoReplyActivity.this);
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.reply_fail),
                         PhotoReplyActivity.this);
@@ -482,6 +485,7 @@ public class PhotoReplyActivity extends Activity {
             if (result) {
                 NotificationUtil.showShortToast(getString(R.string.review_succeed),
                         PhotoReplyActivity.this);
+                handler.sendEmptyMessage(MSG_GET_COMMENT);
             } else {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         PhotoReplyActivity.this);
