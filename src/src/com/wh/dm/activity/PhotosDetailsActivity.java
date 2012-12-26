@@ -267,14 +267,7 @@ public class PhotosDetailsActivity extends Activity {
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
 
-                if (WH_DMApp.isLogin) {
-                    handler.sendEmptyMessage(MSG_ADD_REVIEW);
-                } else {
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            PhotosDetailsActivity.this);
-                    Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
+                handler.sendEmptyMessage(MSG_ADD_REVIEW);
             }
         });
         btnBack = (ImageButton) findViewById(R.id.img_header3_black_back);
@@ -312,14 +305,7 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (WH_DMApp.isLogin) {
-                    handler.sendEmptyMessage(MSG_LOAD_IMAGE);
-                } else {
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            PhotosDetailsActivity.this);
-                    Intent intent = new Intent(PhotosDetailsActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
+                handler.sendEmptyMessage(MSG_LOAD_IMAGE);
             }
         });
         btnStore = (Button) main.findViewById(R.id.btn_photos_favorite);

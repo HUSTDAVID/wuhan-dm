@@ -280,7 +280,7 @@ public class VotedListActivity extends Activity {
                             }
                         });
                     } else {
-                        if (result.get(i).getRcount() == 0) {
+                        if (TimeUtil.isPass(result.get(i).getEndtime())) {
                             txtInfo.setText(getString(R.string.voted));
                         } else {
                             txtInfo.setText(getString(R.string.take_part));
