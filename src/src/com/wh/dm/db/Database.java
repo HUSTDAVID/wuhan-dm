@@ -2,8 +2,7 @@
 package com.wh.dm.db;
 
 import com.wh.dm.type.ArticleMagzine;
-import com.wh.dm.type.FavoriteNews;
-import com.wh.dm.type.FavoritePhoto;
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.LoadInfo;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.NewsContent;
@@ -170,21 +169,14 @@ public interface Database {
     public ArrayList<Magazine> getFunMagazine();
 
     // favorite
-    public void addNewsFavorite(ArrayList<FavoriteNews> favorite);
+    public void addFavorite(ArrayList<Favorite> favorite);
 
-    public ArrayList<FavoriteNews> getNewsFavorite();
+    public ArrayList<Favorite> getFavorite();
 
-    public void deleteNewsFavorite();
+    public void deleteFavorite();
 
-    public boolean deleteOneNewsFavorite(int id);
+    public boolean deleteOneFavorite(int id);
 
-    public void addPhotoFavorite(ArrayList<FavoritePhoto> favorite);
-
-    public ArrayList<FavoritePhoto> getPhotoFavorite();
-
-    public void deletePhotoFavorite();
-
-    public boolean deleteOnePhotoFavorite(int aid);
 
     // subcribe
     public ArrayList<Magazine> getSubcribedMagazine();

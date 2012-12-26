@@ -10,8 +10,7 @@ import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
 import com.wh.dm.type.Cover;
-import com.wh.dm.type.FavoriteNews;
-import com.wh.dm.type.FavoritePhoto;
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.MagazineSort;
 import com.wh.dm.type.NewsContent;
@@ -661,43 +660,19 @@ public class WH_DMHttpApiV1 {
                 new BasicNameValuePair("nid", String.valueOf(nid)), new BasicNameValuePair("type",
                         String.valueOf(type)));
         String content = mHttpApi.doHttpRequest(httpPost);
-        Log.i("wy", "Ìí¼Ó»Ø¸´" + content);
         PostResult result = gson.fromJson(content, PostResult.class);
         return result;
     }
 
-    public ArrayList<FavoriteNews> getNewsFav(int pz, int pi) throws WH_DMException,
+    public ArrayList<Favorite> getFav(int pz, int pi) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_FAV, new BasicNameValuePair(
                 "act", "list"), new BasicNameValuePair("pz", String.valueOf(pz)),
-                new BasicNameValuePair("pi", String.valueOf(pi)), new BasicNameValuePair("type",
-                        String.valueOf(0)));
+                new BasicNameValuePair("pi", String.valueOf(pi)));
         String content = mHttpApi.doHttpRequest(httpGet);
-        Log.i("wy", content);
         // return content;
-        Type typetoken = new TypeToken<ArrayList<FavoriteNews>>() {
-        }.getType();
-        try {
-            return gson.fromJson(content, typetoken);
-        } catch (Exception ex) {
-            gson.fromJson(content, PostResult.class);
-            return null;
-        }
-
-    }
-
-    public ArrayList<FavoritePhoto> getPhotoFav(int pz, int pi) throws WH_DMException,
-            UnKnownException, IOException {
-
-        HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_FAV, new BasicNameValuePair(
-                "act", "list"), new BasicNameValuePair("pz", String.valueOf(pz)),
-                new BasicNameValuePair("pi", String.valueOf(pi)), new BasicNameValuePair("type",
-                        String.valueOf(1)));
-        String content = mHttpApi.doHttpRequest(httpGet);
-        Log.i("wy", content);
-        // return content;
-        Type typetoken = new TypeToken<ArrayList<FavoritePhoto>>() {
+        Type typetoken = new TypeToken<ArrayList<Favorite>>() {
         }.getType();
         try {
             return gson.fromJson(content, typetoken);

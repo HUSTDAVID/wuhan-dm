@@ -623,7 +623,8 @@ public class PhotosDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                CollectPhotoActivity.isNewCollect = true;
+                //CollectPhotoActivity.isNewCollect = true;
+            	MessageActivity.refreshCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         PhotosDetailsActivity.this);
             } else {
