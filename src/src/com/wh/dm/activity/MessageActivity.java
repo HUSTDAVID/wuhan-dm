@@ -6,7 +6,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.type.FavoriteNews;
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.PostMessage;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.CollectAdapter;
@@ -43,14 +43,15 @@ public class MessageActivity extends Activity {
     private ArrayList<PostMessage> messages = null;
     private PostMessageAdapter messageAdapter;
     private CollectAdapter newsCollectAdapter;
-    private ArrayList<FavoriteNews> favList = null;
+    private ArrayList<Favorite> favList = null;
     private MergeAdapter adapter = null;
     private LayoutInflater inflater;
+    private View footer;
     private int messageTotle = 0;
     private int colTotle = 0;
     private WH_DMApi wh_dmApi;
-    private GetNewsFavTask getNewsFavTask = null;
-    private DelNewsFavTask delNewsFavTask = null;
+    private GetFavTask getNewsFavTask = null;
+    private DelFavTask delNewsFavTask = null;
     private static int MSG_GET_FAV = 0;
     private static int MSG_DEL_FAV = 1;
     private ProgressDialog progressDialog;
@@ -68,7 +69,7 @@ public class MessageActivity extends Activity {
                     getNewsFavTask.cancel(true);
                     getNewsFavTask = null;
                 }
-                getNewsFavTask = new GetNewsFavTask();
+                getNewsFavTask = new GetFavTask();
                 getNewsFavTask.execute(countsPerPage, curPage);// param1:counts
                                                                // per page;
                 // param2:current page
@@ -78,7 +79,7 @@ public class MessageActivity extends Activity {
                     delNewsFavTask.cancel(true);
                     delNewsFavTask = null;
                 }
-                delNewsFavTask = new DelNewsFavTask();
+                delNewsFavTask = new DelFavTask();
                 delNewsFavTask.execute();
             }
         }
@@ -118,7 +119,7 @@ public class MessageActivity extends Activity {
         listview = (ListView) findViewById(R.id.lv_message_colect);
         inflater = getLayoutInflater();
 
-        View footer = inflater.inflate(R.layout.news_list_footer, null);
+        footer = inflater.inflate(R.layout.news_list_footer, null);
         Button btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
         btnFoolter.setText("查看下" + countsPerPage + "条");
         btnFoolter.setOnClickListener(new View.OnClickListener() {
@@ -230,9 +231,13 @@ public class MessageActivity extends Activity {
 
         // add local collect
         newsCollectAdapter = new CollectAdapter(this);
-        ArrayList<FavoriteNews> collectNews = databaseImpl.getNewsFavorite();
+        ArrayList<Favorite> collectNews = databaseImpl.getFavorite();
         if (collectNews != null) {
             newsCollectAdapter.setList(collectNews);
+        }
+        else{
+            newsCollectAdapter.setList(new ArrayList<Favorite>());
+            listview.removeFooterView(footer);
         }
         adapter.addAdapter(newsCollectAdapter);
 
@@ -240,8 +245,8 @@ public class MessageActivity extends Activity {
         listview.setAdapter(adapter);
     }
 
-    private class GetNewsFavTask extends AsyncTask<Integer, Void, ArrayList<FavoriteNews>> {
-        ArrayList<FavoriteNews> result = null;
+    private class GetFavTask extends AsyncTask<Integer, Void, ArrayList<Favorite>> {
+        ArrayList<Favorite> result = null;
         Exception reason = null;
 
         @Override
@@ -251,11 +256,11 @@ public class MessageActivity extends Activity {
         }
 
         @Override
-        protected ArrayList<FavoriteNews> doInBackground(Integer... params) {
+        protected ArrayList<Favorite> doInBackground(Integer... params) {
 
             // TODO Auto-generated method stub
             try {
-                result = wh_dmApi.getNewsFav(params[0], params[1]);
+                result = wh_dmApi.getFav(params[0], params[1]);
                 return result;
             } catch (Exception e) {
                 reason = e;
@@ -265,7 +270,7 @@ public class MessageActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<FavoriteNews> result) {
+        protected void onPostExecute(ArrayList<Favorite> result) {
 
             // no result
             if (result == null || result.size() == 0) {
@@ -274,19 +279,19 @@ public class MessageActivity extends Activity {
                             MessageActivity.this);
                     FLAG_PAGE_UP = false;
                 } else {
-                    databaseImpl.deleteNewsFavorite();
-                    newsCollectAdapter.setList(new ArrayList<FavoriteNews>());
+                    databaseImpl.deleteFavorite();
+                    newsCollectAdapter.setList(new ArrayList<Favorite>());
                 }
             }
             // get new data from network
             else {
                 if (FLAG_PAGE_UP) {
-                    databaseImpl.addNewsFavorite(result);
+                    databaseImpl.addFavorite(result);
                     newsCollectAdapter.addList(result);
                     FLAG_PAGE_UP = false;
                 } else {
-                    databaseImpl.deleteNewsFavorite();
-                    databaseImpl.addNewsFavorite(result);
+                    databaseImpl.deleteFavorite();
+                    databaseImpl.addFavorite(result);
                     newsCollectAdapter.setList(result);
                 }
 
@@ -299,15 +304,15 @@ public class MessageActivity extends Activity {
         }
     }
 
-    private class DelNewsFavTask extends AsyncTask<Void, Void, Boolean> {
-        ArrayList<FavoriteNews> delSuccessList;
+    private class DelFavTask extends AsyncTask<Void, Void, Boolean> {
+        ArrayList<Favorite> delSuccessList;
         int delFailCount;
         Exception ex;
 
         @Override
         protected void onPreExecute() {
 
-            delSuccessList = new ArrayList<FavoriteNews>();
+            delSuccessList = new ArrayList<Favorite>();
             delFailCount = 0;
             favList = newsCollectAdapter.getList();
 
@@ -322,9 +327,10 @@ public class MessageActivity extends Activity {
             try {
                 List<Integer> list_nid = newsCollectAdapter.getCheckedID();
                 for (int i = 0; i < list_nid.size(); i++) {
-                    if (wh_dmApi.delFav(favList.get(list_nid.get(i)).getId(), 0)) {
-                        delSuccessList.add(favList.get(list_nid.get(i)));
-                        databaseImpl.deleteOneNewsFavorite(favList.get(list_nid.get(i)).getId());
+                    Favorite collect=favList.get(list_nid.get(i));
+                    if (wh_dmApi.delFav(collect.getNid(), collect.getType())) {
+                        delSuccessList.add(collect);
+                        databaseImpl.deleteOneFavorite(collect.getNid());
                     } else {
                         delFailCount++;
                     }

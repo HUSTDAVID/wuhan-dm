@@ -8,7 +8,7 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Comment;
-import com.wh.dm.type.FavoriteNews;
+import com.wh.dm.type.Favorite;
 import com.wh.dm.type.NewsContent;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
@@ -42,7 +42,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NewsDetailsActivity extends Activity {
 
@@ -595,7 +597,7 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            loadLayout.setVisibility(View.VISIBLE);
+            //loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -606,16 +608,19 @@ public class NewsDetailsActivity extends Activity {
             try {
                 postresult = wh_dmApi.addFav(params[0], 0);
                 if (postresult.getResult()) {
-                    FavoriteNews news = new FavoriteNews();
+                    Favorite news = new Favorite();
                     news.setNo(1);
-                    news.setId(params[0]);
+                    news.setFid(1);
+                    news.setNid(params[0]);
+                    news.setType(0);
                     news.setTitle(newsTitle.getText().toString());
-                    news.setPubdate(newsTime.getText().toString());
-                    news.setLitpic("");
-                    news.setSid("");
-                    ArrayList<FavoriteNews> addNews = new ArrayList<FavoriteNews>();
+                    Date now=new Date();
+            		SimpleDateFormat s= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            		String dateStr = s.format(now);
+                    news.setAddTime(dateStr);
+                    ArrayList<Favorite> addNews = new ArrayList<Favorite>();
                     addNews.add(news);
-                    databaseImpl.addNewsFavorite(addNews);
+                    databaseImpl.addFavorite(addNews);
                     return true;
                 } else
                     return false;
@@ -642,7 +647,7 @@ public class NewsDetailsActivity extends Activity {
                     NotificationUtil.showShortToast(postresult.getMsg(), NewsDetailsActivity.this);
             }
             // progressDialog.dismiss();
-            loadLayout.setVisibility(View.VISIBLE);
+            //loadLayout.setVisibility(View.VISIBLE);
             super.onPostExecute(result);
         }
 

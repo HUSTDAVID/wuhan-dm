@@ -2,12 +2,9 @@
 package com.wh.dm.widget;
 
 import com.wh.dm.R;
-import com.wh.dm.WH_DMApp;
-import com.wh.dm.WH_DMHttpApiV1;
-import com.wh.dm.activity.CollectNewsActivity;
 import com.wh.dm.activity.NewsDetailsActivity;
-import com.wh.dm.type.FavoriteNews;
-import com.wh.dm.util.UrlImageViewHelper;
+import com.wh.dm.activity.PhotosDetailsActivity;
+import com.wh.dm.type.Favorite;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +16,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,7 +25,7 @@ public class CollectAdapter extends BaseAdapter {
 
     private final Context context;
     private final LayoutInflater inflater;
-    private ArrayList<FavoriteNews> list = null;
+    private ArrayList<Favorite> list = null;
     private List<Integer> list_checked = new ArrayList<Integer>();// checked
                                                                   // item
                                                                   // position
@@ -58,19 +54,19 @@ public class CollectAdapter extends BaseAdapter {
         return position;
     }
 
-    public void setList(ArrayList<FavoriteNews> _fav) {
+    public void setList(ArrayList<Favorite> _fav) {
 
         list = _fav;
         notifyDataSetChanged();
     }
 
-    public void addList(ArrayList<FavoriteNews> _fav) {
+    public void addList(ArrayList<Favorite> _fav) {
 
         list.addAll(_fav);
         notifyDataSetChanged();
     }
 
-    public ArrayList<FavoriteNews> getList() {
+    public ArrayList<Favorite> getList() {
 
         return list;
     }
@@ -92,7 +88,7 @@ public class CollectAdapter extends BaseAdapter {
         }
 
         holder.txt_collect_title.setText(list.get(position).getTitle().toString());
-        holder.txt_collect_body.setText(list.get(position).getPubdate().toString());
+        holder.txt_collect_body.setText(context.getString(R.string.collect_time)+" "+list.get(position).getAddTime().toString());
 
         holder.check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -122,9 +118,16 @@ public class CollectAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				 Intent intent = new Intent(context,NewsDetailsActivity.class);
-                 intent.putExtra("id", list.get(position).getId());
-                 context.startActivity(intent);
+				if(list.get(position).getType()==0){
+				    Intent intent = new Intent(context,NewsDetailsActivity.class);
+                    intent.putExtra("id", list.get(position).getNid());
+                    context.startActivity(intent);
+				}
+				if(list.get(position).getType()==1){
+					Intent intent = new Intent(context,PhotosDetailsActivity.class);
+                    intent.putExtra("aid", list.get(position).getNid());
+                    context.startActivity(intent);
+				}
 			}
         	
         });
