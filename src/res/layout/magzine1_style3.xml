@@ -70,6 +70,7 @@
             android:singleLine="false"
             android:text="Large Text"
             android:textSize="@dimen/mzine_large_title"
+            android:textColor="@color/white"
             android:visibility="gone" />
 
     </RelativeLayout>

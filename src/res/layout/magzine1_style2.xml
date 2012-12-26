@@ -77,6 +77,7 @@
             android:paddingLeft="4dip"
             android:singleLine="false"
             android:text="Large Text"
+            android:textColor="@color/white"
             android:textSize="@dimen/mzine_large_title"
             android:visibility="gone" />
 

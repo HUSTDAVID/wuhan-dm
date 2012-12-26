@@ -158,13 +158,13 @@
     android:id="@+id/txt_magazine_1_title6"
     style="@style/magazine_pic_title"
     android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="false"
     android:layout_alignParentRight="false"
     android:layout_alignParentTop="false"
     android:gravity="bottom|left"
     android:paddingLeft="5dip"  
-    android:typeface="serif"
     android:text="华大集团入驻光谷高新区"
     android:textSize="@dimen/mzine_long_title"
     android:textColor="@color/white" />
@@ -188,6 +188,7 @@
     android:singleLine="false"
     android:text="Large Text"
     android:textSize="@dimen/mzine_large_title"
+    android:textColor="@color/white"
     android:visibility="gone" />
 
     </RelativeLayout>
