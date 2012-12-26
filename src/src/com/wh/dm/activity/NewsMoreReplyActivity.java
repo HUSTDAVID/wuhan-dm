@@ -17,7 +17,6 @@ import com.wh.dm.widget.NewsReplyFloorAdapter;
 import com.wh.dm.widget.NewsReplyMoreAdapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,38 +83,22 @@ public class NewsMoreReplyActivity extends Activity {
                     getCommentTask.execute(id);
                     break;
                 case MSG_PUSH_TOP:
-                    // if (pushTopTask != null) {
-                    // pushTopTask.cancel(true);
-                    // pushTopTask = null;
-                    // }
-
-                    if (WH_DMApp.isLogin) {
-                        Bundle bundle = msg.getData();
-                        PushTopTask pushTopTask = new PushTopTask();
-                        pushTopTask.execute(bundle.getString("fid"));
-                    } else {
-                        NotificationUtil.showShortToast(getString(R.string.please_login),
-                                NewsMoreReplyActivity.this);
-                        Intent intent = new Intent(NewsMoreReplyActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
+                    Bundle bundle = msg.getData();
+                    PushTopTask pushTopTask = new PushTopTask();
+                    pushTopTask.execute(bundle.getString("fid"));
 
                     break;
                 case MSG_REPLY:
-                    Bundle bundle = msg.getData();
-                    isReply = bundle.getBoolean("isReply");
+                    Bundle bundle1 = msg.getData();
+                    isReply = bundle1.getBoolean("isReply");
                     if (isReply) {
-                        // if (replyTask != null) {
-                        // replyTask.cancel(true);
-                        // replyTask = null;
-                        // }
 
                         ReplyTask replyTask = new ReplyTask();
                         replyTask.execute(fid);
                         isReview = true;
 
                     } else {
-                        fid = bundle.getString("fid");
+                        fid = bundle1.getString("fid");
                         isReview = false;
                         bottomLayout1.setVisibility(View.GONE);
                         bottomLayout2.setVisibility(View.VISIBLE);
@@ -190,7 +173,7 @@ public class NewsMoreReplyActivity extends Activity {
         // add data for listview
         lv = (ListView) findViewById(R.id.lv_news_reply);
         adapter = new NewsReplyMoreAdapter(this);
-        //floorAdapter = new NewsReplyFloorAdapter(this);
+        // floorAdapter = new NewsReplyFloorAdapter(this);
         mInflater = getLayoutInflater();
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         Button btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
@@ -251,12 +234,6 @@ public class NewsMoreReplyActivity extends Activity {
                 bottomLayout2.setVisibility(View.GONE);
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
-                if (!WH_DMApp.isLogin) {
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            NewsMoreReplyActivity.this);
-                    Intent intent = new Intent(NewsMoreReplyActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
                 if (isReview) {
                     handler.sendEmptyMessage(MSG_REVIEW);
 
@@ -326,7 +303,7 @@ public class NewsMoreReplyActivity extends Activity {
                 // comments = RankUtil.RankOrdering(comments);
                 int length = comments.size();
                 for (int i = 0; i < length; i++) {
-                    //int id = comments.get(i).getId();
+                    // int id = comments.get(i).getId();
                     replys = wh_dmApi.getReply(comments.get(i).getId());
                     Review review = new Review();
                     review.setComment(comments.get(i));
@@ -358,7 +335,7 @@ public class NewsMoreReplyActivity extends Activity {
                     ArrayList<Reply> replys = result.get(i).getReply();
                     Comment comment = result.get(i).getComment();
                     if (replys != null && replys.size() > 0) {
-                    	floorAdapter = new NewsReplyFloorAdapter(NewsMoreReplyActivity.this);
+                        floorAdapter = new NewsReplyFloorAdapter(NewsMoreReplyActivity.this);
                         floorAdapter.setList(result.get(i).getReply());
                         adapter.addItem(comment.getUsername(), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), floorAdapter,

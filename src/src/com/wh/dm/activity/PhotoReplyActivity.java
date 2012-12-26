@@ -18,7 +18,6 @@ import com.wh.dm.widget.NewsReplyMoreAdapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -88,21 +87,14 @@ public class PhotoReplyActivity extends Activity {
                         pushTopTask = null;
                     }
 
-                    if (WH_DMApp.isLogin) {
-                        Bundle bundle = msg.getData();
-                        pushTopTask = new PushTopTask();
-                        pushTopTask.execute(bundle.getString("fid"));
-                    } else {
-                        NotificationUtil.showShortToast(getString(R.string.please_login),
-                                PhotoReplyActivity.this);
-                        Intent intent = new Intent(PhotoReplyActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
+                    Bundle bundle = msg.getData();
+                    pushTopTask = new PushTopTask();
+                    pushTopTask.execute(bundle.getString("fid"));
 
                     break;
                 case MSG_REPLY:
-                    Bundle bundle = msg.getData();
-                    isReply = bundle.getBoolean("isReply");
+                    Bundle bundle1 = msg.getData();
+                    isReply = bundle1.getBoolean("isReply");
                     if (isReply) {
                         if (replyTask != null) {
                             replyTask.cancel(true);
@@ -114,7 +106,7 @@ public class PhotoReplyActivity extends Activity {
                         isReview = true;
 
                     } else {
-                        fid = bundle.getString("fid");
+                        fid = bundle1.getString("fid");
                         isReview = false;
                         bottomLayout1.setVisibility(View.GONE);
                         bottomLayout2.setVisibility(View.VISIBLE);
@@ -189,7 +181,7 @@ public class PhotoReplyActivity extends Activity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         lv = (ListView) findViewById(R.id.lv_news_reply);
         adapter = new NewsReplyMoreAdapter(this);
-        //floorAdapter = new NewsReplyFloorAdapter(this);
+        // floorAdapter = new NewsReplyFloorAdapter(this);
         mInflater = getLayoutInflater();
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         Button btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
@@ -250,12 +242,6 @@ public class PhotoReplyActivity extends Activity {
                 bottomLayout2.setVisibility(View.GONE);
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
-                if (!WH_DMApp.isLogin) {
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            PhotoReplyActivity.this);
-                    Intent intent = new Intent(PhotoReplyActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
                 if (isReview) {
                     handler.sendEmptyMessage(MSG_REVIEW);
 
@@ -355,7 +341,7 @@ public class PhotoReplyActivity extends Activity {
                     ArrayList<Reply> replys = result.get(i).getReply();
                     Comment comment = result.get(i).getComment();
                     if (replys != null && replys.size() > 0) {
-                    	floorAdapter = new NewsReplyFloorAdapter(PhotoReplyActivity.this);
+                        floorAdapter = new NewsReplyFloorAdapter(PhotoReplyActivity.this);
                         floorAdapter.setList(result.get(i).getReply());
                         adapter.addItem(getString(R.string.review_name), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), floorAdapter,

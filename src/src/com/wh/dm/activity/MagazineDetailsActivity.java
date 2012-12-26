@@ -147,22 +147,15 @@ public class MagazineDetailsActivity extends Activity {
                         pushTopTask = null;
                     }
 
-                    if (WH_DMApp.isLogin) {
-                        Bundle bundle = msg.getData();
-                        pushTopTask = new PushTopTask();
-                        pushTopTask.execute(bundle.getString("fid"));
-                    } else {
-                        NotificationUtil.showShortToast(getString(R.string.please_login),
-                                MagazineDetailsActivity.this);
-                        Intent intent = new Intent(MagazineDetailsActivity.this,
-                                LoginActivity.class);
-                        startActivity(intent);
-                    }
+                    Bundle bundle = msg.getData();
+                    pushTopTask = new PushTopTask();
+                    pushTopTask.execute(bundle.getString("fid"));
+
                     break;
 
                 case MSG_REPLY:
-                    Bundle bundle = msg.getData();
-                    isReply = bundle.getBoolean("isReply");
+                    Bundle bundle1 = msg.getData();
+                    isReply = bundle1.getBoolean("isReply");
                     if (isReply) {
                         if (replyTask != null) {
                             replyTask.cancel(true);
@@ -173,7 +166,7 @@ public class MagazineDetailsActivity extends Activity {
                         isReview = true;
 
                     } else {
-                        fid = bundle.getString("fid");
+                        fid = bundle1.getString("fid");
                         isReview = false;
                         bottomLayout1.setVisibility(View.GONE);
                         bottomLayout2.setVisibility(View.VISIBLE);
@@ -336,12 +329,6 @@ public class MagazineDetailsActivity extends Activity {
                 bottomLayout2.setVisibility(View.GONE);
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(edtReply.getWindowToken(), 0);
-                if (!WH_DMApp.isLogin) {
-                    NotificationUtil.showShortToast(getString(R.string.please_login),
-                            MagazineDetailsActivity.this);
-                    Intent intent = new Intent(MagazineDetailsActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
                 if (isReview) {
                     handler.sendEmptyMessage(ADD_REVIEW);
 
