@@ -5,7 +5,7 @@
     <string name="home_load">努力加载中...</string>
     <string name="logining">正在登陆...</string>
     <string name="picture_load">正在为您加载...</string>
-    <string name="news_url_main">HTTP://News.MEIKE15.COM/News/List?</string>
+    <string name="share_url_main">http://www.meike15.com/click.aspx?</string>
     <string name="alert">提示</string>
     <string name="no_ref_magazine">没有搜索到相关杂志</string>
     <string name="is_quit">是否要退出每刻？</string>

@@ -15,6 +15,7 @@ import com.wh.dm.widget.PostMessageAdapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -95,16 +96,17 @@ public class MessageActivity extends Activity {
         init();
 
     }
-    
+
     @Override
-    protected void onResume(){
-    	super.onResume();
-    	MobclickAgent.onError(this);
-    	if(refreshCollect){
-    		if (WH_DMApp.isLogin && WH_DMApp.isConnected)
-    	        handler.sendEmptyMessage(MSG_GET_FAV);
-    		refreshCollect = false;
-    	}
+    protected void onResume() {
+
+        super.onResume();
+        MobclickAgent.onError(this);
+        if (refreshCollect) {
+            if (WH_DMApp.isLogin && WH_DMApp.isConnected)
+                handler.sendEmptyMessage(MSG_GET_FAV);
+            refreshCollect = false;
+        }
     }
 
     private void init() {
@@ -134,6 +136,8 @@ public class MessageActivity extends Activity {
                 if (!WH_DMApp.isLogin) {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             MessageActivity.this);
+                    Intent intent = new Intent(MessageActivity.this, LoginActivity.class);
+                    startActivity(intent);
                     return;
                 }
                 if (WH_DMApp.isLogin && WH_DMApp.isConnected) {
@@ -234,8 +238,7 @@ public class MessageActivity extends Activity {
         ArrayList<Favorite> collectNews = databaseImpl.getFavorite();
         if (collectNews != null) {
             newsCollectAdapter.setList(collectNews);
-        }
-        else{
+        } else {
             newsCollectAdapter.setList(new ArrayList<Favorite>());
             listview.removeFooterView(footer);
         }
@@ -327,7 +330,7 @@ public class MessageActivity extends Activity {
             try {
                 List<Integer> list_nid = newsCollectAdapter.getCheckedID();
                 for (int i = 0; i < list_nid.size(); i++) {
-                    Favorite collect=favList.get(list_nid.get(i));
+                    Favorite collect = favList.get(list_nid.get(i));
                     if (wh_dmApi.delFav(collect.getNid(), collect.getType())) {
                         delSuccessList.add(collect);
                         databaseImpl.deleteOneFavorite(collect.getNid());

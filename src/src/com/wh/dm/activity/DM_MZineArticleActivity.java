@@ -214,6 +214,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 5).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_1:
@@ -224,6 +225,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_1:
@@ -234,6 +236,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 1).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_1:
@@ -244,6 +247,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 2).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_1:
@@ -254,6 +258,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 3).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_1:
@@ -264,6 +269,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("source", articles.get(low + 4).getSource());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
 
@@ -391,6 +397,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 5).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_2:
@@ -401,6 +408,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_2:
@@ -411,6 +419,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 1).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_2:
@@ -421,6 +430,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 2).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_2:
@@ -431,6 +441,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("source", articles.get(low + 3).getSource());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_2:
@@ -441,6 +452,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 4).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                 }
@@ -571,6 +583,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_3:
@@ -581,6 +594,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 1).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_3:
@@ -591,6 +605,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 2).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_3:
@@ -601,6 +616,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("source", articles.get(low + 3).getSource());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_3:
@@ -611,6 +627,7 @@ public class DM_MZineArticleActivity extends Activity {
                         intent.putExtra("source", articles.get(low + 4).getSource());
                         intent.putExtra("titleImg", curMagazine.getTitlepic());
                         intent.putExtra("is_load", isLoad);
+                        intent.putExtra("mid", sid);
                         startActivity(intent);
                         break;
                 }

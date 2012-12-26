@@ -356,7 +356,8 @@ public class NewsDetailsActivity extends Activity {
                 String info = "";
                 if (newsContent != null) {
                     info = "\"" + newsContent.getTitle() + "\" "
-                            + getString(R.string.news_url_main) + newsContent.getId();
+                            + getString(R.string.share_url_main) + "id=" + newsContent.getId()
+                            + "&mid=0&type=0";
                 }
                 share = head + info;
                 Intent intent = new Intent(NewsDetailsActivity.this, ShareActivity.class);
@@ -597,7 +598,7 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            //loadLayout.setVisibility(View.VISIBLE);
+            // loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -614,9 +615,9 @@ public class NewsDetailsActivity extends Activity {
                     news.setNid(params[0]);
                     news.setType(0);
                     news.setTitle(newsTitle.getText().toString());
-                    Date now=new Date();
-            		SimpleDateFormat s= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            		String dateStr = s.format(now);
+                    Date now = new Date();
+                    SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String dateStr = s.format(now);
                     news.setAddTime(dateStr);
                     ArrayList<Favorite> addNews = new ArrayList<Favorite>();
                     addNews.add(news);
@@ -647,7 +648,7 @@ public class NewsDetailsActivity extends Activity {
                     NotificationUtil.showShortToast(postresult.getMsg(), NewsDetailsActivity.this);
             }
             // progressDialog.dismiss();
-            //loadLayout.setVisibility(View.VISIBLE);
+            // loadLayout.setVisibility(View.VISIBLE);
             super.onPostExecute(result);
         }
 

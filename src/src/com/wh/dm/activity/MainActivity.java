@@ -121,10 +121,12 @@ public class MainActivity extends Activity {
 
                     delImage.startAnimation(down);
                     lists.get(Configure.curentPage).remove(Configure.removeItem);
-                    data.remove(Configure.removeItem);
-                    cleanItems();
-                    ((DragGridAdapter) ((gridviews.get(Configure.curentPage)).getAdapter()))
-                            .notifyDataSetChanged();
+                    /*
+                     * data.remove(Configure.removeItem); cleanItems();
+                     * ((DragGridAdapter)
+                     * ((gridviews.get(Configure.curentPage)).getAdapter()))
+                     * .notifyDataSetChanged();
+                     */
 
                     break;
                 case REFRESH_GRID:
@@ -133,8 +135,6 @@ public class MainActivity extends Activity {
                     data.addAll(databaseImpl.getSubcribedMagazine());
                     initData();
                     cleanItems();
-                    ((DragGridAdapter) ((gridviews.get(Configure.curentPage)).getAdapter()))
-                            .notifyDataSetChanged();
                     break;
                 case UNSUBCRIBE:
                     if (unSubcribeTask != null) {
@@ -142,7 +142,8 @@ public class MainActivity extends Activity {
                         unSubcribeTask = null;
                     }
                     unSubcribeTask = new UnSubcribeTask();
-                    unSubcribeTask.execute(data.get(Configure.removeItem).getSid());
+                    unSubcribeTask.execute(lists.get(Configure.curentPage)
+                            .get(Configure.removeItem).getSid());
                     break;
                 case DownloadActivity.MSG_LOAD_ONE_IMAGE:
                     cur++;

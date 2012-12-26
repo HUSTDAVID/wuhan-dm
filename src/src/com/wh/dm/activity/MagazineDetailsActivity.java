@@ -57,6 +57,7 @@ public class MagazineDetailsActivity extends Activity {
     private final int MSG_REPLY = NewsDetailsActivity.MSG_REPLY; // 5
     private final int curStatus = 0;
     private int sid;
+    private int mid;
     private String titleUrl;
     private String source;
     private int time;
@@ -188,6 +189,7 @@ public class MagazineDetailsActivity extends Activity {
         setContentView(R.layout.activity_magazine_details);
         Intent intent = getIntent();
         sid = intent.getIntExtra("sid", 458);
+        mid = intent.getIntExtra("mid", 0);
         isLoad = intent.getBooleanExtra("is_load", false);
         titleUrl = intent.getStringExtra("titleImg");
         source = intent.getStringExtra("source");
@@ -353,7 +355,9 @@ public class MagazineDetailsActivity extends Activity {
 
                 String share = "";
                 String head = getResources().getString(R.string.share_magazine);
-                String info = newsTitle.getText().toString();
+                String info = "\"" + newsTitle.getText().toString() + "\" "
+                        + getString(R.string.share_url_main) + "id=" + sid + "&mid=" + mid
+                        + "&type=0";
                 ;
                 Intent intent = new Intent(MagazineDetailsActivity.this, ShareActivity.class);
                 share = head + info;

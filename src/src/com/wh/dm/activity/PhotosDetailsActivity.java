@@ -291,7 +291,7 @@ public class PhotosDetailsActivity extends Activity {
                 String share = "";
                 String head = getResources().getString(R.string.share_photo);
                 String info = "\"" + txtTitle.getText().toString() + "\""
-                        + getString(R.string.news_url_main) + aid;
+                        + getString(R.string.share_url_main) + "id=" + aid + "&mid=0&type=1";
                 share = head + info;
                 Intent intent = new Intent(PhotosDetailsActivity.this, ShareActivity.class);
                 intent.putExtra("share", share);
@@ -609,8 +609,8 @@ public class PhotosDetailsActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                //CollectPhotoActivity.isNewCollect = true;
-            	MessageActivity.refreshCollect = true;
+                // CollectPhotoActivity.isNewCollect = true;
+                MessageActivity.refreshCollect = true;
                 NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
                         PhotosDetailsActivity.this);
             } else {
