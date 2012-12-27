@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/white">
+    
+     <RelativeLayout
+        android:id="@+id/news_flipper"
+        android:layout_width="fill_parent"
+        android:layout_height="150dip"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+        <com.wh.dm.widget.HorizontalPager
+            android:id="@+id/horizontal_pager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" >
+
+            <ImageView
+                android:id="@+id/pic0"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/pic1"
+                android:layout_width="fill_parent"
+                android:layout_height="150dip"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/pic2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner" >
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/pic3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/banner" >
+            </ImageView>
+        </com.wh.dm.widget.HorizontalPager>
+
+        <TextView
+            android:id="@+id/txt_horizontal_title"
+            android:layout_width="fill_parent"
+            android:layout_height="30dip"
+            android:layout_alignBottom="@+id/horizontal_pager"
+            android:layout_toLeftOf="@+id/tabs"
+            android:background="@color/translucence_black"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_alignBottom="@+id/horizontal_pager"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="@+id/txt_horizontal_title"
+            android:background="@color/translucence_black"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="15dip" >
+
+            <RadioButton
+                android:id="@+id/radio_btn_0"
+                android:layout_width="@dimen/rbtn_width"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/rbtn_bg_xml"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/radio_btn_1"
+                android:layout_width="@dimen/rbtn_width"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/rbtn_bg_xml" />
+
+            <RadioButton
+                android:id="@+id/radio_btn_2"
+                android:layout_width="@dimen/rbtn_width"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/rbtn_bg_xml" />
+
+            <RadioButton
+                android:id="@+id/radio_btn_3"
+                android:layout_width="@dimen/rbtn_width"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/rbtn_bg_xml" />
+        </RadioGroup>
+    </RelativeLayout>
+
+</LinearLayout>

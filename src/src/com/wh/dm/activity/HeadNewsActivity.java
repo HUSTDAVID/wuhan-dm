@@ -10,6 +10,7 @@ import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.type.PicsNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
+import com.wh.dm.widget.BannerListView;
 import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.HorizontalPager;
 
@@ -19,7 +20,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -27,22 +30,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class HeadNewsActivity extends Activity implements OnClickListener {
+public class HeadNewsActivity extends Activity implements OnClickListener,
+        android.view.GestureDetector.OnGestureListener {
 
     private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
     private String[] titles;
     private int currentItem = 0;
     private View headerView;
     private LayoutInflater mInfalater;
-    private ListView lv;
+    private BannerListView lv;
     private View footer;
     private Button btnFoolter;
+    private GestureDetector gestureDetector;
 
     private final int SHOW_NEXT = 0011;
     private final boolean isRun = true;
@@ -123,21 +127,32 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
         MobclickAgent.onPause(this);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        this.gestureDetector.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+    }
+
     private void init() {
 
-        pic0 = (ImageView) findViewById(R.id.pic0);
-        pic0.setOnClickListener(this);
-        pic1 = (ImageView) findViewById(R.id.pic1);
-        pic1.setOnClickListener(this);
-        pic2 = (ImageView) findViewById(R.id.pic2);
-        pic2.setOnClickListener(this);
-        pic3 = (ImageView) findViewById(R.id.pic3);
-        pic3.setOnClickListener(this);
-        txtNews = (TextView) findViewById(R.id.txt_horizontal_title);
-
         mInfalater = getLayoutInflater();
+        headerView = (View) mInfalater.inflate(R.layout.banner, null);
+        gestureDetector = new GestureDetector(this);
+
+        pic0 = (ImageView) headerView.findViewById(R.id.pic0);
+        pic0.setOnClickListener(this);
+        pic1 = (ImageView) headerView.findViewById(R.id.pic1);
+        pic1.setOnClickListener(this);
+        pic2 = (ImageView) headerView.findViewById(R.id.pic2);
+        pic2.setOnClickListener(this);
+        pic3 = (ImageView) headerView.findViewById(R.id.pic3);
+        pic3.setOnClickListener(this);
+        txtNews = (TextView) headerView.findViewById(R.id.txt_horizontal_title);
+
         adapter = new HeadlineAdapter(this);
-        lv = (ListView) findViewById(R.id.list);
+        lv = (BannerListView) findViewById(R.id.list);
+        lv.setGestureDetector(gestureDetector);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
         btnFoolter = (Button) footer.findViewById(R.id.btn_news_footer);
         btnFoolter.setOnClickListener(new View.OnClickListener() {
@@ -149,10 +164,11 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                 handler.sendEmptyMessage(MSG_GET_HEADNEWS);
             }
         });
+        lv.addHeaderView(headerView);
         lv.addFooterView(footer);
-        mRadioGroup = (RadioGroup) findViewById(R.id.tabs);
+        mRadioGroup = (RadioGroup) headerView.findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
-        mPager = (HorizontalPager) findViewById(R.id.horizontal_pager);
+        mPager = (HorizontalPager) headerView.findViewById(R.id.horizontal_pager);
         mPager.setOnScreenSwitchListener(onScreenSwitchListener);
         mPager.setCurrentScreen(0, true);
 
@@ -235,7 +251,8 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                     UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN
                             + picsNews.get(3).getLitpic());
                 }
-                NotificationUtil.showShortToast("danteng", HeadNewsActivity.this);
+                // NotificationUtil.showShortToast("danteng",
+                // HeadNewsActivity.this);
 
             }
             super.onPostExecute(result);
@@ -263,10 +280,13 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long arg3) {
 
+                            int temp = position;
                             Intent intent = new Intent(HeadNewsActivity.this,
                                     NewsDetailsActivity.class);
-                            intent.putExtra("id", savedNews.get(position).getId());
-                            startActivity(intent);
+                            if (position > 0) {
+                                intent.putExtra("id", savedNews.get(position - 1).getId());
+                                startActivity(intent);
+                            }
                         }
 
                     });
@@ -319,9 +339,12 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
                     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long arg3) {
 
-                        Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                        intent.putExtra("id", adapter.getList().get(position).getId());
-                        startActivity(intent);
+                        if (position > 0) {
+                            Intent intent = new Intent(HeadNewsActivity.this,
+                                    NewsDetailsActivity.class);
+                            intent.putExtra("id", adapter.getList().get(position - 1).getId());
+                            startActivity(intent);
+                        }
 
                     }
 
@@ -461,6 +484,60 @@ public class HeadNewsActivity extends Activity implements OnClickListener {
             currentItem = 0;
             mPager.setCurrentScreen(currentItem, true);
         }
+    }
+
+    private void showLastView() {
+
+        currentItem = mPager.getCurrentScreen();
+        if (currentItem > 0) {
+            mPager.setCurrentScreen(--currentItem, true);
+        } else {
+            currentItem = 3;
+            mPager.setCurrentScreen(currentItem, true);
+        }
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+        // slide left
+        if (e1.getX() - e2.getX() > 120) {
+            showNextView();
+            return true;
+        } else if (e1.getX() - e2.getX() < -120) {
+            showLastView();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+
+        return false;
     }
 
 }
