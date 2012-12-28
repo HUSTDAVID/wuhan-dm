@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@color/bg_normal">
 
-    <ListView
+    <com.wh.dm.widget.PullToRefreshListView
         android:id="@+id/news_list_house"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -13,6 +13,6 @@
         android:drawSelectorOnTop="false"
         android:divider="@drawable/doubleline"
         android:dividerHeight="1.5dip" >
-    </ListView>
+    </com.wh.dm.widget.PullToRefreshListView>
 
 </LinearLayout>

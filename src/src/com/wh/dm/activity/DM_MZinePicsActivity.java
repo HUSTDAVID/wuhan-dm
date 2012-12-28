@@ -67,6 +67,10 @@ public class DM_MZinePicsActivity extends Activity {
                 getPicsTask = new GetPicsTask();
                 getPicsTask.execute(sid);
 
+            } else if (DownloadActivity.MSG_LOAD_ONE_IMAGE == msg.what) {
+                UrlImageViewHelper.isLoad = false;
+                layout_load.setVisibility(View.GONE);
+                ;
             }
         };
     };
@@ -182,10 +186,12 @@ public class DM_MZinePicsActivity extends Activity {
 
         for (PictureMagzine magazine : magazines) {
             View view = inflater.inflate(R.layout.magzine2_style, null);
-            ImageView img = (ImageView) view.findViewById(R.id.img);
-            UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN + magazine.getPic());
             views.add(view);
         }
+        UrlImageViewHelper.isLoad = true;
+        ImageView img = (ImageView) views.get(0).findViewById(R.id.img);
+        UrlImageViewHelper.sendFinishMsg2(img, WH_DMHttpApiV1.URL_DOMAIN
+                + magazines.get(0).getPic(), handler);
         v_Pager.setCurrentItem(0);
         totalPage = views.size();
         txtPage.setText(curPage + "/" + totalPage);
@@ -316,10 +322,9 @@ public class DM_MZinePicsActivity extends Activity {
             } else {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);
             }
-            if (!isLoad) {
-                // progressDialog.dismiss();
-                layout_load.setVisibility(View.GONE);
-            }
+            // if (!isLoad) {
+            // layout_load.setVisibility(View.GONE);
+            // }
             super.onPostExecute(result);
         }
     }
@@ -341,10 +346,15 @@ public class DM_MZinePicsActivity extends Activity {
         @Override
         public void onPageSelected(int arg0) {
 
+            UrlImageViewHelper.isLoad = true;
+            ImageView img = (ImageView) views.get(arg0).findViewById(R.id.img);
+            UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN
+                    + magazines.get(arg0).getPic());
             curPage = 1 + arg0;
             txtPage.setText(curPage + "/" + totalPage);
             txtDes.setText(magazines.get(arg0).getDescription());
             imgComment.setVisibility(View.GONE);
+            layout_load.setVisibility(View.VISIBLE);
 
         }
     }

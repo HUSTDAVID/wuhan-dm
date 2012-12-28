@@ -8,6 +8,7 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
+import com.wh.dm.widget.PullToRefreshListView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,12 +20,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class NewsOtherSortActivity extends Activity {
-    private ListView lv;
+    private PullToRefreshListView lv;
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
     private View footer;
@@ -60,7 +60,7 @@ public class NewsOtherSortActivity extends Activity {
         MobclickAgent.onError(this);
 
         id = getIntent().getIntExtra("id", 268);
-        lv = (ListView) findViewById(R.id.news_list_house);
+        lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);

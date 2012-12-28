@@ -117,6 +117,12 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
     public void onResume() {
 
         super.onResume();
+        if (wh_dmApp.isLoadImg && picsNews != null && picsNews.size() > 3) {
+            UrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + picsNews.get(0).getLitpic());
+            UrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + picsNews.get(1).getLitpic());
+            UrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + picsNews.get(2).getLitpic());
+            UrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + picsNews.get(3).getLitpic());
+        }
         MobclickAgent.onResume(this);
     }
 

@@ -829,4 +829,11 @@ public final class UrlImageViewHelper {
         handler = _handler;
         setUrlDrawable(imageView, url, defaultResource, callback);
     }
+
+    public static void sendFinishMsg2(final ImageView imageView, final String url, Handler _handler) {
+
+        handler = _handler;
+        setUrlDrawable(imageView, url);
+
+    }
 }

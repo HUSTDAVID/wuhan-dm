@@ -482,10 +482,6 @@ public class PhotosDetailsActivity extends Activity {
                     pageViews.add(view);
                 }
                 ImageView imageView = (ImageView) pageViews.get(0).findViewById(R.id.img_photos);
-                // UrlImageViewHelper.setUrlDrawable(imageView,
-                // WH_DMHttpApiV1.URL_DOMAIN
-                // + photosDetails.get(0).getPic(),
-                // R.drawable.photo_details_default, null);
                 UrlImageViewHelper.isLoad = true;
                 UrlImageViewHelper.sendFinishMsg(imageView, WH_DMHttpApiV1.URL_DOMAIN
                         + photosDetails.get(0).getPic(), R.drawable.photo_details_default, null,

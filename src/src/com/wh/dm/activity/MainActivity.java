@@ -180,6 +180,9 @@ public class MainActivity extends Activity {
         menu_init();
         data.addAll(databaseImpl.getSubcribedMagazine());
         totle = data.size();
+        if (totle == 3) {
+            layout_load.setVisibility(View.GONE);
+        }
         cur = 3;
         UrlImageViewHelper.isLoad = true;
         initData();
@@ -288,8 +291,8 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                System.exit(0);
-                // MainActivity.this.finish();
+                // System.exit(0);
+                MainActivity.this.finish();
 
             }
         });

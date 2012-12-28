@@ -10,6 +10,7 @@ import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
+import com.wh.dm.widget.PullToRefreshListView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,13 +24,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class CarNewsActivity extends Activity {
 
-    private ListView lv;
+    private PullToRefreshListView lv;
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
     private static int MSG_GET_CARNEWS = 0;
@@ -70,7 +70,7 @@ public class CarNewsActivity extends Activity {
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(CarNewsActivity.this);
         id = preference.getInt(Preferences.NEWS_TWO_ID, 212);
-        lv = (ListView) findViewById(R.id.news_list_house);
+        lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         adapter = new HeadlineAdapter(this);
         mInfalater = getLayoutInflater();
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
