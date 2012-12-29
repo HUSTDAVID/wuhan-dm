@@ -293,7 +293,7 @@ public class BannerListView extends ListView {
         int x1 = (int) event.getX();
         int y1 = (int) event.getY();
         int position = pointToPosition(x1, y1);
-        if (position == 0) {
+        if (position == 1) {
             gestureDetector.onTouchEvent(event);
             return true;
         }

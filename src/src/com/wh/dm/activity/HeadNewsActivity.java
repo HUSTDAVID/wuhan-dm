@@ -307,10 +307,10 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
                             int temp = position;
                             Intent intent = new Intent(HeadNewsActivity.this,
                                     NewsDetailsActivity.class);
-                            if (position > 0) {
-                                intent.putExtra("id", savedNews.get(position - 1).getId());
-                                startActivity(intent);
-                            }
+
+                            intent.putExtra("id", savedNews.get(position).getId());
+                            startActivity(intent);
+
                         }
 
                     });
@@ -363,12 +363,9 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
                     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long arg3) {
 
-                        if (position > 0) {
-                            Intent intent = new Intent(HeadNewsActivity.this,
-                                    NewsDetailsActivity.class);
-                            intent.putExtra("id", adapter.getList().get(position - 1).getId());
-                            startActivity(intent);
-                        }
+                        Intent intent = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                        intent.putExtra("id", adapter.getList().get(position).getId());
+                        startActivity(intent);
 
                     }
 
