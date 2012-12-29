@@ -11,6 +11,17 @@ public class ArticleMagzine {
     private String source;
     private int sid;
     private String body;
+    private boolean ispic;
+
+    public boolean isIspic() {
+
+        return ispic;
+    }
+
+    public void setIspic(boolean ispic) {
+
+        this.ispic = ispic;
+    }
 
     public int getSid() {
 

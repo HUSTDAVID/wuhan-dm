@@ -11,6 +11,7 @@ import com.wh.dm.type.PicsNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 import com.wh.dm.widget.BannerListView;
+import com.wh.dm.widget.BannerListView.OnRefreshListener;
 import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.HorizontalPager;
 
@@ -172,6 +173,23 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
         });
         lv.addHeaderView(headerView);
         lv.addFooterView(footer);
+        lv.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                lv.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        curPage = 1;
+                        handler.sendEmptyMessage(MSG_GET_HEADNEWS);
+                        lv.onRefreshComplete();
+                    }
+                }, 1000);
+            }
+        });
         mRadioGroup = (RadioGroup) headerView.findViewById(R.id.tabs);
         mRadioGroup.setOnCheckedChangeListener(onCheckedChangedListener);
         mPager = (HorizontalPager) headerView.findViewById(R.id.horizontal_pager);

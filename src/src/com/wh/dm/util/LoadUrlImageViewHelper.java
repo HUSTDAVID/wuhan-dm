@@ -477,7 +477,6 @@ public class LoadUrlImageViewHelper {
             if (imageView != null) {
                 imageView.setImageDrawable(defaultDrawable);
             }
-            // TODO
             if (isLoad && handler != null) {
                 handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
             }
@@ -503,6 +502,10 @@ public class LoadUrlImageViewHelper {
             drawable = new ZombieDrawable(url, zd);
         } else {
             drawable = mLiveCache.get(url);
+            // TODO
+            if (drawable != null && isLoad && handler != null) {
+                handler.sendEmptyMessage(DownloadActivity.MSG_LOAD_ONE_IMAGE);
+            }
         }
 
         if (drawable != null) {
@@ -512,7 +515,6 @@ public class LoadUrlImageViewHelper {
             }
             if (callback != null) {
                 callback.onLoaded(imageView, drawable, url, true);
-
             }
             return;
         }

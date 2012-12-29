@@ -354,7 +354,9 @@ public class DM_MZinePicsActivity extends Activity {
             txtPage.setText(curPage + "/" + totalPage);
             txtDes.setText(magazines.get(arg0).getDescription());
             imgComment.setVisibility(View.GONE);
-            layout_load.setVisibility(View.VISIBLE);
+            if (!isLoad) {
+                layout_load.setVisibility(View.VISIBLE);
+            }
 
         }
     }

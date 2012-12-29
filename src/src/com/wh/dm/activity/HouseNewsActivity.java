@@ -10,6 +10,8 @@ import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
+import com.wh.dm.widget.PullToRefreshListView;
+import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,13 +27,12 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class HouseNewsActivity extends Activity {
 
-    private ListView lv;
+    private PullToRefreshListView lv;
     ArrayList<PicWithTxtNews> savedNews = null;
     private HeadlineAdapter adapter;
 
@@ -74,7 +75,7 @@ public class HouseNewsActivity extends Activity {
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(HouseNewsActivity.this);
         id = preference.getInt(Preferences.NEWS_ONE_ID, 211);
-        lv = (ListView) findViewById(R.id.news_list_house);
+        lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
         footer = mInfalater.inflate(R.layout.news_list_footer, null);
@@ -91,6 +92,24 @@ public class HouseNewsActivity extends Activity {
         lv.addFooterView(footer);
         lv.setCacheColorHint(Color.TRANSPARENT);
         lv.requestFocus(0);
+
+        lv.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                lv.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        curPage = 1;
+                        handler.sendEmptyMessage(MSG_GET_HOUSENEWS);
+                        lv.onRefreshComplete();
+                    }
+                }, 1000);
+            }
+        });
 
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();

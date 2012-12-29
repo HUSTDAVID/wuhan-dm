@@ -319,6 +319,17 @@ public class DM_MZineArticleActivity extends Activity {
         maps.add(map5);
         maps.add(map6);
 
+        for (int i = low, j = 0; i <= up; i++, j++) {
+            maps.get(j).get("title").setText(articles.get(i).getTitle());
+            if (j != 5) {
+                maps.get(j)
+                        .get("time")
+                        .setText(
+                                TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
+                                        DM_MZineArticleActivity.this));
+                maps.get(j).get("source").setText(articles.get(i).getSource());
+            }
+        }
         if (up <= articles.size()) {
             if (!wh_dmApp.isLoadImg || articles.get(up).getLitpic().equals("")
                     || articles.get(up).getLitpic() == null) {
@@ -329,17 +340,6 @@ public class DM_MZineArticleActivity extends Activity {
             } else {
                 UrlImageViewHelper.setUrlDrawable(img_magazine_1, URL_DOMAIN
                         + articles.get(up).getLitpic());
-            }
-            for (int i = low, j = 0; i <= up; i++, j++) {
-                maps.get(j).get("title").setText(articles.get(i).getTitle());
-                if (j != 5) {
-                    maps.get(j)
-                            .get("time")
-                            .setText(
-                                    TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
-                                            DM_MZineArticleActivity.this));
-                    maps.get(j).get("source").setText(articles.get(i).getSource());
-                }
             }
 
         }
@@ -502,6 +502,17 @@ public class DM_MZineArticleActivity extends Activity {
         maps.add(map5);
         maps.add(map6);
 
+        for (int i = low, j = 0; i <= up; i++, j++) {
+            maps.get(j).get("title").setText(articles.get(i).getTitle());
+            if (j != 5) {
+                maps.get(j)
+                        .get("time")
+                        .setText(
+                                TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
+                                        DM_MZineArticleActivity.this));
+                maps.get(j).get("source").setText(articles.get(i).getSource());
+            }
+        }
         if (up <= articles.size()) {
             if (!wh_dmApp.isLoadImg || articles.get(up).getLitpic().equals("")
                     || articles.get(up).getLitpic() == null) {
@@ -512,17 +523,6 @@ public class DM_MZineArticleActivity extends Activity {
             } else {
                 UrlImageViewHelper.setUrlDrawable(img_magazine_2, URL_DOMAIN
                         + articles.get(up).getLitpic());
-            }
-            for (int i = low, j = 0; i <= up; i++, j++) {
-                maps.get(j).get("title").setText(articles.get(i).getTitle());
-                if (j != 5) {
-                    maps.get(j)
-                            .get("time")
-                            .setText(
-                                    TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
-                                            DM_MZineArticleActivity.this));
-                    maps.get(j).get("source").setText(articles.get(i).getSource());
-                }
             }
 
         }
@@ -684,6 +684,17 @@ public class DM_MZineArticleActivity extends Activity {
         txtViews.add(view3_txtTile5);
         txtViews.add(view3_txtTile6);
 
+        for (int i = low, j = 0; i <= up; i++, j++) {
+            maps.get(j).get("title").setText(articles.get(i).getTitle());
+            if (j != 5) {
+                maps.get(j)
+                        .get("time")
+                        .setText(
+                                TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
+                                        DM_MZineArticleActivity.this));
+                maps.get(j).get("source").setText(articles.get(i).getSource());
+            }
+        }
         if (up <= articles.size()) {
             if (!wh_dmApp.isLoadImg || articles.get(up).getLitpic().equals("")
                     || articles.get(up).getLitpic() == null) {
@@ -694,17 +705,6 @@ public class DM_MZineArticleActivity extends Activity {
             } else {
                 UrlImageViewHelper.setUrlDrawable(img_magazine_3, URL_DOMAIN
                         + articles.get(up).getLitpic());
-            }
-            for (int i = low, j = 0; i <= up; i++, j++) {
-                maps.get(j).get("title").setText(articles.get(i).getTitle());
-                if (j != 5) {
-                    maps.get(j)
-                            .get("time")
-                            .setText(
-                                    TimeUtil.getTimeInterval(articles.get(i).getPubdate(),
-                                            DM_MZineArticleActivity.this));
-                    maps.get(j).get("source").setText(articles.get(i).getSource());
-                }
             }
 
         }
@@ -876,8 +876,7 @@ public class DM_MZineArticleActivity extends Activity {
 
         ArticleMagzine article = new ArticleMagzine();
         for (int i = low; i <= up; i++) {
-            if (articles.get(i).getLitpic() != null && articles.get(i).getLitpic().length() > 0
-                    && i != up) {
+            if (articles.get(i).isIspic() && i != up) {
                 for (int j = i; j < up; j++) {
                     article = articles.get(j);
                     articles.set(j, articles.get(j + 1));

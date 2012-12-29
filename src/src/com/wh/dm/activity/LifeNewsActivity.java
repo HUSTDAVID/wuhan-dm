@@ -11,6 +11,7 @@ import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.PullToRefreshListView;
+import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class LifeNewsActivity extends Activity {
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
     private boolean isFirstLoad = true;
+
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -87,6 +89,23 @@ public class LifeNewsActivity extends Activity {
             }
         });
         lv.addFooterView(footer);
+        lv.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                lv.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        curPage = 1;
+                        handler.sendEmptyMessage(MSG_GET_LIFENEWS);
+                        lv.onRefreshComplete();
+                    }
+                }, 1000);
+            }
+        });
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
@@ -133,6 +152,7 @@ public class LifeNewsActivity extends Activity {
                                     NewsDetailsActivity.class);
                             intent.putExtra("id", savedNews.get(position).getId());
                             startActivity(intent);
+
                         }
 
                     });

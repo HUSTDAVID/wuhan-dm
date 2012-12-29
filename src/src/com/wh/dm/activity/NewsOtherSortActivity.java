@@ -9,6 +9,7 @@ import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
 import com.wh.dm.widget.PullToRefreshListView;
+import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -75,6 +76,23 @@ public class NewsOtherSortActivity extends Activity {
             }
         });
         lv.addFooterView(footer);
+        lv.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                lv.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        curPage = 1;
+                        handler.sendEmptyMessage(MSG_GET_TRAVELNEWS);
+                        lv.onRefreshComplete();
+                    }
+                }, 1000);
+            }
+        });
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         handler.sendEmptyMessage(MSG_GET_TRAVELNEWS);
