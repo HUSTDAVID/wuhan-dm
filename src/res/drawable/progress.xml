@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"> 
      
-    <!-- 背景图 -->  
-    <item android:id="@+android:id/background" 
-        android:drawable="@color/red" />  
-        
-    <!--全部能量图  -->  
-    <item android:id="@+android:id/SecondaryProgress"  
-        android:drawable="@color/black" /> 
-         
-    <!-- 进和能量图 -->  
-    <item android:id="@+android:id/progress" 
-        android:drawable="@color/blue" />  
+   
+    <item android:id="@+android:id/background">
+        <shape >
+            <corners android:radius="6.0dip"/>
+            <gradient 
+                android:startColor="#b0b0b0"
+                android:centerColor="#d9d9d9"
+                android:endColor="#d9d9d9"
+                android:angle="270.0"
+                android:centerX="0.5"/>
+        </shape>
+    </item>
+               
+   
+    <item android:id="@+android:id/progress"> 
+        <shape >
+            <corners android:radius="6.0dip"/>
+            <gradient 
+                android:startColor="#ffffff"
+                android:centerColor="#d9d9d9"
+                android:endColor="#bcbcbc"
+                android:angle="270.0"
+                android:centerX="0.5"/>
+        </shape>
+    </item> 
 </layer-list>  

@@ -45,7 +45,13 @@ public class SplashActivity extends Activity {
             String tmDevice = "" + tm.getDeviceId();
             Preferences.firstLaunch(this, tmDevice);
         }
-
+        /*
+         * boolean update_db =
+         * preference.getBoolean(Preferences.UPDATE_DATABASE, true); if
+         * (update_db) { DatabaseImpl databaseImpl = ((WH_DMApp)
+         * getApplication()).getDatabase(); databaseImpl.deleteMagazineBody();
+         * databaseImpl.deleteLoadInfo(); Preferences.setUpdateDB(this); }
+         */
         GetLoadPicTask getLoadPictask = new GetLoadPicTask();
         getLoadPictask.execute();
         new Handler().postDelayed(new Runnable() {

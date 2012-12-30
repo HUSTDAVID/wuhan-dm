@@ -178,7 +178,7 @@ public class DatabaseImpl implements Database {
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_FAVORITE
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, fid INTEGER, nid INTEGER, type INTEGER, title VARCHAR, addtime VARCHAR)");
-        
+
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGAZINE_PHOTOGRAPH
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
@@ -192,7 +192,7 @@ public class DatabaseImpl implements Database {
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGEZINE_BODY
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, sid INTEGER , author VARCHAR, writer VARCHAR,"
-                + "no INTEGER, id INTEGER UNIQUE, title VARCHAR, source VARCHAR, litpic VARCHAR, pubdate VARCHAR, body VARCHAR)");
+                + "no INTEGER, id INTEGER UNIQUE, title VARCHAR, source VARCHAR, litpic VARCHAR, pubdate VARCHAR, body VARCHAR, ispic INTEGER)");
         // load info
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_LOAD_INFO
@@ -1416,7 +1416,6 @@ public class DatabaseImpl implements Database {
         }
     }
 
-   
     @Override
     public ArrayList<Magazine> getSubcribedMagazine() {
 

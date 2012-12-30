@@ -875,8 +875,11 @@ public class DM_MZineArticleActivity extends Activity {
     private ArrayList<ArticleMagzine> modifiData(ArrayList<ArticleMagzine> articles, int low, int up) {
 
         ArticleMagzine article = new ArticleMagzine();
+
         for (int i = low; i <= up; i++) {
-            if (articles.get(i).isIspic() && i != up) {
+            // if (articles.get(i).isIspic() && i != up) {
+            if (articles.get(i).getLitpic() != null && articles.get(i).getLitpic().length() > 0
+                    && i != up) {
                 for (int j = i; j < up; j++) {
                     article = articles.get(j);
                     articles.set(j, articles.get(j + 1));
@@ -886,8 +889,8 @@ public class DM_MZineArticleActivity extends Activity {
                 break;
             }
         }
+
         article = articles.get(up);
         return articles;
     }
-
 }

@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class DownloadAdapter extends BaseAdapter {
             viewHolder.txtDM = (TextView) convertView.findViewById(R.id.txt_sub_manage_title);
             viewHolder.txtAddition = (TextView) convertView.findViewById(R.id.txt_download_ad);
             viewHolder.btnStatus = (Button) convertView.findViewById(R.id.btn_download_status);
-            viewHolder.pbStatus = (ProgressBar) convertView.findViewById(R.id.pbar_download);
+            viewHolder.pbStatus = (SeekBar) convertView.findViewById(R.id.pbar_download);
             viewHolder.pbStatus.setProgress(dms.get(positionValue).getPro());
 
             convertView.setTag(viewHolder);
@@ -148,7 +148,8 @@ public class DownloadAdapter extends BaseAdapter {
         private TextView txtDM;
         private TextView txtAddition;
         private Button btnStatus;
-        private ProgressBar pbStatus;
+        // private ProgressBar pbStatus;
+        private SeekBar pbStatus;
 
     }
 

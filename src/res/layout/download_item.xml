@@ -69,20 +69,19 @@
         android:text="查看DM"
         android:textColor="#5b5b5b" />
     
-    <ProgressBar
-        android:id="@+id/pbar_download"
-        style="?android:attr/progressBarStyleHorizontal"
+    <SeekBar
+        android:id="@+id/pbar_download"     
         android:layout_width="100dip"
-        android:layout_height="10dip"
+        android:layout_height="11dip"
         android:layout_alignLeft="@+id/txt_download_ad"
         android:layout_below="@+id/txt_sub_manage_title"
         android:layout_marginRight="15dip"
         android:layout_marginTop="8dip"
-        android:layout_toLeftOf="@+id/btn_download_status"
-        android:background="@color/blue"
+        android:layout_toLeftOf="@+id/btn_download_status"        
         android:max="100"
-        android:progress="50"
-        
+        android:progress="50" 
+        android:progressDrawable="@drawable/music_seekbar_bg"
+        android:thumb="@null"
         android:visibility="visible" />
 
 </RelativeLayout>
