@@ -2,8 +2,10 @@
 <RelativeLayout android:id="@+id/relate"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/index_bg" xmlns:android="http://schemas.android.com/apk/res/android">
-
+    android:background="@drawable/index_bg" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    
     <com.wh.dm.widget.ScrollLayout
         android:id="@+id/views"
         android:layout_width="fill_parent"
@@ -91,41 +93,55 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/del_check"
         android:visibility="gone" />
-    
-    <LinearLayout
-        android:id="@+id/linearlayout_quit" 
+ <RelativeLayout
+     android:id="@+id/linearlayout_quit" 
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:background="@color/index_gray"
+     android:visibility="gone">   
+    <RelativeLayout
+         
         android:layout_width="fill_parent"
         android:layout_height="155dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:background="@drawable/quit_bg_drawable"
-        android:visibility="gone">
+        >
         
-        <TextView 
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/txt_quit_alert" 
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:textColor="@color/white"
-            android:layout_marginLeft="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/rel_quit_btn"
             android:gravity="center_vertical"
             android:textSize="20sp"
             android:text="@string/alert"/>
         
         <View
+            android:id="@+id/divider1"
             android:layout_width="fill_parent"
             android:layout_height="1.5dp"
+            android:layout_below="@+id/txt_quit_alert"
             android:background="@drawable/quit_line_drawable"/>
         
-        <TextView 
+        <TextView
+            android:id="@+id/txt_quit" 
+            android:layout_below="@+id/divider1"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:textColor="@color/white"
-            android:layout_marginLeft="40dp"
+            android:layout_alignLeft="@+id/rel_quit_btn"
             android:gravity="center_vertical"
             android:textSize="16sp"
             android:text="@string/is_quit"/>
         
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <RelativeLayout
+            android:id="@+id/rel_quit_btn"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/txt_quit"
+            android:layout_width="250dp"
             android:layout_height="55dp"
             android:orientation="horizontal"
             android:paddingBottom="15dp">
@@ -135,10 +151,18 @@
                 android:layout_width="110dip"
                 android:layout_height="40dp"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:layout_marginLeft="40dp"
+                android:textSize="20sp"  
+                android:layout_marginRight="10dp"              
+                android:layout_toLeftOf="@+id/divider"
                 android:background="@drawable/quit_btn_drawable"
                 android:text="@string/cacel"/>
+            
+            <View 
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
             
             <Button 
                 android:id="@+id/btn_quit_ok"
@@ -146,13 +170,15 @@
                 android:layout_height="40dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/divider"
                 android:background="@drawable/quit_btn_drawable"
                 android:text="@string/ok"/>
             
             
-        </LinearLayout>>
+        </RelativeLayout>
         
-    </LinearLayout>
-
+    </RelativeLayout>
+    
+</RelativeLayout>
 </RelativeLayout>

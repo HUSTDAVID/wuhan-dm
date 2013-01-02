@@ -1424,7 +1424,7 @@ public class DatabaseImpl implements Database {
         MagazineBuilder builder = new MagazineBuilder();
         Cursor query = db.query(TABLE_SUBCRIBE, null, null, null, null, null, null);
         try {
-            if (query != null) {
+            if (query != null && query.getCount() > 0) {
                 query.moveToFirst();
                 while (!query.isAfterLast()) {
                     magazines.add(builder.build(query));

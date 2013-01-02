@@ -62,7 +62,7 @@ public class SplashActivity extends Activity {
                 startActivity(intent);
                 SplashActivity.this.finish();
             }
-        }, 1200);
+        }, 1500);
         // push need to login first
         // startService(new Intent(SplashActivity.this, PushService.class));
     }

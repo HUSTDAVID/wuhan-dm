@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 
@@ -35,6 +37,28 @@ public class WH_DMApp extends Application {
     public static final String INTENT_ACTION_LOG_SUCCESS = "com.wh.dm.intent.action.LOG_SUCCESS";
     public static final String INTENT_ACTION_LOG_FAIL = "com.wh.dm.intent.action.LOG_FAIL";
     public static final String INTENT_ACTION_SUBCRIBE_CHANGE = "com.wh.dm.intent.action.change";
+
+    private static final int MSG_GET_MAGAZINE = 100;
+    private GetSubcribedMagazine getMagazine;
+
+    private final Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (MSG_GET_MAGAZINE == msg.what) {
+                if (getMagazine != null) {
+                    getMagazine.cancel(true);
+                    getMagazine = null;
+                }
+                getMagazine = new GetSubcribedMagazine();
+                getMagazine.execute();
+            }
+
+            super.handleMessage(msg);
+        }
+
+    };
 
     @Override
     public void onCreate() {
@@ -115,7 +139,6 @@ public class WH_DMApp extends Application {
         LoginTask loginTask = new LoginTask();
         ArrayList<String> users = getUserInfo();
         if (users.get(0) == null || users.get(1) == null) {
-            // TODO
             LoginByIdTask loginByIdTask = new LoginByIdTask();
             loginByIdTask.execute(Preferences.getMachineId(this));
         } else {
@@ -179,6 +202,9 @@ public class WH_DMApp extends Application {
                 Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
                 sendBroadcast(intent);
                 startService(new Intent(WH_DMApp.this, PushService.class));
+                Message message = new Message();
+                message.what = MSG_GET_MAGAZINE;
+                handler.sendMessage(message);
             } else {
 
             }
@@ -210,6 +236,38 @@ public class WH_DMApp extends Application {
                 Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
                 sendBroadcast(intent);
                 Preferences.getDefalutMagazine(WH_DMApp.this);
+            }
+            super.onPostExecute(result);
+        }
+
+    }
+
+    // TODO
+    private class GetSubcribedMagazine extends AsyncTask<Void, Void, ArrayList<Magazine>> {
+        Exception reason = null;
+
+        @Override
+        protected ArrayList<Magazine> doInBackground(Void... params) {
+
+            ArrayList<Magazine> magazines = null;
+            try {
+                magazines = wh_dm.getSubcribedMagazines();
+                return magazines;
+            } catch (Exception e) {
+                reason = e;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Magazine> result) {
+
+            if (result != null) {
+                databaseImpl.deletePostMessage();
+                Preferences.setPostMessage(WH_DMApp.this, 0);
+                startService(new Intent(WH_DMApp.this, PushService.class));
+                databaseImpl.addMagazines(result);
+                sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
             }
             super.onPostExecute(result);
         }

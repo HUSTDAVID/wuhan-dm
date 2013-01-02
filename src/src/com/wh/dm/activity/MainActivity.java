@@ -26,8 +26,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -36,11 +38,12 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnTouchListener {
 
     /** GridView. */
     private LinearLayout linear;
@@ -57,9 +60,10 @@ public class MainActivity extends Activity {
     private ImageButton btn_set;
     private LinearLayout layout_load;
     private ImageView load_close;
+    private RelativeLayout relateBg;
 
     // quit
-    private LinearLayout linearLayoutQuit;
+    private RelativeLayout relativeLayoutQuit;
     private Button btnQuitCacel;
     private Button btnQuitOk;
     // load
@@ -147,6 +151,7 @@ public class MainActivity extends Activity {
                     break;
                 case DownloadActivity.MSG_LOAD_ONE_IMAGE:
                     cur++;
+                    totle = data.size();
                     if (cur == totle) {
                         UrlImageViewHelper.isLoad = false;
                         layout_load.setVisibility(View.GONE);
@@ -180,9 +185,6 @@ public class MainActivity extends Activity {
         menu_init();
         data.addAll(databaseImpl.getSubcribedMagazine());
         totle = data.size();
-        if (totle == 3) {
-            layout_load.setVisibility(View.GONE);
-        }
         cur = 3;
         UrlImageViewHelper.isLoad = true;
         initData();
@@ -219,10 +221,10 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        if (linearLayoutQuit.getVisibility() == View.GONE) {
-            linearLayoutQuit.setVisibility(View.VISIBLE);
+        if (relativeLayoutQuit.getVisibility() == View.GONE) {
+            relativeLayoutQuit.setVisibility(View.VISIBLE);
         } else {
-            linearLayoutQuit.setVisibility(View.GONE);
+            relativeLayoutQuit.setVisibility(View.GONE);
         }
 
     }
@@ -283,7 +285,8 @@ public class MainActivity extends Activity {
         });
 
         // quit
-        linearLayoutQuit = (LinearLayout) findViewById(R.id.linearlayout_quit);
+        relativeLayoutQuit = (RelativeLayout) findViewById(R.id.linearlayout_quit);
+        relativeLayoutQuit.setOnTouchListener(this);
         btnQuitCacel = (Button) findViewById(R.id.btn_quit_cacel);
         btnQuitOk = (Button) findViewById(R.id.btn_quit_ok);
         btnQuitOk.setOnClickListener(new OnClickListener() {
@@ -302,13 +305,14 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                linearLayoutQuit.setVisibility(View.GONE);
+                relativeLayoutQuit.setVisibility(View.GONE);
 
             }
         });
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         scrollLayout = (ScrollLayout) findViewById(R.id.views);
+        scrollLayout.setOnTouchListener(this);
         delImage = (ImageView) findViewById(R.id.dels);
         txt_page = (TextView) findViewById(R.id.tv_page);
         txt_page.setText("1");
@@ -606,6 +610,16 @@ public class MainActivity extends Activity {
             super.onPostExecute(result);
         }
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        if (relativeLayoutQuit.getVisibility() == View.VISIBLE) {
+            relativeLayoutQuit.setVisibility(View.GONE);
+            return true;
+        }
+        return false;
     }
 
 }

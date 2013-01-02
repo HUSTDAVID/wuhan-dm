@@ -322,9 +322,7 @@ public class DM_MZinePicsActivity extends Activity {
             } else {
                 NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);
             }
-            // if (!isLoad) {
-            // layout_load.setVisibility(View.GONE);
-            // }
+
             super.onPostExecute(result);
         }
     }
@@ -338,8 +336,6 @@ public class DM_MZinePicsActivity extends Activity {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-            // TODO Auto-generated method stub
 
         }
 

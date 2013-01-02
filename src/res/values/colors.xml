@@ -13,6 +13,7 @@
     <color name="black">#000000</color>
     <color name="divider">#cdcdcd</color>
     <color name="translucence_black">#70000000</color>
+    <color name="index_gray">#40000000</color>
     <color name="floor_line">#d9d7d7</color>
 
 
