@@ -26,7 +26,6 @@ public class WH_DMApp extends Application {
 
     private WH_DMApi wh_dm;
     private DatabaseImpl databaseImpl;
-    // private ArrayList<PostMessage> messages;
     private SharedPreferences mPrefs;
     public static boolean isLogin = false;
     public static boolean isConnected = true;
@@ -65,6 +64,7 @@ public class WH_DMApp extends Application {
 
         super.onCreate();
         loadWH_DM();
+        databaseImpl = new DatabaseImpl(WH_DMApp.this);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
         login();
@@ -169,6 +169,9 @@ public class WH_DMApp extends Application {
                 sendBroadcast(intent);
                 startService(new Intent(WH_DMApp.this, PushService.class));
                 isLogin = true;
+                Message message = new Message();
+                message.what = MSG_GET_MAGAZINE;
+                handler.sendMessage(message);
             } else {
                 Intent intent = new Intent(INTENT_ACTION_LOG_FAIL);
                 sendBroadcast(intent);
@@ -231,7 +234,6 @@ public class WH_DMApp extends Application {
         protected void onPostExecute(ArrayList<Magazine> result) {
 
             if (result != null) {
-                DatabaseImpl databaseImpl = new DatabaseImpl(WH_DMApp.this);
                 databaseImpl.addMagazines(result);
                 Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
                 sendBroadcast(intent);

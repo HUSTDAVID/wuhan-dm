@@ -477,15 +477,14 @@ public class BannerUrlImageViewHelper {
 
         final int tw;
         final int th;
-        if (mMetrics == null)
-            prepareResources(context);
+        prepareResources(context);
         tw = mMetrics.widthPixels;
         th = mMetrics.heightPixels;
 
         if (mDeadCache == null) {
             mDeadCache = new UrlLruCache(getHeapSize(context) / 8);
         }
-        Drawable drawable;
+        Drawable drawable = null;
         final BitmapDrawable zd = mDeadCache.remove(url);
         if (zd != null) {
             // this drawable was resurrected, it should not be in the live cache
@@ -493,7 +492,6 @@ public class BannerUrlImageViewHelper {
             Assert.assertTrue(!mAllCache.contains(zd));
             drawable = new ZombieDrawable(url, zd);
         } else {
-            drawable = mLiveCache.get(url);
 
         }
 
