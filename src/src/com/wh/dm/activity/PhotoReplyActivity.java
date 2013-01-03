@@ -17,7 +17,6 @@ import com.wh.dm.widget.NewsReplyFloorAdapter;
 import com.wh.dm.widget.NewsReplyMoreAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -54,7 +53,7 @@ public class PhotoReplyActivity extends Activity {
     private RelativeLayout bottomLayout2;
     private ListView lv;
     private View footer;
-    private ProgressDialog progressDialog;
+    private LinearLayout loadLayout;
     private NewsReplyMoreAdapter adapter;
     private NewsReplyFloorAdapter floorAdapter;
     private GetCommentTask getCommentTask = null;
@@ -179,9 +178,8 @@ public class PhotoReplyActivity extends Activity {
 
     private void initViews() {
 
+        loadLayout = (LinearLayout) findViewById(R.id.reply_load);
         // add data for listview
-        progressDialog = new ProgressDialog(PhotoReplyActivity.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         lv = (ListView) findViewById(R.id.lv_news_reply);
         adapter = new NewsReplyMoreAdapter(this);
         // floorAdapter = new NewsReplyFloorAdapter(this);
@@ -299,7 +297,7 @@ public class PhotoReplyActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -364,7 +362,7 @@ public class PhotoReplyActivity extends Activity {
                     lv.setVisibility(View.INVISIBLE);
                 }
             }
-            progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
 
         }
@@ -451,7 +449,7 @@ public class PhotoReplyActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -480,7 +478,7 @@ public class PhotoReplyActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         PhotoReplyActivity.this);
             }
-            progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 

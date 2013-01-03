@@ -120,10 +120,14 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
 
         super.onResume();
         if (wh_dmApp.isLoadImg && picsNews != null && picsNews.size() > 3) {
-            BannerUrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + picsNews.get(0).getLitpic());
-            BannerUrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + picsNews.get(1).getLitpic());
-            BannerUrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + picsNews.get(2).getLitpic());
-            BannerUrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + picsNews.get(3).getLitpic());
+            BannerUrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN + picsNews.get(0).getLitpic(),
+                    R.drawable.banner, null);
+            BannerUrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN + picsNews.get(1).getLitpic(),
+                    R.drawable.banner, null);
+            BannerUrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN + picsNews.get(2).getLitpic(),
+                    R.drawable.banner, null);
+            BannerUrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN + picsNews.get(3).getLitpic(),
+                    R.drawable.banner, null);
         }
         MobclickAgent.onResume(this);
     }
@@ -269,13 +273,13 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
                 // picsNews = result;
                 if (wh_dmApp.isLoadImg) {
                     BannerUrlImageViewHelper.setUrlDrawable(pic0, URL_DOMAIN
-                            + picsNews.get(0).getLitpic());
+                            + picsNews.get(0).getLitpic(), R.drawable.banner, null);
                     BannerUrlImageViewHelper.setUrlDrawable(pic1, URL_DOMAIN
-                            + picsNews.get(1).getLitpic());
+                            + picsNews.get(1).getLitpic(), R.drawable.banner, null);
                     BannerUrlImageViewHelper.setUrlDrawable(pic2, URL_DOMAIN
-                            + picsNews.get(2).getLitpic());
+                            + picsNews.get(2).getLitpic(), R.drawable.banner, null);
                     BannerUrlImageViewHelper.setUrlDrawable(pic3, URL_DOMAIN
-                            + picsNews.get(3).getLitpic());
+                            + picsNews.get(3).getLitpic(), R.drawable.banner, null);
                 }
 
             }

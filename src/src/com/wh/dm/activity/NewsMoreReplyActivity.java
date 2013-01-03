@@ -54,7 +54,6 @@ public class NewsMoreReplyActivity extends Activity {
     private RelativeLayout bottomLayout2;
     private ListView lv;
     private View footer;
-    // private ProgressDialog progressDialog;
     private LinearLayout loadLayout;
     private NewsReplyMoreAdapter adapter;
     private NewsReplyFloorAdapter floorAdapter;
@@ -291,7 +290,6 @@ public class NewsMoreReplyActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // progressDialog.show();
             loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
@@ -358,7 +356,6 @@ public class NewsMoreReplyActivity extends Activity {
                     lv.setVisibility(View.INVISIBLE);
                 }
             }
-            // progressDialog.dismiss();
             loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
 
@@ -447,7 +444,6 @@ public class NewsMoreReplyActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // progressDialog.show();
             loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
@@ -478,7 +474,6 @@ public class NewsMoreReplyActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         NewsMoreReplyActivity.this);
             }
-            // progressDialog.dismiss();
             loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
