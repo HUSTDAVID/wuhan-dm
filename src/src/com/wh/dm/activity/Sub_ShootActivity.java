@@ -254,9 +254,7 @@ public class Sub_ShootActivity extends Activity {
 
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.badconnect),
-                                Sub_ShootActivity.this);
+
                     } else {
                         NotificationUtil.showShortToast(
                                 getResources().getString(R.string.check_network),

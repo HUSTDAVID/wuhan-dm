@@ -293,9 +293,16 @@ public class MagazineDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                String share = "";
+                String head = getResources().getString(R.string.share_magazine);
+                String info = "\"" + newsTitle.getText().toString() + "\" "
+                        + getString(R.string.share_url_main) + "id=" + sid + "&mid=" + mid
+                        + "&type=0";
+                share = head + info;
                 Intent intent = new Intent(MagazineDetailsActivity.this,
                         NewsMoreReplyActivity.class);
                 intent.putExtra("id", sid);
+                intent.putExtra("share", share);
                 startActivity(intent);
 
             }
@@ -363,8 +370,6 @@ public class MagazineDetailsActivity extends Activity {
                 share = head + info;
                 intent.putExtra("share", share);
                 startActivity(intent);
-                // UMSnsService.share(MagazineDetailsActivity.this, "˵Щʲô...",
-                // null);
             }
         });
         txtReplynum = (TextView) findViewById(R.id.txt_total_reply);
@@ -473,8 +478,7 @@ public class MagazineDetailsActivity extends Activity {
                 }
             } else {
                 if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
-                            MagazineDetailsActivity.this);
+
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             MagazineDetailsActivity.this);
@@ -699,8 +703,7 @@ public class MagazineDetailsActivity extends Activity {
                 if (result != null) {
                     NotificationUtil.showShortToast(result.getMsg(), MagazineDetailsActivity.this);
                 } else if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(getString(R.string.badconnect),
-                            MagazineDetailsActivity.this);
+
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             MagazineDetailsActivity.this);

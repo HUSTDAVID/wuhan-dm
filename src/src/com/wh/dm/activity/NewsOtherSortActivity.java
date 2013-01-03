@@ -159,9 +159,7 @@ public class NewsOtherSortActivity extends Activity {
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.badconnect),
-                                NewsOtherSortActivity.this);
+
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 NewsOtherSortActivity.this);

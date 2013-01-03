@@ -17,6 +17,7 @@ import com.wh.dm.widget.NewsReplyFloorAdapter;
 import com.wh.dm.widget.NewsReplyMoreAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,6 +68,7 @@ public class NewsMoreReplyActivity extends Activity {
     private boolean isReply = false;
     private boolean isReview = true;
     private String fid;
+    private String share;
     private int curPage = 1;
     private boolean isFirstLauncher = true;
     public final Handler handler = new Handler() {
@@ -134,6 +136,7 @@ public class NewsMoreReplyActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_reply);
         id = getIntent().getIntExtra("id", 323);
+        share = getIntent().getStringExtra("share");
         initViews();
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
@@ -268,7 +271,9 @@ public class NewsMoreReplyActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UMSnsService.share(NewsMoreReplyActivity.this, "˵Щʲô...", null);
+                Intent intent = new Intent(NewsMoreReplyActivity.this, ShareActivity.class);
+                intent.putExtra("share", share);
+                startActivity(intent);
             }
         });
 
@@ -391,8 +396,7 @@ public class NewsMoreReplyActivity extends Activity {
                 if (result != null) {
                     NotificationUtil.showShortToast(result.getMsg(), NewsMoreReplyActivity.this);
                 } else if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(getString(R.string.badconnect),
-                            NewsMoreReplyActivity.this);
+
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             NewsMoreReplyActivity.this);

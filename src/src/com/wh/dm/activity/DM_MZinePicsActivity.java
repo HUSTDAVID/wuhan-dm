@@ -156,9 +156,16 @@ public class DM_MZinePicsActivity extends Activity {
             public void onClick(View v) {
 
                 if (magazines != null) {
+                    String share = "";
+                    String head = getResources().getString(R.string.share_magazine);
+                    String info = "\"" + txtDes.getText().toString() + "\" "
+                            + getString(R.string.share_url_main) + "id="
+                            + magazines.get(curPage - 1).getId() + "&mid=" + sid + "&type=1";
+                    share = head + info;
                     Intent intent = new Intent(DM_MZinePicsActivity.this,
                             NewsMoreReplyActivity.class);
                     intent.putExtra("id", magazines.get(curPage - 1).getId());
+                    intent.putExtra("share", share);
                     startActivity(intent);
                 } else {
                     NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);

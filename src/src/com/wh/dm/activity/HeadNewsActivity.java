@@ -48,6 +48,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
     private View footer;
     private Button btnFoolter;
     private GestureDetector gestureDetector;
+    private View focusView;
 
     private final int SHOW_NEXT = 0011;
     private final boolean isRun = true;
@@ -138,6 +139,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
     public boolean dispatchTouchEvent(MotionEvent ev) {
 
         this.gestureDetector.onTouchEvent(ev);
+
         return super.dispatchTouchEvent(ev);
     }
 
@@ -302,7 +304,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
                         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long arg3) {
 
-                            int temp = position;
                             Intent intent = new Intent(HeadNewsActivity.this,
                                     NewsDetailsActivity.class);
 
@@ -382,7 +383,7 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(getString(R.string.badconnect),
+                        NotificationUtil.showShortToast(getString(R.string.no_more_message),
                                 HeadNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
@@ -529,11 +530,14 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
         // slide left
         if (e1.getX() - e2.getX() > 120) {
             showNextView();
+            resetFocus();
             return true;
         } else if (e1.getX() - e2.getX() < -120) {
             showLastView();
+            resetFocus();
             return true;
         }
+        resetFocus();
         return false;
     }
 
@@ -557,6 +561,14 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
     public boolean onSingleTapUp(MotionEvent e) {
 
         return false;
+    }
+
+    private void resetFocus() {
+
+        focusView = getCurrentFocus();
+        if (focusView != null) {
+            focusView.clearFocus();
+        }
     }
 
 }

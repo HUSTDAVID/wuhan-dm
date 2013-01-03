@@ -320,8 +320,7 @@ public class VotedListActivity extends Activity {
                 }
             } else {
                 if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
-                            VotedListActivity.this);
+
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             VotedListActivity.this);

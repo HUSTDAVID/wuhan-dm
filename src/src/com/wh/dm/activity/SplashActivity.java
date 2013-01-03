@@ -6,6 +6,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.preference.Preferences;
+import com.wh.dm.service.PushService;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
@@ -64,7 +65,7 @@ public class SplashActivity extends Activity {
             }
         }, 1500);
         // push need to login first
-        // startService(new Intent(SplashActivity.this, PushService.class));
+        startService(new Intent(SplashActivity.this, PushService.class));
     }
 
     private class GetLoadPicTask extends AsyncTask<Void, Void, PostResult> {
@@ -93,7 +94,7 @@ public class SplashActivity extends Activity {
                     Preferences.saveLoadPic(SplashActivity.this, result.getMsg());
                 }
             } else {
-                NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
+                NotificationUtil.showShortToast(getResources().getString(R.string.check_network),
                         SplashActivity.this);
             }
             super.onPostExecute(result);

@@ -254,9 +254,7 @@ public class Sub_FunActivity extends Activity {
                 if (!FLAG_PAGE_UP) {
                     if (!FLAG_PAGE_UP) {
                         if (wh_dmApp.isConnected()) {
-                            NotificationUtil.showShortToast(
-                                    getResources().getString(R.string.badconnect),
-                                    Sub_FunActivity.this);
+
                         } else {
                             NotificationUtil.showShortToast(
                                     getResources().getString(R.string.check_network),

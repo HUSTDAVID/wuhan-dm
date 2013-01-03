@@ -246,9 +246,7 @@ public class Sub_HotActivity extends Activity {
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil
-                                .showShortToast(getResources().getString(R.string.badconnect),
-                                        Sub_HotActivity.this);
+
                     } else {
                         NotificationUtil.showShortToast(
                                 getResources().getString(R.string.check_network),

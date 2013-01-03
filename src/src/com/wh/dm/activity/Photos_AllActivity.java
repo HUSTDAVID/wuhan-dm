@@ -221,9 +221,7 @@ public class Photos_AllActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.badconnect),
-                                Photos_AllActivity.this);
+
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 Photos_AllActivity.this);

@@ -211,9 +211,9 @@ public class CarNewsActivity extends Activity {
                 if (!FLAG_PAGE_UP) {
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil
-                                .showShortToast(getResources().getString(R.string.badconnect),
-                                        CarNewsActivity.this);
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.no_more_message),
+                                CarNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 CarNewsActivity.this);

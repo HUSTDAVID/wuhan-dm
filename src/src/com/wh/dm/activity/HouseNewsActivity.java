@@ -218,7 +218,7 @@ public class HouseNewsActivity extends Activity {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
                         NotificationUtil.showShortToast(
-                                getResources().getString(R.string.badconnect),
+                                getResources().getString(R.string.no_more_message),
                                 HouseNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),

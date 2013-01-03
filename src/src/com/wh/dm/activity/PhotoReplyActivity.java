@@ -18,6 +18,7 @@ import com.wh.dm.widget.NewsReplyMoreAdapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +63,7 @@ public class PhotoReplyActivity extends Activity {
     private ReviewTask reviewTask = null;
     private WH_DMApi wh_dmApi;
     private WH_DMApp wh_dmApp;
+    private String share;
     private int id;
     private boolean isReply = false;
     private boolean isReview = true;
@@ -142,6 +144,7 @@ public class PhotoReplyActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_reply);
         id = getIntent().getIntExtra("id", 323);
+        share = getIntent().getStringExtra("share");
         initViews();
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
@@ -276,7 +279,9 @@ public class PhotoReplyActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UMSnsService.share(PhotoReplyActivity.this, "˵Щʲô...", null);
+                Intent intent = new Intent(PhotoReplyActivity.this, ShareActivity.class);
+                intent.putExtra("share", share);
+                startActivity(intent);
             }
         });
 
@@ -395,8 +400,7 @@ public class PhotoReplyActivity extends Activity {
                 if (result != null) {
                     NotificationUtil.showShortToast(result.getMsg(), PhotoReplyActivity.this);
                 } else if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(getString(R.string.badconnect),
-                            PhotoReplyActivity.this);
+
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             PhotoReplyActivity.this);

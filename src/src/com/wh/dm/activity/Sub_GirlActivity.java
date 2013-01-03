@@ -253,9 +253,7 @@ public class Sub_GirlActivity extends Activity {
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.badconnect),
-                                Sub_GirlActivity.this);
+
                     } else {
                         NotificationUtil.showShortToast(
                                 getResources().getString(R.string.check_network),

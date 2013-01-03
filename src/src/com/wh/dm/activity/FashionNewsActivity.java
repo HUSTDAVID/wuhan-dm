@@ -215,7 +215,7 @@ public class FashionNewsActivity extends Activity {
 
                     if (wh_dmApp.isConnected()) {
                         NotificationUtil.showShortToast(
-                                getResources().getString(R.string.badconnect),
+                                getResources().getString(R.string.no_more_message),
                                 FashionNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),

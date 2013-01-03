@@ -237,7 +237,6 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                // TODO Auto-generated method stub
                 if (WH_DMApp.isConnected) {
                     if (WH_DMApp.isLogin) {
                         handler.sendEmptyMessage(ADD_FAV);
@@ -270,8 +269,18 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                String share = "";
+                String head = getResources().getString(R.string.share_news);
+                String info = "";
+                if (newsContent != null) {
+                    info = "\"" + newsContent.getTitle() + "\" "
+                            + getString(R.string.share_url_main) + "id=" + newsContent.getId()
+                            + "&mid=0&type=0";
+                }
+                share = head + info;
                 Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
                 intent.putExtra("id", id);
+                intent.putExtra("share", share);
                 startActivity(intent);
 
             }
@@ -337,8 +346,18 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                String share = "";
+                String head = getResources().getString(R.string.share_news);
+                String info = "";
+                if (newsContent != null) {
+                    info = "\"" + newsContent.getTitle() + "\" "
+                            + getString(R.string.share_url_main) + "id=" + newsContent.getId()
+                            + "&mid=0&type=0";
+                }
+                share = head + info;
                 Intent intent = new Intent(NewsDetailsActivity.this, NewsMoreReplyActivity.class);
                 intent.putExtra("id", id);
+                intent.putExtra("share", share);
                 startActivity(intent);
             }
         });
@@ -363,7 +382,6 @@ public class NewsDetailsActivity extends Activity {
                 Intent intent = new Intent(NewsDetailsActivity.this, ShareActivity.class);
                 intent.putExtra("share", share);
                 startActivity(intent);
-                // UMSnsService.share(NewsDetailsActivity.this, share, null);
 
             }
         });
@@ -478,8 +496,7 @@ public class NewsDetailsActivity extends Activity {
                     newsTime.setText(result.getPubdate());
                 }
                 if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(getResources().getString(R.string.badconnect),
-                            NewsDetailsActivity.this);
+
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             NewsDetailsActivity.this);
@@ -716,8 +733,7 @@ public class NewsDetailsActivity extends Activity {
                 if (result != null) {
                     NotificationUtil.showShortToast(result.getMsg(), NewsDetailsActivity.this);
                 } else if (wh_dmApp.isConnected()) {
-                    NotificationUtil.showShortToast(getString(R.string.badconnect),
-                            NewsDetailsActivity.this);
+
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             NewsDetailsActivity.this);

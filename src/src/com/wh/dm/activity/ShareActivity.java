@@ -34,6 +34,9 @@ public class ShareActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
         shareStr = getIntent().getStringExtra("share");
+        if (shareStr == null) {
+            shareStr = getString(R.string.speak_sth);
+        }
         initView();
     }
 

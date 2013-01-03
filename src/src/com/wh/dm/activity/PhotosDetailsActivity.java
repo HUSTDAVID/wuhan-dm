@@ -214,6 +214,12 @@ public class PhotosDetailsActivity extends Activity {
 
                 Intent intent = new Intent(PhotosDetailsActivity.this, PhotoReplyActivity.class);
                 intent.putExtra("id", aid);
+                String share = "";
+                String head = getResources().getString(R.string.share_photo);
+                String info = "\"" + txtTitle.getText().toString() + "\""
+                        + getString(R.string.share_url_main) + "id=" + aid + "&mid=0&type=1";
+                share = head + info;
+                intent.putExtra("share", share);
                 startActivity(intent);
 
             }
