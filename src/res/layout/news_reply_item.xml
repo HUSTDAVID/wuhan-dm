@@ -9,33 +9,7 @@
     android:orientation="vertical"
     android:background="@color/bg_normal">
 
-    <LinearLayout
-        android:id="@+id/layout_for_lv"
-        android:layout_width="fill_parent"
-        android:layout_marginTop="10dip"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-         <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.8dip"
-            android:background="@color/floor_line"/>
-
-    <ListView
-        android:id="@+id/lv_news_floor"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/floor_line"
-        android:dividerHeight="0.8dip"/>
-
-    <View
-            android:layout_width="fill_parent"
-            android:layout_height="0.8dip"
-            android:background="@color/floor_line"/>
-
-
-    </LinearLayout>
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,11 +51,40 @@
             android:text="什么逻辑，真他妈坑爹" />
 
     </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/layout_for_lv"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dip"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+         <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.8dip"
+            android:background="@color/floor_line"/>
+
+    <ListView
+        android:id="@+id/lv_news_floor"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/floor_line"
+        android:dividerHeight="0.8dip"/>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.8dip"
+            android:background="@color/floor_line"/>
+
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="10dip"
         android:paddingBottom="8dip" >
 
 
