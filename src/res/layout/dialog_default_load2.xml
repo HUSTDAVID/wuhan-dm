@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="vertical"
+    android:background="@drawable/home_load_bg_drawable" >
+      
+    <ImageView
+        android:id="@+id/img_load" 
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/photo_details_default"/>
+    
+    <RelativeLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/img_load"
+        android:orientation="horizontal">
+        
+        <ProgressBar
+        
+        android:id="@+id/pro_picture" 
+        android:layout_width="30dp"
+        android:layout_height="30dp"       
+        android:layout_marginRight="15dp" 
+        android:layout_alignTop="@+id/txt_pic_load"
+        android:layout_alignBottom="@+id/txt_pic_load"
+        android:indeterminateDrawable="@drawable/progress_picture"/>
+        
+        <TextView
+            android:id="@+id/txt_pic_load" 
+            android:layout_toRightOf="@+id/pro_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/picture_load"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+        
+    </RelativeLayout>
+    
+
+</RelativeLayout>

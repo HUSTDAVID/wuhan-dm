@@ -393,9 +393,6 @@ public class HeadNewsActivity extends Activity implements OnClickListener,
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 HeadNewsActivity.this);
                     }
-                } else {
-                    NotificationUtil.showShortToast(getString(R.string.no_more_message),
-                            HeadNewsActivity.this);
                 }
             }
             super.onPostExecute(result);

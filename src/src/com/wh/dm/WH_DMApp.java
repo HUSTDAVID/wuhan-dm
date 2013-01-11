@@ -5,6 +5,7 @@ import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.service.PushService;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.util.ConnetivityUtil;
 import com.wh.dm.util.SettingUtil;
 
 import android.app.Application;
@@ -32,6 +33,7 @@ public class WH_DMApp extends Application {
     public static boolean isSinaLogin = false;
     public static boolean isTencLogin = false;
     public static boolean isLoadImg;
+    public static boolean isPush;
 
     public static final String INTENT_ACTION_LOG_SUCCESS = "com.wh.dm.intent.action.LOG_SUCCESS";
     public static final String INTENT_ACTION_LOG_FAIL = "com.wh.dm.intent.action.LOG_FAIL";
@@ -67,6 +69,8 @@ public class WH_DMApp extends Application {
         databaseImpl = new DatabaseImpl(WH_DMApp.this);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
+        SharedPreferences sPreference = getSharedPreferences("com.wh.dm_preferences", 0);
+        isPush = !sPreference.getBoolean("push", false);
         login();
         if (!mPrefs.getBoolean(Preferences.GET_DETAULT_MAGAZIE, false)) {
             GetDefaultMagazine getDefaultMagazine = new GetDefaultMagazine();
@@ -105,7 +109,12 @@ public class WH_DMApp extends Application {
 
     public boolean isConnected() {
 
-        return isConnected;
+        return isConnected = ConnetivityUtil.isConnect(this);
+    }
+
+    public void setConnected(boolean _isConnected) {
+
+        isConnected = _isConnected;
     }
 
     public ArrayList<String> getUserInfo() {
@@ -116,11 +125,6 @@ public class WH_DMApp extends Application {
         users.add(email);
         users.add(password);
         return users;
-    }
-
-    public void setConnected(boolean _isConnected) {
-
-        isConnected = _isConnected;
     }
 
     // two method for wake lock

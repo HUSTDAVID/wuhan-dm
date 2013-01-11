@@ -207,7 +207,7 @@ public class SearchMagazineActivity extends Activity {
             if (result != null) {
 
             } else {
-                if (WH_DMApp.isConnected) {
+                if (wh_dmApp.isConnected()) {
                     NotificationUtil.showShortToast(getString(R.string.sub_fail),
                             SearchMagazineActivity.this);
                 }

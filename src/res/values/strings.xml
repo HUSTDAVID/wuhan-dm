@@ -38,7 +38,7 @@
     <string name="interaction">互动</string>
     <string name="headline">头条</string>
     <string name="news">新闻</string>
-    <string name="photo">组图</string>
+    <string name="photo">美图</string>
     <string name="subscribe">订阅</string>
     <string name="store">收藏</string>
     <string name="vote">投票</string>
@@ -79,7 +79,7 @@
     <string name="survey_thanks">感谢您的参与！</string>
     <string name="survey_notice">中奖结果及更多内容请关照官方公告</string>
     <string name="finish">完成</string>
-    <!-- 组图 -->
+    <!-- 美图 -->
     <string name="all">全部</string>
     <string name="hot">热点</string>
     <string name="girl">美女</string>
@@ -94,11 +94,12 @@
     <string name="ptr_release_to_refresh">松开可以刷新</string>
     <string name="ptr_refreshing">正在载入数据</string>
     <string name="ptr_last_updated">Updated: %1$s</string>
-    <string name="share_photo">分享每刻组图：</string>
+    <string name="share_photo">分享每刻美图：</string>
     <string name="share_news">这篇文章很犀利，推荐一读，来自每刻资讯:</string>
     <string name="share_magazine">//分享每刻杂志：</string>
     <string name="load_image_Success">成功下载到相册</string>
     <string name="load_image_fail">图片下载失败</string>
+    <string name="no_review">暂无评论</string>
 
     <!-- 新闻详情 -->
     
@@ -222,6 +223,7 @@
 	<string name="top">顶</string>
 	<string name="review_toast">没有评论</string>
 	<string name="review_no_more">没有更多评论了</string>
+	<string name="review_no">暂无评论</string>
  <string name="review_succeed">评论成功</string> 
 	<string name="review_fail">评论失败</string>
 	<string name="review_null">评论内容为空</string>
@@ -244,4 +246,5 @@
 	<string name="push_body">仅剩一周！每天一款美丽大赏获奖产品75折特惠</string>
 	<string name="review_now">刚刚</string>
 	<string name="collect_time">收藏时间:</string>
+	<string name="next_ten_item">查看下10条</string>
 </resources>

@@ -162,9 +162,10 @@ public class DM_MZinePicsActivity extends Activity {
                             + getString(R.string.share_url_main) + "id="
                             + magazines.get(curPage - 1).getId() + "&mid=" + sid + "&type=1";
                     share = head + info;
-                    Intent intent = new Intent(DM_MZinePicsActivity.this,
-                            NewsMoreReplyActivity.class);
-                    intent.putExtra("id", magazines.get(curPage - 1).getId());
+                    Intent intent = new Intent(DM_MZinePicsActivity.this, PhotoReplyActivity.class);
+                    // intent.putExtra("id", magazines.get(curPage -
+                    // 1).getId());
+                    intent.putExtra("id", sid);
                     intent.putExtra("share", share);
                     startActivity(intent);
                 } else {
@@ -327,7 +328,14 @@ public class DM_MZinePicsActivity extends Activity {
             if (result != null && result.size() > 0) {
                 addData(result);
             } else {
-                NotificationUtil.showShortToast("没有新刊", DM_MZinePicsActivity.this);
+                if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast("没有新刊", DM_MZinePicsActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            DM_MZinePicsActivity.this);
+                }
+                layout_load.setVisibility(View.GONE);
+
             }
 
             super.onPostExecute(result);

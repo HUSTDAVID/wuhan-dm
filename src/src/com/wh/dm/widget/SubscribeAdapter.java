@@ -221,9 +221,11 @@ public class SubscribeAdapter extends BaseAdapter {
 
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.leftImg,
-                    WH_DMHttpApiV1.URL_DOMAIN + left.getPic(), R.drawable.item_default, null);
+                    WH_DMHttpApiV1.URL_DOMAIN + left.getPic(),
+                    R.drawable.subscription_bigimg_background, null);
             UrlImageViewHelper.setUrlDrawable(holder.rightImg,
-                    WH_DMHttpApiV1.URL_DOMAIN + right.getPic(), R.drawable.item_default, null);
+                    WH_DMHttpApiV1.URL_DOMAIN + right.getPic(),
+                    R.drawable.subscription_bigimg_background, null);
         }
 
         return conterView;

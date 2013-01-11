@@ -58,7 +58,7 @@
       android:layout_weight="1"
       android:background="@drawable/btn_forget_pw"
       android:text="@string/forget_passwd"
-      android:textColor="#7b7b7b"
+      android:textColor="@drawable/textcolor_style1"
       android:textSize="18sp" />
        
        <Button

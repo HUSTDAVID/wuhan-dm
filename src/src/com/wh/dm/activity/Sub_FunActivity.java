@@ -169,6 +169,7 @@ public class Sub_FunActivity extends Activity {
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         footer.setBackgroundColor(getResources().getColor(R.color.bg_normal));
         btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
+        btnFooter.setText(getString(R.string.next_ten_item));
         btnFooter.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -295,7 +296,7 @@ public class Sub_FunActivity extends Activity {
             if (result != null) {
 
             } else {
-                if (WH_DMApp.isConnected) {
+                if (wh_dmApp.isConnected()) {
                     NotificationUtil.showShortToast(getString(R.string.sub_fail),
                             Sub_FunActivity.this);
                 }

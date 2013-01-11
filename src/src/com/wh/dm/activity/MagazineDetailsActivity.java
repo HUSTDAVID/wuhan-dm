@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -77,6 +78,7 @@ public class MagazineDetailsActivity extends Activity {
     TextView txtReplynum;
     WebView webViewNewsBody;
     WebSettings webSettings;
+    Parcelable lvState;
 
     LayoutInflater mInflater;
     private ListView lvNews;
@@ -260,7 +262,7 @@ public class MagazineDetailsActivity extends Activity {
             public void onClick(View v) {
 
                 // TODO Auto-generated method stub
-                if (WH_DMApp.isConnected) {
+                if (wh_dmApp.isConnected()) {
                     if (WH_DMApp.isLogin) {
                         handler.sendEmptyMessage(ADD_FAV);
                     } else {
@@ -416,7 +418,6 @@ public class MagazineDetailsActivity extends Activity {
         protected void onPreExecute() {
 
             if (!isLoad) {
-                // progressDialog.show();
                 loadLayout.setVisibility(View.VISIBLE);
                 lvNews.setVisibility(View.GONE);
             }
@@ -500,7 +501,7 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // TODO Auto-generated method stub
+            lvState = lvNews.onSaveInstanceState();
             super.onPreExecute();
         }
 
@@ -508,7 +509,7 @@ public class MagazineDetailsActivity extends Activity {
         protected ArrayList<Comment> doInBackground(Integer... params) {
 
             // if (NetworkConnection.checkInternetConnection()) {
-            if (WH_DMApp.isConnected) {
+            if (wh_dmApp.isConnected()) {
                 try {
                     comments = wh_dmApi.getComment(params[0], curPage);
                     return comments;
@@ -540,7 +541,9 @@ public class MagazineDetailsActivity extends Activity {
             } else {
                 lvNews.removeFooterView(footer);
             }
-
+            if (lvState != null) {
+                lvNews.onRestoreInstanceState(lvState);
+            }
             super.onPostExecute(result);
         }
 
@@ -553,8 +556,6 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // progressDialog.show();
-            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -582,8 +583,7 @@ public class MagazineDetailsActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         MagazineDetailsActivity.this);
             }
-            // progressDialog.dismiss();
-            loadLayout.setVisibility(View.GONE);
+
             super.onPostExecute(result);
         }
 
@@ -597,7 +597,6 @@ public class MagazineDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // progressDialog.show();
             loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }

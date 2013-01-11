@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,9 +64,11 @@ public class PhotoReplyActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private WH_DMApp wh_dmApp;
     private String share;
+    private Parcelable lvState;
     private int id;
     private boolean isReply = false;
     private boolean isReview = true;
+    private boolean firstStart = true;
     private String fid;
     private int curPage = 1;
     private boolean isFirstLauncher = true;
@@ -298,6 +301,7 @@ public class PhotoReplyActivity extends Activity {
         protected void onPreExecute() {
 
             loadLayout.setVisibility(View.VISIBLE);
+            lvState = lv.onSaveInstanceState();
             super.onPreExecute();
         }
 
@@ -356,13 +360,21 @@ public class PhotoReplyActivity extends Activity {
                 }
 
             } else {
-                NotificationUtil.showShortToast(getString(R.string.review_no_more),
-                        PhotoReplyActivity.this);
+                if (isFirstLauncher) {
+                    NotificationUtil.showShortToast(getString(R.string.review_no),
+                            PhotoReplyActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.review_no_more),
+                            PhotoReplyActivity.this);
+                }
                 if (adapter.getCount() == 0) {
                     lv.setVisibility(View.INVISIBLE);
                 }
             }
             loadLayout.setVisibility(View.GONE);
+            if (lvState != null) {
+                lv.onRestoreInstanceState(lvState);
+            }
             super.onPostExecute(result);
 
         }
@@ -449,7 +461,6 @@ public class PhotoReplyActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -478,7 +489,6 @@ public class PhotoReplyActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         PhotoReplyActivity.this);
             }
-            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 

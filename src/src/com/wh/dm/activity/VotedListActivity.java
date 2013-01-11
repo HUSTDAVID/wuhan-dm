@@ -118,7 +118,6 @@ public class VotedListActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            // TODO Auto-generated method stub
             Toast.makeText(VotedListActivity.this, ((TextView) v).getText(), Toast.LENGTH_LONG)
                     .show();
         }
@@ -275,7 +274,8 @@ public class VotedListActivity extends Activity {
                                 intent.putExtra("enable", true);
                                 intent.putExtra("name", votes.get(currentSelelct).getVotename());
                                 intent.putExtra("votenote", votes.get(currentSelelct).getVotenote());
-                                startActivity(intent);
+                                // startActivity(intent);
+                                startActivityForResult(intent, 0);
 
                             }
                         });
@@ -317,6 +317,7 @@ public class VotedListActivity extends Activity {
                     group.addView(dots[i]);
                     viewPager.setAdapter(new GuidePageAdapter());
                     viewPager.setOnPageChangeListener(new GuidePageChangeListener());
+
                 }
             } else {
                 if (wh_dmApp.isConnected()) {
@@ -330,6 +331,39 @@ public class VotedListActivity extends Activity {
             loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
+    }
+
+    // TODO
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        boolean isVote = false;
+        if (data != null) {
+            isVote = data.getBooleanExtra("voting", false);
+            if (isVote) {
+                View view = viewPager.getChildAt(currentSelelct);
+                TextView txtInfo = (TextView) view.findViewById(R.id.vote_ing_3);
+                Button btnVote = (Button) view.findViewById(R.id.btn_vote);
+                txtInfo.setText(getString(R.string.take_part));
+                btnVote.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(VotedListActivity.this, Vote2Activity.class);
+                        intent.putExtra("aid", votes.get(currentSelelct).getAid());
+                        intent.putExtra("enable", false);
+                        intent.putExtra("name", votes.get(currentSelelct).getVotename());
+                        intent.putExtra("votenote", votes.get(currentSelelct).getVotenote());
+                        startActivity(intent);
+
+                    }
+                });
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

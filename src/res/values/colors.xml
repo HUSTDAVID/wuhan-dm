@@ -62,4 +62,7 @@
     
     <color name="push_body_color">#363636</color>
     <color name="orange">#F59500</color>
+    
+    <drawable name="textcolor_gray">#7b7b7b</drawable>
+    <drawable name="textcolor_white">#ffffff</drawable>
 </resources>

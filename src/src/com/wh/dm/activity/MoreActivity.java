@@ -85,11 +85,14 @@ public class MoreActivity extends PreferenceActivity implements OnSharedPreferen
                 if (preference.getKey().equals("push")) {
                     checkPreference.setChecked((Boolean) newValue);
                     if ((Boolean) newValue) {
+                        WH_DMApp.isPush = false;
                         Intent intent = new Intent(MoreActivity.this, PushService.class);
                         stopService(intent);
                     } else {
+                        WH_DMApp.isPush = true;
                         Intent intent = new Intent(MoreActivity.this, PushService.class);
                         startService(intent);
+
                     }
                 } else {
                     return false;

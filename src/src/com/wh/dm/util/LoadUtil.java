@@ -45,6 +45,7 @@ public class LoadUtil {
                 article.setPubdate(objBody.getString("pubdate"));
                 article.setBody(objBody.getString("body"));
                 article.setSid(sid);
+                article.setIspic(objBody.getBoolean("ispic"));
 
                 articleMagzines.add(article);
             }

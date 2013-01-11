@@ -16,7 +16,7 @@
         android:title="@string/push" 
         android:widgetLayout="@layout/set_checkbox" 
         android:key="push" 
-        android:persistent="true"/>
+        android:enabled="true" android:defaultValue="false"/>
     
     <CheckBoxPreference
         android:layout="@layout/set_pref_check"

@@ -103,7 +103,7 @@ public class MessageActivity extends Activity {
         super.onResume();
         MobclickAgent.onError(this);
         if (refreshCollect) {
-            if (WH_DMApp.isLogin && WH_DMApp.isConnected)
+            if (WH_DMApp.isLogin && wh_dmApp.isConnected())
                 handler.sendEmptyMessage(MSG_GET_FAV);
             refreshCollect = false;
         }
@@ -128,7 +128,7 @@ public class MessageActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                if (!WH_DMApp.isConnected) {
+                if (!wh_dmApp.isConnected()) {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             MessageActivity.this);
                     return;
@@ -140,7 +140,7 @@ public class MessageActivity extends Activity {
                     startActivity(intent);
                     return;
                 }
-                if (WH_DMApp.isLogin && WH_DMApp.isConnected) {
+                if (WH_DMApp.isLogin && wh_dmApp.isConnected()) {
                     FLAG_PAGE_UP = true;
                     curPage++;
                     handler.sendEmptyMessage(MSG_GET_FAV);
@@ -183,7 +183,7 @@ public class MessageActivity extends Activity {
         addData();
 
         // get collect from server
-        if (WH_DMApp.isLogin && WH_DMApp.isConnected)
+        if (WH_DMApp.isLogin && wh_dmApp.isConnected())
             handler.sendEmptyMessage(MSG_GET_FAV);
 
         btnDel = (ImageButton) findViewById(R.id.DeleteButton);
@@ -197,7 +197,7 @@ public class MessageActivity extends Activity {
                         || newsCollectAdapter.getCheckedID().size() == 0) {
                     return;
                 }
-                if (!WH_DMApp.isConnected) {
+                if (!wh_dmApp.isConnected()) {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             MessageActivity.this);
                     return;

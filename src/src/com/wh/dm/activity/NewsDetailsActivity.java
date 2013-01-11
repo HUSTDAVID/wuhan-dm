@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +76,7 @@ public class NewsDetailsActivity extends Activity {
     TextView txtReplynum;
     WebView webViewNewsBody;
     WebSettings webSettings;
+    Parcelable lvState;
 
     LayoutInflater mInflater;
     private ListView lvNews;
@@ -237,7 +239,7 @@ public class NewsDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (WH_DMApp.isConnected) {
+                if (wh_dmApp.isConnected()) {
                     if (WH_DMApp.isLogin) {
                         handler.sendEmptyMessage(ADD_FAV);
                     } else {
@@ -516,7 +518,7 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // TODO Auto-generated method stub
+            lvState = lvNews.onSaveInstanceState();
             super.onPreExecute();
         }
 
@@ -524,7 +526,7 @@ public class NewsDetailsActivity extends Activity {
         protected ArrayList<Comment> doInBackground(Integer... params) {
 
             // if (NetworkConnection.checkInternetConnection()) {
-            if (WH_DMApp.isConnected) {
+            if (wh_dmApp.isConnected()) {
                 try {
                     comments = wh_dmApi.getComment(params[0], curPage);
                     return comments;
@@ -559,7 +561,9 @@ public class NewsDetailsActivity extends Activity {
             }
             // txtReplynum.setText("" + result.getFcount() +
             // getString(R.string.news_reply_count));
-
+            if (lvState != null) {
+                lvNews.onRestoreInstanceState(lvState);
+            }
             super.onPostExecute(result);
         }
 
@@ -572,7 +576,6 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -601,7 +604,6 @@ public class NewsDetailsActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         NewsDetailsActivity.this);
             }
-            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 
@@ -615,7 +617,7 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // loadLayout.setVisibility(View.VISIBLE);
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -664,8 +666,7 @@ public class NewsDetailsActivity extends Activity {
                 else
                     NotificationUtil.showShortToast(postresult.getMsg(), NewsDetailsActivity.this);
             }
-            // progressDialog.dismiss();
-            // loadLayout.setVisibility(View.VISIBLE);
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 

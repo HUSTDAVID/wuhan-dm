@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -58,6 +59,7 @@ public class NewsMoreReplyActivity extends Activity {
     private NewsReplyMoreAdapter adapter;
     private NewsReplyFloorAdapter floorAdapter;
     private GetCommentTask getCommentTask = null;
+    private Parcelable lvState;
     // private PushTopTask pushTopTask = null;
     // private ReplyTask replyTask = null;
     // private ReviewTask reviewTask = null;
@@ -290,6 +292,7 @@ public class NewsMoreReplyActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
+            lvState = lv.onSaveInstanceState();
             loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
@@ -350,13 +353,21 @@ public class NewsMoreReplyActivity extends Activity {
                 }
 
             } else {
-                NotificationUtil.showShortToast(getString(R.string.review_no_more),
-                        NewsMoreReplyActivity.this);
+                if (isFirstLauncher) {
+                    NotificationUtil.showShortToast(getString(R.string.review_no),
+                            NewsMoreReplyActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.review_no_more),
+                            NewsMoreReplyActivity.this);
+                }
                 if (adapter.getCount() == 0) {
                     lv.setVisibility(View.INVISIBLE);
                 }
             }
             loadLayout.setVisibility(View.GONE);
+            if (lvState != null) {
+                lv.onRestoreInstanceState(lvState);
+            }
             super.onPostExecute(result);
 
         }
@@ -444,7 +455,6 @@ public class NewsMoreReplyActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -474,7 +484,6 @@ public class NewsMoreReplyActivity extends Activity {
                 NotificationUtil.showShortToast(getString(R.string.review_fail),
                         NewsMoreReplyActivity.this);
             }
-            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 

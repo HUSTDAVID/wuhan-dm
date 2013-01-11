@@ -125,13 +125,6 @@ public class MainActivity extends Activity implements OnTouchListener {
 
                     delImage.startAnimation(down);
                     lists.get(Configure.curentPage).remove(Configure.removeItem);
-                    /*
-                     * data.remove(Configure.removeItem); cleanItems();
-                     * ((DragGridAdapter)
-                     * ((gridviews.get(Configure.curentPage)).getAdapter()))
-                     * .notifyDataSetChanged();
-                     */
-
                     break;
                 case REFRESH_GRID:
                     data.clear();
@@ -201,6 +194,16 @@ public class MainActivity extends Activity implements OnTouchListener {
         });
 
         runAnimation();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (data.size() == 3) {
+                    layout_load.setVisibility(View.GONE);
+                }
+            }
+        }, 4000);
 
     }
 
@@ -294,7 +297,6 @@ public class MainActivity extends Activity implements OnTouchListener {
             @Override
             public void onClick(View v) {
 
-                // System.exit(0);
                 MainActivity.this.finish();
 
             }

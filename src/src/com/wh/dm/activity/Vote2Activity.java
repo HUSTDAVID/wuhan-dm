@@ -13,6 +13,7 @@ import com.wh.dm.widget.VoteChoiceAdapter;
 import com.wh.dm.widget.VoteResultAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,6 +49,7 @@ public class Vote2Activity extends Activity {
     private VoteResultAdapter resultAdapter;
     private String[] notes;
     private String myChioce;
+    private boolean doVoting = false;
     private ArrayList<VoteResultPercent> voteResultList = null;
 
     private WH_DMApp wh_dmApp;
@@ -146,6 +148,11 @@ public class Vote2Activity extends Activity {
             @Override
             public void onClick(View v) {
 
+                if (doVoting) {
+                    Intent intent = new Intent();
+                    intent.putExtra("voting", true);
+                    Vote2Activity.this.setResult(0, intent);
+                }
                 Vote2Activity.this.finish();
 
             }
@@ -196,6 +203,17 @@ public class Vote2Activity extends Activity {
             });
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (doVoting) {
+            Intent intent = new Intent();
+            intent.putExtra("voting", true);
+            Vote2Activity.this.setResult(0, intent);
+        }
+        super.onBackPressed();
     }
 
     //
@@ -279,7 +297,6 @@ public class Vote2Activity extends Activity {
         protected VoteResult doInBackground(Void... params) {
 
             VoteResult result = new VoteResult();
-            ;
             try {
                 result = wh_dmApi.postVote(aid, myChioce,
                         Preferences.getMachineId(Vote2Activity.this));
@@ -295,6 +312,7 @@ public class Vote2Activity extends Activity {
 
             if (result.isResult()) {
                 handler.sendEmptyMessage(MSG_GET_VOTE_RESULT);
+                doVoting = true;
             } else {
                 Toast.makeText(Vote2Activity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
             }

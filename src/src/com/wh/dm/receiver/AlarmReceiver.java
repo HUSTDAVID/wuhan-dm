@@ -100,10 +100,13 @@ public class AlarmReceiver extends BroadcastReceiver {
             ArrayList<PostMessage> newMessages = new ArrayList<PostMessage>();
             if (result != null) {
                 msgNum = Preferences.getMsgNum(_context);
+                int temp = msgNum;
                 if (msgNum < result.size()) {
                     int size = result.size();
                     for (int i = msgNum; i < size; i++) {
-                        showNotification(_context, result.get(i), i);
+                        if (WH_DMApp.isPush) {
+                            showNotification(_context, result.get(i), i);
+                        }
                         PostMessage message = result.get(i);
                         message.setIsRead(0);
                         newMessages.add(message);

@@ -94,7 +94,7 @@ public class PostMessageAdapter extends BaseAdapter {
                     Bundle bundle = new Bundle();
                     bundle.putInt("dm", messages.get(position).getTemp());
                     bundle.putInt("sid", messages.get(position).getMid());
-                    bundle.putInt("id", messages.get(position).getId());
+                    // bundle.putInt("id", messages.get(position).getId());
                     intent_magazine.putExtras(bundle);
                     context.startActivity(intent_magazine);
                 }

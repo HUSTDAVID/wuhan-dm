@@ -320,7 +320,7 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (WH_DMApp.isConnected) {
+                if (wh_dmApp.isConnected()) {
                     if (WH_DMApp.isLogin) {
                         handler.sendEmptyMessage(MSG_STORE_IMAGE);
                     } else {
@@ -444,7 +444,7 @@ public class PhotosDetailsActivity extends Activity {
             currentPhoto = 1 + arg0;
             ImageView imageView = (ImageView) pageViews.get(arg0).findViewById(R.id.img_photos);
             UrlImageViewHelper.setUrlDrawable(imageView, WH_DMHttpApiV1.URL_DOMAIN
-                    + photosDetails.get(arg0).getPic(), R.drawable.photo_details_default, null);
+                    + photosDetails.get(arg0).getPic());
             txtPage.setText(currentPhoto + "/" + totalPhotos);
             txtBody.setText(photosDetails.get(arg0).getDescription());
 
@@ -489,9 +489,8 @@ public class PhotosDetailsActivity extends Activity {
                 }
                 ImageView imageView = (ImageView) pageViews.get(0).findViewById(R.id.img_photos);
                 UrlImageViewHelper.isLoad = true;
-                UrlImageViewHelper.sendFinishMsg(imageView, WH_DMHttpApiV1.URL_DOMAIN
-                        + photosDetails.get(0).getPic(), R.drawable.photo_details_default, null,
-                        handler);
+                UrlImageViewHelper.sendFinishMsg2(imageView, WH_DMHttpApiV1.URL_DOMAIN
+                        + photosDetails.get(0).getPic(), handler);
                 txtPage.setText(currentPhoto + "/" + totalPhotos);
                 txtBody.setText(photosDetails.get(0).getDescription());
 
@@ -617,7 +616,7 @@ public class PhotosDetailsActivity extends Activity {
                         PhotosDetailsActivity.this);
             } else {
                 if (postresult == null)
-                    NotificationUtil.showShortToast(getString(R.string.favorite_fail) + ":未知原因",
+                    NotificationUtil.showShortToast(getString(R.string.favorite_fail) + ":没有检测到网络",
                             PhotosDetailsActivity.this);
                 else
                     NotificationUtil

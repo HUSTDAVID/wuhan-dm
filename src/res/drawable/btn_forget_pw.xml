@@ -12,6 +12,6 @@
 	          android:state_pressed="true"	
 	          android:drawable="@drawable/quit_btn_on" /> 
 	
-	<item android:drawable="@drawable/site_btn_2" />
+	<item android:drawable="@drawable/site_btn_2"/>
 
 </selector>

@@ -17,8 +17,7 @@ public class ArticleMagzineBuilder extends DatabaseBuilder<ArticleMagzine> {
     private static final String ArticleMagzine_Litpic = "litpic";
     private static final String ArticleMagzine_Pubdate = "pubdate";
     private static final String ArticleMagzine_Body = "body";
-
-    // private static final String ArticleMagzine_Ispic = "ispic";
+    private static final String ArticleMagzine_Ispic = "ispic";
 
     @Override
     public ArticleMagzine build(Cursor c) {
@@ -32,7 +31,7 @@ public class ArticleMagzineBuilder extends DatabaseBuilder<ArticleMagzine> {
         int ColumnLitpic = c.getColumnIndex(ArticleMagzine_Litpic);
         int ColumnPubdate = c.getColumnIndex(ArticleMagzine_Pubdate);
         int ColumnBody = c.getColumnIndex(ArticleMagzine_Body);
-        // int ColumnIspic = c.getColumnIndex(ArticleMagzine_Ispic);
+        int ColumnIspic = c.getColumnIndex(ArticleMagzine_Ispic);
 
         ArticleMagzine articleMagzine = new ArticleMagzine();
 
@@ -45,10 +44,12 @@ public class ArticleMagzineBuilder extends DatabaseBuilder<ArticleMagzine> {
         articleMagzine.setLitpic(c.getString(ColumnLitpic));
         articleMagzine.setPubdate(c.getString(ColumnPubdate));
         articleMagzine.setBody(c.getString(ColumnBody));
-        /*
-         * if (0 == c.getInt(ColumnIspic)) { articleMagzine.setIspic(true); }
-         * else { articleMagzine.setIspic(false); }
-         */
+
+        if (0 == c.getInt(ColumnIspic)) {
+            articleMagzine.setIspic(true);
+        } else {
+            articleMagzine.setIspic(false);
+        }
 
         return articleMagzine;
     }
@@ -66,10 +67,12 @@ public class ArticleMagzineBuilder extends DatabaseBuilder<ArticleMagzine> {
         values.put(ArticleMagzine_Litpic, articleMagzine.getLitpic());
         values.put(ArticleMagzine_Pubdate, articleMagzine.getPubdate());
         values.put(ArticleMagzine_Body, articleMagzine.getBody());
-        /*
-         * if (articleMagzine.isIspic()) { values.put(ArticleMagzine_Ispic, 0);
-         * } else { values.put(ArticleMagzine_Ispic, 1); }
-         */
+
+        if (articleMagzine.isIspic()) {
+            values.put(ArticleMagzine_Ispic, 0);
+        } else {
+            values.put(ArticleMagzine_Ispic, 1);
+        }
 
         return values;
     }

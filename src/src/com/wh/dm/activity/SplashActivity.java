@@ -8,7 +8,6 @@ import com.wh.dm.WH_DMHttpApiV1;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.service.PushService;
 import com.wh.dm.type.PostResult;
-import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
@@ -93,9 +92,6 @@ public class SplashActivity extends Activity {
                 if (result.getResult()) {
                     Preferences.saveLoadPic(SplashActivity.this, result.getMsg());
                 }
-            } else {
-                NotificationUtil.showShortToast(getResources().getString(R.string.check_network),
-                        SplashActivity.this);
             }
             super.onPostExecute(result);
         }

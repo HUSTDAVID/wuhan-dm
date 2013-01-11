@@ -877,9 +877,10 @@ public class DM_MZineArticleActivity extends Activity {
         ArticleMagzine article = new ArticleMagzine();
 
         for (int i = low; i <= up; i++) {
-            // if (articles.get(i).isIspic() && i != up) {
-            if (articles.get(i).getLitpic() != null && articles.get(i).getLitpic().length() > 0
-                    && i != up) {
+            if (articles.get(i).isIspic() && i != up) {
+                // if (articles.get(i).getLitpic() != null &&
+                // articles.get(i).getLitpic().length() > 0
+                // && i != up) {
                 for (int j = i; j < up; j++) {
                     article = articles.get(j);
                     articles.set(j, articles.get(j + 1));

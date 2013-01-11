@@ -236,7 +236,7 @@ public class LoginActivity extends Activity {
                 }
 
             } else {
-                if (WH_DMApp.isConnected) {
+                if (wh_dmApp.isConnected()) {
 
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),

@@ -24,8 +24,8 @@
 
 	    <include 	            
 	            android:layout_width="match_parent"
-	            android:layout_height="50dp"	                       
-	            layout="@layout/dialog_default_load"/>
+	            android:layout_height="85dp"	                       
+	            layout="@layout/dialog_default_load2"/>
 	    
     </LinearLayout>
 
