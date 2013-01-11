@@ -293,8 +293,8 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.addFav(nid, type);
     }
 
-    public ArrayList<Favorite> getFav(int pz, int pi) throws WH_DMException,
-            UnKnownException, IOException {
+    public ArrayList<Favorite> getFav(int pz, int pi) throws WH_DMException, UnKnownException,
+            IOException {
 
         return mWH_DMHttpApiV1.getFav(pz, pi);
     }
@@ -329,6 +329,12 @@ public class WH_DMApi {
             IOException {
 
         return mWH_DMHttpApiV1.getDefaultMagazine();
+    }
+
+    public PostResult findPassword(String email) throws WH_DMException, UnKnownException,
+            IOException {
+
+        return mWH_DMHttpApiV1.findPassword(email);
     }
 
 }

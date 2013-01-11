@@ -25,6 +25,9 @@
     <string name="begin_load">开始下载</string>
     <string name="loading">下载中</string>
     <string name="speak_sth">说点什么吧...</string>
+    <string name="input_email">请输入注册邮箱...</string>
+    <string name="find_password_ok">请登录邮箱设置新密码...</string>
+    <string name="find_password_fail">密码找回失败:</string>
     <!-- 
     <string name="badconnect">您的网络不给力</string>  -->
     <string name="bind">已绑定</string>

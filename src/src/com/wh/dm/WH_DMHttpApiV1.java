@@ -664,8 +664,8 @@ public class WH_DMHttpApiV1 {
         return result;
     }
 
-    public ArrayList<Favorite> getFav(int pz, int pi) throws WH_DMException,
-            UnKnownException, IOException {
+    public ArrayList<Favorite> getFav(int pz, int pi) throws WH_DMException, UnKnownException,
+            IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_FAV, new BasicNameValuePair(
                 "act", "list"), new BasicNameValuePair("pz", String.valueOf(pz)),
@@ -730,6 +730,17 @@ public class WH_DMHttpApiV1 {
                 new BasicNameValuePair("act", "down"),
                 new BasicNameValuePair("sid", String.valueOf(sid)));
         return mHttpApi.doHttpRequest(httpGet);
+    }
+
+    // find password
+    public PostResult findPassword(String email) throws WH_DMException, UnKnownException,
+            IOException {
+
+        HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
+                new BasicNameValuePair("act", "findpass"), new BasicNameValuePair("mail", email));
+        String content = mHttpApi.doHttpRequest(httPost);
+        PostResult result = gson.fromJson(content, PostResult.class);
+        return result;
     }
 
 }

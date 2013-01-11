@@ -105,6 +105,7 @@ public class NewsMoreReplyActivity extends Activity {
                         isReview = false;
                         bottomLayout1.setVisibility(View.GONE);
                         bottomLayout2.setVisibility(View.VISIBLE);
+                        edtReply.setText("");
 
                         edtReply.requestFocus();
                         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
@@ -219,6 +220,7 @@ public class NewsMoreReplyActivity extends Activity {
 
                 bottomLayout1.setVisibility(View.GONE);
                 bottomLayout2.setVisibility(View.VISIBLE);
+                edtReply.setText("");
 
                 edtReply.requestFocus();
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(
