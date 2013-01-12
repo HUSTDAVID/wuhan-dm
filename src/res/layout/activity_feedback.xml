@@ -69,7 +69,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_alignParentRight="true"
-           android:background="@drawable/site_btn_3"
+           android:background="@drawable/btn_login"
            android:text="@string/send"
            android:textColor="@color/white"
            android:textSize="18sp" />
