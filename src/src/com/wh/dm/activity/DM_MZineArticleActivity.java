@@ -840,7 +840,12 @@ public class DM_MZineArticleActivity extends Activity {
                 txtPage.setText(curPage + "/" + totalPage);
 
             } else {
-                NotificationUtil.showShortToast("没有新刊", DM_MZineArticleActivity.this);
+                if (wh_dmApp.isConnected()) {
+                    NotificationUtil.showShortToast("没有新刊", DM_MZineArticleActivity.this);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            DM_MZineArticleActivity.this);
+                }
             }
             if (!isLoad) {
                 loadLayout.setVisibility(View.GONE);

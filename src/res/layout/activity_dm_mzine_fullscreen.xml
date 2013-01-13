@@ -25,7 +25,7 @@
 	    <include 	            
 	            android:layout_width="match_parent"
 	            android:layout_height="85dp"	                       
-	            layout="@layout/dialog_default_load2"/>
+	            layout="@layout/dialog_default_load3"/>
 	    
     </LinearLayout>
 
@@ -39,14 +39,15 @@
         android:visibility="gone"/>
     
     
-    <RelativeLayout          
+    <RelativeLayout
+        android:id="@+id/rel_info"          
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="8dp"
-        >
+        android:visibility="visible">
         
         <ImageView 
             android:id="@+id/img_mzine_arrow"

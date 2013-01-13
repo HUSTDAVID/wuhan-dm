@@ -28,6 +28,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class DM_MZinePicsActivity extends Activity {
     private ViewPager v_Pager;
     // private ProgressDialog progressDialog;
     private LinearLayout layout_load;
+    private RelativeLayout relInfo;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -70,7 +72,8 @@ public class DM_MZinePicsActivity extends Activity {
             } else if (DownloadActivity.MSG_LOAD_ONE_IMAGE == msg.what) {
                 UrlImageViewHelper.isLoad = false;
                 layout_load.setVisibility(View.GONE);
-                ;
+                relInfo.setVisibility(View.VISIBLE);
+                relInfo.bringToFront();
             }
         };
     };
@@ -93,6 +96,7 @@ public class DM_MZinePicsActivity extends Activity {
     public void init() {
 
         layout_load = (LinearLayout) findViewById(R.id.picture_load);
+        relInfo = (RelativeLayout) findViewById(R.id.rel_info);
 
         txtPage = (TextView) findViewById(R.id.txt_magazine_page);
         txtDes = (TextView) findViewById(R.id.txt_mzine_des);
@@ -300,8 +304,8 @@ public class DM_MZinePicsActivity extends Activity {
         protected void onPreExecute() {
 
             if (!isLoad) {
-                // progressDialog.show();
                 layout_load.setVisibility(View.VISIBLE);
+                relInfo.setVisibility(View.INVISIBLE);
             }
             super.onPreExecute();
         }
@@ -335,6 +339,8 @@ public class DM_MZinePicsActivity extends Activity {
                             DM_MZinePicsActivity.this);
                 }
                 layout_load.setVisibility(View.GONE);
+                relInfo.setVisibility(View.VISIBLE);
+                relInfo.bringToFront();
 
             }
 
@@ -367,6 +373,7 @@ public class DM_MZinePicsActivity extends Activity {
             imgComment.setVisibility(View.GONE);
             if (!isLoad) {
                 layout_load.setVisibility(View.VISIBLE);
+                relInfo.setVisibility(View.INVISIBLE);
             }
 
         }
