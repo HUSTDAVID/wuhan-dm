@@ -1,4 +1,3 @@
-
 package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
@@ -559,8 +558,16 @@ public class HeadNewsActivity extends Activity implements
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
-        clickCurrentView();
-        return true;
+        int x1 = (int) e.getX();
+        int y1 = (int) e.getY();
+        int position = lv.pointToPosition(x1, y1);
+
+        if (position == 1) {
+            clickCurrentView();
+            return true;
+        }
+
+        return false;
     }
 
     private void resetFocus() {
