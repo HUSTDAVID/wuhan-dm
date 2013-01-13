@@ -10,12 +10,10 @@
     <ProgressBar
         
         android:id="@+id/pro_home" 
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:layout_alignTop="@+id/txt_home"
-        android:layout_alignBottom="@+id/txt_home"
+        android:layout_centerInParent="true"        
         android:layout_marginRight="15dp"
         android:indeterminateDrawable="@drawable/progress_dialog_home"/>
     
@@ -26,10 +24,13 @@
         android:layout_marginRight="30dp"
         android:layout_toRightOf="@+id/pro_home"
         android:singleLine="true"
+        android:layout_alignTop="@+id/pro_home"
+        android:layout_alignBottom="@+id/pro_home"
         android:text="@string/home_load"
         android:layout_centerInParent="true"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:gravity="center_vertical"
+        android:textSize="20sp" />
     
     
     <View 
@@ -41,12 +42,9 @@
     
     <ImageButton
         android:id="@+id/btn_home_load_close"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:padding="5dp"
-        android:layout_centerInParent="true"
-        android:layout_alignTop="@+id/txt_home"
-        android:layout_alignBottom="@+id/txt_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_centerVertical="true"      
         android:layout_alignParentRight="true"
         android:background="@drawable/home_close"/>
 

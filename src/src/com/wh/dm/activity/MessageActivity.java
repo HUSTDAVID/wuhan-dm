@@ -14,7 +14,6 @@ import com.wh.dm.widget.MergeAdapter;
 import com.wh.dm.widget.PostMessageAdapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,6 +47,7 @@ public class MessageActivity extends Activity {
     private ArrayList<Favorite> favList = null;
     private MergeAdapter adapter = null;
     private LayoutInflater inflater;
+    private LinearLayout layoutLoad;
     private View footer;
     private int messageTotle = 0;
     private int colTotle = 0;
@@ -55,7 +56,6 @@ public class MessageActivity extends Activity {
     private DelFavTask delNewsFavTask = null;
     private static int MSG_GET_FAV = 0;
     private static int MSG_DEL_FAV = 1;
-    private ProgressDialog progressDialog;
     private int countsPerPage = 10;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
@@ -118,6 +118,7 @@ public class MessageActivity extends Activity {
         if (messages != null) {
             messageTotle = messages.size();
         }
+        layoutLoad = (LinearLayout) findViewById(R.id.layout_load);
         listview = (ListView) findViewById(R.id.lv_message_colect);
         inflater = getLayoutInflater();
 
@@ -150,9 +151,6 @@ public class MessageActivity extends Activity {
         listview.addFooterView(footer);
 
         adapter = new MergeAdapter();
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         txtHead = (TextView) findViewById(R.id.textView3);
         txtHead.setText(getString(R.string.message_collect));
@@ -319,7 +317,7 @@ public class MessageActivity extends Activity {
             delFailCount = 0;
             favList = newsCollectAdapter.getList();
 
-            progressDialog.show();
+            layoutLoad.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -362,7 +360,7 @@ public class MessageActivity extends Activity {
             newsCollectAdapter.RemoveAllInCheckedList();
             newsCollectAdapter.setList(favList);
 
-            progressDialog.dismiss();
+            layoutLoad.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
 

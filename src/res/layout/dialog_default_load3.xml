@@ -7,7 +7,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:orientation="vertical"
-    android:background="@drawable/home_load_bg_drawable" >
+    android:background="#dcdcdc" >
       
     <ImageView
         android:id="@+id/img_load" 
@@ -33,9 +33,8 @@
         android:id="@+id/pro_picture" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"       
-        android:layout_marginRight="15dp"
-        android:layout_centerVertical="true" 
-        
+        android:layout_marginRight="15dp"         
+        android:layout_centerVertical="true"         
         android:indeterminateDrawable="@drawable/progress_picture"/>
         
         <TextView
@@ -43,12 +42,12 @@
             android:layout_toRightOf="@+id/pro_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/picture_load"
-            android:textColor="@color/white"
-            android:layout_centerVertical="true"
+            android:layout_centerVertical="true" 
             android:layout_alignTop="@+id/pro_picture"
             android:layout_alignBottom="@+id/pro_picture"
-            android:gravity="center_vertical" 
+            android:gravity="center_vertical"
+            android:text="@string/picture_load"
+            android:textColor="#8f8f8f"
             android:textSize="15sp"/>
         
     </RelativeLayout>
