@@ -349,11 +349,14 @@ public class MessageActivity extends Activity {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
-                if (delFailCount == 0)
-                    NotificationUtil.showShortToast("É¾³ý³É¹¦", MessageActivity.this);
-                else {
-                    NotificationUtil.showLongToast(delFailCount + "ÌõÉ¾³ýÊ§°Ü", MessageActivity.this);
-                }
+                NotificationUtil.showShortToast("É¾³ý³É¹¦", MessageActivity.this);
+                /*
+                 * if (delFailCount == 0)
+                 * NotificationUtil.showShortToast("É¾³ý³É¹¦",
+                 * MessageActivity.this); else {
+                 * NotificationUtil.showLongToast(delFailCount + "ÌõÉ¾³ýÊ§°Ü",
+                 * MessageActivity.this); }
+                 */
             } else {
                 NotificationUtil.showLongToast("É¾³ýÊ§°Ü" + ex.toString(), MessageActivity.this);
             }

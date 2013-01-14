@@ -25,6 +25,7 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,7 +36,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class HeadNewsActivity extends Activity implements
+public class HeadNewsActivity extends Activity implements OnClickListener,
         android.view.GestureDetector.OnGestureListener {
 
     private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
@@ -149,13 +150,17 @@ public class HeadNewsActivity extends Activity implements
     private void init() {
 
         mInfalater = getLayoutInflater();
-        headerView = mInfalater.inflate(R.layout.banner, null);
+        headerView = (View) mInfalater.inflate(R.layout.banner, null);
         gestureDetector = new GestureDetector(this);
 
         pic0 = (ImageView) headerView.findViewById(R.id.pic0);
+        pic0.setOnClickListener(this);
         pic1 = (ImageView) headerView.findViewById(R.id.pic1);
+        pic1.setOnClickListener(this);
         pic2 = (ImageView) headerView.findViewById(R.id.pic2);
+        pic2.setOnClickListener(this);
         pic3 = (ImageView) headerView.findViewById(R.id.pic3);
+        pic3.setOnClickListener(this);
         txtNews = (TextView) headerView.findViewById(R.id.txt_horizontal_title);
 
         adapter = new HeadlineAdapter(this);
@@ -203,6 +208,45 @@ public class HeadNewsActivity extends Activity implements
         thread.start();
         handler.sendEmptyMessage(MSG_GET_HEADNEWS);
         // handler.sendEmptyMessage(MSG_GET_PICSNEWS);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.pic0:
+                if (picsNews != null) {
+                    Intent intent0 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent0.putExtra("id", picsNews.get(0).getId());
+                    startActivity(intent0);
+                }
+                break;
+            case R.id.pic1:
+                if (picsNews != null) {
+                    Intent intent1 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent1.putExtra("id", picsNews.get(1).getId());
+                    startActivity(intent1);
+                }
+                break;
+            case R.id.pic2:
+                if (picsNews != null) {
+                    Intent intent2 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent2.putExtra("id", picsNews.get(2).getId());
+                    startActivity(intent2);
+                }
+                break;
+            case R.id.pic3:
+                if (picsNews != null) {
+                    Intent intent3 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
+                    intent3.putExtra("id", picsNews.get(3).getId());
+                    startActivity(intent3);
+                }
+                break;
+            default:
+                break;
+
+        }
 
     }
 
@@ -349,6 +393,9 @@ public class HeadNewsActivity extends Activity implements
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 HeadNewsActivity.this);
                     }
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.no_more_message),
+                            HeadNewsActivity.this);
                 }
             }
             super.onPostExecute(result);
@@ -474,52 +521,10 @@ public class HeadNewsActivity extends Activity implements
         }
     }
 
-    private void clickCurrentView() {
-
-        currentItem = mPager.getCurrentScreen();
-
-        switch (currentItem) {
-            case 0:
-                if (picsNews != null) {
-                    Intent intent0 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                    intent0.putExtra("id", picsNews.get(0).getId());
-                    intent0.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent0);
-                }
-                break;
-            case 1:
-                if (picsNews != null) {
-                    Intent intent1 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                    intent1.putExtra("id", picsNews.get(1).getId());
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent1);
-                }
-                break;
-            case 2:
-                if (picsNews != null) {
-                    Intent intent2 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                    intent2.putExtra("id", picsNews.get(2).getId());
-                    intent2.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent2);
-                }
-                break;
-            case 3:
-                if (picsNews != null) {
-                    Intent intent3 = new Intent(HeadNewsActivity.this, NewsDetailsActivity.class);
-                    intent3.putExtra("id", picsNews.get(3).getId());
-                    intent3.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent3);
-                }
-                break;
-            default:
-                break;
-
-        }
-    }
-
     @Override
     public boolean onDown(MotionEvent e) {
 
+        // TODO Auto-generated method stub
         return false;
     }
 
@@ -559,8 +564,7 @@ public class HeadNewsActivity extends Activity implements
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
-        clickCurrentView();
-        return true;
+        return false;
     }
 
     private void resetFocus() {
