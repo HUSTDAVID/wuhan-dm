@@ -345,6 +345,7 @@ public class VotedListActivity extends Activity {
                 View view = viewPager.getChildAt(currentSelelct);
                 TextView txtInfo = (TextView) view.findViewById(R.id.vote_ing_3);
                 Button btnVote = (Button) view.findViewById(R.id.btn_vote);
+                btnVote.setText(getString(R.string.watch_result));
                 txtInfo.setText(getString(R.string.take_part));
                 btnVote.setOnClickListener(new OnClickListener() {
 

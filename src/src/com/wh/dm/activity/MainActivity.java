@@ -203,7 +203,7 @@ public class MainActivity extends Activity implements OnTouchListener {
                     layout_load.setVisibility(View.GONE);
                 }
             }
-        }, 4000);
+        }, 5000);
 
     }
 

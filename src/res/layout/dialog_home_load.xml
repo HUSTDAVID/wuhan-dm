@@ -15,6 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"        
         android:layout_marginRight="15dp"
+        android:layout_alignTop="@+id/btn_home_load_close"
+        android:layout_alignBottom="@+id/btn_home_load_close"
         android:indeterminateDrawable="@drawable/progress_dialog_home"/>
     
     <TextView
@@ -24,13 +26,13 @@
         android:layout_marginRight="30dp"
         android:layout_toRightOf="@+id/pro_home"
         android:singleLine="true"
-        android:layout_alignTop="@+id/pro_home"
-        android:layout_alignBottom="@+id/pro_home"
+        android:layout_alignTop="@+id/btn_home_load_close"
+        android:layout_alignBottom="@+id/btn_home_load_close"
         android:text="@string/home_load"
         android:layout_centerInParent="true"
         android:textColor="@color/white"
         android:gravity="center_vertical"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
     
     
     <View 
@@ -40,11 +42,11 @@
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/btn_home_load_close"/>
     
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_home_load_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:layout_centerVertical="true"      
+        android:layout_centerVertical="true"      
         android:layout_alignParentRight="true"
         android:background="@drawable/home_close"/>
 

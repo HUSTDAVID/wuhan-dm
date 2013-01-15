@@ -19,9 +19,10 @@
             android:layout_height="80dip"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"            
             android:scaleType="centerInside"
             android:src="@drawable/love" />
-
+
         <TextView
             android:id="@+id/item_text"
             android:layout_width="fill_parent"
