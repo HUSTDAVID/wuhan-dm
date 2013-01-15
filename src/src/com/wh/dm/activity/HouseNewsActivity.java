@@ -6,7 +6,6 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -74,7 +73,7 @@ public class HouseNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(HouseNewsActivity.this);
-        id = preference.getInt(Preferences.NEWS_ONE_ID, 211);
+        id = getIntent().getIntExtra("id", 211);
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);

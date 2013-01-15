@@ -6,7 +6,6 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -15,11 +14,9 @@ import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -71,9 +68,7 @@ public class LifeNewsActivity extends Activity {
         MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_house);
-        SharedPreferences preference = PreferenceManager
-                .getDefaultSharedPreferences(LifeNewsActivity.this);
-        id = preference.getInt(Preferences.NEWS_FOUR_ID, 214);
+        id = getIntent().getIntExtra("id", 214);
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);

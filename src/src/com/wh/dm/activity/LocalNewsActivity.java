@@ -60,6 +60,8 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
     private final int MSG_GET_NEWS_TYPE = 0;
     private GetNewsTypeTask getNewsTypeTask = null;
     private ArrayList<NewsType> newsSort = null;
+    private String[] newsSortNames;
+    private String[] newsIds;
 
     private final Handler handler = new Handler() {
 
@@ -131,23 +133,19 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
 
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(LocalNewsActivity.this);
-        String one = preference.getString(Preferences.NEWS_ONE,
-                getResources().getString(R.string.house));
-        String two = preference.getString(Preferences.NEWS_TWO,
-                getResources().getString(R.string.car));
-        String three = preference.getString(Preferences.NEWS_THREE,
-                getResources().getString(R.string.digital));
-        String four = preference.getString(Preferences.NEWS_FOUR,
-                getResources().getString(R.string.lift));
-        String five = preference.getString(Preferences.NEWS_FIVE,
-                getResources().getString(R.string.traval));
+        String newsAllSort = preference.getString(Preferences.NEWS_ALL_SORT,
+                getString(R.string.news_all_sort));
+        String newsAllId = preference.getString(Preferences.NEWS_ALL_SORT,
+                getString(R.string.news_all_sort));
+        newsSortNames = newsAllSort.split("\\:");
+        newsIds = newsAllId.split("\\:");
 
         txtHeadline = initMenu(txtHeadline, getResources().getString(R.string.headline));
-        txtHouse = initMenu(txtHouse, one);
-        txtCar = initMenu(txtCar, two);
-        txtFashion = initMenu(txtFashion, three);
-        txtLift = initMenu(txtLift, four);
-        txtTravel = initMenu(txtTravel, five);
+        txtHouse = initMenu(txtHouse, newsSortNames[0]);
+        txtCar = initMenu(txtCar, newsSortNames[1]);
+        txtFashion = initMenu(txtFashion, newsSortNames[2]);
+        txtLift = initMenu(txtLift, newsSortNames[3]);
+        txtTravel = initMenu(txtTravel, newsSortNames[4]);
 
         txtHeadline.setId(1);
         txtHouse.setId(2);
@@ -169,6 +167,18 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
         menuLinerLayout.addView(txtFashion);
         menuLinerLayout.addView(txtLift);
         menuLinerLayout.addView(txtTravel);
+
+        if (newsSortNames.length > 5) {
+            for (int i = 5; i < newsSortNames.length; i++) {
+                TextView txtOther = new TextView(LocalNewsActivity.this);
+                txtOther = initMenu(txtOther, newsSortNames[i]);
+                txtOther.setId(i + 2);
+                txtOther.setOnClickListener(new NewsItemOnClickListener());
+                menuLinerLayout.addView(txtOther);
+                menuList.add(txtOther);
+
+            }
+        }
 
         handler.sendEmptyMessage(MSG_GET_NEWS_TYPE);
 
@@ -211,18 +221,21 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 case 2:
                     setCurTxt(2);
                     intent.setClass(LocalNewsActivity.this, HouseNewsActivity.class);
+                    intent.putExtra("id", newsIds[0]);
                     vMain = getLocalActivityManager().startActivity("House", intent).getDecorView();
                     break;
 
                 case 3:
                     setCurTxt(3);
                     intent.setClass(LocalNewsActivity.this, CarNewsActivity.class);
+                    intent.putExtra("id", newsIds[1]);
                     vMain = getLocalActivityManager().startActivity("Car", intent).getDecorView();
                     break;
 
                 case 4:
                     setCurTxt(4);
                     intent.setClass(LocalNewsActivity.this, FashionNewsActivity.class);
+                    intent.putExtra("id", newsIds[2]);
                     vMain = getLocalActivityManager().startActivity("Fashion", intent)
                             .getDecorView();
                     break;
@@ -230,12 +243,14 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                 case 5:
                     setCurTxt(5);
                     intent.setClass(LocalNewsActivity.this, LifeNewsActivity.class);
+                    intent.putExtra("id", newsIds[3]);
                     vMain = getLocalActivityManager().startActivity("Life", intent).getDecorView();
                     break;
 
                 case 6:
                     setCurTxt(6);
                     intent.setClass(LocalNewsActivity.this, TravelNewsActivity.class);
+                    intent.putExtra("id", newsIds[4]);
                     vMain = getLocalActivityManager().startActivity("Travel", intent)
                             .getDecorView();
                     break;
@@ -244,7 +259,7 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                     setCurTxt(id);
                     getLocalActivityManager().destroyActivity("other", true);
                     intent.setClass(LocalNewsActivity.this, NewsOtherSortActivity.class);
-                    intent.putExtra("id", newsSort.get(id - 2).getId());
+                    intent.putExtra("id", newsIds[id - 2]);
                     vMain = getLocalActivityManager().startActivity("other", intent).getDecorView();
                     break;
             }
@@ -329,26 +344,29 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
         protected void onPostExecute(ArrayList<NewsType> result) {
 
             if (result != null && result.size() > 0) {
-                String one = newsSort.get(0).getTypename();
-                String two = newsSort.get(1).getTypename();
-                String three = newsSort.get(2).getTypename();
-                String four = newsSort.get(3).getTypename();
-                String five = newsSort.get(4).getTypename();
-                int idOne = newsSort.get(0).getId();
-                int idTwo = newsSort.get(1).getId();
-                int idThree = newsSort.get(2).getId();
-                int idFour = newsSort.get(3).getId();
-                int idFive = newsSort.get(4).getId();
 
-                // refresh news sort
-                txtHouse.setText(one);
-                txtCar.setText(two);
-                txtFashion.setText(three);
-                txtLift.setText(four);
-                txtTravel.setText(five);
+                String newsAllSort = "";
+                String newsAllId = "";
+                int size = result.size();
+                int length = newsSortNames.length;
+                // index 0 is headline
+                for (int i = 0; i < length; i++) {
+                    // index 0 is headline,so get result i to menulist i+1
+                    menuList.get(i + 1).setText(result.get(i).getTypename());
+                }
+                for (int i = 0; i < size; i++) {
+                    newsAllSort += result.get(i).getTypename();
+                    newsAllId += result.get(i).getId();
+                    if (i != size) {
+                        newsAllSort += ":";
+                        newsAllId += ":";
+                    }
 
-                if (result.size() > 5) {
-                    for (int i = 5; i < result.size(); i++) {
+                }
+                newsIds = newsAllId.split("\\:");
+                if (size > length) {
+
+                    for (int i = length; i < size; i++) {
                         TextView txtOther = new TextView(LocalNewsActivity.this);
                         txtOther = initMenu(txtOther, result.get(i).getTypename());
                         txtOther.setId(i + 2);
@@ -359,8 +377,7 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                     }
                 }
 
-                Preferences.saveNewsType(LocalNewsActivity.this, one, two, three, four, five,
-                        idOne, idTwo, idThree, idFour, idFive);
+                Preferences.saveNewsType(LocalNewsActivity.this, newsAllSort, newsAllId);
             }
             super.onPostExecute(result);
         }

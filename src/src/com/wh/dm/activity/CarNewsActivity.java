@@ -6,7 +6,6 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -70,7 +69,7 @@ public class CarNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(CarNewsActivity.this);
-        id = preference.getInt(Preferences.NEWS_TWO_ID, 212);
+        id = getIntent().getIntExtra("id", 212);
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         adapter = new HeadlineAdapter(this);
         mInfalater = getLayoutInflater();

@@ -6,7 +6,6 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.PicWithTxtNews;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.HeadlineAdapter;
@@ -70,7 +69,7 @@ public class TravelNewsActivity extends Activity {
         MobclickAgent.onError(this);
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(TravelNewsActivity.this);
-        id = preference.getInt(Preferences.NEWS_FIVE_ID, 215);
+        id = getIntent().getIntExtra("id", 215);
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);
