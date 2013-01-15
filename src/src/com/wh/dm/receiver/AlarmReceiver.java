@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class AlarmReceiver extends BroadcastReceiver {
 
     private FetchDataTask fetchDataTask;
-    private NotificationManager notificationManager;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     private int msgNum;
@@ -49,14 +48,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         notification.when = System.currentTimeMillis();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         Intent intent_push;
-        // if (message.getTemp() == 0) {
         intent_push = new Intent(context, MessageActivity.class);
-        // } else {
-        // intent_push = new Intent(context, DM_MZineArticleActivity.class);
-        // }
-        // Bundle bundle = new Bundle();
-        // bundle.putInt("sid", message.getMid());
-        // intent_push.putExtras(bundle);
         PendingIntent sender = PendingIntent.getActivity(context, flag, intent_push, flag);
 
         notification.contentIntent = sender;

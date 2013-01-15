@@ -270,7 +270,6 @@ public class WH_DMApp extends Application {
 
             if (result != null) {
                 databaseImpl.deletePostMessage();
-                Preferences.setPostMessage(WH_DMApp.this, 0);
                 startService(new Intent(WH_DMApp.this, PushService.class));
                 databaseImpl.addMagazines(result);
                 sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));

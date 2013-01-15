@@ -18,9 +18,9 @@ public class ClearReceiver extends BroadcastReceiver {
         WH_DMApp app = (WH_DMApp) context.getApplicationContext();
         DatabaseImpl databaseImpl = app.getDatabase();
         databaseImpl.deletePostMessage();
-        databaseImpl.deleteLoadInfo();
-        databaseImpl.deleteMagazineBody();
-        databaseImpl.deleteMagazinePic();
+        // databaseImpl.deleteLoadInfo();
+        // databaseImpl.deleteMagazineBody();
+        // databaseImpl.deleteMagazinePic();
 
     }
 }

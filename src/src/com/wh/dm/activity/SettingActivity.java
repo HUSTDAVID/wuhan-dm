@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.util.FileUtil;
 import com.wh.dm.util.SettingUtil;
@@ -37,6 +38,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
     Preference pref_about;
 
     SharedPreferences sPreference;
+    private WH_DMApp wh_dmApp;
+    private DatabaseImpl databaseImpl;
 
     private ImageButton btnBack;
 
@@ -76,6 +79,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
         txt_title = (TextView) findViewById(R.id.txt_header_title2);
         txt_title.setText(getResources().getString(R.string.setting));
         btnBack = (ImageButton) findViewById(R.id.Btn_back_header2);
+        wh_dmApp = (WH_DMApp) getApplication();
+        databaseImpl = wh_dmApp.getDatabase();
         btnBack.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -124,6 +129,9 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
             startActivity(intent);
         } else if (preference.getKey().equals("cache")) {
             FileUtil.deleteCache();
+            databaseImpl.deleteLoadInfo();
+            databaseImpl.deleteMagazineBody();
+            databaseImpl.deleteMagazinePic();
             pref_cache.setSummary(FileUtil.getCacheSize());
         } else if (preference.getKey().equals("more")) {
             Intent intent = new Intent(SettingActivity.this, MoreActivity.class);
