@@ -73,7 +73,7 @@ public class DragGrid extends GridView {
                 mLastY = y;
                 dragPosition = dropPosition = position;
 
-                if (Configure.curentPage == 0 && (position == 0 || position == 1)) {
+                if (Configure.curentPage == 0 && (position == 0 || position == 1 || position == 2)) {
                     Configure.isMove = false;
                     return false;
                 }
@@ -324,6 +324,7 @@ public class DragGrid extends GridView {
                 // TODO Auto-generated method stub
                 adapter.exchange(dragPosition, dropPosition);
                 adapter.notifyDataSetChanged();
+
             }
         });
     }

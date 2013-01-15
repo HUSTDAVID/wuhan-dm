@@ -56,12 +56,16 @@ public class DragGridAdapter extends BaseAdapter {
 
     public void exchange(int startPosition, int endPosition) {
 
-        Object endObject = getItem(endPosition);
-        Object startObject = getItem(startPosition);
-        list.add(startPosition, (Magazine) endObject);
-        list.remove(startPosition + 1);
-        list.add(endPosition, (Magazine) startObject);
-        list.remove(endPosition + 1);
+        if (endPosition == 0 || endPosition == 1 || endPosition == 2) {
+
+        } else {
+            Object endObject = getItem(endPosition);
+            Object startObject = getItem(startPosition);
+            list.add(startPosition, (Magazine) endObject);
+            list.remove(startPosition + 1);
+            list.add(endPosition, (Magazine) startObject);
+            list.remove(endPosition + 1);
+        }
     }
 
     @Override
