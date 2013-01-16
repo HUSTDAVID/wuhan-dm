@@ -269,7 +269,6 @@ public class WH_DMApp extends Application {
         protected void onPostExecute(ArrayList<Magazine> result) {
 
             if (result != null) {
-                databaseImpl.deletePostMessage();
                 startService(new Intent(WH_DMApp.this, PushService.class));
                 databaseImpl.addMagazines(result);
                 sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));

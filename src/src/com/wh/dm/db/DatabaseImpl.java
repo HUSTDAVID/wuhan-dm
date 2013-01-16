@@ -241,14 +241,16 @@ public class DatabaseImpl implements Database {
         db.delete(TABLE_MAGAZINE_HOT, null, null);
         db.delete(TABLE_MAGEZINE_BODY, null, null);
         db.delete(TABLE_LOAD_INFO, null, null);
-        // subcribe
-        db.delete(TABLE_SUBCRIBE, null, null);
-        // message
-        db.delete(TABLE_MESSAGE, null, null);
+
         // down load
         db.delete(TABLE_MAGEZINE_BODY, null, null);
         db.delete(TABLE_MAGAZINE_PIC, null, null);
         db.delete(TABLE_LOAD_INFO, null, null);
+
+        // message
+        // db.delete(TABLE_MESSAGE, null, null);
+        // subcribe
+        // db.delete(TABLE_SUBCRIBE, null, null);
         db.close();
 
     }

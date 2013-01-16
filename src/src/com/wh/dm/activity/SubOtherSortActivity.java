@@ -181,13 +181,13 @@ public class SubOtherSortActivity extends Activity {
 
             }
         });
-        lvSub.addFooterView(footer);
 
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
         adapter = new SubscribeAdapter(this);
         adapter.setHandler(handler);
+        adapter.setDatabaseImpl(databaseImpl);
         handler.sendEmptyMessage(MSG_GET_MAGAZINE);
     }
 
@@ -233,6 +233,7 @@ public class SubOtherSortActivity extends Activity {
             if (result != null && result.size() > 0) {
                 if (isFirstLoad) {
                     isFirstLoad = false;
+                    lvSub.addFooterView(footer);
                 }
                 if (FLAG_PAGE_UP) {
                     adapter.addList(result);

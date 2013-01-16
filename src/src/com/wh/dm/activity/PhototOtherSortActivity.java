@@ -130,7 +130,6 @@ public class PhototOtherSortActivity extends Activity {
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         footer.setBackgroundResource(R.drawable.photos_bg);
         btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
-        lvPhotos.addFooterView(footer);
         btnFooter.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -170,6 +169,7 @@ public class PhototOtherSortActivity extends Activity {
             if (result != null && result.size() > 0) {
                 if (FLAG_PAGE_UP) {
                     adapter.addList(result);
+                    lvPhotos.addFooterView(footer);
                     FLAG_PAGE_UP = false;
                 } else {
 
