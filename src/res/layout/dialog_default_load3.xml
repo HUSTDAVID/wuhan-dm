@@ -7,7 +7,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:orientation="vertical"
-    android:background="#dcdcdc" >
+    android:background="#00dcdcdc" >
       
     <ImageView
         android:id="@+id/img_load" 
