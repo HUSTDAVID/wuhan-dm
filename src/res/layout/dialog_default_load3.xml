@@ -31,8 +31,8 @@
         <ProgressBar
         
         android:id="@+id/pro_picture" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"       
+        android:layout_width="27px"
+        android:layout_height="27px"       
         android:layout_marginRight="15dp"         
         android:layout_centerVertical="true"         
         android:indeterminateDrawable="@drawable/progress_picture"/>

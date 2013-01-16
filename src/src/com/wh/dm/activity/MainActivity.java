@@ -232,6 +232,13 @@ public class MainActivity extends Activity implements OnTouchListener {
 
     }
 
+    @Override
+    protected void onDestroy() {
+
+        // databaseImpl.refreshMagazines(data);
+        super.onDestroy();
+    }
+
     public void menu_init() {
 
         Magazine Magazine1 = new Magazine();
@@ -573,12 +580,6 @@ public class MainActivity extends Activity implements OnTouchListener {
         });
         txt_page.startAnimation(a);
 
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
     }
 
     private class UnSubcribeTask extends AsyncTask<Integer, Void, Integer> {

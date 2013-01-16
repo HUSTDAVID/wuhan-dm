@@ -1488,7 +1488,7 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
-    public void delMagazines() {
+    public void refreshMagazines(ArrayList<Magazine> magazines) {
 
         SQLiteDatabase db = context
                 .openOrCreateDatabase(TABLE_SUBCRIBE, Context.MODE_PRIVATE, null);
@@ -1496,6 +1496,15 @@ public class DatabaseImpl implements Database {
             db.delete(TABLE_SUBCRIBE, null, null);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        for (int i = 0; i < magazines.size(); i++) {
+            try {
+                ContentValues values = new ContentValues();
+                values.putAll(new MagazineBuilder().deconstruct(magazines.get(i)));
+                db.insert(TABLE_SUBCRIBE, null, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         db.close();
     }

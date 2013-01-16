@@ -27,7 +27,6 @@ public class DragGridAdapter extends BaseAdapter {
     private ImageView img_String;
     private Handler handler;
 
-    // TODO
     public DragGridAdapter(Context mContext, ArrayList<Magazine> list, Handler handler) {
 
         this.context = mContext;

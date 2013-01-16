@@ -177,7 +177,6 @@ public interface Database {
 
     public boolean deleteOneFavorite(int id);
 
-
     // subcribe
     public ArrayList<Magazine> getSubcribedMagazine();
 
@@ -187,7 +186,7 @@ public interface Database {
 
     public void delMagazine(int id);
 
-    public void delMagazines();
+    public void refreshMagazines(ArrayList<Magazine> magazines);
 
     // magazine download
     public ArrayList<ArticleMagzine> getMagazineBody(int sid);

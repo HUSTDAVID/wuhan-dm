@@ -31,27 +31,25 @@ public class SplashActivity extends Activity {
         MobclickAgent.onError(this);
         setContentView(R.layout.activity_splash);
         img = (ImageView) findViewById(R.id.loading);
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstLaunch = preference.getBoolean(Preferences.FISRT_LAUNCH, true);
+
         String path = Preferences.getLoadPic(SplashActivity.this);
-        if (path != null && path.length() > 0) {
+
+        if (firstLaunch) {
+            img.setBackgroundDrawable(getResources().getDrawable(R.drawable.splash));
+        } else {
             UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN + path,
                     R.drawable.splash, null);
         }
 
-        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean firstLaunch = preference.getBoolean(Preferences.FISRT_LAUNCH, true);
         if (firstLaunch) {
             final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(
                     Context.TELEPHONY_SERVICE);
             String tmDevice = "" + tm.getDeviceId();
             Preferences.firstLaunch(this, tmDevice);
         }
-        /*
-         * boolean update_db =
-         * preference.getBoolean(Preferences.UPDATE_DATABASE, true); if
-         * (update_db) { DatabaseImpl databaseImpl = ((WH_DMApp)
-         * getApplication()).getDatabase(); databaseImpl.deleteMagazineBody();
-         * databaseImpl.deleteLoadInfo(); Preferences.setUpdateDB(this); }
-         */
+
         GetLoadPicTask getLoadPictask = new GetLoadPicTask();
         getLoadPictask.execute();
         new Handler().postDelayed(new Runnable() {
@@ -90,6 +88,8 @@ public class SplashActivity extends Activity {
 
             if (result != null) {
                 if (result.getResult()) {
+                    UrlImageViewHelper.setUrlDrawable(new ImageView(SplashActivity.this),
+                            WH_DMHttpApiV1.URL_DOMAIN + result.getMsg(), R.drawable.splash, null);
                     Preferences.saveLoadPic(SplashActivity.this, result.getMsg());
                 }
             }
