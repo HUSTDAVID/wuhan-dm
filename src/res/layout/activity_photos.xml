@@ -11,10 +11,26 @@
     
 
 
-    <include
+    <HorizontalScrollView 
+		        android:layout_width="match_parent"
+		        android:layout_height="35dp"
+		        android:background="@drawable/list_topbg"
+		        android:scrollbars="none" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLayoutMenu"
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:background="@drawable/list_topbg"
+		            android:gravity="center_vertical" >
+		    
+		        </LinearLayout>
+		    </HorizontalScrollView> 
+		    
+		    <View 
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/list_top" />
+        android:layout_height="1dip"
+        android:background="#c0c0c0" />
     
     <RelativeLayout 
         android:id="@+id/rel_photos_main"

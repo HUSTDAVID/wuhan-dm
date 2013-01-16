@@ -6,7 +6,6 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.PhotoUtil;
@@ -53,7 +52,7 @@ public class CarPhotoActivity extends Activity {
     private GetPhotosTask getPhotosTask = null;
     private PhotoAdapter adapter;
     ArrayList<TwoPhotos> savePhotos = null;
-    private int id = 0;
+    private String id;
 
     private final Handler handler = new Handler() {
 
@@ -107,7 +106,7 @@ public class CarPhotoActivity extends Activity {
 
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(CarPhotoActivity.this);
-        id = preference.getInt(Preferences.PHOTO_ONE_ID, 218);
+        id = getIntent().getStringExtra("id");
 
         lvPhotos = (PullToRefreshListView) findViewById(R.id.lv_photos_all);
         lvPhotos.setDivider(null);

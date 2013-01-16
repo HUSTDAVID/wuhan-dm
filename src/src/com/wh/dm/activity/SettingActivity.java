@@ -184,6 +184,8 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 
                         WH_DMApp.isLogin = false;
                         Preferences.logout(SettingActivity.this);
+                        Preferences.setPostMessage(SettingActivity.this, 0);
+                        databaseImpl.deletePostMessage();
                         pref_login.setTitle(getString(R.string.set_login));
                         pref_login.setSummary(getString(R.string.login_summary));
 

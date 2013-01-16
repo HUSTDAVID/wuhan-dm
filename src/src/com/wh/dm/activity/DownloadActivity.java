@@ -193,6 +193,10 @@ public class DownloadActivity extends Activity {
     public void onResume() {
 
         super.onResume();
+        databaseImpl = wh_dmApp.getDatabase();
+        subMagazines = databaseImpl.getSubcribedMagazine();
+        loadList = initLoadInfo(subMagazines);
+        adapter.setList(loadList);
         MobclickAgent.onResume(this);
     }
 

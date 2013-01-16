@@ -41,7 +41,7 @@ public class CarNewsActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     private int curPage = 1;
-    private int id;
+    private String id;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
@@ -69,7 +69,7 @@ public class CarNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(CarNewsActivity.this);
-        id = getIntent().getIntExtra("id", 212);
+        id = getIntent().getStringExtra("id");
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         adapter = new HeadlineAdapter(this);
         mInfalater = getLayoutInflater();

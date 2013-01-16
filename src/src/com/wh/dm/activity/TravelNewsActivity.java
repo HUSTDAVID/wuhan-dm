@@ -41,7 +41,7 @@ public class TravelNewsActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
     private int curPage = 1;
-    private int id;
+    private String id;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
@@ -69,7 +69,7 @@ public class TravelNewsActivity extends Activity {
         MobclickAgent.onError(this);
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(TravelNewsActivity.this);
-        id = getIntent().getIntExtra("id", 215);
+        id = getIntent().getStringExtra("id");
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);

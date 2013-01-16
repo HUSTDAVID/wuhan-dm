@@ -37,7 +37,7 @@ public class NewsOtherSortActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private boolean FLAG_PAGE_UP = false;
     private int curPage = 1;
-    private int id;
+    private String id;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -60,7 +60,7 @@ public class NewsOtherSortActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         MobclickAgent.onError(this);
 
-        id = getIntent().getIntExtra("id", 268);
+        id = getIntent().getStringExtra("id");
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);

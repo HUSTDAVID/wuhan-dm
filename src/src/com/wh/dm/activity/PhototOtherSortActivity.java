@@ -5,10 +5,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
-import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.type.TwoPhotos;
 import com.wh.dm.util.NotificationUtil;
-import com.wh.dm.util.PhotoUtil;
 import com.wh.dm.widget.PhotoAdapter;
 import com.wh.dm.widget.PullToRefreshListView;
 import com.wh.dm.widget.PullToRefreshListView.OnRefreshListener;
@@ -28,7 +26,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class FunPhotoActivity extends Activity {
+public class PhototOtherSortActivity extends Activity {
+
     RelativeLayout relPhotosHeader;
     TextView txtPhotosHeader;
 
@@ -39,12 +38,10 @@ public class FunPhotoActivity extends Activity {
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
-    private DatabaseImpl databaseImp1;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLanucher = true;
     private boolean isAdapter = false;
-    private boolean isFirstLoad = true;
     private static int MSG_GET_PHOTOS = 0;
     private GetPhotosTask getPhotosTask = null;
     private PhotoAdapter adapter;
@@ -107,7 +104,6 @@ public class FunPhotoActivity extends Activity {
         lvPhotos.setDivider(null);
         wh_dmApp = (WH_DMApp) this.getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
-        databaseImp1 = wh_dmApp.getDatabase();
         adapter = new PhotoAdapter(this);
 
         lvPhotos.setOnRefreshListener(new OnRefreshListener() {
@@ -163,23 +159,6 @@ public class FunPhotoActivity extends Activity {
         Exception reason = null;
 
         @Override
-        protected void onPreExecute() {
-
-            if (isFirstLanucher) {
-                savePhotos = PhotoUtil.chagePhoto(databaseImp1.getFunPhoto());
-                if (savePhotos != null && savePhotos.size() > 0) {
-                    lvPhotos.setAdapter(adapter);
-                    adapter.setList(savePhotos);
-                } else {
-                    isAdapter = true;
-                }
-                isFirstLanucher = false;
-            }
-
-            super.onPreExecute();
-        }
-
-        @Override
         protected ArrayList<TwoPhotos> doInBackground(Void... params) {
 
             ArrayList<TwoPhotos> photos = null;
@@ -197,11 +176,6 @@ public class FunPhotoActivity extends Activity {
         protected void onPostExecute(ArrayList<TwoPhotos> result) {
 
             if (result != null && result.size() > 0) {
-
-                if (isFirstLoad) {
-                    databaseImp1.deleteFunPhoto();
-                    isFirstLoad = false;
-                }
                 if (FLAG_PAGE_UP) {
                     adapter.addList(result);
                     FLAG_PAGE_UP = false;
@@ -213,11 +187,8 @@ public class FunPhotoActivity extends Activity {
                     adapter.setList(result);
                 }
 
-                databaseImp1.addFunPhoto(PhotoUtil.chageOnePhoto(result));
-
             } else {
                 if (!FLAG_PAGE_UP) {
-                    savePhotos = PhotoUtil.chagePhoto(databaseImp1.getFunPhoto());
                     if (savePhotos != null && savePhotos.size() > 0) {
                         if (isFirstLanucher) {
                             lvPhotos.setAdapter(adapter);
@@ -228,14 +199,14 @@ public class FunPhotoActivity extends Activity {
                     if (wh_dmApp.isConnected()) {
                         NotificationUtil.showShortToast(
                                 getResources().getString(R.string.no_more_message),
-                                FunPhotoActivity.this);
+                                PhototOtherSortActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
-                                FunPhotoActivity.this);
+                                PhototOtherSortActivity.this);
                     }
                 } else {
                     NotificationUtil.showLongToast(getString(R.string.no_more_message),
-                            FunPhotoActivity.this);
+                            PhototOtherSortActivity.this);
                 }
             }
 
@@ -243,5 +214,4 @@ public class FunPhotoActivity extends Activity {
         }
 
     }
-
 }

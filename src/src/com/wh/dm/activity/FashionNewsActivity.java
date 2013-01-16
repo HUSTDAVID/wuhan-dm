@@ -46,7 +46,7 @@ public class FashionNewsActivity extends Activity {
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
     private boolean isFirstLoad = true;
-    private int id;
+    private String id;
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
@@ -71,7 +71,7 @@ public class FashionNewsActivity extends Activity {
         setContentView(R.layout.activity_news_house);
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(FashionNewsActivity.this);
-        id = getIntent().getIntExtra("id", 213);
+        id = getIntent().getStringExtra("id");
         lv = (PullToRefreshListView) findViewById(R.id.news_list_house);
         mInfalater = getLayoutInflater();
         adapter = new HeadlineAdapter(this);

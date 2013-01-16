@@ -39,7 +39,7 @@ import java.util.Random;
 
 public class DM_MZineArticleActivity extends Activity {
 
-    private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
+    private final String URL_DOMAIN = "http://api.meike15.com";
     private ArrayList<View> views;
     private View view1, view2, view3;
     private ViewPager viewPager;

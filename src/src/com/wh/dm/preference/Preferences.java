@@ -20,15 +20,8 @@ public class Preferences {
     public static final String NEWS_ALL_SORT = "news_all_sort";
     public static final String NEWS_ALL_ID = "news_all_id";
 
-    public static final String PHOTO_ONE = "photo_one";
-    public static final String PHOTO_TWO = "photo_two";
-    public static final String PHOTO_THREE = "photo_three";
-    public static final String PHOTO_FOUR = "photo_four";
-
-    public static final String PHOTO_ONE_ID = "id_photo_one";
-    public static final String PHOTO_TWO_ID = "id_photo_two";
-    public static final String PHOTO_THREE_ID = "id_photo_three";
-    public static final String PHOTO_FOUR_ID = "id_photo_four";
+    public static final String PHOTO_ALL_SORT = "photo_all_sort";
+    public static final String PHOTO_ALL_ID = "photo_all_id";
 
     public static final String MAGAZINE_ONE = "magazien_one";
     public static final String MAGAZINE_TWO = "magazien_two";
@@ -90,19 +83,12 @@ public class Preferences {
 
     }
 
-    public static void savePhotoType(Context context, String one, String two, String three,
-            String four, int idOne, int idTwo, int idThree, int idFour) {
+    public static void savePhotoType(Context context, String photoAllSort, String photoAllId) {
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = preference.edit();
-        editor.putString(PHOTO_ONE, one);
-        editor.putString(PHOTO_TWO, two);
-        editor.putString(PHOTO_THREE, three);
-        editor.putString(PHOTO_FOUR, four);
-        editor.putInt(PHOTO_ONE_ID, idOne);
-        editor.putInt(PHOTO_TWO_ID, idTwo);
-        editor.putInt(PHOTO_THREE_ID, idThree);
-        editor.putInt(PHOTO_FOUR_ID, idFour);
+        editor.putString(PHOTO_ALL_SORT, photoAllSort);
+        editor.putString(PHOTO_ALL_ID, photoAllId);
         editor.commit();
 
     }

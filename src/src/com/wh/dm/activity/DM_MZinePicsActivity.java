@@ -36,7 +36,6 @@ import java.util.ArrayList;
 public class DM_MZinePicsActivity extends Activity {
 
     private ViewPager v_Pager;
-    // private ProgressDialog progressDialog;
     private LinearLayout layout_load;
     private RelativeLayout relInfo;
     private WH_DMApp wh_dmApp;

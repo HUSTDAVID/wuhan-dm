@@ -18,12 +18,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -34,18 +36,15 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
 
     private RelativeLayout relMain;
     private LayoutParams params = null;
-
-    private TextView txtAll;
-    private TextView txtHot;
-    private TextView txtCar;
-    private TextView txtGirl;
-    private TextView txtPhotograph;
-    private TextView txtFun;
     private ImageButton btnMessage;
     private TextView txtNum;
     private View vMain;
     private int itemWidth = 0;
     Intent intent = null;
+    private LinearLayout menuLinerLayout;
+    private ArrayList<TextView> menuList;
+    private String[] photoSortNames;
+    private String[] photoIds;
 
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_DMApi;
@@ -110,42 +109,43 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         TextView txtTitle = (TextView) findViewById(R.id.txt_title);
         txtTitle.setText(getResources().getString(R.string.photo));
 
-        // delete all
-        txtAll = (TextView) findViewById(R.id.txt_listtop_1);
-        txtAll.setText(getResources().getString(R.string.all));
-        txtAll.setVisibility(View.GONE);
-        //
-        txtHot = (TextView) findViewById(R.id.txt_listtop_2);
-        txtHot.setText(getResources().getString(R.string.hot));
-        txtCar = (TextView) findViewById(R.id.txt_listtop_3);
-        txtGirl = (TextView) findViewById(R.id.txt_listtop_4);
-        txtPhotograph = (TextView) findViewById(R.id.txt_listtop_5);
-        txtFun = (TextView) findViewById(R.id.txt_listtop_6);
+        // add list top
+        menuList = new ArrayList<TextView>();
+        menuLinerLayout = (LinearLayout) findViewById(R.id.linearLayoutMenu);
+        menuLinerLayout.setOrientation(LinearLayout.HORIZONTAL);
+        // ≤Œ ˝…Ë÷√
+        LinearLayout.LayoutParams menuLinerLayoutParames = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        menuLinerLayoutParames.gravity = Gravity.CENTER_HORIZONTAL;
 
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(PhotosActivity.this);
-        String one = preference.getString(Preferences.PHOTO_ONE,
-                getResources().getString(R.string.car));
-        String two = preference.getString(Preferences.PHOTO_TWO,
-                getResources().getString(R.string.girl));
-        String three = preference.getString(Preferences.PHOTO_THREE,
-                getResources().getString(R.string.photograph));
-        String four = preference.getString(Preferences.PHOTO_FOUR,
-                getResources().getString(R.string.fun));
-        txtCar.setText(one);
-        txtGirl.setText(two);
-        txtPhotograph.setText(three);
-        txtFun.setText(four);
+        String photoAllSortName = preference.getString(Preferences.PHOTO_ALL_SORT,
+                getString(R.string.photo_all_sort));
+        String photoAllIds = preference.getString(Preferences.PHOTO_ALL_SORT,
+                getString(R.string.photo_all_id));
+        photoSortNames = photoAllSortName.split("\\:");
+        photoIds = photoAllIds.split("\\:");
+        //
+        TextView txtHot = new TextView(this);
+        txtHot = initMenu(txtHot, getResources().getString(R.string.hot));
+        txtHot.setId(1);
+        txtHot.setOnClickListener(new PhotosItemOnClickListener());
+        menuList.add(txtHot);
+        menuLinerLayout.addView(txtHot);
+
+        for (int i = 0; i < photoSortNames.length; i++) {
+            TextView txtView = new TextView(this);
+            txtView = initMenu(txtView, photoSortNames[i]);
+            txtView.setId(i + 2);
+            txtView.setOnClickListener(new PhotosItemOnClickListener());
+            menuList.add(txtView);
+            menuLinerLayout.addView(txtView);
+        }
 
         handler.sendEmptyMessage(MSG_GET_PHOTO_SORT);
 
         itemWidth = getScreenWidth() / 5;
-
-        txtHot.setOnClickListener(new PhotosItemOnClickListener());
-        txtCar.setOnClickListener(new PhotosItemOnClickListener());
-        txtGirl.setOnClickListener(new PhotosItemOnClickListener());
-        txtPhotograph.setOnClickListener(new PhotosItemOnClickListener());
-        txtFun.setOnClickListener(new PhotosItemOnClickListener());
 
         RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(itemWidth,
                 LayoutParams.WRAP_CONTENT);
@@ -157,7 +157,7 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
         params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         relMain.addView(vMain, params);
-        setCurTxt(2);
+        setCurTxt(1);
     }
 
     private class PhotosItemOnClickListener implements OnClickListener {
@@ -166,46 +166,50 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
         public void onClick(View v) {
 
             switch (v.getId()) {
-            /*
-             * case R.id.txt_listtop_1: setCurTxt(1);
-             * intent.setClass(PhotosActivity.this, Photos_AllActivity.class);
-             * vMain = getLocalActivityManager().startActivity("all",
-             * intent).getDecorView(); break;
-             */
-
-                case R.id.txt_listtop_2:
+                case 1:
                     intent.setClass(PhotosActivity.this, HotPhotosActivity.class);
                     vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
+                    setCurTxt(1);
+                    break;
+
+                case 2:
+                    intent.setClass(PhotosActivity.this, CarPhotoActivity.class);
+                    intent.putExtra("id", photoIds[0]);
+                    vMain = getLocalActivityManager().startActivity("car", intent).getDecorView();
                     setCurTxt(2);
                     break;
 
-                case R.id.txt_listtop_3:
-                    intent.setClass(PhotosActivity.this, CarPhotoActivity.class);
-                    vMain = getLocalActivityManager().startActivity("car", intent).getDecorView();
+                case 3:
+                    intent.setClass(PhotosActivity.this, GirlPhotoActivity.class);
+                    intent.putExtra("id", photoIds[1]);
+                    vMain = getLocalActivityManager().startActivity("girl", intent).getDecorView();
                     setCurTxt(3);
                     break;
 
-                case R.id.txt_listtop_4:
-                    intent.setClass(PhotosActivity.this, GirlPhotoActivity.class);
-                    vMain = getLocalActivityManager().startActivity("girl", intent).getDecorView();
+                case 4:
+                    intent.setClass(PhotosActivity.this, PhotographPhotoActivity.class);
+                    intent.putExtra("id", photoIds[2]);
+                    vMain = getLocalActivityManager().startActivity("photograph", intent)
+                            .getDecorView();
                     setCurTxt(4);
                     break;
 
-                case R.id.txt_listtop_5:
-                    intent.setClass(PhotosActivity.this, PhotographPhotoActivity.class);
-                    vMain = getLocalActivityManager().startActivity("photograph", intent)
-                            .getDecorView();
+                case 5:
+                    intent.setClass(PhotosActivity.this, FunPhotoActivity.class);
+                    intent.putExtra("id", photoIds[3]);
+                    vMain = getLocalActivityManager().startActivity("fun", intent).getDecorView();
                     setCurTxt(5);
                     break;
-
-                case R.id.txt_listtop_6:
-                    intent.setClass(PhotosActivity.this, FunPhotoActivity.class);
-                    vMain = getLocalActivityManager().startActivity("fun", intent).getDecorView();
-                    setCurTxt(6);
+                default:
+                    int id = v.getId();
+                    setCurTxt(id);
+                    getLocalActivityManager().destroyActivity("other", true);
+                    // intent.setClass(PhotosActivity.this,
+                    // NewsOtherSortActivity.class);
+                    intent.putExtra("id", photoIds[id - 2]);
+                    vMain = getLocalActivityManager().startActivity("other", intent).getDecorView();
                     break;
             }
-
-            // set main content
             relMain.removeAllViews();
             relMain.addView(vMain, params);
         }
@@ -222,88 +226,17 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
 
     private void setCurTxt(int i) {
 
-        switch (i) {
-        /*
-         * case 1: txtAll.setSelected(true); txtAll.setTextColor(Color.WHITE);
-         * txtHot.setSelected(false); txtHot.setTextColor(Color.BLACK);
-         * txtCar.setSelected(false); txtCar.setTextColor(Color.BLACK);
-         * txtGirl.setSelected(false); txtGirl.setTextColor(Color.BLACK);
-         * txtPhotograph.setSelected(false);
-         * txtPhotograph.setTextColor(Color.BLACK); txtFun.setSelected(false);
-         * txtFun.setTextColor(Color.BLACK); break;
-         */
-            case 2:
-                txtAll.setSelected(false);
-                txtAll.setTextColor(Color.BLACK);
-                txtHot.setSelected(true);
-                txtHot.setTextColor(Color.WHITE);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 3:
-                txtAll.setSelected(false);
-                txtAll.setTextColor(Color.BLACK);
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(true);
-                txtCar.setTextColor(Color.WHITE);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 4:
-                txtAll.setSelected(false);
-                txtAll.setTextColor(Color.BLACK);
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(true);
-                txtGirl.setTextColor(Color.WHITE);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 5:
-                txtAll.setSelected(false);
-                txtAll.setTextColor(Color.BLACK);
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(true);
-                txtPhotograph.setTextColor(Color.WHITE);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 6:
-                txtAll.setSelected(false);
-                txtAll.setTextColor(Color.BLACK);
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(true);
-                txtFun.setTextColor(Color.WHITE);
-                break;
+        int pos = i - 1;
+        int size = menuList.size();
+        for (int j = 0; j < size; j++) {
+            if (j == pos) {
+                menuList.get(j).setSelected(true);
+                menuList.get(j).setTextColor(Color.WHITE);
+            } else {
+                menuList.get(j).setSelected(false);
+                menuList.get(j).setTextColor(Color.BLACK);
+            }
         }
-
     }
 
     public void showMessage() {
@@ -355,26 +288,53 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
 
             if (sortList != null && sortList.size() > 0) {
 
-                String one = sortList.get(0).getTypename();
-                String two = sortList.get(1).getTypename();
-                String three = sortList.get(2).getTypename();
-                String four = sortList.get(3).getTypename();
-                int idOne = sortList.get(0).getId();
-                int idTwo = sortList.get(1).getId();
-                int idThree = sortList.get(2).getId();
-                int idFour = sortList.get(3).getId();
+                String photoAllSortName = "";
+                String photoAllId = "";
+                int size = result.size();
+                int length = photoSortNames.length;
+                // index 0 is headline
+                for (int i = 0; i < length; i++) {
+                    menuList.get(i + 1).setText(result.get(i).getTypename());
+                }
+                for (int i = 0; i < size; i++) {
+                    photoAllSortName += result.get(i).getTypename();
+                    photoAllId += result.get(i).getId();
+                    photoAllSortName += ":";
+                    photoAllId += ":";
+                }
+                photoIds = photoAllId.split("\\:");
+                if (size > length) {
 
-                txtCar.setText(one);
-                txtGirl.setText(two);
-                txtPhotograph.setText(three);
-                txtFun.setText(four);
+                    for (int i = length; i < size; i++) {
+                        TextView txtOther = new TextView(PhotosActivity.this);
+                        txtOther = initMenu(txtOther, result.get(i).getTypename());
+                        txtOther.setId(i + 2);
+                        txtOther.setOnClickListener(new PhotosItemOnClickListener());
+                        menuLinerLayout.addView(txtOther);
+                        menuList.add(txtOther);
 
-                Preferences.savePhotoType(PhotosActivity.this, one, two, three, four, idOne, idTwo,
-                        idThree, idFour);
+                    }
+                }
+
+                Preferences.savePhotoType(PhotosActivity.this, photoAllSortName, photoAllId);
             }
             super.onPostExecute(result);
         }
 
+    }
+
+    // init menu text view
+    private TextView initMenu(TextView txtMenu, String txt) {
+
+        txtMenu.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.FILL_PARENT));
+        txtMenu.setPadding(15, 10, 10, 10);
+        txtMenu.setText(txt);
+        txtMenu.setTextColor(Color.BLACK);
+        txtMenu.setTextSize(18);
+        txtMenu.setGravity(Gravity.CENTER_HORIZONTAL);
+        txtMenu.setBackgroundResource(R.drawable.list_top);
+        return txtMenu;
     }
 
 }
