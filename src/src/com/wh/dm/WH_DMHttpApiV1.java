@@ -520,13 +520,13 @@ public class WH_DMHttpApiV1 {
         return result.getResult();
     }
 
-    public ArrayList<Magazine> getMagazine(int cid, int page) throws WH_DMException,
+    public ArrayList<Magazine> getMagazine(String cid, int page) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpGet httpGet = mHttpApi.createHttpGet(URL_DOMAIN + URL_API_MAGAZINE,
                 new BasicNameValuePair("act", "list"),
                 new BasicNameValuePair("pi", String.valueOf(page)), new BasicNameValuePair("pz",
-                        String.valueOf(20)), new BasicNameValuePair("cid", String.valueOf(cid)));
+                        String.valueOf(20)), new BasicNameValuePair("cid", cid));
         String content = mHttpApi.doHttpRequest(httpGet);
         Type type = new TypeToken<ArrayList<Magazine>>() {
         }.getType();

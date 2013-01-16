@@ -204,8 +204,7 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
                     int id = v.getId();
                     setCurTxt(id);
                     getLocalActivityManager().destroyActivity("other", true);
-                    // intent.setClass(PhotosActivity.this,
-                    // NewsOtherSortActivity.class);
+                    intent.setClass(PhotosActivity.this, PhototOtherSortActivity.class);
                     intent.putExtra("id", photoIds[id - 2]);
                     vMain = getLocalActivityManager().startActivity("other", intent).getDecorView();
                     break;

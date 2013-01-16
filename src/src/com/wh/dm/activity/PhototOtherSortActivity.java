@@ -41,7 +41,6 @@ public class PhototOtherSortActivity extends Activity {
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLanucher = true;
-    private boolean isAdapter = false;
     private static int MSG_GET_PHOTOS = 0;
     private GetPhotosTask getPhotosTask = null;
     private PhotoAdapter adapter;
@@ -92,12 +91,6 @@ public class PhototOtherSortActivity extends Activity {
 
     private void initViews() {
 
-        // init header
-        // relPhotosHeader = (RelativeLayout) findViewById(R.id.rel_header3);
-        // txtPhotosHeader = (TextView) findViewById(R.id.txt_header3_title);
-        // relPhotosHeader.setBackgroundResource(R.drawable.topbar_black_bg);
-        // txtPhotosHeader.setText(getResources().getString(R.string.photo));
-
         id = getIntent().getStringExtra("id");
 
         lvPhotos = (PullToRefreshListView) findViewById(R.id.lv_photos_all);
@@ -127,14 +120,13 @@ public class PhototOtherSortActivity extends Activity {
 
                         curPage = 1;
                         FLAG_PAGE_UP = false;
-                        isAdapter = false;
                         handler.sendEmptyMessage(MSG_GET_PHOTOS);
                         lvPhotos.onRefreshComplete();
                     }
                 }, 1000);
             }
         });
-
+        lvPhotos.setAdapter(adapter);
         footer = mInflater.inflate(R.layout.news_list_footer, null);
         footer.setBackgroundResource(R.drawable.photos_bg);
         btnFooter = (Button) footer.findViewById(R.id.btn_news_footer);
@@ -180,10 +172,7 @@ public class PhototOtherSortActivity extends Activity {
                     adapter.addList(result);
                     FLAG_PAGE_UP = false;
                 } else {
-                    if (isAdapter) {
-                        lvPhotos.setAdapter(adapter);
-                        isAdapter = false;
-                    }
+
                     adapter.setList(result);
                 }
 

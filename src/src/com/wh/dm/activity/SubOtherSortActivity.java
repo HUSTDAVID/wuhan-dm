@@ -35,7 +35,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class Sub_GirlActivity extends Activity {
+public class SubOtherSortActivity extends Activity {
+
     PullToRefreshListView lvSub;
     View footer;
     Button btnFooter;
@@ -50,8 +51,8 @@ public class Sub_GirlActivity extends Activity {
     private ArrayList<TwoMagazine> savedMagazine = null;
     private SubscribeAdapter adapter;
     private int curPage = 1;
-    private String id;
     private DatabaseImpl databaseImpl;
+    private String id;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
     private boolean isAdapter = true;
@@ -131,7 +132,7 @@ public class Sub_GirlActivity extends Activity {
     private void initViews() {
 
         SharedPreferences preference = PreferenceManager
-                .getDefaultSharedPreferences(Sub_GirlActivity.this);
+                .getDefaultSharedPreferences(SubOtherSortActivity.this);
         id = getIntent().getStringExtra("id");
 
         lvSub = (PullToRefreshListView) findViewById(R.id.lv_subscribe);
@@ -198,7 +199,6 @@ public class Sub_GirlActivity extends Activity {
         protected void onPreExecute() {
 
             if (isFirstLauncher) {
-                savedMagazine = MagazineUtil.toTwoMagazine(databaseImpl.getGirlMagazine());
                 if (savedMagazine != null && savedMagazine.size() > 0) {
                     if (isAdapter) {
                         lvSub.setAdapter(adapter);
@@ -207,7 +207,6 @@ public class Sub_GirlActivity extends Activity {
                     }
                 }
                 isFirstLauncher = false;
-                adapter.setDatabaseImpl(databaseImpl);
             }
             super.onPreExecute();
         }
@@ -233,7 +232,6 @@ public class Sub_GirlActivity extends Activity {
 
             if (result != null && result.size() > 0) {
                 if (isFirstLoad) {
-                    databaseImpl.deleteGirlMagazine();
                     isFirstLoad = false;
                 }
                 if (FLAG_PAGE_UP) {
@@ -248,22 +246,22 @@ public class Sub_GirlActivity extends Activity {
                     adapter.setList(result);
                 }
                 addStatus(adapter);
-                databaseImpl.addGirlMagazine(MagazineUtil.toOneMagazine(result));
 
             } else {
                 if (!FLAG_PAGE_UP) {
-                    if (wh_dmApp.isConnected()) {
+                    if (!FLAG_PAGE_UP) {
+                        if (wh_dmApp.isConnected()) {
 
+                        } else {
+                            NotificationUtil.showShortToast(
+                                    getResources().getString(R.string.check_network),
+                                    SubOtherSortActivity.this);
+                        }
                     } else {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.check_network),
-                                Sub_GirlActivity.this);
+                        NotificationUtil.showLongToast(getString(R.string.last_page),
+                                SubOtherSortActivity.this);
                     }
-                } else {
-                    NotificationUtil.showLongToast(getString(R.string.last_page),
-                            Sub_GirlActivity.this);
                 }
-
             }
 
         }
@@ -296,7 +294,7 @@ public class Sub_GirlActivity extends Activity {
             } else {
                 if (wh_dmApp.isConnected()) {
                     NotificationUtil.showShortToast(getString(R.string.sub_fail),
-                            Sub_GirlActivity.this);
+                            SubOtherSortActivity.this);
                 }
             }
             super.onPostExecute(result);

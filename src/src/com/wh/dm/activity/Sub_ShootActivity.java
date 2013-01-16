@@ -6,7 +6,6 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
-import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Cover;
 import com.wh.dm.type.Magazine;
 import com.wh.dm.type.TwoMagazine;
@@ -51,7 +50,7 @@ public class Sub_ShootActivity extends Activity {
     private ArrayList<TwoMagazine> savedMagazine = null;
     private SubscribeAdapter adapter;
     private int curPage = 1;
-    private int id;
+    private String id;
     private DatabaseImpl databaseImpl;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLauncher = true;
@@ -133,7 +132,7 @@ public class Sub_ShootActivity extends Activity {
 
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(Sub_ShootActivity.this);
-        id = preference.getInt(Preferences.MAGAZINE_THREE_ID, 0);
+        id = getIntent().getStringExtra("id");
 
         lvSub = (PullToRefreshListView) findViewById(R.id.lv_subscribe);
         lvSub.setDivider(null);

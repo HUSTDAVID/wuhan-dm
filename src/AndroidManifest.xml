@@ -109,6 +109,11 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
+            android:name=".activity.SubOtherSortActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
             android:name=".activity.DM_VoteResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/my_dialog">

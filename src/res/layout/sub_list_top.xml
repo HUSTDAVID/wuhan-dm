@@ -5,49 +5,34 @@
     android:background="@drawable/list_topbg"
     android:orientation="horizontal"
     android:weightSum="6" >
-
-    <TableRow
-        android:id="@+id/table_top"
-        android:layout_width="fill_parent"
-        android:layout_height="35dip" >
-
-        <TextView
-            android:id="@+id/txt_sub_hot"
-            style="@style/sub_list_top_txt"
-            android:background="@drawable/list_top"
-            android:text="@string/hot" />
-
-        <TextView
-            android:id="@+id/txt_sub_car"
-            style="@style/sub_list_top_txt"
-            android:background="@drawable/list_top"
-            android:text="@string/car" />
-
-        <TextView
-            android:id="@+id/txt_sub_girl"
-            style="@style/sub_list_top_txt"
-            android:background="@drawable/list_top"
-            android:text="@string/girl" />
-
-        <TextView
-            android:id="@+id/txt_sub_photograph"
-            style="@style/sub_list_top_txt"
-            android:background="@drawable/list_top"
-            android:text="@string/photograph" />
-
-        <TextView
-            android:id="@+id/txt_sub_fun"
-            style="@style/sub_list_top_txt"
-            android:background="@drawable/list_top"
-            android:text="@string/fun" />
-
-        <ImageView
-            android:id="@+id/img_sub_search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/btn_subscription_search" />
-
-    </TableRow>
+             <RelativeLayout
+                 android:layout_width="fill_parent"
+                 android:layout_height="35dp"
+                 android:orientation="horizontal">
+                <HorizontalScrollView 
+		        android:layout_width="match_parent"
+		        android:layout_height="35dp"
+		        android:layout_toLeftOf="@+id/img_sub_search"
+		        android:background="@drawable/list_topbg"
+		        android:scrollbars="none" >
+		
+		        <LinearLayout
+		            android:id="@+id/linearLayoutMenu"
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:background="@drawable/list_topbg"
+		            android:gravity="center_vertical" >
+		    
+		        </LinearLayout>
+                   </HorizontalScrollView> 
+	        <ImageView
+	            android:id="@+id/img_sub_search"
+	            android:layout_alignParentRight="true"
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:src="@drawable/btn_subscription_search" />
+        
+        </RelativeLayout>
     
     <View 
         android:layout_width="fill_parent"

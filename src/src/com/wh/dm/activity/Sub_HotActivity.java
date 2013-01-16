@@ -211,7 +211,7 @@ public class Sub_HotActivity extends Activity {
 
             ArrayList<Magazine> one = null;
             try {
-                one = wh_dmApi.getMagazine(0, curPage);
+                one = wh_dmApi.getMagazine("0", curPage);
                 savedMagazine = MagazineUtil.toTwoMagazine(one);
                 return savedMagazine;
             } catch (Exception e) {

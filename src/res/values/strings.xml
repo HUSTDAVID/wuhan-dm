@@ -5,6 +5,8 @@
     <string name="news_all_id">212:213:214:215:216</string>
     <string name="photo_all_sort">奇趣:摄影:汽车:美女</string>
     <string name="photo_all_id">220:219:218:217</string>
+    <string name="magazine_all_sort">汽车:产业园:旅游:生活</string>
+    <string name="magazine_all_id">228:230:231:232</string>
     <string name="load_fail">抱歉，加载订阅信息失败。</string>
     <string name="home_load">努力加载中...</string>
     <string name="logining">正在登陆...</string>

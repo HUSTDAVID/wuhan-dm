@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -43,11 +44,11 @@ public class SubscribeActivity extends ActivityGroup {
     private RelativeLayout relMain;
     private LayoutParams params = null;
 
-    private TextView txtHot;
-    private TextView txtCar;
-    private TextView txtGirl;
-    private TextView txtPhotograph;
-    private TextView txtFun;
+    private LinearLayout menuLinerLayout;
+    private ArrayList<TextView> menuList;
+    private String[] magazineSortNames;
+    private String[] magazineIds;
+
     private ImageView imgSearch;
     private ImageButton btnBack;
     private View vMain;
@@ -88,7 +89,6 @@ public class SubscribeActivity extends ActivityGroup {
         MobclickAgent.onError(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_subscribe);
-
         initViews();
     }
 
@@ -158,27 +158,40 @@ public class SubscribeActivity extends ActivityGroup {
         // txtTitle = (TextView) findViewById(R.id.txt_title);
         // txtTitle.setText(getResources().getString(R.string.news));
 
+        menuList = new ArrayList<TextView>();
+        menuLinerLayout = (LinearLayout) findViewById(R.id.linearLayoutMenu);
+        menuLinerLayout.setOrientation(LinearLayout.HORIZONTAL);
+        // ≤Œ ˝…Ë÷√
+        LinearLayout.LayoutParams menuLinerLayoutParames = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        menuLinerLayoutParames.gravity = Gravity.CENTER_HORIZONTAL;
+
         SharedPreferences preference = PreferenceManager
                 .getDefaultSharedPreferences(SubscribeActivity.this);
-        String one = preference.getString(Preferences.MAGAZINE_ONE,
-                getResources().getString(R.string.hot));
-        String two = preference.getString(Preferences.MAGAZINE_TWO,
-                getResources().getString(R.string.car));
-        String three = preference.getString(Preferences.MAGAZINE_THREE,
-                getResources().getString(R.string.girl));
-        String four = preference.getString(Preferences.MAGAZINE_FOUR,
-                getResources().getString(R.string.photograph));
+        String magazineAllSortNameStr = preference.getString(Preferences.MAGAZINE_ALL_SORT,
+                getString(R.string.magazine_all_sort));
+        String magazineAllIdsStr = preference.getString(Preferences.MAGAZINE_ALL_SORT,
+                getString(R.string.magazine_all_id));
 
-        txtHot = (TextView) findViewById(R.id.txt_sub_hot);
-        txtCar = (TextView) findViewById(R.id.txt_sub_car);
-        txtGirl = (TextView) findViewById(R.id.txt_sub_girl);
-        txtPhotograph = (TextView) findViewById(R.id.txt_sub_photograph);
-        txtFun = (TextView) findViewById(R.id.txt_sub_fun);
+        magazineSortNames = magazineAllSortNameStr.split("\\:");
+        magazineIds = magazineAllIdsStr.split("\\:");
 
-        txtCar.setText(one);
-        txtGirl.setText(two);
-        txtPhotograph.setText(three);
-        txtFun.setText(four);
+        TextView txtHot = new TextView(this);
+        txtHot = initMenu(txtHot, getResources().getString(R.string.hot));
+        txtHot.setId(1);
+        txtHot.setOnClickListener(new NewsItemOnClickListener());
+        menuList.add(txtHot);
+        menuLinerLayout.addView(txtHot);
+
+        for (int i = 0; i < magazineSortNames.length; i++) {
+            TextView txtView = new TextView(this);
+            txtView = initMenu(txtView, magazineSortNames[i]);
+            txtView.setId(i + 2);
+            txtView.setOnClickListener(new NewsItemOnClickListener());
+            menuList.add(txtView);
+            menuLinerLayout.addView(txtView);
+        }
+
         imgSearch = (ImageView) findViewById(R.id.img_sub_search);
         btnBack = (ImageButton) findViewById(R.id.img_header3_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -192,14 +205,16 @@ public class SubscribeActivity extends ActivityGroup {
 
         });
 
-        itemWidth = txtHot.getWidth();
+        imgSearch.setOnClickListener(new OnClickListener() {
 
-        txtHot.setOnClickListener(new NewsItemOnClickListener());
-        txtCar.setOnClickListener(new NewsItemOnClickListener());
-        txtGirl.setOnClickListener(new NewsItemOnClickListener());
-        txtPhotograph.setOnClickListener(new NewsItemOnClickListener());
-        txtFun.setOnClickListener(new NewsItemOnClickListener());
-        imgSearch.setOnClickListener(new NewsItemOnClickListener());
+            @Override
+            public void onClick(View v) {
+
+                linearListTop.setVisibility(View.GONE);
+                linearSubSearch.setVisibility(View.VISIBLE);
+
+            }
+        });
 
         RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(itemWidth,
                 LayoutParams.WRAP_CONTENT);
@@ -225,41 +240,47 @@ public class SubscribeActivity extends ActivityGroup {
         @Override
         public void onClick(View v) {
 
-            itemWidth = txtHot.getWidth();
             switch (v.getId()) {
-                case R.id.txt_sub_hot:
+                case 1:
                     setCurTxt(1);
                     intent.setClass(SubscribeActivity.this, Sub_HotActivity.class);
                     vMain = getLocalActivityManager().startActivity("hot", intent).getDecorView();
                     break;
 
-                case R.id.txt_sub_car:
+                case 2:
                     setCurTxt(2);
                     intent.setClass(SubscribeActivity.this, Sub_CarActivity.class);
+                    intent.putExtra("id", magazineIds[0]);
                     vMain = getLocalActivityManager().startActivity("car", intent).getDecorView();
                     break;
 
-                case R.id.txt_sub_girl:
+                case 3:
                     setCurTxt(3);
                     intent.setClass(SubscribeActivity.this, Sub_GirlActivity.class);
+                    intent.putExtra("id", magazineIds[1]);
                     vMain = getLocalActivityManager().startActivity("girl", intent).getDecorView();
                     break;
 
-                case R.id.txt_sub_photograph:
+                case 4:
                     setCurTxt(4);
                     intent.setClass(SubscribeActivity.this, Sub_ShootActivity.class);
+                    intent.putExtra("id", magazineIds[2]);
                     vMain = getLocalActivityManager().startActivity("shoot", intent).getDecorView();
                     break;
 
-                case R.id.txt_sub_fun:
+                case 5:
                     setCurTxt(5);
                     intent.setClass(SubscribeActivity.this, Sub_FunActivity.class);
+                    intent.putExtra("id", magazineIds[3]);
                     vMain = getLocalActivityManager().startActivity("fun", intent).getDecorView();
                     break;
-
-                case R.id.img_sub_search:
-                    linearListTop.setVisibility(View.GONE);
-                    linearSubSearch.setVisibility(View.VISIBLE);
+                default:
+                    int id = v.getId();
+                    setCurTxt(id);
+                    getLocalActivityManager().destroyActivity("other", true);
+                    intent.setClass(SubscribeActivity.this, SubOtherSortActivity.class);
+                    intent.putExtra("id", magazineIds[id - 2]);
+                    vMain = getLocalActivityManager().startActivity("other", intent).getDecorView();
                     break;
             }
 
@@ -272,68 +293,18 @@ public class SubscribeActivity extends ActivityGroup {
 
     private void setCurTxt(int i) {
 
-        switch (i) {
-            case 1:
-                txtHot.setSelected(true);
-                txtHot.setTextColor(Color.WHITE);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 2:
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(true);
-                txtCar.setTextColor(Color.WHITE);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 3:
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(true);
-                txtGirl.setTextColor(Color.WHITE);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 4:
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(true);
-                txtPhotograph.setTextColor(Color.WHITE);
-                txtFun.setSelected(false);
-                txtFun.setTextColor(Color.BLACK);
-                break;
-            case 5:
-                txtHot.setSelected(false);
-                txtHot.setTextColor(Color.BLACK);
-                txtCar.setSelected(false);
-                txtCar.setTextColor(Color.BLACK);
-                txtGirl.setSelected(false);
-                txtGirl.setTextColor(Color.BLACK);
-                txtPhotograph.setSelected(false);
-                txtPhotograph.setTextColor(Color.BLACK);
-                txtFun.setSelected(true);
-                txtFun.setTextColor(Color.WHITE);
-                break;
+        int pos = i - 1;
+        int size = menuList.size();
+        for (int j = 0; j < size; j++) {
+            if (j == pos) {
+                menuList.get(j).setSelected(true);
+                menuList.get(j).setTextColor(Color.WHITE);
+            } else {
+                menuList.get(j).setSelected(false);
+                menuList.get(j).setTextColor(Color.BLACK);
+            }
         }
+
     }
 
     class GetMagazineSortTask extends AsyncTask<Void, Void, ArrayList<MagazineSort>> {
@@ -358,24 +329,53 @@ public class SubscribeActivity extends ActivityGroup {
 
             if (sortList != null && sortList.size() > 0) {
 
-                String one = sortList.get(0).getTypename();
-                String two = sortList.get(1).getTypename();
-                String three = sortList.get(2).getTypename();
-                String four = sortList.get(3).getTypename();
-                int idOne = sortList.get(0).getId();
-                int idTwo = sortList.get(1).getId();
-                int idThree = sortList.get(2).getId();
-                int idFour = sortList.get(3).getId();
-                txtCar.setText(one);
-                txtGirl.setText(two);
-                txtPhotograph.setText(three);
-                txtFun.setText(four);
+                String magazineAllSortStr = "";
+                String magazineAllId = "";
+                int size = result.size();
+                int length = magazineSortNames.length;
+                // index 0 is headline
+                for (int i = 0; i < length; i++) {
+                    menuList.get(i + 1).setText(result.get(i).getTypename());
+                }
+                for (int i = 0; i < size; i++) {
+                    magazineAllSortStr += result.get(i).getTypename();
+                    magazineAllId += result.get(i).getId();
+                    magazineAllSortStr += ":";
+                    magazineAllId += ":";
+                }
+                magazineIds = magazineAllId.split("\\:");
+                if (size > length) {
 
-                Preferences.saveMagazienType(SubscribeActivity.this, one, two, three, four, idOne,
-                        idTwo, idThree, idFour);
+                    for (int i = length; i < size; i++) {
+                        TextView txtOther = new TextView(SubscribeActivity.this);
+                        txtOther = initMenu(txtOther, result.get(i).getTypename());
+                        txtOther.setId(i + 2);
+                        txtOther.setOnClickListener(new NewsItemOnClickListener());
+                        menuLinerLayout.addView(txtOther);
+                        menuList.add(txtOther);
+
+                    }
+                }
+
+                Preferences.saveMagazienType(SubscribeActivity.this, magazineAllSortStr,
+                        magazineAllId);
 
             }
             super.onPostExecute(result);
         }
+    }
+
+    // init menu text view
+    private TextView initMenu(TextView txtMenu, String txt) {
+
+        txtMenu.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.FILL_PARENT));
+        txtMenu.setPadding(15, 10, 10, 10);
+        txtMenu.setText(txt);
+        txtMenu.setTextColor(Color.BLACK);
+        txtMenu.setTextSize(18);
+        txtMenu.setGravity(Gravity.CENTER_HORIZONTAL);
+        txtMenu.setBackgroundResource(R.drawable.list_top);
+        return txtMenu;
     }
 }

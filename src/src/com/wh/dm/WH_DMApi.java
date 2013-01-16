@@ -230,7 +230,7 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.loginById(machine);
     }
 
-    public ArrayList<Magazine> getMagazine(int cid, int page) throws WH_DMException,
+    public ArrayList<Magazine> getMagazine(String cid, int page) throws WH_DMException,
             UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.getMagazine(cid, page);
