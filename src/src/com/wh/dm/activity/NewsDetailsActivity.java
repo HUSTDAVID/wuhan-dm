@@ -260,6 +260,7 @@ public class NewsDetailsActivity extends Activity {
 
         // watch more comments
         footer = mInflater.inflate(R.layout.news_more_comment_white, null);
+        footer.setVisibility(View.INVISIBLE);
         lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);
@@ -472,6 +473,7 @@ public class NewsDetailsActivity extends Activity {
                 newsTime.setText(TimeUtil.getTimeInterval(result.getPubdate(),
                         NewsDetailsActivity.this));
                 newsSource.setText(result.getSource());
+                footer.setVisibility(View.VISIBLE);
                 if (comments != null && comments.size() > 0) {
                     int commentNum = 5;
                     if (comments.size() < 5) {

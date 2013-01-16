@@ -19,9 +19,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import java.util.ArrayList;
 
@@ -121,6 +124,31 @@ public class SubscribeActivity extends ActivityGroup {
         edtKey = (EditText) findViewById(R.id.edt_sub_search);
         btnCSearch = (Button) findViewById(R.id.btn_sub_csearch);
 
+        edtKey.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                String key = edtKey.getText().toString();
+                if (key.equals("") || key == null) {
+                    NotificationUtil.showShortToast("«Î ‰»Îπÿº¸¥ ", SubscribeActivity.this);
+                } else {
+                    getLocalActivityManager().destroyActivity("search", true);
+                    intent.setClass(SubscribeActivity.this, SearchMagazineActivity.class);
+                    intent.putExtra("key", key);
+                    Window window = getLocalActivityManager().startActivity("search", intent);
+                    vMain = window.getDecorView();
+                    relMain.removeAllViews();
+                    relMain.addView(vMain, params);
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(SubOtherSortActivity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edtKey.getWindowToken(), 0);
+                }
+
+                return false;
+            }
+        });
+
         btnCSearch.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -137,6 +165,9 @@ public class SubscribeActivity extends ActivityGroup {
                     vMain = window.getDecorView();
                     relMain.removeAllViews();
                     relMain.addView(vMain, params);
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(SubOtherSortActivity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edtKey.getWindowToken(), 0);
                 }
 
             }

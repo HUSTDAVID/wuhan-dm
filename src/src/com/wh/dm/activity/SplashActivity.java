@@ -36,11 +36,10 @@ public class SplashActivity extends Activity {
 
         String path = Preferences.getLoadPic(SplashActivity.this);
 
-        if (firstLaunch) {
+        if (firstLaunch || path == null || path.length() == 0) {
             img.setBackgroundDrawable(getResources().getDrawable(R.drawable.splash));
         } else {
-            UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN + path,
-                    R.drawable.splash, null);
+            UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN + path);
         }
 
         if (firstLaunch) {
