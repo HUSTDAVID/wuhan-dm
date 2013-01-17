@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -25,6 +26,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class RegisterActivity extends Activity {
 
@@ -124,6 +126,29 @@ public class RegisterActivity extends Activity {
 
             }
 
+        });
+
+        edtEmail.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (IsValidate()) {
+                    handler.sendEmptyMessage(MSG_REGISTER);
+                }
+                return false;
+            }
+        });
+        edtPasswd.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (IsValidate()) {
+                    handler.sendEmptyMessage(MSG_REGISTER);
+                }
+                return false;
+            }
         });
 
     }

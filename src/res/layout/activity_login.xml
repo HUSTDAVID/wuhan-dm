@@ -23,6 +23,7 @@
             android:layout_marginTop="15dip"
             android:background="@drawable/site_btn_2_9patch"
             android:ems="10"
+            android:singleLine="true"
             android:hint="@string/email"
             android:paddingBottom="5dip"
             android:paddingTop="5dip"
@@ -41,6 +42,7 @@
         android:paddingBottom="5dip"
         android:paddingTop="5dip"
         android:password="true"
+        android:singleLine="true"
         android:textColor="#a7a7a7"
         android:textColorHint="#a7a7a7"
         android:textSize="18dip" />

@@ -375,6 +375,11 @@ public class LocalNewsActivity extends ActivityGroup implements OnClickListener 
                         menuList.add(txtOther);
 
                     }
+                } else if (size < length) {
+
+                    for (int i = size + 1; i <= length; i++) {
+                        menuLinerLayout.removeViewAt(i);
+                    }
                 }
 
                 Preferences.saveNewsType(LocalNewsActivity.this, newsAllSort, newsAllId);

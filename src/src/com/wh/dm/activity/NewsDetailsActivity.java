@@ -621,7 +621,6 @@ public class NewsDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 

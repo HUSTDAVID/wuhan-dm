@@ -203,6 +203,8 @@ public class MessageActivity extends Activity {
                 if (!WH_DMApp.isLogin) {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             MessageActivity.this);
+                    Intent intent = new Intent(MessageActivity.this, LoginActivity.class);
+                    startActivity(intent);
                     return;
                 }
                 handler.sendEmptyMessage(MSG_DEL_FAV);
@@ -317,7 +319,6 @@ public class MessageActivity extends Activity {
             delFailCount = 0;
             favList = newsCollectAdapter.getList();
 
-            layoutLoad.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 

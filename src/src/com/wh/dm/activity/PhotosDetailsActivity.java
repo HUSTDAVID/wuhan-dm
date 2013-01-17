@@ -585,7 +585,6 @@ public class PhotosDetailsActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            // progressDialog.show();
             super.onPreExecute();
         }
 

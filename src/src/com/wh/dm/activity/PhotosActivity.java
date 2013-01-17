@@ -315,7 +315,7 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
                     }
                 } else if (size < length) {
 
-                    for (int i = size; i < length; i++) {
+                    for (int i = size + 1; i <= length; i++) {
                         menuLinerLayout.removeViewAt(i);
                     }
                 }

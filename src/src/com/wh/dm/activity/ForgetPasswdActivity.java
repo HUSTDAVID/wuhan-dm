@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class ForgetPasswdActivity extends Activity {
 
@@ -106,6 +108,22 @@ public class ForgetPasswdActivity extends Activity {
                             ForgetPasswdActivity.this);
                 }
 
+            }
+        });
+
+        edtText.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                email = edtText.getText().toString();
+                if (email != null && email.length() > 0) {
+                    handler.sendEmptyMessage(MSG_FIND_PASSWORD);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.input_email),
+                            ForgetPasswdActivity.this);
+                }
+                return false;
             }
         });
     }

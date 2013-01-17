@@ -18,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -27,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import java.util.ArrayList;
 
@@ -158,6 +160,29 @@ public class LoginActivity extends Activity {
 
             }
 
+        });
+
+        edtEmail.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (IsValidate()) {
+                    handler.sendEmptyMessage(MSG_LOGIN);
+                }
+                return false;
+            }
+        });
+        edtPasswd.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (IsValidate()) {
+                    handler.sendEmptyMessage(MSG_LOGIN);
+                }
+                return false;
+            }
         });
 
     }
