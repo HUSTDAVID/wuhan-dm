@@ -386,6 +386,11 @@ public class SubscribeActivity extends ActivityGroup {
                         menuList.add(txtOther);
 
                     }
+                } else if (size < length) {
+
+                    for (int i = size + 1; i <= length; i++) {
+                        menuLinerLayout.removeViewAt(i);
+                    }
                 }
 
                 Preferences.saveMagazienType(SubscribeActivity.this, magazineAllSortStr,

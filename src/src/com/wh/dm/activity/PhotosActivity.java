@@ -313,8 +313,12 @@ public class PhotosActivity extends ActivityGroup implements OnClickListener {
                         menuList.add(txtOther);
 
                     }
-                }
+                } else if (size < length) {
 
+                    for (int i = size; i < length; i++) {
+                        menuLinerLayout.removeViewAt(i);
+                    }
+                }
                 Preferences.savePhotoType(PhotosActivity.this, photoAllSortName, photoAllId);
             }
             super.onPostExecute(result);
