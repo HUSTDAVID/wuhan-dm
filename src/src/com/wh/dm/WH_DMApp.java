@@ -71,6 +71,12 @@ public class WH_DMApp extends Application {
         isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
         SharedPreferences sPreference = getSharedPreferences("com.wh.dm_preferences", 0);
         isPush = !sPreference.getBoolean("push", false);
+        boolean updateDB = sPreference.getBoolean(Preferences.UPDATE_DATABASE, true);
+        if (updateDB) {
+            databaseImpl.deletePostMessage();
+            Preferences.setUpdateDB(this);
+        }
+
         login();
         if (!mPrefs.getBoolean(Preferences.GET_DETAULT_MAGAZIE, false)) {
             GetDefaultMagazine getDefaultMagazine = new GetDefaultMagazine();

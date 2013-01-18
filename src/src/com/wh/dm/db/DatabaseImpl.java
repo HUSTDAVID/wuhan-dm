@@ -204,7 +204,7 @@ public class DatabaseImpl implements Database {
         // post message
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MESSAGE
-                + "(id_key INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER, title VARCHAR, mid INTEGER, mname VARCHAR, pid INTEGER, temp INTEGER, uid INTEGER, is_read INTEGER)");
+                + "(id INTEGER, title VARCHAR, mid INTEGER, mname VARCHAR, pid INTEGER, temp INTEGER, uid INTEGER, is_read INTEGER, PRIMARY KEY(temp,id))");
         db.close();
     }
 
@@ -1548,6 +1548,26 @@ public class DatabaseImpl implements Database {
         query.close();
         db.close();
         return messages;
+    }
+
+    @Override
+    public boolean checkIsNewMessage(int temp, int id) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        Cursor query = db.query(TABLE_MESSAGE, null, "temp=? and id=?", new String[] {
+                String.valueOf(temp), String.valueOf(id)
+        }, null, null, null);
+
+        if (query != null && query.getCount() > 0) {
+            query.close();
+            return false;
+        } else if (query != null) {
+            query.close();
+            return true;
+        } else {
+            return true;
+        }
+
     }
 
     @Override

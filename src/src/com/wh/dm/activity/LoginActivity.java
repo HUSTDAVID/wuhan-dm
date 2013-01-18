@@ -254,6 +254,7 @@ public class LoginActivity extends Activity {
                     WH_DMApp.isLogin = true;
                     Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
                     handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
+                    setResult(MessageActivity.MSG_REQUEST_CODE);
                     finish();
                 } else {
                     String test = getString(R.string.login_fails) + "," + result.getMsg();

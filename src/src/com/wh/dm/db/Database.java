@@ -228,4 +228,6 @@ public interface Database {
 
     public void addPostMessage(ArrayList<PostMessage> postMessages);
 
+    public boolean checkIsNewMessage(int temp, int id);
+
 }

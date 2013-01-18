@@ -33,6 +33,7 @@ import java.util.List;
 
 public class MessageActivity extends Activity {
 
+    public static final int MSG_REQUEST_CODE = 1001;
     private TextView txtHead;
     private ImageButton btnBack;
     private ImageButton btnDel;
@@ -49,8 +50,6 @@ public class MessageActivity extends Activity {
     private LayoutInflater inflater;
     private LinearLayout layoutLoad;
     private View footer;
-    private int messageTotle = 0;
-    private int colTotle = 0;
     private WH_DMApi wh_dmApi;
     private GetFavTask getNewsFavTask = null;
     private DelFavTask delNewsFavTask = null;
@@ -59,6 +58,7 @@ public class MessageActivity extends Activity {
     private int countsPerPage = 10;
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
+    private boolean FLAG_GET_MESSAGE = true;
     public static boolean refreshCollect = false;
 
     private final Handler handler = new Handler() {
@@ -114,10 +114,8 @@ public class MessageActivity extends Activity {
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
-        messages = databaseImpl.getPostMessage();
-        if (messages != null) {
-            messageTotle = messages.size();
-        }
+        // TODO
+        // messages = databaseImpl.getPostMessage();
         layoutLoad = (LinearLayout) findViewById(R.id.layout_load);
         listview = (ListView) findViewById(R.id.lv_message_colect);
         inflater = getLayoutInflater();
@@ -138,7 +136,7 @@ public class MessageActivity extends Activity {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             MessageActivity.this);
                     Intent intent = new Intent(MessageActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, MSG_REQUEST_CODE);
                     return;
                 }
                 if (WH_DMApp.isLogin && wh_dmApp.isConnected()) {
@@ -204,7 +202,7 @@ public class MessageActivity extends Activity {
                     NotificationUtil.showShortToast(getString(R.string.please_login),
                             MessageActivity.this);
                     Intent intent = new Intent(MessageActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, MSG_REQUEST_CODE);
                     return;
                 }
                 handler.sendEmptyMessage(MSG_DEL_FAV);
@@ -222,9 +220,7 @@ public class MessageActivity extends Activity {
 
         // add message
         messageAdapter = new PostMessageAdapter(this);
-        if (messages != null) {
-            messageAdapter.setList(messages);
-        }
+
         adapter.addAdapter(messageAdapter);
 
         // add collect title
@@ -261,8 +257,10 @@ public class MessageActivity extends Activity {
         @Override
         protected ArrayList<Favorite> doInBackground(Integer... params) {
 
-            // TODO Auto-generated method stub
             try {
+                if (FLAG_GET_MESSAGE) {
+                    messages = wh_dmApi.getMessage();
+                }
                 result = wh_dmApi.getFav(params[0], params[1]);
                 return result;
             } catch (Exception e) {
@@ -275,6 +273,10 @@ public class MessageActivity extends Activity {
         @Override
         protected void onPostExecute(ArrayList<Favorite> result) {
 
+            if (messages != null) {
+                messageAdapter.setList(messages);
+                FLAG_GET_MESSAGE = false;
+            }
             // no result
             if (result == null || result.size() == 0) {
                 if (FLAG_PAGE_UP) {
@@ -369,4 +371,15 @@ public class MessageActivity extends Activity {
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == MSG_REQUEST_CODE) {
+            if (WH_DMApp.isLogin && wh_dmApp.isConnected())
+                handler.sendEmptyMessage(MSG_GET_FAV);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

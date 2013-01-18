@@ -24,7 +24,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     private FetchDataTask fetchDataTask;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
-    private int msgNum;
     private Context _context;
 
     @Override
@@ -34,7 +33,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         _context = context;
         databaseImpl = app.getDatabase();
         wh_dmApi = app.getWH_DMApi();
-        msgNum = Preferences.getMsgNum(context);
         getData();
     }
 
@@ -91,22 +89,23 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             ArrayList<PostMessage> newMessages = new ArrayList<PostMessage>();
             if (result != null) {
-                msgNum = Preferences.getMsgNum(_context);
-                int temp = msgNum;
-                if (msgNum < result.size()) {
-                    int size = result.size();
-                    for (int i = msgNum; i < size; i++) {
+                int size = result.size();
+                for (int i = 0; i < size; i++) {
+                    PostMessage message = result.get(i);
+                    if (databaseImpl.checkIsNewMessage(message.getTemp(), message.getId())) {
+                        newMessages.add(message);
                         if (WH_DMApp.isPush) {
                             showNotification(_context, result.get(i), i);
                         }
-                        PostMessage message = result.get(i);
-                        message.setIsRead(0);
-                        newMessages.add(message);
                     }
-                    databaseImpl.addPostMessage(newMessages);
-                    Preferences.setPostMessage(_context, size);
                 }
+                if (newMessages.size() > 0) {
+                    databaseImpl.addPostMessage(newMessages);
+                    Preferences.setPostMessage(_context, newMessages.size());
+                }
+
             }
+
             super.onPostExecute(result);
         }
 
