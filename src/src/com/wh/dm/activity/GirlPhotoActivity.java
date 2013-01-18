@@ -226,16 +226,16 @@ public class GirlPhotoActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.no_more_message),
-                                GirlPhotoActivity.this);
+
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 GirlPhotoActivity.this);
                     }
                 } else {
+
                     NotificationUtil.showLongToast(getString(R.string.no_more_message),
                             GirlPhotoActivity.this);
+
                 }
             }
 

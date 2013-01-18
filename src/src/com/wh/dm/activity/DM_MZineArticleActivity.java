@@ -804,7 +804,6 @@ public class DM_MZineArticleActivity extends Activity {
         protected void onPreExecute() {
 
             if (!isLoad) {
-                // progressDialog.show();
                 loadLayout.setVisibility(View.VISIBLE);
             }
             super.onPreExecute();

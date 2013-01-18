@@ -226,16 +226,16 @@ public class FunPhotoActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.no_more_message),
-                                FunPhotoActivity.this);
+
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 FunPhotoActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
-                            FunPhotoActivity.this);
+                    if (!isFirstLoad) {
+                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                                FunPhotoActivity.this);
+                    }
                 }
             }
 

@@ -41,6 +41,7 @@ public class PhototOtherSortActivity extends Activity {
     private int curPage = 1;
     private boolean FLAG_PAGE_UP = false;
     private boolean isFirstLanucher = true;
+    private boolean isFirstLoad = true;
     private static int MSG_GET_PHOTOS = 0;
     private GetPhotosTask getPhotosTask = null;
     private PhotoAdapter adapter;
@@ -167,6 +168,7 @@ public class PhototOtherSortActivity extends Activity {
         protected void onPostExecute(ArrayList<TwoPhotos> result) {
 
             if (result != null && result.size() > 0) {
+                isFirstLoad = false;
                 if (FLAG_PAGE_UP) {
                     adapter.addList(result);
                     lvPhotos.addFooterView(footer);
@@ -194,8 +196,10 @@ public class PhototOtherSortActivity extends Activity {
                                 PhototOtherSortActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
-                            PhototOtherSortActivity.this);
+                    if (!isFirstLoad) {
+                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                                PhototOtherSortActivity.this);
+                    }
                 }
             }
 
