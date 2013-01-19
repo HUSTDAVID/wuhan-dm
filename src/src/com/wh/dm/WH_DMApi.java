@@ -207,7 +207,7 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getVoteResultPercent(vid);
     }
 
-    public boolean register(String regemail, String regepass, String machineId)
+    public PostResult register(String regemail, String regepass, String machineId)
             throws WH_DMException, UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.register(regemail, regepass, machineId);
@@ -271,7 +271,7 @@ public class WH_DMApi {
         return mWH_DMHttpApiV1.getArticle(sid);
     }
 
-    public boolean commitFeedback(String contactways, String fcontent) throws WH_DMException,
+    public PostResult commitFeedback(String contactways, String fcontent) throws WH_DMException,
             UnKnownException, IOException {
 
         return mWH_DMHttpApiV1.commitFeedBack(contactways, fcontent);

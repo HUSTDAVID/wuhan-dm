@@ -4,6 +4,7 @@ package com.wh.dm.activity;
 import com.umeng.analytics.MobclickAgent;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
@@ -26,6 +27,7 @@ public class FeedbackActivity extends Activity {
     EditText edtFeedbackText;
     Button btnSend;
     LinearLayout loadLayout;
+    private PostResult postResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +118,9 @@ public class FeedbackActivity extends Activity {
 
             // TODO Auto-generated method stub
             try {
-                return ((WH_DMApp) getApplication()).getWH_DMApi().commitFeedback(params[0],
+                postResult = ((WH_DMApp) getApplication()).getWH_DMApi().commitFeedback(params[0],
                         params[1]);
+                return postResult.getResult();
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
@@ -131,7 +134,11 @@ public class FeedbackActivity extends Activity {
                 NotificationUtil.showShortToast("提交成功", FeedbackActivity.this);
                 finish();
             } else {
-                NotificationUtil.showShortToast("提交失败", FeedbackActivity.this);
+                String msg = "提交失败";
+                if (postResult != null) {
+                    msg = msg + postResult.getMsg();
+                }
+                NotificationUtil.showShortToast(msg, FeedbackActivity.this);
             }
             loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);

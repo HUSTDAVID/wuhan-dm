@@ -6,6 +6,7 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.preference.Preferences;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
@@ -35,7 +36,7 @@ public class RegisterActivity extends Activity {
     private EditText edtPasswd;
     private CheckBox cbShowPw;
     private Button btnRigester;
-
+    private PostResult postResult;
     private WH_DMApi wh_dmApi;
     private RegisterTask registerTask = null;
     private final Handler handler = new Handler() {
@@ -193,7 +194,8 @@ public class RegisterActivity extends Activity {
 
             boolean isRegister = false;
             try {
-                isRegister = wh_dmApi.register(params[0], params[1], params[2]);
+                postResult = wh_dmApi.register(params[0], params[1], params[2]);
+                isRegister = postResult.getResult();
             } catch (Exception e) {
                 reason = e;
                 e.printStackTrace();
@@ -218,7 +220,11 @@ public class RegisterActivity extends Activity {
 
                 RegisterActivity.this.finish();
             } else {
-                NotificationUtil.showShortToast(getString(R.string.register_fails),
+                String msg = "";
+                if (postResult != null) {
+                    msg = postResult.getMsg();
+                }
+                NotificationUtil.showShortToast(getString(R.string.register_fails) + ":" + msg,
                         RegisterActivity.this);
             }
             super.onPostExecute(result);

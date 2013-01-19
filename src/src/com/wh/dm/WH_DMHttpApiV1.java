@@ -472,7 +472,7 @@ public class WH_DMHttpApiV1 {
         return gson.fromJson(content, type);
     }
 
-    public boolean register(String regemail, String regepass, String machineId)
+    public PostResult register(String regemail, String regepass, String machineId)
             throws WH_DMException, UnKnownException, IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
@@ -482,7 +482,7 @@ public class WH_DMHttpApiV1 {
         String content = mHttpApi.doHttpRequest(httPost);
         Log.d("content", content);
         PostResult result = gson.fromJson(content, PostResult.class);
-        return result.getResult();
+        return result;
 
     }
 
@@ -605,7 +605,7 @@ public class WH_DMHttpApiV1 {
 
     }
 
-    public boolean commitFeedBack(String contactways, String fcontent) throws WH_DMException,
+    public PostResult commitFeedBack(String contactways, String fcontent) throws WH_DMException,
             UnKnownException, IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_FEEDBACK,
@@ -613,7 +613,7 @@ public class WH_DMHttpApiV1 {
                         contactways), new BasicNameValuePair("Memo", fcontent));
         String content = mHttpApi.doHttpRequest(httPost);
         PostResult result = gson.fromJson(content, PostResult.class);
-        return result.getResult();
+        return result;
     }
 
     public Cover subcribe(int id) throws WH_DMException, UnKnownException, IOException {
