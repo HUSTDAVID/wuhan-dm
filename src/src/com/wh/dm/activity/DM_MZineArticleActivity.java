@@ -122,11 +122,6 @@ public class DM_MZineArticleActivity extends Activity {
         curMagazine = databaseImpl.getMagazine(sid);
 
         isLoad = databaseImpl.isLoad(sid);
-        if (!isLoad) {
-            // progressDialog = new ProgressDialog(getParent());
-            // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-        }
         handler.sendEmptyMessage(MSG_GET_MAGZINE);
 
     }

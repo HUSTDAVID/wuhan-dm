@@ -7,23 +7,25 @@ import com.wh.dm.WH_DMApp;
 import com.wh.dm.util.NotificationUtil;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class FeedbackActivity extends Activity {
 
     EditText edtContack;
     EditText edtFeedbackText;
     Button btnSend;
-    ProgressDialog progressDialog;
+    LinearLayout loadLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +86,20 @@ public class FeedbackActivity extends Activity {
         txtHeader.setText(getResources().getString(R.string.feedback));
 
         // init views
+        loadLayout = (LinearLayout) findViewById(R.id.feedback_load);
         edtContack = (EditText) findViewById(R.id.edt_feedback_contack);
         edtFeedbackText = (EditText) findViewById(R.id.edt_feedback_text);
         btnSend = (Button) findViewById(R.id.btn_feedback_send);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        edtContack.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                edtFeedbackText.requestFocus();
+                return false;
+            }
+        });
 
     }
 
@@ -96,7 +107,7 @@ public class FeedbackActivity extends Activity {
         @Override
         protected void onPreExecute() {
 
-            progressDialog.show();
+            loadLayout.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
 
@@ -122,7 +133,7 @@ public class FeedbackActivity extends Activity {
             } else {
                 NotificationUtil.showShortToast("Ã·Ωª ß∞‹", FeedbackActivity.this);
             }
-            progressDialog.dismiss();
+            loadLayout.setVisibility(View.GONE);
             super.onPostExecute(result);
         }
     }

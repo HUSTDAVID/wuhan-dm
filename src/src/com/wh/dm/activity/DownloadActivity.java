@@ -127,7 +127,7 @@ public class DownloadActivity extends Activity {
                     Intent intent_magazine = new Intent(DownloadActivity.this,
                             DM_Tab_2Activity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("dm", subMagazines.get(msg.arg2).getTemplate());
+                    bundle.putInt("dm", getTemplate(sid));
                     bundle.putInt("sid", sid);
                     intent_magazine.putExtras(bundle);
                     startActivity(intent_magazine);
@@ -263,7 +263,7 @@ public class DownloadActivity extends Activity {
                 if (tempLoadList.get(i).isFinish()) {
                     tempLoadList.get(i).setOk(true);
                     loadInfoList.add(tempLoadList.get(i));
-                    finishSid.add(loadInfoList.get(i).getSid());
+                    finishSid.add(tempLoadList.get(i).getSid());
                 }
             }
             int size2 = magazines.size();
@@ -449,4 +449,17 @@ public class DownloadActivity extends Activity {
 
     }
 
+    // get template
+    private int getTemplate(int sid) {
+
+        int template = 0;
+        int size = subMagazines.size();
+        for (int i = 0; i < size; i++) {
+            if (sid == subMagazines.get(i).getSid()) {
+                template = subMagazines.get(i).getTemplate();
+                break;
+            }
+        }
+        return template;
+    }
 }

@@ -166,8 +166,6 @@ public class DM_MZinePicsActivity extends Activity {
                             + magazines.get(curPage - 1).getId() + "&mid=" + sid + "&type=1";
                     share = head + info;
                     Intent intent = new Intent(DM_MZinePicsActivity.this, PhotoReplyActivity.class);
-                    // intent.putExtra("id", magazines.get(curPage -
-                    // 1).getId());
                     intent.putExtra("id", sid);
                     intent.putExtra("share", share);
                     startActivity(intent);
