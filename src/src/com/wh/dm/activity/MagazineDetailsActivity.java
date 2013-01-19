@@ -441,9 +441,12 @@ public class MagazineDetailsActivity extends Activity {
                     article.setTitle(one.getTitle());
                 } else {
                     article = wh_dmApi.getArticle(sid);
-                    comments = wh_dmApi.getComment(sid, curPage);
+
                 }
 
+                if (wh_dmApp.isConnected()) {
+                    comments = wh_dmApi.getComment(sid, curPage);
+                }
             } catch (Exception e) {
                 reason = e;
                 return null;
