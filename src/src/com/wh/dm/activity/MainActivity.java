@@ -51,6 +51,7 @@ public class MainActivity extends Activity implements OnTouchListener {
     private TextView txt_page;
     private ScrollLayout scrollLayout;
     private ImageView delImage;
+    private int delSid = 0;
     LinearLayout.LayoutParams param;
     Animation up, down;
 
@@ -590,6 +591,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 
             unSub_result = false;
             try {
+                delSid = params[0];
                 unSub_result = wh_dmApi.unsubcribe(params[0]);
                 return params[0];
             } catch (Exception e) {
@@ -603,6 +605,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 
             if (result != 0) {
                 databaseImpl.delMagazine(result);
+                databaseImpl.deleteOneLoadInfo(delSid);
                 sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
                 unSub_result = false;
                 NotificationUtil

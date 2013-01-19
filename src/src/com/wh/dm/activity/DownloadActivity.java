@@ -241,9 +241,9 @@ public class DownloadActivity extends Activity {
     private ArrayList<LoadInfo> initLoadInfo(ArrayList<Magazine> magazines) {
 
         ArrayList<LoadInfo> loadInfoList = new ArrayList<LoadInfo>();
-
-        loadInfoList = databaseImpl.getLoadInfo();
-        if (loadInfoList == null || loadInfoList.size() == 0) {
+        ArrayList<LoadInfo> tempLoadList = new ArrayList<LoadInfo>();
+        tempLoadList = databaseImpl.getLoadInfo();
+        if (tempLoadList == null || tempLoadList.size() == 0) {
             for (int i = 0; i < magazines.size(); i++) {
                 LoadInfo loadInfo = new LoadInfo();
                 Magazine magazine = magazines.get(i);
@@ -257,12 +257,37 @@ public class DownloadActivity extends Activity {
                 loadInfoList.add(loadInfo);
             }
         } else {
-            int size = loadInfoList.size();
+            int size = tempLoadList.size();
+            ArrayList<Integer> finishSid = new ArrayList<Integer>();
             for (int i = 0; i < size; i++) {
-                if (loadInfoList.get(i).isFinish()) {
-                    loadInfoList.get(i).setOk(true);
+                if (tempLoadList.get(i).isFinish()) {
+                    tempLoadList.get(i).setOk(true);
+                    loadInfoList.add(tempLoadList.get(i));
+                    finishSid.add(loadInfoList.get(i).getSid());
+                }
+            }
+            int size2 = magazines.size();
+            int sizeFinish = finishSid.size();
+            boolean isLoad = false;
+            for (int i = 0; i < size2; i++) {
+                for (int j = 0; j < sizeFinish; j++) {
+                    if (magazines.get(i).getSid() == finishSid.get(j)) {
+                        isLoad = true;
+                    }
+                }
+                if (isLoad) {
+                    isLoad = false;
                 } else {
-                    loadInfoList.get(i).setStart(false);
+                    LoadInfo loadInfo = new LoadInfo();
+                    Magazine magazine = magazines.get(i);
+                    loadInfo.setPicPath(magazine.getSpic());
+                    loadInfo.setTitle(magazine.getSname());
+                    loadInfo.setSid(magazine.getSid());
+                    loadInfo.setPro(0);
+                    loadInfo.setFinish(false);
+                    loadInfo.setStart(false);
+
+                    loadInfoList.add(loadInfo);
                 }
             }
         }

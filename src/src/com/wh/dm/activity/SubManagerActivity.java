@@ -33,6 +33,7 @@ public class SubManagerActivity extends Activity {
     private GetSubcribedMagazine getMgzsTask = null;
     private UnSubcribeTask unSubcribeTask = null;
 
+    private int delSid = 0;
     private ListView lvSubManager;
     private LinearLayout loadLayout;
     private SubManagerAdapter adapter;
@@ -182,6 +183,7 @@ public class SubManagerActivity extends Activity {
 
             boolean result = false;
             try {
+                delSid = params[0];
                 result = wh_dmApi.unsubcribe(params[0]);
                 return params[0];
             } catch (Exception e) {
@@ -196,6 +198,8 @@ public class SubManagerActivity extends Activity {
             if (result != 0) {
                 sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
                 databaseImpl.delMagazine(result);
+                databaseImpl.deleteOneLoadInfo(delSid);
+
             } else {
                 NotificationUtil.showShortToast(getString(R.string.unsub_fail),
                         SubManagerActivity.this);

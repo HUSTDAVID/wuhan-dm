@@ -234,9 +234,6 @@ public class MagazineDetailsActivity extends Activity {
         UrlImageViewHelper.setUrlDrawable(img_header, WH_DMHttpApiV1.URL_DOMAIN + titleUrl,
                 R.drawable.magazine_title, null);
 
-        // progressDialog = new ProgressDialog(MagazineDetailsActivity.this);
-        // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
         mInflater = getLayoutInflater();
 
         lvNews = (ListView) findViewById(R.id.lv_news_details);
@@ -444,8 +441,9 @@ public class MagazineDetailsActivity extends Activity {
                     article.setTitle(one.getTitle());
                 } else {
                     article = wh_dmApi.getArticle(sid);
+                    comments = wh_dmApi.getComment(sid, curPage);
                 }
-                comments = wh_dmApi.getComment(sid, curPage);
+
             } catch (Exception e) {
                 reason = e;
                 return null;

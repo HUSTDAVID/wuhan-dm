@@ -207,6 +207,8 @@ public interface Database {
 
     public void addLoadInfo(ArrayList<LoadInfo> loadInfos);
 
+    public void deleteOneLoadInfo(int id);
+
     // load image magazine
 
     public void addMagazinePic(ArrayList<PictureMagzine> magazineList);

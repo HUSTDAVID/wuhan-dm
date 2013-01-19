@@ -1738,6 +1738,20 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
+    public void deleteOneLoadInfo(int sid) {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        // String sql = "delete * from " + TABLE_LOAD_INFO + " where sid = " +
+        // sid;
+        // db.execSQL(sql);
+        db.delete(TABLE_LOAD_INFO, "sid=?", new String[] {
+            String.valueOf(sid)
+        });
+        db.close();
+
+    }
+
+    @Override
     public void addMagazinePic(ArrayList<PictureMagzine> magazineList) {
 
         SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);

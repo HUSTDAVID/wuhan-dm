@@ -207,7 +207,6 @@ public class DM_MZineArticleActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                int backColor = getResources().getColor(R.color.bg_clicked);
                 switch (v.getId()) {
                     case R.id.style1:
                         intent.putExtra("sid", articles.get(low + 5).getId());
@@ -218,7 +217,6 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_1:
-                        // view1_linear1.setBackgroundColor(backColor);
                         view1_txtTile1.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low).getId());
@@ -229,7 +227,6 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_1:
-                        // view1_linear2.setBackgroundColor(backColor);
                         view1_txtTile2.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 1).getId());
@@ -240,7 +237,6 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_1:
-                        // view1_linear3.setBackgroundColor(backColor);
                         view1_txtTile3.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 2).getId());
@@ -251,7 +247,6 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_1:
-                        // view1_linear4.setBackgroundColor(backColor);
                         view1_txtTile4.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 3).getId());
@@ -262,7 +257,6 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_1:
-                        // view1_linear5.setBackgroundColor(backColor);
                         view1_txtTile5.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 4).getId());
@@ -390,7 +384,6 @@ public class DM_MZineArticleActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                int backColor = getResources().getColor(R.color.bg_clicked);
                 switch (v.getId()) {
                     case R.id.style2:
                         intent.putExtra("sid", articles.get(low + 5).getId());
@@ -401,7 +394,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout1_magazine_2:
-                        // view2_linear1.setBackgroundColor(backColor);
+
                         view2_txtTile1.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low).getId());
@@ -412,7 +405,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_2:
-                        // view2_linear2.setBackgroundColor(backColor);
+
                         view2_txtTile2.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 1).getId());
@@ -423,7 +416,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_2:
-                        // view2_linear3.setBackgroundColor(backColor);
+
                         view2_txtTile3.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 2).getId());
@@ -434,7 +427,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_2:
-                        // view2_linear4.setBackgroundColor(backColor);
+
                         view2_txtTile4.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 3).getId());
@@ -445,7 +438,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_2:
-                        // view2_linear5.setBackgroundColor(backColor);
+
                         view2_txtTile5.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 4).getId());
@@ -572,11 +565,9 @@ public class DM_MZineArticleActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                int backColor = getResources().getColor(R.color.bg_clicked);
-
                 switch (v.getId()) {
                     case R.id.layout1_magazine_3:
-                        // view3_linear1.setBackgroundColor(backColor);
+
                         view3_txtTile1.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low).getId());
@@ -587,7 +578,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout2_magazine_3:
-                        // view3_linear2.setBackgroundColor(backColor);
+
                         view3_txtTile2.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 1).getId());
@@ -598,7 +589,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout3_magazine_3:
-                        // view3_linear3.setBackgroundColor(backColor);
+
                         view3_txtTile3.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 2).getId());
@@ -609,7 +600,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout4_magazine_3:
-                        // view3_linear4.setBackgroundColor(backColor);
+
                         view3_txtTile4.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 3).getId());
@@ -620,7 +611,7 @@ public class DM_MZineArticleActivity extends Activity {
                         startActivity(intent);
                         break;
                     case R.id.layout5_magazine_3:
-                        // view3_linear5.setBackgroundColor(backColor);
+
                         view3_txtTile5.setTextColor(getResources().getColor(
                                 R.color.mzine_txt_clicked));
                         intent.putExtra("sid", articles.get(low + 4).getId());
