@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class AboutActivity extends Activity {
 
     WebView webview;
-    private final String aboutUrl = "http://api.meike15.com/api/News.aspx?act=about";
+    private final String aboutUrl = "http://www.meike15.com/mobi/about.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

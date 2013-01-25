@@ -37,6 +37,7 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -291,14 +292,12 @@ public class MagazineDetailsActivity extends Activity {
 
         // watch more comments
         footer = mInflater.inflate(R.layout.news_more_comment_white, null);
-        footer.setVisibility(View.INVISIBLE);
-        lvNews.addFooterView(footer, null, false);
 
         adapter = new NewsReplyAdapter(this);
         adapter.setHandler(handler);
         lvNews.setAdapter(adapter);
 
-        btnMore = (Button) findViewById(R.id.btn_news_more);
+        btnMore = (Button) footer.findViewById(R.id.btn_news_more);
         btnMore.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -476,22 +475,33 @@ public class MagazineDetailsActivity extends Activity {
                 newsTitle.setText(result.getTitle());
                 newsTime.setText(TimeUtil.getTimeInterval(result.getPubdate(),
                         MagazineDetailsActivity.this));
-                footer.setVisibility(View.VISIBLE);
-                if (comments != null && comments.size() > 0) {
-                    int commentNum = 5;
-                    if (comments.size() < 5) {
-                        commentNum = comments.size();
+
+                webViewNewsBody.setWebViewClient(new WebViewClient() {
+
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+
+                        lvNews.addFooterView(footer, null, false);
+                        if (comments != null && comments.size() > 0) {
+                            int commentNum = 5;
+                            if (comments.size() < 5) {
+                                commentNum = comments.size();
+                            }
+                            adapter.clearItem();
+                            for (int i = 0; i < commentNum; i++) {
+                                Comment comment = comments.get(i);
+                                adapter.addItem(comment.getUsername(), TimeUtil.getTimeInterval(
+                                        comment.getDtime(), MagazineDetailsActivity.this), comment
+                                        .getMsg(), "" + comment.getGood(), comment.getId());
+                            }
+                        } else {
+                            lvNews.removeFooterView(footer);
+                        }
+                        super.onPageFinished(view, url);
                     }
-                    adapter.clearItem();
-                    for (int i = 0; i < commentNum; i++) {
-                        Comment comment = comments.get(i);
-                        adapter.addItem(comment.getUsername(), TimeUtil.getTimeInterval(
-                                comment.getDtime(), MagazineDetailsActivity.this),
-                                comment.getMsg(), "" + comment.getGood(), comment.getId());
-                    }
-                } else {
-                    lvNews.removeFooterView(footer);
-                }
+
+                });
+
             } else {
                 if (wh_dmApp.isConnected()) {
 
@@ -553,8 +563,6 @@ public class MagazineDetailsActivity extends Activity {
                             comment.getDtime(), MagazineDetailsActivity.this), comment.getMsg(), ""
                             + comment.getGood(), comment.getId());
                 }
-            } else {
-                lvNews.removeFooterView(footer);
             }
             if (lvState != null) {
                 lvNews.onRestoreInstanceState(lvState);

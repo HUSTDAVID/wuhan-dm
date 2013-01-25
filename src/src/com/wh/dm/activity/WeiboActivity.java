@@ -8,6 +8,9 @@ import com.umeng.api.sns.UMSnsService.SHARE_TO;
 import com.wh.dm.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +52,8 @@ public class WeiboActivity extends Activity {
             btnSina.setBackgroundColor(getResources().getColor(R.color.red));
         } else {
             btnSina.setText(getResources().getString(R.string.unbind));
+            btnSina.setTextColor(getResources().getColor(R.color.black));
+            btnSina.setBackgroundColor(getResources().getColor(R.color.white));
         }
         if (isBingTenc) {
             btnTenc.setText(getResources().getString(R.string.bind));
@@ -56,6 +61,8 @@ public class WeiboActivity extends Activity {
             btnTenc.setBackgroundColor(getResources().getColor(R.color.red));
         } else {
             btnTenc.setText(getResources().getString(R.string.unbind));
+            btnTenc.setTextColor(getResources().getColor(R.color.black));
+            btnTenc.setBackgroundColor(getResources().getColor(R.color.white));
         }
 
         listener = new OauthCallbackListener() {
@@ -70,8 +77,12 @@ public class WeiboActivity extends Activity {
 
                 if (arg1 == UMSnsService.SHARE_TO.TENC) {
                     btnTenc.setText(getResources().getString(R.string.bind));
+                    btnTenc.setTextColor(getResources().getColor(R.color.white));
+                    btnTenc.setBackgroundColor(getResources().getColor(R.color.red));
                 } else if (arg1 == UMSnsService.SHARE_TO.SINA) {
                     btnSina.setText(getResources().getString(R.string.bind));
+                    btnSina.setTextColor(getResources().getColor(R.color.white));
+                    btnSina.setBackgroundColor(getResources().getColor(R.color.red));
                 }
 
             }
@@ -85,8 +96,7 @@ public class WeiboActivity extends Activity {
                 isBindSina = UMSnsService.isAuthorized(WeiboActivity.this,
                         UMSnsService.SHARE_TO.SINA);
                 if (isBindSina) {
-                    UMSnsService.writeOffAccount(WeiboActivity.this, UMSnsService.SHARE_TO.SINA);
-                    btnSina.setText(getResources().getString(R.string.unbind));
+                    UnbindSinaDialog();
                 } else {
                     UMSnsService.oauthSina(WeiboActivity.this, listener);
                 }
@@ -101,8 +111,7 @@ public class WeiboActivity extends Activity {
                 isBingTenc = UMSnsService.isAuthorized(WeiboActivity.this,
                         UMSnsService.SHARE_TO.TENC);
                 if (isBingTenc) {
-                    UMSnsService.writeOffAccount(WeiboActivity.this, UMSnsService.SHARE_TO.TENC);
-                    btnTenc.setText(getResources().getString(R.string.unbind));
+                    UnbindTencDialog();
                 } else {
                     UMSnsService.oauthTenc(WeiboActivity.this, listener);
                 }
@@ -122,6 +131,80 @@ public class WeiboActivity extends Activity {
             }
 
         });
+
+    }
+
+    //
+    protected void UnbindSinaDialog() {
+
+        AlertDialog.Builder builder = new Builder(WeiboActivity.this);
+        builder.setMessage(getResources().getString(R.string.if_unbind));
+        builder.setTitle(getResources().getString(R.string.alert));
+        builder.setPositiveButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        UMSnsService
+                                .writeOffAccount(WeiboActivity.this, UMSnsService.SHARE_TO.SINA);
+                        btnSina.setText(getResources().getString(R.string.unbind));
+                        btnSina.setTextColor(getResources().getColor(R.color.black));
+                        btnSina.setBackgroundColor(getResources().getColor(R.color.white));
+
+                    }
+
+                });
+        builder.setNegativeButton(getResources().getString(R.string.cacel),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+
+                });
+
+        builder.create().show();
+
+    }
+
+    //
+    protected void UnbindTencDialog() {
+
+        AlertDialog.Builder builder = new Builder(WeiboActivity.this);
+        builder.setMessage(getResources().getString(R.string.if_unbind));
+        builder.setTitle(getResources().getString(R.string.alert));
+        builder.setPositiveButton(getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        UMSnsService
+                                .writeOffAccount(WeiboActivity.this, UMSnsService.SHARE_TO.TENC);
+                        btnTenc.setText(getResources().getString(R.string.unbind));
+                        btnTenc.setTextColor(getResources().getColor(R.color.black));
+                        btnTenc.setBackgroundColor(getResources().getColor(R.color.white));
+
+                    }
+
+                });
+        builder.setNegativeButton(getResources().getString(R.string.cacel),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+
+                });
+
+        builder.create().show();
 
     }
 

@@ -20,6 +20,7 @@
     <string name="vote_result">投票结果：</string>
     <string name="take_part">您已参与</string>
     <string name="is_logout">确认注销登录？</string>
+    <string name="if_unbind">是否解除绑定?</string>
     <string name="close">关闭</string>
     <string name="ok">确定</string>
     <string name="cacel">取消</string>

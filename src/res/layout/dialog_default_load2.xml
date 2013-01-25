@@ -45,8 +45,7 @@
             android:layout_height="wrap_content"
             android:text="@string/picture_load"
             android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_alignTop="@+id/pro_picture"
+            android:layout_centerVertical="true"            
             android:layout_alignBottom="@+id/pro_picture"
             android:gravity="center_vertical" 
             android:textSize="15sp"/>
