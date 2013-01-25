@@ -174,14 +174,14 @@ public class DragGrid extends GridView {
 
         if (iv_drag != null) {
             windowParams.alpha = 0.8f;
-            windowParams.x = (x - mLastX - xtox) + fromView.getLeft() + 28 - moveNum
+            windowParams.x = x - mLastX - xtox + fromView.getLeft() + 28 - moveNum
                     * Configure.screenWidth;
-            windowParams.y = (y - mLastY - ytoy) + fromView.getTop()
+            windowParams.y = y - mLastY - ytoy + fromView.getTop()
                     + (int) (40 * Configure.screenDensity) + 8;
             windowManager.updateViewLayout(iv_drag, windowParams);
         }
-        if ((x > (Configure.screenWidth / 2 - 100) && x < (Configure.screenWidth / 2 + 100))
-                && (y > Configure.screenHeight - 200)) {
+        if (x > Configure.screenWidth / 2 - 100 && x < Configure.screenWidth / 2 + 100
+                && y > Configure.screenHeight - 200) {
             pageListener.page(2, -100);
             return;
         }
@@ -191,10 +191,11 @@ public class DragGrid extends GridView {
         if (moveNum > 0) {
             if ((x >= (moveNum + 1) * Configure.screenWidth - 20 * Configure.screenDensity || x <= moveNum
                     * Configure.screenWidth)
-                    && !Configure.isChangingPage)
+                    && !Configure.isChangingPage) {
                 stopCount++;
-            else
+            } else {
                 stopCount = 0;
+            }
             if (stopCount > 10) {
                 stopCount = 0;
                 if (x >= (moveNum + 1) * Configure.screenWidth - 20 * Configure.screenDensity
@@ -211,10 +212,11 @@ public class DragGrid extends GridView {
         } else {
             if ((x >= (moveNum + 1) * Configure.screenWidth - 20 * Configure.screenDensity || x <= moveNum
                     * Configure.screenWidth)
-                    && !Configure.isChangingPage)
+                    && !Configure.isChangingPage) {
                 stopCount++;
-            else
+            } else {
                 stopCount = 0;
+            }
             if (stopCount > 10) {
                 stopCount = 0;
                 if (x >= (moveNum + 1) * Configure.screenWidth - 20 * Configure.screenDensity
@@ -284,31 +286,36 @@ public class DragGrid extends GridView {
         if (tempPosition != AdapterView.INVALID_POSITION) {
             dropPosition = tempPosition;
         }
-        if ((Configure.curentPage == 0)
-                && (dropPosition == 0 || dropPosition == 1 || dropPosition == 2)) {
-            dropPosition = dragPosition;
-        }
+
         if (moveNum != 0) {
             itemListener.change(dragPosition, dropPosition, moveNum);
             moveNum = 0;
             return;
         }
         moveNum = 0;
+
+        // First three can`t be moved
+        if (Configure.curentPage == 0
+                && (dropPosition == 0 || dropPosition == 1 || dropPosition == 2)) {
+            dropPosition = dragPosition;
+        }
+
         ViewGroup toView = (ViewGroup) getChildAt(dropPosition - getFirstVisiblePosition());
         final DragGridAdapter adapter = (DragGridAdapter) this.getAdapter();
         if (dragPosition % 2 == 0) {
-            AtoB = getDownAnimation((dropPosition % 2 == dragPosition % 2) ? 0 : 1,
-                    (dropPosition / 2 - dragPosition / 2));
-            if (dropPosition != dragPosition)
-                toView.startAnimation(getMyAnimation((dragPosition % 2 == dropPosition % 2) ? 0
-                        : -1, (dragPosition / 2 - dropPosition / 2)));
+            AtoB = getDownAnimation(dropPosition % 2 == dragPosition % 2 ? 0 : 1, dropPosition / 2
+                    - dragPosition / 2);
+            if (dropPosition != dragPosition) {
+                toView.startAnimation(getMyAnimation(dragPosition % 2 == dropPosition % 2 ? 0 : -1,
+                        dragPosition / 2 - dropPosition / 2));
+            }
         } else {
-            AtoB = getDownAnimation((dropPosition % 2 == dragPosition % 2) ? 0 : -1,
-                    (dropPosition / 2 - dragPosition / 2));
-            if (dropPosition != dragPosition)
-                toView.startAnimation(getMyAnimation(
-                        (dragPosition % 2 == dropPosition % 2) ? 0 : 1,
-                        (dragPosition / 2 - dropPosition / 2)));
+            AtoB = getDownAnimation(dropPosition % 2 == dragPosition % 2 ? 0 : -1, dropPosition / 2
+                    - dragPosition / 2);
+            if (dropPosition != dragPosition) {
+                toView.startAnimation(getMyAnimation(dragPosition % 2 == dropPosition % 2 ? 0 : 1,
+                        dragPosition / 2 - dropPosition / 2));
+            }
         }
         fromView.startAnimation(AtoB);
         AtoB.setAnimationListener(new Animation.AnimationListener() {

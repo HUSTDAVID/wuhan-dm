@@ -403,8 +403,9 @@ public class MainActivity extends Activity implements OnTouchListener {
         for (int i = 0; i < Configure.countPages; i++) {
             lists.add(new ArrayList<Magazine>());
             for (int j = PAGE_SIZE * i; j < (PAGE_SIZE * (i + 1) > data.size() ? data.size()
-                    : PAGE_SIZE * (i + 1)); j++)
+                    : PAGE_SIZE * (i + 1)); j++) {
                 lists.get(i).add(data.get(j));
+            }
         }
 
     }
@@ -508,6 +509,20 @@ public class MainActivity extends Activity implements OnTouchListener {
             @Override
             public void change(int from, int to, int count) {
 
+                // First three can`t be moved
+                if (Configure.curentPage == 0 && (to == 0 || to == 1 || to == 2)) {
+                    ((DragGridAdapter) gridviews.get(Configure.curentPage - count).getAdapter())
+                            .notifyDataSetChanged();
+                    ((DragGridAdapter) gridviews.get(Configure.curentPage).getAdapter())
+                            .notifyDataSetChanged();
+                    return;
+                }
+
+                // If move out of size of target page , use last one
+                if (to > lists.get(Configure.curentPage).size() - 1) {
+                    to = lists.get(Configure.curentPage).size() - 1;
+                }
+
                 Magazine toString = lists.get(Configure.curentPage - count).get(from);
 
                 lists.get(Configure.curentPage - count).add(from,
@@ -516,9 +531,9 @@ public class MainActivity extends Activity implements OnTouchListener {
                 lists.get(Configure.curentPage).add(to, toString);
                 lists.get(Configure.curentPage).remove(to + 1);
 
-                ((DragGridAdapter) ((gridviews.get(Configure.curentPage - count)).getAdapter()))
+                ((DragGridAdapter) gridviews.get(Configure.curentPage - count).getAdapter())
                         .notifyDataSetChanged();
-                ((DragGridAdapter) ((gridviews.get(Configure.curentPage)).getAdapter()))
+                ((DragGridAdapter) gridviews.get(Configure.curentPage).getAdapter())
                         .notifyDataSetChanged();
             }
         });
@@ -577,7 +592,7 @@ public class MainActivity extends Activity implements OnTouchListener {
             @Override
             public void onAnimationEnd(Animation animation) {
 
-                txt_page.setText((page + 1) + "");
+                txt_page.setText(page + 1 + "");
                 txt_page.startAnimation(AnimationUtils.loadAnimation(MainActivity.this,
                         R.anim.scale_out));
             }
