@@ -34,6 +34,8 @@ import java.util.ArrayList;
 
 public class LoginActivity extends Activity {
 
+    public static final int REGISTER_CODE = 1001;
+
     EditText edtEmail;
     EditText edtPasswd;
     Button btnLogin;
@@ -145,7 +147,7 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REGISTER_CODE);
             }
 
         });
@@ -252,7 +254,9 @@ public class LoginActivity extends Activity {
                     NotificationUtil.showShortToast(getString(R.string.login_sucesses),
                             LoginActivity.this);
                     WH_DMApp.isLogin = true;
+                    WH_DMApp.isLoginById = true;
                     Preferences.saveUser(LoginActivity.this, getEmail(), getPassword());
+                    startService(new Intent(LoginActivity.this, PushService.class));
                     handler.sendEmptyMessage(MSG_GET_SUBCRIBED);
                     setResult(MessageActivity.MSG_REQUEST_CODE);
                     finish();

@@ -36,6 +36,7 @@ public class NewsOtherSortActivity extends Activity {
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private boolean FLAG_PAGE_UP = false;
+    private boolean firstLoad = true;
     private int curPage = 1;
     private String id;
     private final Handler handler = new Handler() {
@@ -75,7 +76,7 @@ public class NewsOtherSortActivity extends Activity {
                 handler.sendEmptyMessage(MSG_GET_TRAVELNEWS);
             }
         });
-        lv.addFooterView(footer);
+
         lv.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -135,6 +136,11 @@ public class NewsOtherSortActivity extends Activity {
         protected void onPostExecute(final ArrayList<PicWithTxtNews> result) {
 
             if (result != null) {
+                // TODO
+                if (firstLoad) {
+                    lv.addFooterView(footer);
+                    firstLoad = false;
+                }
                 if (curPage == 1) {
                     adapter.setList(result);
                 } else {
@@ -165,7 +171,7 @@ public class NewsOtherSortActivity extends Activity {
                                 NewsOtherSortActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                    NotificationUtil.showLongToast(getString(R.string.no_more_news),
                             NewsOtherSortActivity.this);
                 }
             }

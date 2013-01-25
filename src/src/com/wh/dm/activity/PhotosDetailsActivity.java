@@ -70,6 +70,7 @@ public class PhotosDetailsActivity extends Activity {
     Button btnStore;
     Button btnShare;
 
+    public static Bitmap curBitmap = null;
     private static final int MSG_GET_ALL = 0;
     private static final int MSG_LOAD_IMAGE = 2;
     private static final int MSG_ADD_REVIEW = 3;
@@ -212,6 +213,15 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                ImageView imageView = (ImageView) pageViews.get(currentPhoto - 1).findViewById(
+                        R.id.img_photos);
+                imageView.setDrawingCacheEnabled(true);
+                curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+                if (curBitmap == null) {
+                    NotificationUtil.showShortToast("test", PhotosDetailsActivity.this);
+                }
+                imageView.setDrawingCacheEnabled(false);
+
                 Intent intent = new Intent(PhotosDetailsActivity.this, PhotoReplyActivity.class);
                 intent.putExtra("id", aid);
                 String share = "";
@@ -220,6 +230,7 @@ public class PhotosDetailsActivity extends Activity {
                         + getString(R.string.share_url_main) + "id=" + aid + "&mid=0&type=1";
                 share = head + info;
                 intent.putExtra("share", share);
+                intent.putExtra("image", 1);
                 startActivity(intent);
 
             }
@@ -294,6 +305,15 @@ public class PhotosDetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                ImageView imageView = (ImageView) pageViews.get(currentPhoto - 1).findViewById(
+                        R.id.img_photos);
+                imageView.setDrawingCacheEnabled(true);
+                curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+                if (curBitmap == null) {
+                    NotificationUtil.showShortToast("test", PhotosDetailsActivity.this);
+                }
+                imageView.setDrawingCacheEnabled(false);
+
                 String share = "";
                 String head = getResources().getString(R.string.share_photo);
                 String info = "\"" + txtTitle.getText().toString() + "\""
@@ -301,6 +321,7 @@ public class PhotosDetailsActivity extends Activity {
                 share = head + info;
                 Intent intent = new Intent(PhotosDetailsActivity.this, ShareActivity.class);
                 intent.putExtra("share", share);
+                intent.putExtra("image", 1);
                 startActivity(intent);
             }
         });

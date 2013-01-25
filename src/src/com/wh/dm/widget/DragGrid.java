@@ -284,6 +284,10 @@ public class DragGrid extends GridView {
         if (tempPosition != AdapterView.INVALID_POSITION) {
             dropPosition = tempPosition;
         }
+        if ((Configure.curentPage == 0)
+                && (dropPosition == 0 || dropPosition == 1 || dropPosition == 2)) {
+            dropPosition = dragPosition;
+        }
         if (moveNum != 0) {
             itemListener.change(dragPosition, dropPosition, moveNum);
             moveNum = 0;

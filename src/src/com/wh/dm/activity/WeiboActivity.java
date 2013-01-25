@@ -45,11 +45,15 @@ public class WeiboActivity extends Activity {
         btnTenc = (Button) findViewById(R.id.button2);
         if (isBindSina) {
             btnSina.setText(getResources().getString(R.string.bind));
+            btnSina.setTextColor(getResources().getColor(R.color.white));
+            btnSina.setBackgroundColor(getResources().getColor(R.color.red));
         } else {
             btnSina.setText(getResources().getString(R.string.unbind));
         }
         if (isBingTenc) {
             btnTenc.setText(getResources().getString(R.string.bind));
+            btnTenc.setTextColor(getResources().getColor(R.color.white));
+            btnTenc.setBackgroundColor(getResources().getColor(R.color.red));
         } else {
             btnTenc.setText(getResources().getString(R.string.unbind));
         }

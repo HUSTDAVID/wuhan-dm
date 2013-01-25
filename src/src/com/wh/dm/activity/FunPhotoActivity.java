@@ -233,7 +233,7 @@ public class FunPhotoActivity extends Activity {
                     }
                 } else {
                     if (!isFirstLoad) {
-                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                        NotificationUtil.showLongToast(getString(R.string.no_more_photo),
                                 FunPhotoActivity.this);
                     }
                 }

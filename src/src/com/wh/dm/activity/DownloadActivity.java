@@ -68,8 +68,15 @@ public class DownloadActivity extends Activity {
 
             switch (msg.what) {
                 case MSG_NO_MAGAZINE:
-                    NotificationUtil.showShortToast(getResources().getString(R.string.no_magazine),
-                            DownloadActivity.this);
+                    if (wh_dmApp.isConnected()) {
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.no_magazine),
+                                DownloadActivity.this);
+                    } else {
+                        NotificationUtil.showShortToast(
+                                getResources().getString(R.string.check_network),
+                                DownloadActivity.this);
+                    }
                     if (loadPosList.size() > 0) {
                         position = loadPosList.get(0);
                         loadPosList.remove(0);

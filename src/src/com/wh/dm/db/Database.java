@@ -19,6 +19,8 @@ public interface Database {
     // local news
     public void deleteAllData();
 
+    public void deleteAllCache();
+
     public void deleteAllNews();
 
     public void addHeadNews(ArrayList<PicWithTxtNews> news);

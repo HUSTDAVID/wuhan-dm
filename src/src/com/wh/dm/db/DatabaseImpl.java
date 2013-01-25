@@ -155,39 +155,39 @@ public class DatabaseImpl implements Database {
                 + TABLE_FUN_PHOTO_DET
                 + "(uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, id INTEGER, aid INTEGER,cover INTEGER, click INTEGER, description VARCHAR, ordernum VARCHAR,"
                 + "pic VARCHAR, addtime VARCHAR, edittime VARCHAR, ext1 INTEGER, ext2 VARCHAR, ext3 VARCHAR)");
-        // magazine
-        db.execSQL("CREATE TABLE IF NOT EXISTS "
-                + TABLE_MAGAZINE_HOT
-                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
-                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
         // subcribe
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_SUBCRIBE
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        // magazine
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGAZINE_HOT
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGAZINE_CAR
-                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGAZINE_GIRL
-                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGAZINE_PHOTOGRAPH
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
+                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + TABLE_MAGAZINE_FUN
+                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER UNIQUE, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
                 + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
 
         // favorite
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_FAVORITE
                 + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, fid INTEGER, nid INTEGER, type INTEGER, title VARCHAR, addtime VARCHAR)");
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS "
-                + TABLE_MAGAZINE_PHOTOGRAPH
-                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
-                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS "
-                + TABLE_MAGAZINE_FUN
-                + "( uid INTEGER PRIMARY KEY AUTOINCREMENT, no INTEGER, sid INTEGER, cid VARCHAR, editor VARCHAR, template INTEGER, memo VARCHAR, isfeedback INTEGER,"
-                + "_limit INTEGER, addtime VARCHAR, sname VARCHAR, shortname VARCHAR, pic VARCHAR, spic VARCHAR, titlepic VARCHAR)");
-
         // load arcticle magazine
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + TABLE_MAGEZINE_BODY
@@ -1848,6 +1848,50 @@ public class DatabaseImpl implements Database {
         }
         db.endTransaction();
         db.close();
+    }
+
+    @Override
+    public void deleteAllCache() {
+
+        SQLiteDatabase db = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+        // local news
+        db.delete(TABLE_HEAD, null, null);
+        db.delete(TABLE_HOUSE, null, null);
+        db.delete(TABLE_CAR, null, null);
+        db.delete(TABLE_FASHION, null, null);
+        db.delete(TABLE_LIFE, null, null);
+        db.delete(TABLE_TRAVEL, null, null);
+        // photos
+        db.delete(TABLE_PHOTO, null, null);
+        db.delete(TABLE_HOT_PHOTO, null, null);
+        db.delete(TABLE_CAR_PHOTO, null, null);
+        db.delete(TABLE_GIRL_PHOTO, null, null);
+        db.delete(TABLE_PHOTOGRAPH_PHOTO, null, null);
+        db.delete(TABLE_FUN_PHOTO, null, null);
+        // photo details
+        db.delete(TABLE_PHOTO_DET, null, null);
+        db.delete(TABLE_HOT_PHOTO_DET, null, null);
+        db.delete(TABLE_CAR_PHOTO_DET, null, null);
+        db.delete(TABLE_GIRL_PHOTO_DET, null, null);
+        db.delete(TABLE_PHOTOGRAPH_PHOTO_DET, null, null);
+        db.delete(TABLE_FUN_PHOTO_DET, null, null);
+        // favorite
+        db.delete(TABLE_FAVORITE, null, null);
+        // magazine
+        db.delete(TABLE_MAGAZINE_HOT, null, null);
+        db.delete(TABLE_MAGAZINE_CAR, null, null);
+        db.delete(TABLE_MAGAZINE_GIRL, null, null);
+        db.delete(TABLE_MAGAZINE_PHOTOGRAPH, null, null);
+        db.delete(TABLE_MAGAZINE_FUN, null, null);
+        db.delete(TABLE_MAGAZINE_HOT, null, null);
+
+        // down load
+        db.delete(TABLE_MAGEZINE_BODY, null, null);
+        db.delete(TABLE_MAGAZINE_PIC, null, null);
+        db.delete(TABLE_LOAD_INFO, null, null);
+
+        db.close();
+
     }
 
 }

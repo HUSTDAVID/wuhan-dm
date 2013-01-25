@@ -13,6 +13,7 @@ import com.wh.dm.util.UrlImageViewHelper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,7 @@ public class DM_MZinePicsActivity extends Activity {
     private ViewPager v_Pager;
     private LinearLayout layout_load;
     private RelativeLayout relInfo;
+    public static Bitmap curBitmap = null;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
     private DatabaseImpl databaseImpl;
@@ -50,6 +52,7 @@ public class DM_MZinePicsActivity extends Activity {
     private GetPicsTask getPicsTask = null;
     private static final int MSG_GET_PICS = 0;
     private int sid;
+    private int aid;
     private boolean isLoad = false;
     private TextView txtDes;
     private ImageView imgArrow;
@@ -159,6 +162,11 @@ public class DM_MZinePicsActivity extends Activity {
             public void onClick(View v) {
 
                 if (magazines != null) {
+                    ImageView imageView = (ImageView) views.get(curPage - 1).findViewById(R.id.img);
+                    imageView.setDrawingCacheEnabled(true);
+                    curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+                    imageView.setDrawingCacheEnabled(false);
+
                     String share = "";
                     String head = getResources().getString(R.string.share_magazine);
                     String info = "\"" + txtDes.getText().toString() + "\" "
@@ -168,6 +176,8 @@ public class DM_MZinePicsActivity extends Activity {
                     Intent intent = new Intent(DM_MZinePicsActivity.this, PhotoReplyActivity.class);
                     intent.putExtra("id", sid);
                     intent.putExtra("share", share);
+                    intent.putExtra("aid", aid);
+                    intent.putExtra("image", 2);
                     startActivity(intent);
                 } else {
                     NotificationUtil.showShortToast("Ã»ÓÐÐÂ¿¯", DM_MZinePicsActivity.this);
@@ -193,6 +203,7 @@ public class DM_MZinePicsActivity extends Activity {
 
     public void addData(ArrayList<PictureMagzine> magazines) {
 
+        aid = magazines.get(0).getAid();
         for (PictureMagzine magazine : magazines) {
             View view = inflater.inflate(R.layout.magzine2_style, null);
             views.add(view);

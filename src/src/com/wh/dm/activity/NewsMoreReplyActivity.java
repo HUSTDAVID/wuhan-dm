@@ -44,12 +44,14 @@ public class NewsMoreReplyActivity extends Activity {
     public static final int MSG_PUSH_TOP = 1;
     public static final int MSG_REPLY = 2;
     private static final int MSG_REVIEW = 3;
+    private static final int MSF_ADD_FAV = 5;
 
     private LayoutInflater mInflater;
     private EditText edtxMyReplyforBtn;
     private Button btnReply;
     private EditText edtReply;
     private Button btnShare;
+    private Button btnFav;
 
     private LinearLayout bottomLayout1;
     private RelativeLayout bottomLayout2;
@@ -63,6 +65,7 @@ public class NewsMoreReplyActivity extends Activity {
     // private PushTopTask pushTopTask = null;
     // private ReplyTask replyTask = null;
     // private ReviewTask reviewTask = null;
+    private AddFavTask addFavTask = null;
     private WH_DMApi wh_dmApi;
     private WH_DMApp wh_dmApp;
     private int id;
@@ -114,10 +117,6 @@ public class NewsMoreReplyActivity extends Activity {
 
                     break;
                 case MSG_REVIEW:
-                    // if (reviewTask != null) {
-                    // reviewTask.cancel(true);
-                    // reviewTask = null;
-                    // }
                     String str = getFcontent();
                     if (!TextUtil.isEmpty(getFcontent())) {
                         ReviewTask reviewTask = new ReviewTask();
@@ -126,6 +125,15 @@ public class NewsMoreReplyActivity extends Activity {
                         NotificationUtil.showShortToast(getString(R.string.review_null),
                                 NewsMoreReplyActivity.this);
                     }
+                    break;
+                case MSF_ADD_FAV:
+                    if (addFavTask != null) {
+                        addFavTask.cancel(true);
+                        addFavTask = null;
+                    }
+                    addFavTask = new AddFavTask();
+                    addFavTask.execute(id);
+                    break;
 
             }
         };
@@ -139,6 +147,7 @@ public class NewsMoreReplyActivity extends Activity {
         setContentView(R.layout.activity_news_reply);
         id = getIntent().getIntExtra("id", 323);
         share = getIntent().getStringExtra("share");
+
         initViews();
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
@@ -225,6 +234,22 @@ public class NewsMoreReplyActivity extends Activity {
                 edtReply.requestFocus();
                 ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(
                         edtReply, 0);
+            }
+        });
+
+        btnFav = (Button) findViewById(R.id.btn_news_my_favorite);
+        btnFav.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (wh_dmApp.isConnected()) {
+                    handler.sendEmptyMessage(MSF_ADD_FAV);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            NewsMoreReplyActivity.this);
+                }
+
             }
         });
 
@@ -336,8 +361,9 @@ public class NewsMoreReplyActivity extends Activity {
                 lv.setVisibility(View.VISIBLE);
                 if (isFirstLauncher && result.size() < 6) {
                     lv.removeFooterView(footer);
-                    isFirstLauncher = false;
+
                 }
+                isFirstLauncher = false;
                 adapter.clearItem();
                 for (int i = 0; i < result.size(); i++) {
                     ArrayList<Reply> replys = result.get(i).getReply();
@@ -491,4 +517,53 @@ public class NewsMoreReplyActivity extends Activity {
 
     }
 
+    // ADD FAV
+    private class AddFavTask extends AsyncTask<Integer, Void, Boolean> {
+        boolean result = false;
+        Exception reason = null;
+        PostResult postresult = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+
+            try {
+                postresult = wh_dmApi.addFav(params[0], 0);
+                if (postresult.getResult()) {
+                    return true;
+                } else
+                    return false;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                // CollectNewsActivity.isNewCollect = true;
+                MessageActivity.refreshCollect = true;
+                NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
+                        NewsMoreReplyActivity.this);
+            } else {
+                if (postresult == null)
+                    NotificationUtil.showShortToast(getString(R.string.favorite_fail) + ":Î´ÖªÔ­Òò",
+                            NewsMoreReplyActivity.this);
+                else
+                    NotificationUtil
+                            .showShortToast(postresult.getMsg(), NewsMoreReplyActivity.this);
+            }
+            loadLayout.setVisibility(View.GONE);
+            super.onPostExecute(result);
+        }
+
+    }
 }

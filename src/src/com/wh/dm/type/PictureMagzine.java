@@ -7,7 +7,18 @@ public class PictureMagzine {
     private int id;
     private String description;
     private String pic;
+    private int aid;
     private String addtime;
+
+    public int getAid() {
+
+        return aid;
+    }
+
+    public void setAid(int aid) {
+
+        this.aid = aid;
+    }
 
     public int getSid() {
 

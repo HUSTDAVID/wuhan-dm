@@ -510,14 +510,15 @@ public class WH_DMHttpApiV1 {
 
     }
 
-    public boolean loginById(String machine) throws WH_DMException, UnKnownException, IOException {
+    public PostResult loginById(String machine) throws WH_DMException, UnKnownException,
+            IOException {
 
         HttpPost httPost = mHttpApi.createHttpPost(URL_DOMAIN + URL_API_MEM,
                 new BasicNameValuePair("act", "load"), new BasicNameValuePair("machine", machine),
                 new BasicNameValuePair("mail", null), new BasicNameValuePair("pass", null));
         String content = mHttpApi.doHttpRequest(httPost);
         PostResult result = gson.fromJson(content, PostResult.class);
-        return result.getResult();
+        return result;
     }
 
     public ArrayList<Magazine> getMagazine(String cid, int page) throws WH_DMException,

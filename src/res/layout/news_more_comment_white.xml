@@ -11,13 +11,13 @@
         android:orientation="vertical"
         android:gravity="center">
  
-          
+        <!--    
         <View 
             android:layout_width="fill_parent"
             android:layout_height="1.5dip"
             android:layout_marginBottom="5dip"
             android:background="@drawable/doubleline"/>
-            
+           --> 
                       
         <Button 
             android:id="@+id/btn_news_more"

@@ -168,10 +168,13 @@ public class PhototOtherSortActivity extends Activity {
         protected void onPostExecute(ArrayList<TwoPhotos> result) {
 
             if (result != null && result.size() > 0) {
-                isFirstLoad = false;
+                if (isFirstLoad) {
+                    lvPhotos.addFooterView(footer);
+                    isFirstLoad = false;
+                }
                 if (FLAG_PAGE_UP) {
                     adapter.addList(result);
-                    lvPhotos.addFooterView(footer);
+
                     FLAG_PAGE_UP = false;
                 } else {
 
@@ -188,16 +191,16 @@ public class PhototOtherSortActivity extends Activity {
                     }
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.no_more_message),
-                                PhototOtherSortActivity.this);
+                        // NotificationUtil.showShortToast(
+                        // getResources().getString(R.string.no_more_message),
+                        // PhototOtherSortActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 PhototOtherSortActivity.this);
                     }
                 } else {
                     if (!isFirstLoad) {
-                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                        NotificationUtil.showLongToast(getString(R.string.no_more_photo),
                                 PhototOtherSortActivity.this);
                     }
                 }

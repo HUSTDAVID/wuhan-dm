@@ -6,6 +6,7 @@ import com.wh.dm.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -15,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+
 public class ShareActivity extends Activity implements OnClickListener {
 
     private String shareStr;
+    private int imageSource = -1;
+    private byte[] picture = null;
     private RelativeLayout relMessage;
     private RelativeLayout relSina;
     private RelativeLayout relTenc;
@@ -41,6 +46,25 @@ public class ShareActivity extends Activity implements OnClickListener {
     }
 
     private void initView() {
+
+        imageSource = getIntent().getIntExtra("image", -1);
+        if (imageSource != -1) {
+            Bitmap bmp = null;
+            switch (imageSource) {
+                case 1:
+                    bmp = PhotosDetailsActivity.curBitmap;
+                    break;
+                case 2:
+                    bmp = DM_MZinePicsActivity.curBitmap;
+                    break;
+            }
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (bmp != null) {
+                bmp.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+                picture = stream.toByteArray();
+            }
+        }
 
         // init header
         TextView txtHeader = (TextView) findViewById(R.id.txt_header_title2);
@@ -94,12 +118,20 @@ public class ShareActivity extends Activity implements OnClickListener {
             case R.id.rel_share_sina:
             case R.id.img_share_sina:
             case R.id.txt_share_sina:
-                UMSnsService.shareToSina(ShareActivity.this, shareStr, null);
+                if (imageSource == -1 || picture == null) {
+                    UMSnsService.shareToSina(ShareActivity.this, shareStr, null);
+                } else {
+                    UMSnsService.shareToSina(ShareActivity.this, picture, shareStr, null);
+                }
                 break;
             case R.id.rel_share_tenc:
             case R.id.img_share_tenc:
             case R.id.txt_share_tenc:
-                UMSnsService.shareToTenc(ShareActivity.this, shareStr, null);
+                if (imageSource == -1 || picture == null) {
+                    UMSnsService.shareToTenc(ShareActivity.this, shareStr, null);
+                } else {
+                    UMSnsService.shareToTenc(ShareActivity.this, picture, shareStr, null);
+                }
                 break;
 
         }

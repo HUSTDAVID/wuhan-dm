@@ -227,7 +227,7 @@ public class Photos_AllActivity extends Activity {
                                 Photos_AllActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                    NotificationUtil.showLongToast(getString(R.string.no_more_photo),
                             Photos_AllActivity.this);
                 }
             }

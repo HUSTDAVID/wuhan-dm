@@ -1,3 +1,4 @@
+
 package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 public class HeadNewsActivity extends Activity implements
         android.view.GestureDetector.OnGestureListener {
 
-    private final String URL_DOMAIN = "http://test1.jbr.net.cn:809";
+    private final String URL_DOMAIN = "http://api.meike15.com";
     private String[] titles;
     private int currentItem = 0;
     private View headerView;
@@ -342,12 +343,15 @@ public class HeadNewsActivity extends Activity implements
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(getString(R.string.no_more_message),
-                                HeadNewsActivity.this);
+                        // NotificationUtil.showShortToast(getString(R.string.no_more_message),
+                        // HeadNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 HeadNewsActivity.this);
                     }
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.no_more_news),
+                            HeadNewsActivity.this);
                 }
             }
             super.onPostExecute(result);

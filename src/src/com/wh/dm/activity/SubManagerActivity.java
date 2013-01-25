@@ -6,7 +6,9 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.SubManagerAdapter;
 
@@ -30,8 +32,10 @@ public class SubManagerActivity extends Activity {
     private static final int MSG_GET_MAGAZINE = 0;
     private static final int MSG_UNSUBCRIBE = 1;
     private static final int MSG_REFRESH = 2;
+    private static final int MSG_LOGIN = 3;
     private GetSubcribedMagazine getMgzsTask = null;
     private UnSubcribeTask unSubcribeTask = null;
+    private LoginByIdTask loginByIdTask = null;
 
     private int delSid = 0;
     private ListView lvSubManager;
@@ -40,6 +44,7 @@ public class SubManagerActivity extends Activity {
     private ImageButton btnBack;
     private WH_DMApp wh_dmApp;
     private WH_DMApi wh_dmApi;
+    private PostResult postResult;
     private DatabaseImpl databaseImpl;
     private final Handler handler = new Handler() {
         @Override
@@ -61,6 +66,13 @@ public class SubManagerActivity extends Activity {
                 Bundle bundle = msg.getData();
                 unSubcribeTask.execute(bundle.getInt("id"));
 
+            } else if (MSG_LOGIN == msg.what) {
+                if (loginByIdTask != null) {
+                    loginByIdTask.cancel(true);
+                    loginByIdTask = null;
+                }
+                loginByIdTask = new LoginByIdTask();
+                loginByIdTask.execute(Preferences.getMachineId(SubManagerActivity.this));
             }
         };
     };
@@ -77,7 +89,11 @@ public class SubManagerActivity extends Activity {
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
         databaseImpl = wh_dmApp.getDatabase();
-        handler.sendEmptyMessage(MSG_GET_MAGAZINE);
+        if (WH_DMApp.isLoginById) {
+            handler.sendEmptyMessage(MSG_GET_MAGAZINE);
+        } else {
+            handler.sendEmptyMessage(MSG_LOGIN);
+        }
     }
 
     @Override
@@ -159,7 +175,6 @@ public class SubManagerActivity extends Activity {
 
             } else {
                 adapter.clear();
-
                 if (wh_dmApp.isConnected()) {
                     NotificationUtil.showShortToast(getString(R.string.no_subcribe),
                             SubManagerActivity.this);
@@ -207,6 +222,49 @@ public class SubManagerActivity extends Activity {
             super.onPostExecute(result);
         }
 
+    }
+
+    // login
+    // load by machine id
+    private class LoginByIdTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean login = false;
+            try {
+                postResult = wh_dmApi.loginById(params[0]);
+                if (postResult != null) {
+                    login = postResult.getResult();
+                }
+                return login;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                WH_DMApp.isLoginById = true;
+                handler.sendEmptyMessage(MSG_GET_MAGAZINE);
+            } else {
+                if (wh_dmApp.isConnected()) {
+                    // NotificationUtil.showShortToast(getString(R.string.excetion),
+                    // SubManagerActivity.this);
+                    if (postResult != null) {
+                        NotificationUtil.showShortToast(postResult.getMsg(),
+                                SubManagerActivity.this);
+                    }
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            SubManagerActivity.this);
+                }
+            }
+            super.onPostExecute(result);
+        }
     }
 
 }

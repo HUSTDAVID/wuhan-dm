@@ -29,7 +29,7 @@ public class Preferences {
     public static final String LOAD_PIC_PATH = "pic_path";
     public static final String POST_MESSAGE = "post_message";
 
-    public static final String UPDATE_DATABASE = "update_database_v3";
+    public static final String UPDATE_DATABASE = "update_database_v4";
 
     public static void firstLaunch(Context context, String deviceId) {
 

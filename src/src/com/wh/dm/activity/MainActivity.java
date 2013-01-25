@@ -123,9 +123,13 @@ public class MainActivity extends Activity implements OnTouchListener {
                     break;
 
                 case DEL_GRID:
+                    if (((WH_DMApp) getApplication()).isConnected()) {
+                        delImage.startAnimation(down);
+                        lists.get(Configure.curentPage).remove(Configure.removeItem);
+                    } else {
+                        delImage.startAnimation(down);
+                    }
 
-                    delImage.startAnimation(down);
-                    lists.get(Configure.curentPage).remove(Configure.removeItem);
                     break;
                 case REFRESH_GRID:
                     data.clear();

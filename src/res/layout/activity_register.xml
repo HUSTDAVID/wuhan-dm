@@ -46,6 +46,22 @@
         android:textColor="#a7a7a7"
         android:textColorHint="#a7a7a7"
         android:textSize="18dip" />
+    
+     <EditText
+        android:id="@+id/edt_register_passwd_again"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dip"
+        android:background="@drawable/site_btn_2_9patch"
+        android:ems="10"
+        android:hint="@string/password_again"
+        android:singleLine="true"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:password="true"
+        android:textColor="#a7a7a7"
+        android:textColorHint="#a7a7a7"
+        android:textSize="18dip" />
     
      <TableRow
          android:layout_width="fill_parent"

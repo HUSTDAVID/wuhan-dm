@@ -5,6 +5,7 @@ import com.wh.dm.db.DatabaseImpl;
 import com.wh.dm.preference.Preferences;
 import com.wh.dm.service.PushService;
 import com.wh.dm.type.Magazine;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.ConnetivityUtil;
 import com.wh.dm.util.SettingUtil;
 
@@ -29,6 +30,7 @@ public class WH_DMApp extends Application {
     private DatabaseImpl databaseImpl;
     private SharedPreferences mPrefs;
     public static boolean isLogin = false;
+    public static boolean isLoginById = false;
     public static boolean isConnected = true;
     public static boolean isSinaLogin = false;
     public static boolean isTencLogin = false;
@@ -73,7 +75,8 @@ public class WH_DMApp extends Application {
         isPush = !sPreference.getBoolean("push", false);
         boolean updateDB = sPreference.getBoolean(Preferences.UPDATE_DATABASE, true);
         if (updateDB) {
-            databaseImpl.deletePostMessage();
+            // databaseImpl.deletePostMessage();
+
             Preferences.setUpdateDB(this);
         }
 
@@ -179,6 +182,7 @@ public class WH_DMApp extends Application {
                 sendBroadcast(intent);
                 startService(new Intent(WH_DMApp.this, PushService.class));
                 isLogin = true;
+                isLoginById = true;
                 Message message = new Message();
                 message.what = MSG_GET_MAGAZINE;
                 handler.sendMessage(message);
@@ -200,7 +204,10 @@ public class WH_DMApp extends Application {
 
             boolean login = false;
             try {
-                login = wh_dm.loginById(params[0]);
+                PostResult result = wh_dm.loginById(params[0]);
+                if (result != null) {
+                    login = result.getResult();
+                }
                 return login;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -212,6 +219,7 @@ public class WH_DMApp extends Application {
         protected void onPostExecute(Boolean result) {
 
             if (result) {
+                isLoginById = true;
                 Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
                 sendBroadcast(intent);
                 startService(new Intent(WH_DMApp.this, PushService.class));

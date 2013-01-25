@@ -238,7 +238,7 @@ public class CarPhotoActivity extends Activity {
                     }
                 } else {
 
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                    NotificationUtil.showLongToast(getString(R.string.no_more_photo),
                             CarPhotoActivity.this);
 
                 }

@@ -94,12 +94,13 @@ public class AlarmReceiver extends BroadcastReceiver {
                     PostMessage message = result.get(i);
                     if (databaseImpl.checkIsNewMessage(message.getTemp(), message.getId())) {
                         newMessages.add(message);
-                        if (WH_DMApp.isPush) {
-                            showNotification(_context, result.get(i), i);
-                        }
                     }
                 }
                 if (newMessages.size() > 0) {
+                    // TODO
+                    if (WH_DMApp.isPush) {
+                        showNotification(_context, result.get(0), 0);
+                    }
                     databaseImpl.addPostMessage(newMessages);
                     Preferences.setPostMessage(_context, newMessages.size());
                 }

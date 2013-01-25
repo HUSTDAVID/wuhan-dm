@@ -65,10 +65,11 @@
    
     
      
-     
+     <!--  
     <View 
         android:layout_width="fill_parent"
         android:layout_height="1.5dip"
-        android:background="@drawable/doubleline"/>   
+        android:background="@drawable/doubleline"/>  
+        --> 
 
 </LinearLayout>

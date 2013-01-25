@@ -6,8 +6,10 @@ import com.wh.dm.R;
 import com.wh.dm.WH_DMApi;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
+import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Favorite;
 import com.wh.dm.type.PostMessage;
+import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.widget.CollectAdapter;
 import com.wh.dm.widget.MergeAdapter;
@@ -53,6 +55,7 @@ public class MessageActivity extends Activity {
     private WH_DMApi wh_dmApi;
     private GetFavTask getNewsFavTask = null;
     private DelFavTask delNewsFavTask = null;
+    private PostResult postResult;
     private static int MSG_GET_FAV = 0;
     private static int MSG_DEL_FAV = 1;
     private int countsPerPage = 10;
@@ -179,8 +182,14 @@ public class MessageActivity extends Activity {
         addData();
 
         // get collect from server
-        if (WH_DMApp.isLogin && wh_dmApp.isConnected())
-            handler.sendEmptyMessage(MSG_GET_FAV);
+        if (wh_dmApp.isConnected()) {
+            if (WH_DMApp.isLoginById) {
+                handler.sendEmptyMessage(MSG_GET_FAV);
+            } else {
+                LoginByIdTask loginByIdTask = new LoginByIdTask();
+                loginByIdTask.execute(Preferences.getMachineId(MessageActivity.this));
+            }
+        }
 
         btnDel = (ImageButton) findViewById(R.id.DeleteButton);
         btnDel.setOnClickListener(new View.OnClickListener() {
@@ -260,8 +269,11 @@ public class MessageActivity extends Activity {
             try {
                 if (FLAG_GET_MESSAGE) {
                     messages = wh_dmApi.getMessage();
+
                 }
-                result = wh_dmApi.getFav(params[0], params[1]);
+                if (wh_dmApp.isLogin) {
+                    result = wh_dmApi.getFav(params[0], params[1]);
+                }
                 return result;
             } catch (Exception e) {
                 reason = e;
@@ -382,4 +394,44 @@ public class MessageActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    // load by machine id
+    private class LoginByIdTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            boolean login = false;
+            try {
+                postResult = wh_dmApi.loginById(params[0]);
+                if (postResult != null) {
+                    login = postResult.getResult();
+                }
+                return login;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                WH_DMApp.isLoginById = true;
+                handler.sendEmptyMessage(MSG_GET_FAV);
+            } else {
+                if (wh_dmApp.isConnected()) {
+                    // NotificationUtil.showShortToast(getString(R.string.excetion),
+                    // SubManagerActivity.this);
+                    if (postResult != null) {
+                        NotificationUtil.showShortToast(postResult.getMsg(), MessageActivity.this);
+                    }
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            MessageActivity.this);
+                }
+            }
+            super.onPostExecute(result);
+        }
+    }
 }

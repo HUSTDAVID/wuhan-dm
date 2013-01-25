@@ -216,7 +216,7 @@ public class TravelNewsActivity extends Activity {
                                 TravelNewsActivity.this);
                     }
                 } else {
-                    NotificationUtil.showShortToast(getString(R.string.no_more_message),
+                    NotificationUtil.showShortToast(getString(R.string.no_more_news),
                             TravelNewsActivity.this);
                 }
             }

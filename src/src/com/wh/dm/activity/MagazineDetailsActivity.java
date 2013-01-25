@@ -11,6 +11,7 @@ import com.wh.dm.preference.Preferences;
 import com.wh.dm.type.Article;
 import com.wh.dm.type.ArticleMagzine;
 import com.wh.dm.type.Comment;
+import com.wh.dm.type.Magazine;
 import com.wh.dm.type.PostResult;
 import com.wh.dm.util.NotificationUtil;
 import com.wh.dm.util.TextUtil;
@@ -191,15 +192,17 @@ public class MagazineDetailsActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_magazine_details);
         Intent intent = getIntent();
+        // in this activity,mid is magazine is.sid is id of this article
         sid = intent.getIntExtra("sid", 458);
         mid = intent.getIntExtra("mid", 0);
         isLoad = intent.getBooleanExtra("is_load", false);
         titleUrl = intent.getStringExtra("titleImg");
         source = intent.getStringExtra("source");
-        initViews();
         wh_dmApp = (WH_DMApp) this.getApplication();
         databaseImpl = wh_dmApp.getDatabase();
         wh_dmApi = wh_dmApp.getWH_DMApi();
+        initViews();
+
         handler.sendEmptyMessage(MSG_GET_NEWSDETAIL);
 
     }
@@ -229,6 +232,13 @@ public class MagazineDetailsActivity extends Activity {
     private void initViews() {
 
         loadLayout = (LinearLayout) findViewById(R.id.detail_load);
+
+        if (titleUrl == null) {
+            Magazine curmag = databaseImpl.getMagazine(mid);
+            if (curmag != null) {
+                titleUrl = curmag.getTitlepic();
+            }
+        }
 
         final ImageView img_header = (ImageView) findViewById(R.id.img_header);
         UrlImageViewHelper.setUrlDrawable(img_header, WH_DMHttpApiV1.URL_DOMAIN + titleUrl,

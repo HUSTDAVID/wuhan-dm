@@ -40,7 +40,7 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
         }
         for (int i = 0; i < comments.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", context.getString(R.string.review_name));
+            map.put("name", context.getString(R.string.review_name) + comments.get(i).getUsername());
             map.put("time", comments.get(i).getDtime());
             map.put("body", comments.get(i).getMsg());
             map.put("top", comments.get(i).getGood());
@@ -55,13 +55,14 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
         this.context = context;
         mInflater = LayoutInflater.from(context);
     }
-    
-    public void clearItem(){
-    	if(mData!=null){
-    		mData.clear();
-    	}
+
+    public void clearItem() {
+
+        if (mData != null) {
+            mData.clear();
+        }
     }
-    
+
     public void addItem(String name, String time, String body, String top,
             NewsReplyFloorAdapter floorAdapter, int fid) {
 
@@ -69,7 +70,7 @@ public class NewsReplyMoreAdapter extends BaseAdapter {
             mData = new ArrayList<Map<String, Object>>();
         }
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", name);
+        map.put("name", context.getString(R.string.review_name) + name);
         map.put("time", time);
         map.put("body", body);
         map.put("top", top);

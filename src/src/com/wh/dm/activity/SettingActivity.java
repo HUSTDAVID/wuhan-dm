@@ -129,9 +129,10 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
             startActivity(intent);
         } else if (preference.getKey().equals("cache")) {
             FileUtil.deleteCache();
-            databaseImpl.deleteLoadInfo();
-            databaseImpl.deleteMagazineBody();
-            databaseImpl.deleteMagazinePic();
+            // databaseImpl.deleteLoadInfo();
+            // databaseImpl.deleteMagazineBody();
+            // databaseImpl.deleteMagazinePic();
+            databaseImpl.deleteAllCache();
             pref_cache.setSummary(FileUtil.getCacheSize());
         } else if (preference.getKey().equals("more")) {
             Intent intent = new Intent(SettingActivity.this, MoreActivity.class);

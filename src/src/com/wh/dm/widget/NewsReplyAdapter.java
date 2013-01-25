@@ -10,11 +10,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,19 +33,20 @@ public class NewsReplyAdapter extends BaseAdapter {
         this.context = context;
         mInflater = LayoutInflater.from(context);
     }
-    
-    public void clearItem(){
-    	if(mData!=null)
-    	   mData.clear();
+
+    public void clearItem() {
+
+        if (mData != null)
+            mData.clear();
     }
-    
-    public void addItem(String name, String time, String body, String top,int fid) {
+
+    public void addItem(String name, String time, String body, String top, int fid) {
 
         if (mData == null) {
             mData = new ArrayList<Map<String, Object>>();
         }
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", name);
+        map.put("name", context.getString(R.string.review_name) + name);
         map.put("time", time);
         map.put("body", body);
         map.put("top", top);
@@ -99,36 +100,38 @@ public class NewsReplyAdapter extends BaseAdapter {
         holder.txtTime.setText(mData.get(position).get("time").toString());
         holder.btnTop.setText(context.getString(R.string.top)
                 + mData.get(position).get("top").toString());
-        
-        holder.btnTop.setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Message message = new Message();
+        holder.btnTop.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                // TODO Auto-generated method stub
+                Message message = new Message();
                 message.what = NewsDetailsActivity.MSG_PUSH_TOP;
                 Bundle bundle = new Bundle();
                 bundle.putString("fid", "" + mData.get(position).get("fid"));
                 message.setData(bundle);
                 handler.sendMessage(message);
-			}
-        	
-        });
-        
-        holder.btnReply.setOnClickListener(new OnClickListener(){
+            }
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				 Message message = new Message();
-	             message.what = NewsDetailsActivity.MSG_REPLY;
-	             Bundle bundle = new Bundle();
-	             bundle.putString("fid", "" + mData.get(position).get("fid"));
-	             bundle.putBoolean("isReply", false);
-	             message.setData(bundle);
-	             handler.sendMessage(message);
-			}
-        	
+        });
+
+        holder.btnReply.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                // TODO Auto-generated method stub
+                Message message = new Message();
+                message.what = NewsDetailsActivity.MSG_REPLY;
+                Bundle bundle = new Bundle();
+                bundle.putString("fid", "" + mData.get(position).get("fid"));
+                bundle.putBoolean("isReply", false);
+                message.setData(bundle);
+                handler.sendMessage(message);
+            }
+
         });
         return convertView;
     }
@@ -140,8 +143,9 @@ public class NewsReplyAdapter extends BaseAdapter {
         Button btnTop;
         Button btnReply;
     }
-    
+
     public void setHandler(Handler _handler) {
+
         handler = _handler;
     }
 }

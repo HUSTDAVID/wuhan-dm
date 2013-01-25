@@ -231,7 +231,7 @@ public class PhotographPhotoActivity extends Activity {
                     }
                 } else {
                     if (!isFirstLoad) {
-                        NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                        NotificationUtil.showLongToast(getString(R.string.no_more_photo),
                                 PhotographPhotoActivity.this);
                     }
                 }

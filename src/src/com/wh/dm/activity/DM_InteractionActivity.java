@@ -107,12 +107,17 @@ public class DM_InteractionActivity extends Activity implements OnClickListener 
                     break;
                 case R.id.rel_interaction_critic:
                 case R.id.btn_interaction_critic:
+                    NotificationUtil.showShortToast(getString(R.string.no_critic),
+                            DM_InteractionActivity.this);
                     break;
                 case R.id.rel_interaction_award:
                 case R.id.btn_interaction_award:
-                    Intent intentSurvey = new Intent(DM_InteractionActivity.this,
-                            SurveyActivity.class);
-                    startActivity(intentSurvey);
+                    NotificationUtil.showShortToast(getString(R.string.no_award),
+                            DM_InteractionActivity.this);
+                    // Intent intentSurvey = new
+                    // Intent(DM_InteractionActivity.this,
+                    // SurveyActivity.class);
+                    // startActivity(intentSurvey);
                     break;
             }
         } else {

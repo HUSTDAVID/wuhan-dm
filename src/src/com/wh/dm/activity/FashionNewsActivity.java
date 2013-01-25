@@ -213,15 +213,15 @@ public class FashionNewsActivity extends Activity {
                 if (!FLAG_PAGE_UP) {
 
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.no_more_message),
-                                FashionNewsActivity.this);
+                        // NotificationUtil.showShortToast(
+                        // getResources().getString(R.string.no_more_message),
+                        // FashionNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 FashionNewsActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                    NotificationUtil.showLongToast(getString(R.string.no_more_news),
                             FashionNewsActivity.this);
                 }
             }

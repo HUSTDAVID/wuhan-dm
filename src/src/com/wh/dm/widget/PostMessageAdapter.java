@@ -4,6 +4,7 @@ package com.wh.dm.widget;
 import com.wh.dm.R;
 import com.wh.dm.activity.DM_Tab_2Activity;
 import com.wh.dm.activity.MagazineDetailsActivity;
+import com.wh.dm.activity.MeikeInformActivity;
 import com.wh.dm.type.PostMessage;
 
 import android.content.Context;
@@ -86,9 +87,18 @@ public class PostMessageAdapter extends BaseAdapter {
 
                 int temp = messages.get(position).getTemp();
                 if (temp == 0) {
-                    Intent intent_magazine = new Intent(context, MagazineDetailsActivity.class);
-                    intent_magazine.putExtra("sid", messages.get(position).getId());
-                    context.startActivity(intent_magazine);
+                    if (messages.get(position).getMid() == 0) {
+                        // system inform
+                        Intent intent_magazine = new Intent(context, MeikeInformActivity.class);
+                        intent_magazine.putExtra("id", messages.get(position).getId());
+                        context.startActivity(intent_magazine);
+                    } else {
+                        // article
+                        Intent intent_magazine = new Intent(context, MagazineDetailsActivity.class);
+                        intent_magazine.putExtra("sid", messages.get(position).getId());
+                        intent_magazine.putExtra("mid", messages.get(position).getMid());
+                        context.startActivity(intent_magazine);
+                    }
                 } else {
                     Intent intent_magazine = new Intent(context, DM_Tab_2Activity.class);
                     Bundle bundle = new Bundle();

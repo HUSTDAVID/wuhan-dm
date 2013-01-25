@@ -43,12 +43,15 @@ public class PhotoReplyActivity extends Activity {
     public static final int MSG_PUSH_TOP = 1;
     public static final int MSG_REPLY = 2;
     private static final int MSG_REVIEW = 3;
+    private static final int MSG_STORE_IMAGE = 4;
 
     private LayoutInflater mInflater;
     private EditText edtxMyReplyforBtn;
     private Button btnReply;
     private EditText edtReply;
     private Button btnShare;
+    private Button btnFav;
+    private int imageSource = -1;
 
     private LinearLayout bottomLayout1;
     private RelativeLayout bottomLayout2;
@@ -63,9 +66,11 @@ public class PhotoReplyActivity extends Activity {
     private ReviewTask reviewTask = null;
     private WH_DMApi wh_dmApi;
     private WH_DMApp wh_dmApp;
+    private AddFavTask addFavTask = null;
     private String share;
     private Parcelable lvState;
     private int id;
+    private int aid = -1;
     private boolean isReply = false;
     private boolean isReview = true;
     private boolean firstStart = true;
@@ -135,6 +140,18 @@ public class PhotoReplyActivity extends Activity {
                         NotificationUtil.showShortToast(getString(R.string.review_null),
                                 PhotoReplyActivity.this);
                     }
+                    break;
+                case MSG_STORE_IMAGE:
+                    if (addFavTask != null) {
+                        addFavTask.cancel(true);
+                        addFavTask = null;
+                    }
+                    addFavTask = new AddFavTask();
+                    if (aid == -1) {
+                        aid = id; // is photo, not magazine
+                    }
+                    addFavTask.execute(aid);
+                    break;
 
             }
         };
@@ -147,7 +164,9 @@ public class PhotoReplyActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_news_reply);
         id = getIntent().getIntExtra("id", 323);
+        aid = getIntent().getIntExtra("aid", -1);
         share = getIntent().getStringExtra("share");
+        imageSource = getIntent().getIntExtra("image", -1);
         initViews();
         wh_dmApp = (WH_DMApp) getApplication();
         wh_dmApi = wh_dmApp.getWH_DMApi();
@@ -236,6 +255,22 @@ public class PhotoReplyActivity extends Activity {
             }
         });
 
+        btnFav = (Button) findViewById(R.id.btn_news_my_favorite);
+        btnFav.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (wh_dmApp.isConnected()) {
+                    handler.sendEmptyMessage(MSG_STORE_IMAGE);
+                } else {
+                    NotificationUtil.showShortToast(getString(R.string.check_network),
+                            PhotoReplyActivity.this);
+                }
+
+            }
+        });
+
         edtReply = (EditText) findViewById(R.id.edt_news_details_input);
         btnReply = (Button) findViewById(R.id.btn_news_details_reply);
 
@@ -284,6 +319,7 @@ public class PhotoReplyActivity extends Activity {
 
                 Intent intent = new Intent(PhotoReplyActivity.this, ShareActivity.class);
                 intent.putExtra("share", share);
+                intent.putExtra("image", imageSource);
                 startActivity(intent);
             }
         });
@@ -343,8 +379,9 @@ public class PhotoReplyActivity extends Activity {
                 lv.setVisibility(View.VISIBLE);
                 if (isFirstLauncher && result.size() < 6) {
                     lv.removeFooterView(footer);
-                    isFirstLauncher = false;
+
                 }
+                isFirstLauncher = false;
                 adapter.clearItem();
                 for (int i = 0; i < result.size(); i++) {
                     ArrayList<Reply> replys = result.get(i).getReply();
@@ -352,11 +389,11 @@ public class PhotoReplyActivity extends Activity {
                     if (replys != null && replys.size() > 0) {
                         floorAdapter = new NewsReplyFloorAdapter(PhotoReplyActivity.this);
                         floorAdapter.setList(result.get(i).getReply());
-                        adapter.addItem(getString(R.string.review_name), comment.getDtime(),
+                        adapter.addItem(comment.getUsername(), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), floorAdapter,
                                 comment.getId());
                     } else {
-                        adapter.addItem(getString(R.string.review_name), comment.getDtime(),
+                        adapter.addItem(comment.getUsername(), comment.getDtime(),
                                 comment.getMsg(), "" + comment.getGood(), null, comment.getId());
                     }
                 }
@@ -496,4 +533,53 @@ public class PhotoReplyActivity extends Activity {
 
     }
 
+    // add fav
+    private class AddFavTask extends AsyncTask<Integer, Void, Boolean> {
+        boolean result = false;
+        Exception reason = null;
+        PostResult postresult = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+
+            // TODO Auto-generated method stub
+            try {
+                postresult = wh_dmApi.addFav(params[0], 1);
+                if (postresult.getResult())
+                    return true;
+                else
+                    return false;
+            } catch (Exception e) {
+                reason = e;
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result) {
+                // CollectPhotoActivity.isNewCollect = true;
+                MessageActivity.refreshCollect = true;
+                NotificationUtil.showShortToast(getString(R.string.favorite_succeed),
+                        PhotoReplyActivity.this);
+            } else {
+                if (postresult == null)
+                    NotificationUtil.showShortToast(getString(R.string.favorite_fail) + ":Ã»ÓÐ¼ì²âµ½ÍøÂç",
+                            PhotoReplyActivity.this);
+                else
+                    NotificationUtil.showShortToast(postresult.getMsg(), PhotoReplyActivity.this);
+            }
+            // progressDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+    }
 }

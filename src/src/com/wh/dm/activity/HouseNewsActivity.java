@@ -216,20 +216,19 @@ public class HouseNewsActivity extends Activity {
             } else {
                 if (!FLAG_PAGE_UP) {
                     if (wh_dmApp.isConnected()) {
-                        NotificationUtil.showShortToast(
-                                getResources().getString(R.string.no_more_message),
-                                HouseNewsActivity.this);
+                        // NotificationUtil.showShortToast(
+                        // getResources().getString(R.string.no_more_message),
+                        // HouseNewsActivity.this);
                     } else {
                         NotificationUtil.showShortToast(getString(R.string.check_network),
                                 HouseNewsActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.no_more_message),
+                    NotificationUtil.showLongToast(getString(R.string.no_more_news),
                             HouseNewsActivity.this);
                 }
             }
             super.onPostExecute(result);
         }
-
     }
 }
