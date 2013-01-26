@@ -94,11 +94,6 @@ public class PhotoAdapter extends BaseAdapter {
         left.setCounts(twoPhotos.get(position).getLeftPhoto().getFcount());
         left.setTitle(twoPhotos.get(position).getLeftPhoto().getTitle());
         left.setDescription(twoPhotos.get(position).getLeftPhoto().getDescription());
-        final PhotoMsg right = new PhotoMsg();
-        right.setAid(twoPhotos.get(position).getRightPhoto().getAid());
-        right.setCounts(twoPhotos.get(position).getRightPhoto().getFcount());
-        right.setTitle(twoPhotos.get(position).getRightPhoto().getTitle());
-        right.setDescription(twoPhotos.get(position).getRightPhoto().getDescription());
         holder.imgLeft.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -108,14 +103,21 @@ public class PhotoAdapter extends BaseAdapter {
             }
         });
 
-        holder.imgRight.setOnClickListener(new OnClickListener() {
+        if (twoPhotos.get(position).getRightPhoto() != null) {
+            final PhotoMsg right = new PhotoMsg();
+            right.setAid(twoPhotos.get(position).getRightPhoto().getAid());
+            right.setCounts(twoPhotos.get(position).getRightPhoto().getFcount());
+            right.setTitle(twoPhotos.get(position).getRightPhoto().getTitle());
+            right.setDescription(twoPhotos.get(position).getRightPhoto().getDescription());
+            holder.imgRight.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
-                startActivity(right);
-            }
-        });
+                    startActivity(right);
+                }
+            });
+        }
 
         convertView.setTag(holder);
         // } else {
@@ -129,17 +131,20 @@ public class PhotoAdapter extends BaseAdapter {
         holder.txtLeftReview.setText(String.valueOf(leftPhoto.getFcount()));
         holder.txtLeftNum.setText(String.valueOf(leftPhoto.getPcount()));
 
-        holder.txtRightTitle.setText(rightPhot.getAname());
-        holder.txtRightReview.setText(String.valueOf(rightPhot.getFcount()));
-        holder.txtRightNum.setText(String.valueOf(rightPhot.getPcount()));
-
+        if (rightPhot != null) {
+            holder.txtRightTitle.setText(rightPhot.getAname());
+            holder.txtRightReview.setText(String.valueOf(rightPhot.getFcount()));
+            holder.txtRightNum.setText(String.valueOf(rightPhot.getPcount()));
+        }
         if (WH_DMApp.isLoadImg) {
             UrlImageViewHelper.setUrlDrawable(holder.imgLeft,
                     WH_DMHttpApiV1.URL_DOMAIN + leftPhoto.getLitpic(),
                     R.drawable.photos_img_background_nr, null);
 
-            UrlImageViewHelper.setUrlDrawable(holder.imgRight, WH_DMHttpApiV1.URL_DOMAIN
-                    + rightPhot.getLitpic(), R.drawable.photos_img_background_nr, null);
+            if (rightPhot != null) {
+                UrlImageViewHelper.setUrlDrawable(holder.imgRight, WH_DMHttpApiV1.URL_DOMAIN
+                        + rightPhot.getLitpic(), R.drawable.photos_img_background_nr, null);
+            }
         }
 
         return convertView;

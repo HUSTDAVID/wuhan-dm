@@ -379,6 +379,10 @@ public class DM_MZinePicsActivity extends Activity {
             UrlImageViewHelper.setUrlDrawable(img, WH_DMHttpApiV1.URL_DOMAIN
                     + magazines.get(arg0).getPic());
             curPage = 1 + arg0;
+            if (curPage == totalPage) {
+                NotificationUtil.showShortToast(getString(R.string.last_page),
+                        DM_MZinePicsActivity.this);
+            }
             txtPage.setText(curPage + "/" + totalPage);
             txtDes.setText(magazines.get(arg0).getDescription());
             imgComment.setVisibility(View.GONE);

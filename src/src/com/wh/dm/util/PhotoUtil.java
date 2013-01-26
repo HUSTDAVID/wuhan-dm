@@ -20,12 +20,15 @@ public class PhotoUtil {
                 if (i < size) {
                     twoP.setRightPhoto(photo.get(i));
                     twoPhotos.add(twoP);
+                } else {
+                    twoPhotos.add(twoP);
                 }
             }
 
             return twoPhotos;
-        } else
+        } else {
             return null;
+        }
     }
 
     public static ArrayList<Photo> chageOnePhoto(ArrayList<TwoPhotos> photos) {
@@ -34,7 +37,9 @@ public class PhotoUtil {
             ArrayList<Photo> photo = new ArrayList<Photo>();
             for (int i = 0; i < photos.size(); i++) {
                 photo.add(photos.get(i).getLeftPhoto());
-                photo.add(photos.get(i).getRightPhoto());
+                if (photos.get(i).getRightPhoto() != null) {
+                    photo.add(photos.get(i).getRightPhoto());
+                }
             }
             return photo;
         } else

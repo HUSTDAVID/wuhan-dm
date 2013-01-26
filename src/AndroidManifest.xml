@@ -396,7 +396,7 @@
 		</receiver>
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="508b875b52701571dd000026" >
+            android:value="50f0df985270152dce000005" >
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"

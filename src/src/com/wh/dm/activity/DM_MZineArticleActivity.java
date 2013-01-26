@@ -858,6 +858,10 @@ public class DM_MZineArticleActivity extends Activity {
 
             curPage = 1 + arg0;
             txtPage.setText(curPage + "/" + totalPage);
+            if (curPage == totalPage) {
+                NotificationUtil.showShortToast(getString(R.string.last_page),
+                        DM_MZineArticleActivity.this);
+            }
 
         }
     }

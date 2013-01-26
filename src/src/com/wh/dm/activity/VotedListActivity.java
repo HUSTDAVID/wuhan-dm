@@ -162,14 +162,11 @@ public class VotedListActivity extends Activity {
         @Override
         public void restoreState(Parcelable arg0, ClassLoader arg1) {
 
-            // TODO Auto-generated method stub
-
         }
 
         @Override
         public Parcelable saveState() {
 
-            // TODO Auto-generated method stub
             return null;
         }
 
@@ -320,6 +317,23 @@ public class VotedListActivity extends Activity {
 
                 }
             } else {
+                // TODO
+                View view = pageViews.get(0);
+                TextView txtInfo = (TextView) view.findViewById(R.id.vote_ing_3);
+                Button btnVote = (Button) view.findViewById(R.id.btn_vote);
+                txtInfo.setText(getString(R.string.no_vote));
+                btnVote.setText(getString(R.string.no_vote));
+                btnVote.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        NotificationUtil.showShortToast(getString(R.string.note_vote_toast),
+                                VotedListActivity.this);
+
+                    }
+                });
+
                 if (wh_dmApp.isConnected()) {
 
                 } else {

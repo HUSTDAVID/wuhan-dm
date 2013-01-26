@@ -29,6 +29,8 @@
     <string name="thanks_gelivable">谢谢您的给力</string>
     <string name="meike_share">每刻分享</string>
     <string name="no_magazine">暂无新刊</string>
+    <string name="no_vote">暂无投票</string>
+    <string name="note_vote_toast">本期杂志暂无投票！</string>
     <string name="load_finish">下载已完成</string>
     <string name="watch_dm">查看DM</string>
     <string name="not_load">未下载杂志</string>

@@ -3,8 +3,8 @@ package com.wh.dm.type;
 
 public class TwoPhotos {
 
-    private Photo leftPhoto;
-    private Photo rightPhoto;
+    private Photo leftPhoto = null;
+    private Photo rightPhoto = null;
 
     public Photo getLeftPhoto() {
 
