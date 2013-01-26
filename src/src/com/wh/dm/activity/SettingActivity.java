@@ -2,6 +2,7 @@
 package com.wh.dm.activity;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.api.sns.UMSnsService;
 import com.wh.dm.R;
 import com.wh.dm.WH_DMApp;
 import com.wh.dm.db.DatabaseImpl;
@@ -185,10 +186,13 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 
                         WH_DMApp.isLogin = false;
                         Preferences.logout(SettingActivity.this);
-                        // Preferences.setPostMessage(SettingActivity.this, 0);
-                        // databaseImpl.deletePostMessage();
                         pref_login.setTitle(getString(R.string.set_login));
                         pref_login.setSummary(getString(R.string.login_summary));
+                        // TODO
+                        UMSnsService.writeOffAccount(SettingActivity.this,
+                                UMSnsService.SHARE_TO.SINA);
+                        UMSnsService.writeOffAccount(SettingActivity.this,
+                                UMSnsService.SHARE_TO.TENC);
 
                     }
 

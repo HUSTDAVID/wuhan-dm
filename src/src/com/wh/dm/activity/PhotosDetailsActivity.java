@@ -216,9 +216,9 @@ public class PhotosDetailsActivity extends Activity {
                 ImageView imageView = (ImageView) pageViews.get(currentPhoto - 1).findViewById(
                         R.id.img_photos);
                 imageView.setDrawingCacheEnabled(true);
-                curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
-                if (curBitmap == null) {
-                    NotificationUtil.showShortToast("test", PhotosDetailsActivity.this);
+
+                if (imageView.getDrawingCache() != null) {
+                    curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
                 }
                 imageView.setDrawingCacheEnabled(false);
 
@@ -308,9 +308,9 @@ public class PhotosDetailsActivity extends Activity {
                 ImageView imageView = (ImageView) pageViews.get(currentPhoto - 1).findViewById(
                         R.id.img_photos);
                 imageView.setDrawingCacheEnabled(true);
-                curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
-                if (curBitmap == null) {
-                    NotificationUtil.showShortToast("test", PhotosDetailsActivity.this);
+
+                if (imageView.getDrawingCache() != null) {
+                    curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
                 }
                 imageView.setDrawingCacheEnabled(false);
 

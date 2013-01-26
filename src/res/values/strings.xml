@@ -21,10 +21,11 @@
     <string name="take_part">您已参与</string>
     <string name="is_logout">确认注销登录？</string>
     <string name="if_unbind">是否解除绑定?</string>
+    <string name="feedback_load">正在为您提交，请稍等</string>
     <string name="close">关闭</string>
     <string name="ok">确定</string>
     <string name="cacel">取消</string>
-    <string name="share_apk">我在使用每刻资讯，自主订阅，永久免费，你也试试吧！http://www.meike15.com/meike15.apk</string>
+    <string name="share_apk">我在使用每刻资讯，自主订阅，永久免费，你也试试吧！下载地址：http://www.meike15.com/meike15.apk</string>
     <string name="thanks_gelivable">谢谢您的给力</string>
     <string name="meike_share">每刻分享</string>
     <string name="no_magazine">暂无新刊</string>
@@ -110,7 +111,7 @@
     <string name="ptr_last_updated">Updated: %1$s</string>
     <string name="share_photo">分享每刻美图：</string>
     <string name="share_news">这篇文章很犀利，推荐一读，来自每刻资讯:</string>
-    <string name="share_magazine">//分享每刻杂志：</string>
+    <string name="share_magazine">分享每刻杂志：</string>
     <string name="load_image_Success">成功下载到相册</string>
     <string name="load_image_fail">图片下载失败</string>
     <string name="no_review">暂无评论</string>

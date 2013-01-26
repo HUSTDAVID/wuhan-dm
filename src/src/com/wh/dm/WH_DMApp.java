@@ -73,7 +73,7 @@ public class WH_DMApp extends Application {
         isLoadImg = SettingUtil.isDownloadImg(mPrefs, this);
         SharedPreferences sPreference = getSharedPreferences("com.wh.dm_preferences", 0);
         isPush = !sPreference.getBoolean("push", false);
-        boolean updateDB = sPreference.getBoolean(Preferences.UPDATE_DATABASE, true);
+        boolean updateDB = sPreference.getBoolean(Preferences.UPDATE_DATABASE, false);
         if (updateDB) {
             // databaseImpl.deletePostMessage();
 
@@ -81,7 +81,8 @@ public class WH_DMApp extends Application {
         }
 
         login();
-        if (!mPrefs.getBoolean(Preferences.GET_DETAULT_MAGAZIE, false)) {
+        boolean isGetDefalutMag = mPrefs.getBoolean(Preferences.GET_DETAULT_MAGAZIE, true);
+        if (isGetDefalutMag) {
             GetDefaultMagazine getDefaultMagazine = new GetDefaultMagazine();
             getDefaultMagazine.execute();
         }
@@ -251,10 +252,11 @@ public class WH_DMApp extends Application {
         @Override
         protected void onPostExecute(ArrayList<Magazine> result) {
 
-            if (result != null) {
+            if (result != null && result.size() > 0) {
                 databaseImpl.addMagazines(result);
                 Intent intent = new Intent(INTENT_ACTION_LOG_SUCCESS);
                 sendBroadcast(intent);
+                sendBroadcast(new Intent(WH_DMApp.INTENT_ACTION_SUBCRIBE_CHANGE));
                 Preferences.getDefalutMagazine(WH_DMApp.this);
             }
             super.onPostExecute(result);

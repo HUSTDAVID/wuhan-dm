@@ -262,7 +262,15 @@ public class PhotoReplyActivity extends Activity {
             public void onClick(View v) {
 
                 if (wh_dmApp.isConnected()) {
-                    handler.sendEmptyMessage(MSG_STORE_IMAGE);
+                    if (wh_dmApp.isLogin) {
+                        handler.sendEmptyMessage(MSG_STORE_IMAGE);
+                    } else {
+                        NotificationUtil.showShortToast(getString(R.string.please_login),
+                                PhotoReplyActivity.this);
+                        Intent intent = new Intent(PhotoReplyActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
                 } else {
                     NotificationUtil.showShortToast(getString(R.string.check_network),
                             PhotoReplyActivity.this);

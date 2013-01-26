@@ -46,7 +46,8 @@ public class NewsReplyAdapter extends BaseAdapter {
             mData = new ArrayList<Map<String, Object>>();
         }
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("name", context.getString(R.string.review_name) + name);
+        // map.put("name", context.getString(R.string.review_name) + name);
+        map.put("name", context.getString(R.string.review_name));
         map.put("time", time);
         map.put("body", body);
         map.put("top", top);

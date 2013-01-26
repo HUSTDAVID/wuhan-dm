@@ -164,7 +164,10 @@ public class DM_MZinePicsActivity extends Activity {
                 if (magazines != null) {
                     ImageView imageView = (ImageView) views.get(curPage - 1).findViewById(R.id.img);
                     imageView.setDrawingCacheEnabled(true);
-                    curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+
+                    if (imageView.getDrawingCache() != null) {
+                        curBitmap = Bitmap.createBitmap(imageView.getDrawingCache());
+                    }
                     imageView.setDrawingCacheEnabled(false);
 
                     String share = "";

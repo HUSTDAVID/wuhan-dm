@@ -89,6 +89,8 @@ public class FeedbackActivity extends Activity {
 
         // init views
         loadLayout = (LinearLayout) findViewById(R.id.feedback_load);
+        TextView loadText = (TextView) findViewById(R.id.txt_pic_load);
+        loadText.setText(getString(R.string.feedback_load));
         edtContack = (EditText) findViewById(R.id.edt_feedback_contack);
         edtFeedbackText = (EditText) findViewById(R.id.edt_feedback_text);
         btnSend = (Button) findViewById(R.id.btn_feedback_send);

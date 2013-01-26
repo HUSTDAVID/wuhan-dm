@@ -37,7 +37,8 @@ public class NewsReplyFloorAdapter extends BaseAdapter {
         mData.clear();
         for (int i = 0; i < replys.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", replys.get(i).getUsername());
+            // map.put("name", replys.get(i).getUsername());
+            map.put("name", context.getString(R.string.review_name));
             map.put("msg", replys.get(i).getMsg());
             map.put("floor", "" + (i + 1));
             map.put("time", replys.get(i).getDtime());

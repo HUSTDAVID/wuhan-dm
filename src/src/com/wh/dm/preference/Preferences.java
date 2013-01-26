@@ -44,7 +44,7 @@ public class Preferences {
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = preference.edit();
-        editor.putBoolean(GET_DETAULT_MAGAZIE, true);
+        editor.putBoolean(GET_DETAULT_MAGAZIE, false);
         editor.commit();
     }
 
