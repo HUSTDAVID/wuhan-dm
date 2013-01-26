@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager.WakeLock;
@@ -84,12 +85,17 @@ public class WH_DMApp extends Application {
         boolean isGetDefalutMag = mPrefs.getBoolean(Preferences.GET_DETAULT_MAGAZIE, true);
         if (isGetDefalutMag) {
             GetDefaultMagazine getDefaultMagazine = new GetDefaultMagazine();
-            getDefaultMagazine.execute();
+
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB_MR1) {
+                getDefaultMagazine.execute();
+            } else {
+                getDefaultMagazine.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
         }
 
     }
 
-    public WH_DMApi getWH_DMApi() {
+    public synchronized WH_DMApi getWH_DMApi() {
 
         return wh_dm;
     }
@@ -167,7 +173,7 @@ public class WH_DMApp extends Application {
 
             boolean login = false;
             try {
-                login = wh_dm.login(params[0], params[1], params[2]);
+                login = getWH_DMApi().login(params[0], params[1], params[2]);
                 return login;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -205,7 +211,7 @@ public class WH_DMApp extends Application {
 
             boolean login = false;
             try {
-                PostResult result = wh_dm.loginById(params[0]);
+                PostResult result = getWH_DMApi().loginById(params[0]);
                 if (result != null) {
                     login = result.getResult();
                 }
@@ -242,7 +248,7 @@ public class WH_DMApp extends Application {
         protected ArrayList<Magazine> doInBackground(Void... params) {
 
             try {
-                defalutMagazines = wh_dm.getDefaultMagazine();
+                defalutMagazines = getWH_DMApi().getDefaultMagazine();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -273,7 +279,7 @@ public class WH_DMApp extends Application {
 
             ArrayList<Magazine> magazines = null;
             try {
-                magazines = wh_dm.getSubcribedMagazines();
+                magazines = getWH_DMApi().getSubcribedMagazines();
                 return magazines;
             } catch (Exception e) {
                 reason = e;

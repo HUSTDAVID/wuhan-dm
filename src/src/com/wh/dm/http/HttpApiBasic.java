@@ -84,6 +84,7 @@ public class HttpApiBasic implements HttpApi {
                 String content = EntityUtils.toString(response.getEntity());
                 return content;
             case 400:
+                response.getEntity().consumeContent();
                 throw new WH_DMException("请求参数不符合API规定");
 
             case 401:

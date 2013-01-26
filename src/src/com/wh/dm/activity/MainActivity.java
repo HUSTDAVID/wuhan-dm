@@ -241,6 +241,7 @@ public class MainActivity extends Activity implements OnTouchListener {
     protected void onDestroy() {
 
         // databaseImpl.refreshMagazines(data);
+        this.unregisterReceiver(mSubChangeReceiver);
         super.onDestroy();
     }
 

@@ -204,7 +204,7 @@
     <string name="set_feedback">用户反馈</string>
     <string name="feedback_summary">欢迎给我们提出宝贵意见</string>
     <string name="about_us">关于我们</string>
-    <string name="about_us_summary">当前版本为4.8.1</string>
+    <string name="about_us_summary">当前版本为4.8.2</string>
     <string name="text_size">文章字体大小</string>
     <string name="text_summary">当前字体大小为18号</string>
     <string name="push">开启推送功能</string>
