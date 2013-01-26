@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -117,6 +118,10 @@ public class PhotoAdapter extends BaseAdapter {
                     startActivity(right);
                 }
             });
+        } else {
+            RelativeLayout relRight = (RelativeLayout) convertView
+                    .findViewById(R.id.rel_photo_right);
+            relRight.setVisibility(View.INVISIBLE);
         }
 
         convertView.setTag(holder);

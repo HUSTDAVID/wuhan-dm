@@ -105,8 +105,7 @@
         android:layout_width="fill_parent"
         android:layout_height="92dip"
         android:layout_weight="1"
-        android:scaleType="fitXY"
-        android:src="@drawable/temp_magazine_img" />
+        android:scaleType="fitXY" />
 
     <TableRow
         android:id="@+id/medium"
