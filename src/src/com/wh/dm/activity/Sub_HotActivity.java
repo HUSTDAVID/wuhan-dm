@@ -254,7 +254,7 @@ public class Sub_HotActivity extends Activity {
                                 Sub_HotActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.last_page),
+                    NotificationUtil.showLongToast(getString(R.string.mo_more_mag),
                             Sub_HotActivity.this);
                 }
 

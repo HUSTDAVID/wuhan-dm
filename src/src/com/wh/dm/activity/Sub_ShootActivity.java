@@ -261,7 +261,7 @@ public class Sub_ShootActivity extends Activity {
                                 Sub_ShootActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.last_page),
+                    NotificationUtil.showLongToast(getString(R.string.mo_more_mag),
                             Sub_ShootActivity.this);
                 }
 

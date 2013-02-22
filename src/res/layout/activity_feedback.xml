@@ -63,7 +63,7 @@
 	        android:background="@drawable/site_btn_2_9patch"
 	        android:ems="10"
 	        android:minHeight="200dip"
-	        android:maxHeight="350dp"
+	        android:maxHeight="250dp"
 	        android:textColor="#a7a7a7"
 	        android:textSize="18dip" />
 	    

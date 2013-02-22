@@ -259,7 +259,7 @@ public class SubOtherSortActivity extends Activity {
                                     SubOtherSortActivity.this);
                         }
                     } else {
-                        NotificationUtil.showLongToast(getString(R.string.last_page),
+                        NotificationUtil.showLongToast(getString(R.string.mo_more_mag),
                                 SubOtherSortActivity.this);
                     }
                 }

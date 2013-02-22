@@ -260,7 +260,7 @@ public class Sub_GirlActivity extends Activity {
                                 Sub_GirlActivity.this);
                     }
                 } else {
-                    NotificationUtil.showLongToast(getString(R.string.last_page),
+                    NotificationUtil.showLongToast(getString(R.string.mo_more_mag),
                             Sub_GirlActivity.this);
                 }
 
